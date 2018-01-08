@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 {
     // change in login activity for git on 8th jan.
 
-    // chage in working copy
+    // chage in working copy and alos commit on master branch
     BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult;
     private ProgressDialog progressDialog;
     ProgressDialog prd;
