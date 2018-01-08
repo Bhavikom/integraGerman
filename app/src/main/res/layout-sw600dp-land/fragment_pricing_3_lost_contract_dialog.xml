@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:layout_weight="1">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            style="@style/EditText_Comman_white_bg"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:id="@+id/linearLostSaleDLG"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+               
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/chkLogisticsDLGP3"
+                    style="@style/padding_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox_bg"
+                    android:textStyle="bold"
+                    android:text="logistics" />
+
+                <CheckBox
+                    android:id="@+id/chkAvailabilityDLGP3"
+                    style="@style/padding_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox_bg"
+                    android:textStyle="bold"
+                    android:text="Availability" />
+
+            </LinearLayout>
+
+            <LinearLayout
+               
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chkPriceDLGP3"
+                        style="@style/padding_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/checkbox_bg"
+                        android:textStyle="bold"
+                        android:text="Price" />
+
+                    <TextView
+                        android:id="@+id/txtPriceDLGP3"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="Price" />
+
+                    <TextView
+                        android:id="@+id/txtCompetitorDLGP3"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Competitor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chkGeratermieteDLGP3"
+                        style="@style/padding_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/checkbox_bg"
+                        android:text="Geratermiete" />
+
+                    <EditText
+
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:digits="0,1,2,3,4,5,6,7,8,9,0,."
+                        android:singleLine="true"
+                        android:id="@+id/etGeratermietePriceDLGP3"
+                        android:text="" />
+
+                    <EditText
+                        android:id="@+id/etGeratermieteCompititerDLGP3"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chkLimitationOfLiabilityDLGP3"
+                        style="@style/padding_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/checkbox_bg"
+                        android:text="Limitation of Liability" />
+
+                    <EditText
+
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:digits="0,1,2,3,4,5,6,7,8,9,0,."
+                        android:singleLine="true"
+                        android:layout_weight="1"
+                        android:id="@+id/etLimitationOfLiabilityPriceDLGP3"
+                        android:text="" />
+
+                    <EditText
+
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:layout_weight="1"
+                        android:id="@+id/etLimitationOfLiabilityCompititerDLGP3"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chkTransportDLGP3"
+                        style="@style/padding_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/checkbox_bg"
+                        android:text="Transport" />
+
+                    <EditText
+
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:digits="0,1,2,3,4,5,6,7,8,9,0,."
+                        android:singleLine="true"
+                        android:id="@+id/etTransportPriceDLGP3"
+                        android:text="" />
+
+                    <EditText
+                        style="@style/EditText_Comman_white_bg"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:id="@+id/etTransportCompititerDLGP3"
+                        android:text="" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+               
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/chkTermsofPaymentDLGP3"
+                    style="@style/padding_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox_bg"
+                    android:textStyle="bold"
+                    android:text="Terms of payment" />
+
+                <CheckBox
+                    android:id="@+id/chkPaysNoAdvancePaymentDLGP3"
+                    style="@style/padding_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="Pays no advance payment" />
+
+                <CheckBox
+                    android:id="@+id/chkCashDiscountDLGP3"
+                    style="@style/padding_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="Cash discount" />
+
+            </LinearLayout>
+
+            <LinearLayout
+               
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/chkTheCustomerHasChosenAnAlternativeMtecoUnitDLGP3"
+                    style="@style/padding_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="The customer has chosen an alternative mateco-unit" />
+
+                <CheckBox
+                    android:id="@+id/chkTheCustomerDoesNotHaveNeedLessDLGP3"
+                    style="@style/padding_style"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox_bg"
+
+                    android:text="The customer does not have / need less" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chkTheCustomerHasNotReceivedTheOrderDLGP3"
+                        style="@style/padding_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/checkbox_bg"
+                        android:textStyle="bold"
+                        android:layout_gravity="top"
+                        android:text="the customer has not received the order" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtCompetitor1DLGP3"
+                            style="@style/TextView_Black_Comman"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:text="competitor" />
+
+                        <EditText
+
+                            style="@style/EditText_Comman_white_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:id="@+id/etTheCustomerHasNotReceivedTheOrderCompititerDLGP3"
+                            android:text="" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left|top"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chkOtherDLGP3"
+                        style="@style/padding_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:button="@drawable/checkbox_bg"
+                        android:textStyle="bold"
+                        android:text="Other" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lines="3"
+                        style="@style/EditText_Comman_white_bg"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:id="@+id/etOtherDLGP3"
+                        android:text="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+               
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="right|center"
+                android:orientation="horizontal">
+
+                <Button
+
+                    style="@style/Button_Common_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnOkDLGP3"
+                    android:text="Ok" />
+
+                <Button
+                    android:id="@+id/btnAbortDLGP3"
+                    style="@style/Button_Common_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+
+                    android:text="Abbrechen" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

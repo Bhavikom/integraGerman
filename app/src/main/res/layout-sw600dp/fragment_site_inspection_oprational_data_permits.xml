@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5sp"
+    android:layout_marginRight="5sp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/labelAuthOwner"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Auth-owner" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.1"
+                android:gravity="left">
+
+                <ToggleButton
+                    android:id="@+id/button1"
+                    style="@style/TextView_White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelName"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/textName"
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:imeOptions="actionNext"
+                android:maxLength="40"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/labelAnsbach"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.9"
+                android:text="Ansbach." />
+
+            <EditText
+                android:id="@+id/textAnsbach"
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:imeOptions="actionNext"
+                android:maxLength="40"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <LinearLayout
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/labelPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/icn_phone" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/textTelephone"
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.15"
+                android:hint="Telefon"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="25"
+                android:singleLine="true" />
+            android:layout_weight="0.85" />
+
+            <ImageView
+                android:id="@+id/imageViewCall"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:src="@drawable/icn_dial"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/labelFaxNo"
+                    style="@style/TextView_Black_Comman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:drawableLeft="@drawable/icn_fax" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/textFaxNo"
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:hint="Fax"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="25"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/labelIsFord"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.9"
+                android:text="is ford." />
+
+            <EditText
+                android:id="@+id/textIsFord"
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:imeOptions="actionNext"
+                android:maxLength="80"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelAuthCommunity"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Auth-community" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="left">
+
+                <ToggleButton
+                    android:id="@+id/button2"
+                    style="@style/TextView_White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelAuthPt"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Auth-PT" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="left">
+
+                <ToggleButton
+                    android:id="@+id/button3"
+                    style="@style/TextView_White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelAuthTaxiAssociation"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="2"
+                android:text="Auth-Taxi Association" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="left">
+
+                <ToggleButton
+                    android:id="@+id/button4"
+                    style="@style/TextView_White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelAbsperrmaß"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Absperrmaßnahmen" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="left">
+
+                <ToggleButton
+                    android:id="@+id/button5"
+                    style="@style/TextView_White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelSketch"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Sketch" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="left">
+
+                <ToggleButton
+                    android:id="@+id/button6"
+                    style="@style/TextView_White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelTrafficSignPlanRequired"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="2"
+                android:text="Traffic sign plan required" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="left">
+
+                <ToggleButton
+                    android:id="@+id/button7"
+                    style="@style/TextView_White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:fillViewport="true"
+            android:id="@+id/scroll"
+            android:fadeScrollbars="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_weight="1"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/labelLaneRoadway"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lane Roadway" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <TextView
+
+                        android:id="@+id/labelDirection"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Direction" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/labelNumber"
+                        style="@style/EditText_Comman_white_bg"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+
+                        <EditText
+                            android:id="@+id/textRichTung1"
+                            style="@style/EditText_Comman_white_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dip"
+                            android:layout_weight="1"
+                            android:imeOptions="actionNext"
+                            android:maxLength="40"
+                            android:singleLine="true" />
+
+
+                        <TextView
+                            android:id="@+id/labelWidth"
+                            style="@style/EditText_Comman_white_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dip"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Width[m]">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dip"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+
+                                android:id="@+id/labelLane"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:text="Lane" />
+
+                            <TextView
+                                android:id="@+id/labelGoAway"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:text="Go Away" />
+
+                            <TextView
+                                android:id="@+id/labelRoadway"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:text="Roadway" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:id="@+id/labelDirection1"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Direction" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/labelNumber1"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+
+                        <EditText
+                            android:id="@+id/textRichTung2"
+                            style="@style/EditText_Comman_white_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dip"
+                            android:layout_weight="1"
+                            android:imeOptions="actionNext"
+                            android:maxLength="40"
+                            android:singleLine="true" />
+
+                        <TextView
+                            android:id="@+id/labelWidth1"
+                            style="@style/EditText_Comman_white_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dip"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Width[m]">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dip"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+
+                                android:id="@+id/labelLane1"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:text="Lane" />
+
+                            <TextView
+                                android:id="@+id/labelGoAway1"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:text="Go Away" />
+
+                            <TextView
+                                android:id="@+id/labelRoadway1"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:text="Roadway" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelAvailable"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center|left"
+                    android:text="Available" />
+
+                <EditText
+                    android:id="@+id/textFahrstreifenAnzahl1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textFahrbahnbreite1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textGehwegbreite1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textRadwegbreite1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textFahrstreifenAnzahl2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textFahrbahnbreite2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textGehwegbreite2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textRadwegbreite2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelDuringConstruction"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center|left"
+                    android:text="During Construction Period" />
+
+                <EditText
+                    android:id="@+id/textFahrstreifenBauzeit1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textFBBauzeit1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textGWBauzeit1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textRWBauzeit1"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textFahrstreifenBauzeit2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textFBBauzeit2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textGWBauzeit2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/textRWBauzeit2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelUsuallyPlan"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center|left"
+                    android:text="Usually Plan By RSA 95" />
+
+                <EditText
+                    android:id="@+id/textUsuallyPlane"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:maxLength="200"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true" />
+            </LinearLayout>
+        </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
+        <LinearLayout
+            android:layout_marginTop="10sp"
+            android:gravity="center_vertical"
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:gravity="center_vertical"
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/labelPreparationOfStoppingSigns"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="Preparation of Stopping Signs " />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ToggleButton
+                        android:id="@+id/button8"
+                        style="@style/TextView_White"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/toggle_selector"
+                        android:checked="true"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/padding_style"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/labelLayingBusStop"
+                        style="@style/padding_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:checked="false"
+                        android:drawableLeft="@drawable/checkbox_bg"
+                        android:text="Laying Bus Stop" />
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+                <LinearLayout
+                    android:layout_width="0sp"
+                    android:layout_weight="3"
+
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+                    <CheckBox
+                        android:id="@+id/labelTransferTaxiStand"
+                        style="@style/padding_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:checked="false"
+
+                        android:drawableLeft="@drawable/checkbox_bg"
+                        android:text="Transfer Taxi Stand" />
+                </LinearLayout>
+
+                <View
+
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.1"/>
+                <LinearLayout
+                    android:layout_width="0sp"
+                    android:layout_weight="3"
+
+                    android:layout_height="wrap_content"
+                    android:gravity="left">
+
+                <CheckBox
+
+                    android:id="@+id/labelLayingHandicappedParking"
+                    style="@style/padding_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/checkbox_bg"
+                    android:text="Laying Handicapped Parking" />
+                    </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/labelNote"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.4"
+                android:gravity="top|right"
+                android:text="Note" />
+
+            <EditText
+                android:id="@+id/textNote"
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.6"
+                android:gravity="top|left"
+                android:maxLength="1000"
+                android:minLines="4" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

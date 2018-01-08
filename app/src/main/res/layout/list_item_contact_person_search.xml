@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/item_selection"
+    android:minHeight="@dimen/list_item_height_big"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:weightSum="1.78"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultCustomerNo"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:layout_weight="0.12"
+            android:maxLength="8"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="Cutomer No." />
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultKaNr"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:maxLength="5"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="KaNr" />
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultMatchCode"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:layout_weight="0.14"
+            android:layout_height="match_parent"
+            android:maxLength="8"
+            android:gravity="center"
+            android:ellipsize="marquee"
+            android:text="Match Code" />
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultName1"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.14"
+            android:maxLength="18"
+            android:gravity="center"
+            android:ellipsize="marquee"
+            android:text="Name 1" />
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultRoad"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.14"
+            android:gravity="center"
+            android:maxLength="18"
+            android:ellipsize="marquee"
+            android:text="Road" />
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultZipcode"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:layout_weight="0.10"
+            android:maxLength="5"
+            android:gravity="center"
+            android:ellipsize="marquee"
+            android:layout_height="match_parent"
+            android:text="Zip Code" />
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultPlace"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:maxLength="18"
+            android:gravity="center"
+            android:ellipsize="marquee"
+            android:text="Place"
+            android:layout_height="match_parent"
+            android:layout_weight="0.12" />
+
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultTelephone"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.14"
+            android:text="Tel" />
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultUstIDnr"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.14"
+            android:text="Tel" />
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultAnrede"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.18"
+            android:text="Tel" />
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultVorname"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.14"
+            android:text="Tel" />
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultNachName"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.14"
+            android:text="Tel" />
+        <TextView
+            android:id="@+id/listItemCustomerSearchResultAnspTelephone"
+            style="@style/EditText_customer_search_unselected_bg"
+            android:layout_width="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.18"
+            android:text="Tel" />
+    </LinearLayout>
+</LinearLayout>

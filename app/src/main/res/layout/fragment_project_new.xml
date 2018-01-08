@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="24dp"
+
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/customer_new_row_height"
+                android:orientation="horizontal">
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.0" />
+
+                <TextView
+                    android:id="@+id/labelProjectNewDescription"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Description"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:maxLength="60"
+                    android:id="@+id/textProjectNewDescription"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/customer_new_row_height"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.0" />
+                <TextView
+                    android:id="@+id/labelProjectNewProjectArt"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Type of projecrt"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:minHeight="@dimen/project_new_widget_height"
+                    android:background="@drawable/white_border_click">
+
+                    <Spinner
+                        android:id="@+id/spinnerProjectNewProjectArt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/customer_new_row_height"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.0" />
+                <TextView
+                    android:id="@+id/labelProjectNewRoad"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Road"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:maxLength="30"
+                    android:id="@+id/textProjectNewRoad"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.0" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/customer_new_row_height"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.0" />
+                <TextView
+                    android:id="@+id/labelProjectNewEmployee"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Employee"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/project_new_widget_height"
+                    android:background="@drawable/white_border_click">
+
+                    <Spinner
+                        android:id="@+id/spinnerProjectNewEmployee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.0" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/customer_new_row_height"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1" />
+                <TextView
+                    android:id="@+id/labelProjectNewZipCode"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Zip-code"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:maxLength="10"
+                    android:id="@+id/textProjectNewZipCode"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:digits="0123456789"
+                    android:inputType="phone"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/customer_new_row_height"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1" />
+                <TextView
+                    android:id="@+id/labelProjectNewPlace"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Place"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:maxLength="30"
+                    android:id="@+id/textProjectNewPlace"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/customer_new_row_height"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1" />
+                <TextView
+                    android:id="@+id/labelProjectNewMatchCode"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Match code"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/textProjectNewMatchCode"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:maxLength="8"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.0" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </LinearLayout>
+        </LinearLayout>
+
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:minHeight="@dimen/customer_new_row_height">
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+
+                    android:layout_weight="0.4"
+                    android:minHeight="@dimen/customer_new_row_height"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonProjectNewSubmit"
+                        style="@style/Button_Common_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:layout_weight="0.5"
+                        android:minHeight="@dimen/project_new_widget_height"
+                        android:text="OK" />
+
+                    <Button
+                        android:id="@+id/buttonProjectNewCancel"
+                        style="@style/Button_Common_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:minHeight="@dimen/project_new_widget_height"
+                        android:text="Abort" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

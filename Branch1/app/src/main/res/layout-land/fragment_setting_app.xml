@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+
+       <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+           android:layout_weight="0.2"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center|right">
+
+                <TextView
+                    android:id="@+id/labelSettingAppLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Language" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/spinnerLanguageSelector"
+                    style="@style/Spinner_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></Spinner>
+            </LinearLayout>
+        </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="0.2"
+               android:layout_margin="10dp"
+               android:orientation="horizontal">
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.2">
+
+                   <TextView
+                       android:id="@+id/labelSettingAppCustomerOfflineData"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:gravity="center" />
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="0.8">
+
+                   <Button
+                       android:id="@+id/buttonCustomerOfflineData"
+                       style="@style/Button_bg"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_margin="5dp"/>
+               </LinearLayout>
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_margin="10dp"
+               android:orientation="horizontal"
+               android:layout_height="0dp"
+               android:layout_weight="0.2">
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.2">
+
+                   <TextView
+                       android:id="@+id/labelAppVersion"
+                       android:gravity="center"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent" />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.8">
+
+                   <TextView
+                       android:id="@+id/labelValueAppVersion"
+                       android:layout_width="wrap_content"
+                       android:gravity="center"
+                       android:layout_height="match_parent" />
+
+               </LinearLayout>
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="0.2"
+               android:layout_margin="10dp"
+               android:orientation="horizontal">
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.2">
+
+                   <TextView
+                       android:id="@+id/labelSettingAppLogout"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:gravity="center" />
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="0.8">
+
+                   <Button
+                       android:id="@+id/buttonLogout"
+                       style="@style/Button_bg"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_margin="5dp"/>
+               </LinearLayout>
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="0.2"
+               android:layout_margin="10dp"
+               android:orientation="horizontal">
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.2">
+
+                   <TextView
+                       android:id="@+id/labelSettingCustomerPageSize"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:gravity="center" />
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="0.8">
+
+                   <EditText
+                       android:layout_width="150dp"
+                       android:id="@+id/textCustomerPageSize"
+                       android:digits="0123456789"
+                       android:layout_marginRight="15dp"
+                       android:layout_height="wrap_content" />
+
+                   <Button
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       style="@style/Button_bg"
+                       android:textColor="@color/white"
+                       android:id="@+id/buttonSaveCustomerPageSize"/>
+
+               </LinearLayout>
+           </LinearLayout>
+
+</LinearLayout>
+

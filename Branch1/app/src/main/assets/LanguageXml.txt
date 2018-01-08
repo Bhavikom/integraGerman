@@ -1,0 +1,1699 @@
+﻿<data>
+    <Language>
+        <languageName>Deutsch</languageName>
+        <languageCode>de</languageCode>
+        <languageFlag>german</languageFlag>
+        <labelZipCode>PLZ</labelZipCode>
+        <labelPlace>Ort</labelPlace>
+        <labelTelephone>Telefon</labelTelephone>
+        <labelBonusIndex>Boni-Index</labelBonusIndex>
+        <labelTotalOutput>Gesamt-OP</labelTotalOutput>
+        <labelSalesRunning>Umsatz lfd.</labelSalesRunning>
+        <labelSalesPreviousYear>Umsatz Vorjahr</labelSalesPreviousYear>
+        <labelSalesLatest>Letzter Umsatz</labelSalesLatest>
+        <labelSales>Umsatz</labelSales>
+        <labelSales12Month>Umsatz letzte 12 Monate</labelSales12Month>
+        <labelGeneral>Allgemein</labelGeneral>
+        <labelContacts>Ansprechpartner</labelContacts>
+        <labelMatchcode>Matchcode</labelMatchcode>
+        <labelCountry>Land</labelCountry>
+        <labelPhone>Telefon</labelPhone>
+        <labelFax>Telefax</labelFax>
+        <labelBusiness>Branche</labelBusiness>
+        <labelEmail>E-Mail</labelEmail>
+        <labelArea>Gebiet</labelArea>
+        <labelCreditLimit>Kreditlimit</labelCreditLimit>
+        <labelPayment>Zahlungsziel</labelPayment>
+        <labelAddDate>Erfassungsdatum</labelAddDate>
+        <labelCustomerBonus>Bonitätsindex</labelCustomerBonus>
+        <labelWithContract>Vertragskunde</labelWithContract>
+        <labelSalutation>Anrede</labelSalutation>
+        <labelTitle>Titel</labelTitle>
+        <labelFirstName>Vorname</labelFirstName>
+        <labelLastName>Nachname</labelLastName>
+        <labelFunction>Funktion</labelFunction>
+        <labelDecisionMakers>Entscheider</labelDecisionMakers>
+        <labelAdditionalInfo>Zusatzinfo</labelAdditionalInfo>
+        <labelWithContract>Auftrag</labelWithContract>
+        <labelDocumentLanguage>Belegsprache</labelDocumentLanguage>
+        <labelFeature>Merkmal</labelFeature>
+        <labelMobile>Mobile</labelMobile>
+        <labelName>Name</labelName>
+        <labelRoad>Straße</labelRoad>
+        <labelWebsite>Webseite</labelWebsite>
+        <labelLegalForm>Rechtsform</labelLegalForm>
+        <labelOwner>Inhaber</labelOwner>
+        <labelCustomerNo>Kunden Nr</labelCustomerNo>
+        <labelKanr>KaNr</labelKanr>
+        <labelResponsiblePerson>Ansprechpartner</labelResponsiblePerson>
+        <labelVatNo>UStNr</labelVatNo>
+        <labelOrderNo>Jahresbestell-Nr</labelOrderNo>
+        <labelPaymentDeadline>Zahlungsziel</labelPaymentDeadline>
+        <labelOrderBacklog>Auftragsbestand</labelOrderBacklog>
+        <labelSalesPotential>Umsatzpotential</labelSalesPotential>
+        <labelActivity>Aktivität</labelActivity>
+        <labelTopic>Thema</labelTopic>
+        <labelStartTime>Startzeit</labelStartTime>
+        <labelEndTime>Endzeit</labelEndTime>
+        <labelOffer>Angebot</labelOffer>
+        <labelProject>Projekt</labelProject>
+        <labelRealized>Realisiert</labelRealized>
+        <labelFixedTime>Zeiten fest</labelFixedTime>
+        <labelEmployee>Mitarbeiter</labelEmployee>
+        <labelOpenOrders>Offene Auftrage</labelOpenOrders>
+        <labelContractNo>Auftrag Nr</labelContractNo>
+        <labelNL>NL</labelNL>
+        <labelHGRP>HGRP</labelHGRP>
+        <labelDesiredDevice>Wunschgerät</labelDesiredDevice>
+        <labelDelivered>geliefert</labelDelivered>
+        <labelArrival>Mietbeginn</labelArrival>
+        <labelMD>MD</labelMD>
+        <labelUnit>Einheit</labelUnit>
+        <labelLP>LP</labelLP>
+        <labelCape>Cape</labelCape>
+        <labelTP>TP</labelTP>
+        <labelSB>SB</labelSB>
+        <labelCompletedOffers>Abgeschlossene Aufträge</labelCompletedOffers>
+        <labelOpenOffer>Offenes Angebot</labelOpenOffer>
+        <labelCreatedOn>erfasst am</labelCreatedOn>
+        <labelQuantity>Anz</labelQuantity>
+        <labelRelay>Staffel</labelRelay>
+        <labelPrice>Preis</labelPrice>
+        <labelHaftb>Haftb</labelHaftb>
+        <labelStatus>Status</labelStatus>
+        <labelLostSale>Lost Sale</labelLostSale>
+        <labelRentalPrice>Mietpreis</labelRentalPrice>
+        <labelReasonForRejection>Absagegrund</labelReasonForRejection>
+        <labelGenerally>Allgemein</labelGenerally>
+        <labelTrades>Gewerke</labelTrades>
+        <labelNotes>Notiz</labelNotes>
+        <labelStartOfConstruction>Baubeginn</labelStartOfConstruction>
+        <labelEndOfConstruction>Bauende</labelEndOfConstruction>
+        <labelSize>Grösse(m2)</labelSize>
+        <labelHeight>Höhe(m)</labelHeight>
+        <labelTypeOfProject>Projektart</labelTypeOfProject>
+        <labelProjectType>Projekttyp</labelProjectType>
+        <labelActPhase>Akt Phase</labelActPhase>
+        <labelDateOfUpdate>Datum aktuell</labelDateOfUpdate>
+        <labelDate>Datum</labelDate>
+        <labelStatesADM>Zust. ADM</labelStatesADM>
+        <labelAbgeschlosse>Abgeschlossen</labelAbgeschlosse>
+        <labelRamp>Rampe</labelRamp>
+        <labelMatureWhite>Weisse Reifen</labelMatureWhite>
+        <labelDesignation>Bezeichnung</labelDesignation>
+        <labelAnspPartner>Ansp.Partner</labelAnspPartner>
+        <labelPurchaser>Besteller</labelPurchaser>
+        <labelApOnSite>AP vor Ort</labelApOnSite>
+        <labelInsertDate>Einsatzdatum</labelInsertDate>
+        <labelOperationalLife>Einsatzdauer</labelOperationalLife>
+        <labelBuildingProject>Bauvorhaben</labelBuildingProject>
+        <labelAccess>Zugang</labelAccess>
+        <labelRegistrationRequired>Anmeldung erforderlich</labelRegistrationRequired>
+        <labelWorkToBePerformed>Auszuführende Arbeit</labelWorkToBePerformed>
+        <labelKnickPointHigh>Knickpunkt Höhe</labelKnickPointHigh>
+        <labelInterferingEdgesAt>Störkante bei</labelInterferingEdgesAt>
+        <labelOther>Sonstige</labelOther>
+        <labelToday>Heute</labelToday>
+        <labelCustomer>Kunde</labelCustomer>
+        <labelCustomerDetails>Kunden Details</labelCustomerDetails>
+        <labelPropertyDetails>Objekt Details</labelPropertyDetails>
+        <labelOfferDetails>Angebots Details</labelOfferDetails>
+        <labelNotice>Notiz</labelNotice>
+        <labelActivityDetails>Aktivitäts Details</labelActivityDetails>
+        <labelOverDue>Überfällig</labelOverDue>
+        <labelFuture>Zukünftig</labelFuture>
+        <labelFrom>von</labelFrom>
+        <labelTotalOutput>Gesamt-OP</labelTotalOutput>
+        <labelFixedTimes>Zeiten fest</labelFixedTimes>
+        <labelOk>Ok</labelOk>
+        <labelAbort>Abbrechen</labelAbort>
+        <labelAppSetting>App Einstellungen</labelAppSetting>
+        <labelAccountSetting>Konto Einstellungen</labelAccountSetting>
+        <labelOfflineData>Offline Daten</labelOfflineData>
+        <labelHelp>Hilfe</labelHelp>
+        <labelRefreshInterval>Aktualisierungsinterval Offlinedaten</labelRefreshInterval>
+        <labelLanguage>Sprache</labelLanguage>
+        <labelOfflineViewData>Offline Datenansicht</labelOfflineViewData>
+        <labelEmailAddress>E-Mail</labelEmailAddress>
+        <labelPassword>Passwort</labelPassword>.
+        <labelAddress>Addresse</labelAddress>
+        <labelLastSyncTime>Letzte Synchronisation</labelLastSyncTime>
+		<labelSyncNow>jetzt synchronisieren</labelSyncNow>
+		<labelCleanUpOfflineData>Offline Daten löschen</labelCleanUpOfflineData>
+		<labelMemo>Memo</labelMemo>
+		<labelHideRetired>Ausgeschiedene ausblenden</labelHideRetired>
+		<labelCustomerDistributionType>Customer Distribution Type</labelCustomerDistributionType>
+		<labelCustomerTypeTrend>Customer Type Trend</labelCustomerTypeTrend>
+		<labelLostSaleReason>Lost Sales Grund</labelLostSaleReason>
+		<labelUsIdNr>UsIdNrn</labelUsIdNr>
+		<labelBrand>Marke</labelBrand>
+		<labelLevelGroup>Höhengruppe</labelLevelGroup>
+		<labelEquipment>Ausstattung</labelEquipment>
+		<labelRental>Mietdauer</labelRental>
+		<labelIntegraCalenderFrom>Kalendertäglich</labelIntegraCalenderFrom>
+		<labelTo>bis</labelTo>
+		<labelImportHelp>Import-Hilfe</labelImportHelp>
+		<labelContactNo>KaNr.</labelContactNo>
+		<labelFiveTenTargetPrice>5-10 Tage</labelFiveTenTargetPrice>
+		<labelDayMiniPrice>Mindestpreis Tag</labelDayMiniPrice>
+		<labelElevenTwentyTargetPrice>11-20 Tage</labelElevenTwentyTargetPrice>
+		<labelAboveTwentyOneTargetPrice>Ab 21 Tage</labelAboveTwentyOneTargetPrice>
+		<labelTransport>Transport</labelTransport>
+		<labelApproach>Anfahrt</labelApproach>
+        <labelDeparture>Abfahrt</labelDeparture>
+        <labelAdditionalCargoPrice>Beiladungs Preis</labelAdditionalCargoPrice>
+        <labelFlateRate>Pauschale</labelFlateRate>
+		<labelLandUse>Einsatzland</labelLandUse>
+        <labelUseZipCode>Einsatz PLZ</labelUseZipCode>
+        <labelOfUse>Einsatzort</labelOfUse>
+        <labelReadUse>Einsatzstraße</labelReadUse>
+        <labelAddition>Zusatz</labelAddition>
+        <labelContractSpot>AP vor Ort</labelContractSpot>
+        <labelAnspTelefon>AP Telefon</labelAnspTelefon>
+        <labelTollKilometers>Entfernung</labelTollKilometers>
+		<labelCost>Kosten</labelCost>
+		<labelHandlingFee>Handling Fee</labelHandlingFee>
+		<labelTotal>Gesamt</labelTotal>
+		<labelNewAddress>Neue Adresse</labelNewAddress>
+		<labelCurrentAddress>Aktuelle Addresse</labelCurrentAddress>
+		<messageBvoUploadFailed>Fehler beim Senden der BvO – die BvO wurde zwischengespeichert!</messageBvoUploadFailed>
+        <labelInsertData>Einsatzdatum</labelInsertData>
+        <labelSiteInspectionWithoutCustomer>ohne Kunde</labelSiteInspectionWithoutCustomer>
+        <labelMap>Kartenansicht</labelMap>
+        <labelUpdate>aktualisieren</labelUpdate>
+        <labelCamera>Kamera</labelCamera>
+        <labelGallery>Galerie</labelGallery>
+       <labelAccessObstruction>Zufahrt Hinderniss</labelAccessObstruction>
+       <labelDesclaimer>Haftungsausschluss</labelDesclaimer>
+       <labelAccessForest>Zufahrt Wald/Feldweg</labelAccessForest>
+       <labelWhich>welche</labelWhich>
+       <labelFor>für</labelFor>
+       <labelAccessLying>Zufahrt Auslegen</labelAccessLying>
+       <labelStk>Stk.</labelStk>
+       <labelDirections>Anfahrt</labelDirections>
+       <labelVerdSewers>Verd. Abwasserkanäle</labelVerdSewers>
+       <labelLoadAccess>Traglast Zufahrt</labelLoadAccess>
+       <labelLoadStand>Traglast Standplatz</labelLoadStand>
+       <labelMaxTrafficLoad>Max. Verkehrslast</labelMaxTrafficLoad>
+       <labelAdditionalSupportingMaterial>Zusätzliches Stützmaterial:</labelAdditionalSupportingMaterial>
+       <labelUndergroundStand>Untergrund Standplatz</labelUndergroundStand>
+       <labelRoadGrade>Straßengefälle</labelRoadGrade>
+       <labelAdditionalAccessories>Zusätzliches Zubehör</labelAdditionalAccessories>
+       <labelPracticability>Befahrbarkeit</labelPracticability>
+       <labelSummer>Sommer</labelSummer>
+       <labelWinter>Winter</labelWinter>
+       <labelWetness>Nässe</labelWetness>
+       <LabelDrivingPlates>Fahrbleche</LabelDrivingPlates>
+       <labelBongossiPlates>Bongossi Platten</labelBongossiPlates>
+       <labelPublicRoadCountry>Öffentliche Straßen Land</labelPublicRoadCountry>
+       <labelPrivateProperty>Privatgelände</labelPrivateProperty>
+       <labelInterior>Innenbereich</labelInterior>
+       <labelOutdoor>Außenbereich</labelOutdoor>
+       <labelPowerLiftSystem>Power-Lift System</labelPowerLiftSystem>
+       <labelPowerGenerator>Stromerzeuger</labelPowerGenerator>
+       <labelAcquisitionDate>Erfassungsdatum</labelAcquisitionDate>
+        <labelAuthOwner>Genehm.-Eigentümer</labelAuthOwner>
+       <labelAnsbach>Ansp.</labelAnsbach>
+       <labelFaxNo>Fax</labelFaxNo>
+       <labelIsFord>Angefordert</labelIsFord>
+       <labelAuthCommunity>Geneh.-Kommune</labelAuthCommunity>
+       <labelAuthPt>Geneh-ÖPNV</labelAuthPt>
+       <labelAuthTaxiAssociation>Geneh.-Taxiverband</labelAuthTaxiAssociation>
+       <labelAbsperrma>Absperrmaßnahmen</labelAbsperrma>
+       <labelSketch>Skizze</labelSketch>
+       <labelTrafficSignPlanRequired>Verkehrszeichenplan erforderlich</labelTrafficSignPlanRequired>
+       <labelPreparationOfStoppingSigns>Aufstellung von Halteverbotsschilder</labelPreparationOfStoppingSigns>
+       <labelLayingBusStop>Verlegung Bushaltestelle</labelLayingBusStop>
+       <labelTransferTaxiStand>Verlegung Taxistand</labelTransferTaxiStand>
+       <labelLayingHandicappedParking>Verlegung Behindertenparkplatz</labelLayingHandicappedParking>
+       <labelDeviceGroup>Gerätegruppe</labelDeviceGroup>
+       <labelHeightScale>Höhenstaffel</labelHeightScale>
+       <labelHeightScale1>Höhe von/bis</labelHeightScale1>
+       <labelDeviceType>Gerätetyp</labelDeviceType>
+       <labelAlternativeDeviceType>Alternativer Gerätetyp</labelAlternativeDeviceType>
+       <labelDeviceTypeNumber>Anzahl Gerätetyp</labelDeviceTypeNumber>
+       <labelWorkinhHeight>Arbeitshöhe</labelWorkinhHeight>
+       <labelLateralReach>seitliche Reichweite</labelLateralReach>
+       <labelMaxLength>Max. Länge</labelMaxLength>
+       <labelMaxBreadth>Max. Breite</labelMaxBreadth>
+       <labelMaxHeight>Max. Höhe</labelMaxHeight>
+       <labelMaxWeight>Max. Gewicht</labelMaxWeight>
+       <labelBasketLoad>Korbbelastung</labelBasketLoad>
+       <labelBoomLength>Korbarmlänge</labelBoomLength>
+       <labelDiesel>Diesel</labelDiesel>
+       <labelElectrostatics>Elektro</labelElectrostatics>
+       <labelFourWheel>Allrad</labelFourWheel>
+       <labelChainRubber>Kette-Gummi</labelChainRubber>
+       <labelWhiteReef>Weiße Reifen</labelWhiteReef>
+       <labelColor>Farbe</labelColor>
+       <labelClear>klar</labelClear>
+       <labelYes> ja </labelYes>
+       <labelNo>nein</labelNo>
+       <labelSearch>Suche</labelSearch>
+       <labelHome>Home</labelHome>
+       <labelSiteInspection>BvO</labelSiteInspection>
+       <labelVisitPlan>Besuchsplanung</labelVisitPlan>
+       <labelExtra>Sonstige</labelExtra>
+       <labelNew>Neu</labelNew>
+       <labelCustomerData>Kundendaten</labelCustomerData>
+       <labelContactPerson>Ansprechpartner</labelContactPerson>
+       <labelDashBoard>DashBoard</labelDashBoard>
+       <labelResume>Fortsetzen</labelResume>
+       <labelDailyAgenda>Tagesagenda</labelDailyAgenda>
+       <labelWeeklyAgenda>Wochenagenda</labelWeeklyAgenda>
+       <labelSendVisitingCard>Visitenkarte Senden</labelSendVisitingCard>
+       <labelDevice>Gerätegruppe</labelDevice>
+       <labelAdditionalMobileWindPower>Zusatz Mobilfunk / Windenergie</labelAdditionalMobileWindPower>
+       <labelSiteNo>StandortNr</labelSiteNo>
+       <labelNetworkOperator>Netzbetreiber</labelNetworkOperator>
+       <labelMoreAntennasAvailable>Weitere Antennen vorhanden [m]</labelMoreAntennasAvailable>
+       <labelCurrentGroundingNecessary>Stromerdung nötig</labelCurrentGroundingNecessary>
+       <labelSteelConstruction>Gew.Stahlbau Ant. [Kg]</labelSteelConstruction>
+       <labelTieDown>Spannbänderverlegung</labelTieDown>
+       <labelBasePlan>Grundwerksplan vorh.</labelBasePlan>
+       <labelWhatToDo>Auszuführende Arbeit</labelWhatToDo>
+       <labelNumberWKA>Nummer WKA</labelNumberWKA>
+       <labelWKAType>WKA-Typ / Hersteller</labelWKAType>
+       <labelBoltingWKA>Verbolzung WKA</labelBoltingWKA>
+       <labelShutDown>Abschaltung</labelShutDown>
+       <labelMicrowave>Richtfunk</labelMicrowave>
+       <labelElectricityPylon>Strommast</labelElectricityPylon>
+       <labelWindPower>Windkraft</labelWindPower>
+       <labelCableLaying>Kabelverlegung</labelCableLaying>
+       <labelAdequateSpacing>Ausreichend Mastabstand</labelAdequateSpacing>
+       <labelLaneRoadway>FB:Fahrbahn</labelLaneRoadway>
+       <labelDirection>Richtung</labelDirection>
+       <labelLane>FB</labelLane>
+       <labelNumber>FS:Anzahl</labelNumber>
+       <labelGoAway>Gehweg</labelGoAway>
+       <labelRoadway>Radweg</labelRoadway>
+       <labelAvailable>Vorhanden</labelAvailable>
+       <labelDuringConstruction>Während Bauzeit</labelDuringConstruction>
+       <labelUsuallyPlan>Regelpläne nach RSA 95</labelUsuallyPlan>
+       <labelPermits>Genehmigungen</labelPermits>
+       <labelperformWorkLabels>Schalttafeln</labelperformWorkLabels>
+       <labelOperatingEnvironment>Einsatzumgebung</labelOperatingEnvironment>
+       <labelInrinsicActivity>eigene Aktivität</labelInrinsicActivity>
+       <labelVerbleOffered>mündliches Angebot</labelVerbleOffered>
+       <labelEquipmentRent>Gerätemiete</labelEquipmentRent>
+       <labelCache>Zwischenspeicher</labelCache>
+       <labelGesAmenities>Ges. Ausstattung</labelGesAmenities>
+       <labelSatntag>Standtag</labelSatntag>
+       <labelServicePackages>Servicepauschale</labelServicePackages>
+       <labelBranch>Niederlassung</labelBranch>
+       <labelManufacturer>Hersteller</labelManufacturer>
+       <labelType>Art</labelType>
+       <labelHF>HF</labelHF>
+
+       <labelSP>SP</labelSP>
+       <labelHB>HB</labelHB>
+       <labelBest>Best</labelBest>
+       <labelSatellite>Satellitenansicht</labelSatellite>
+       <labelNormal>Normalansicht</labelNormal>
+
+       <labelSubmit>Senden</labelSubmit>
+       <labelPowerLiftSystem>Power-Lift System</labelPowerLiftSystem>
+       <labelToll>Maut</labelToll>
+       <labelLiabilityLimitation>Haftungsbegrenzung</labelLiabilityLimitation>
+       <labelOrder>Aufträge</labelOrder>
+       <labelCockpit>Cockpit</labelCockpit>
+       <labelPricing>Preise</labelPricing>
+       <labelPricingDetail>Preis Details</labelPricingDetail>
+       <labelPricingGetheringActivity>Sammeln Aktivität</labelPricingGetheringActivity>
+        <labelKinkPointHigh>Knickpunkt\n Höhe [m]</labelKinkPointHigh>
+       <labelSiteInspectionNew>Einsatzdaten/ -ort</labelSiteInspectionNew>
+       <labelPhotos>Fotos</labelPhotos>
+       <labelDeviceData>Gerätedaten-Gerät</labelDeviceData>
+       <labelLogistics>Logistik</labelLogistics>
+       <labelAvailability>Verfügbarkeit</labelAvailability>
+       <labelGeratermiete>Gerätemiete</labelGeratermiete>
+       <labelLimitationOfLiability>Haftungsbegrenzung</labelLimitationOfLiability>
+       <labelTermsofPayment>Zahlungsbedingungen</labelTermsofPayment>
+       <labelPaysNoAdvancePayment>Zahlt keine Vorauszahlung</labelPaysNoAdvancePayment>
+       <labelCashDiscount>Skonto</labelCashDiscount>
+       <labelTheCustomerHasChosenAnAlternativeMtecoUnit>Der Kunde hat ein alternatives mateco Gerät gewählt</labelTheCustomerHasChosenAnAlternativeMtecoUnit>
+       <labelTheCustomerDoesNotHaveNeedLess>Der Kunde hat keinen/weniger Bedarf</labelTheCustomerDoesNotHaveNeedLess>
+       <labelTheCustomerHasNotReceivedTheOrder>Der Kunde hat den Auftrag nicht erhalten</labelTheCustomerHasNotReceivedTheOrder>
+       <labelCompetitor>Wettbewerber</labelCompetitor>
+       <labelAlert>Alarm</labelAlert>
+       <messageProviders>Kein Provider verfügbar. Ort nicht gefunden. Bitte GPS oder Netzwerk einschalten.</messageProviders>
+       <messageDelete>Änderungen löschen?</messageDelete>
+       <messageSelectImageFrom>Wählen Sie ein Bild aus</messageSelectImageFrom>
+       <messageEnterNotes>Notiz erfassen</messageEnterNotes>
+       <messageNetworkNotAvailable>Netzwerk nicht verfügbar</messageNetworkNotAvailable>
+       <messageError>Ups ein unerwarteter Fehler ist aufgetreten!</messageError>
+       <messageWaitWhileLoading>Bitte warten</messageWaitWhileLoading>
+       <labelChangePassword>Passwort ändern </labelChangePassword>
+       <labelLogin>Login</labelLogin>
+       <labelUsername>Benutzername</labelUsername>
+       <messageSelectCustomerFirst>Bitte wählen Sie zuerst den Kunden aus</messageSelectCustomerFirst>
+       <messageInputSearchParameter>Bitte geben Sie Filterkriterien ein </messageInputSearchParameter>
+       <messageSearchQueryBroad>Ihre Filterkriterien sind zu ungenau bitte schränken Sie weiter ein</messageSearchQueryBroad>
+       <messageLoadCustomerFirst>Bitte zuerst einen Kunden auswählen</messageLoadCustomerFirst>
+       <labelRequired>Muss Feld</labelRequired>
+       <messageNotValidEmail>Ungültige E-Mail Adresse</messageNotValidEmail>
+       <messageNotValidWebsite>Ungültige Website</messageNotValidWebsite>
+       <messageNotValidNumber>Ungültige Nummer</messageNotValidNumber>
+       <messageNoCustomerSelected>Kein Kunde ausgewählt</messageNoCustomerSelected>
+       <messageNoCustomerLoaded>Kein Kunde geladen</messageNoCustomerLoaded>
+       <messageSelectItemToRemove>Bitte wählen Sie eine Position aus</messageSelectItemToRemove>
+       <labelofflineSettings>Offline Einstellungen</labelofflineSettings>
+       <messageCustomerupdated>Die Kundendaten wurden geändert</messageCustomerupdated>
+       <messageContactPersonInserted>Der Ansprechpartner wurde hinzugefugt </messageContactPersonInserted>
+       <messageCustomerLoaded>Der Kunde wird geladen</messageCustomerLoaded>
+       <messageFunctionImplemented>Diese Funktion steht bald zur Verfügung</messageFunctionImplemented>
+       <messageNoEmployees>Kein Mitarbeiter gefunden</messageNoEmployees>
+       <messageNoOffers>Es gibt keine Angebote</messageNoOffers>
+       <messageNoContactPersons>Es gibt keine Ansprechpartner</messageNoContactPersons>
+       <messageNoPeojects>Es gibt keine Projekte</messageNoPeojects>
+       <labelCompletedOrders>Abgerechnete Aufträge</labelCompletedOrders>
+       <labelOpenOffers>Offene Angebote</labelOpenOffers>
+       <labelTypeOfProjct>Projekttyp</labelTypeOfProjct>
+       <labelActivityPhase>Projektstatus</labelActivityPhase>
+       <labelCleanUpData>Bereinigung der Offline-Daten</labelCleanUpData>
+       <labelDelete>Löschen</labelDelete>
+       <labelPhoneCalls>Telefonate</labelPhoneCalls>
+       <labelFuture>Zukünftig </labelFuture>
+       <labelAdd>Hinzufügen</labelAdd>
+       <labelCancel>Abbrechen</labelCancel>
+       <messageSelectEquipment>Bitten wählen Sie Ausstattungsmerkmale aus</messageSelectEquipment>
+       <labelSelect>--------</labelSelect>
+       <messageCustomerStored>Kunde Offline gespeichert</messageCustomerStored>
+       <labelWidth>Breite[m]</labelWidth>
+       <labelNote>Hinweise</labelNote>
+       <messageMaximumSizeToStoreCustomer>Bereits 50 Kunden offline gespeichert.Bitte löschen Sie zuerst einen offline Kunden</messageMaximumSizeToStoreCustomer>
+       <labelMessage>Termine</labelMessage>
+       <labelGel_Gerat>Gel_Gerät</labelGel_Gerat>
+       <labelKaP>KaP</labelKaP>
+       <labelMandant>Mandant</labelMandant>
+       <labelMietende>Mietende</labelMietende>
+       <labelRegion>Region</labelRegion>
+
+       <labelSelbstbehalt>Selbstabholung</labelSelbstbehalt>
+       <labelSelbstbehalt2>Selbstbehalt</labelSelbstbehalt2>
+
+       <labelVers_LP>Vers_LP</labelVers_LP>
+       <labelVers_TP>Vers_TP</labelVers_TP>
+       <labelWunschgerat>Wunschgerät</labelWunschgerat>
+       <labelContact>Kontakt</labelContact>
+       <labelInsurance>Versicherung</labelInsurance>
+       <messageSelectFeature>Merkmal auswählen</messageSelectFeature>
+       <messageSelectEmployee>Mitarbeiter auswählen</messageSelectEmployee>
+       <messageSelectContactPerson>Ansprechpartner auswählen</messageSelectContactPerson>
+       <labelConfirmation>Bitte bestätigen</labelConfirmation>
+       <messageCancelAddingActivity>Erfassung der Aktivität abbrechen?</messageCancelAddingActivity>
+       <messageCancelAddingContactPerson>Erfassung Ansprechpartner abbrechen?</messageCancelAddingContactPerson>
+       <messageNoResultFound>Kein Ergebnis gefunden</messageNoResultFound>
+       <messageCustomerNotFound>Kunde nicht gefunden</messageCustomerNotFound>
+       <messageSelectStartTime>Bitte Startzeit wählen</messageSelectStartTime>
+       <messageEndTimeGreaterThenStartTime>Endezeit ist kleiner als Startzeit</messageEndTimeGreaterThenStartTime>
+       <messageNoActivityFound>Keine Aktivität gefunden</messageNoActivityFound>
+       <messageNoTradeFound>Keine Gewerke gefunden</messageNoTradeFound>
+       <messagePleaseSelectDate>Bitte Datum auswählen</messagePleaseSelectDate>
+       <messagePleaseSelectActivityType>Bitte wählen Sie einen Aktivitätstyp</messagePleaseSelectActivityType>
+       <messagePleaseSelectActivity>Bitte wählen Sie eine Aktivität</messagePleaseSelectActivity>
+       <messageDateMustBeLessThen2079>Bitte Datum überprüfen</messageDateMustBeLessThen2079>
+       <messageCustomerAlreadyExistsUpdatingContent>Kunde bereits offline gespeichert - Kundendaten wurden aktualisiert</messageCustomerAlreadyExistsUpdatingContent>
+       <messageCachePriceAddedToCacheCart>Erfolgreich in Zwischenspeicher übertragen</messageCachePriceAddedToCacheCart>
+       <messagePleaseSelectCartItem>Bitte wählen Sie eine Position aus dem Zwischenspeicher</messagePleaseSelectCartItem>
+       <messageYourOrderSuccessfullyTransferredToCart>Ihr Auftrag wurde erfolgreich in den integrA Warenkorb übertragen</messageYourOrderSuccessfullyTransferredToCart>
+       <messageYourDealsSuccessfullyTransferredToCart>Ihr mündliches Angebot wurde erfolgreich in den integrA Warenkorb übertragen</messageYourDealsSuccessfullyTransferredToCart>
+       <messagePleaseEnterReasonForRejection>Bitte geben Sie einen Ablehnungsgrund ein</messagePleaseEnterReasonForRejection>
+       <messageErrorAtParsing>Es ist ein nicht spezifizierter Fehler bei der Übertragung entstanden - bitte versuchen Sie es nochmals</messageErrorAtParsing>
+       <messagePleaseWaitWhileDataBeingLoadedForFirstTime>Bitte warten es werden Daten für den ersten Start geladen.</messagePleaseWaitWhileDataBeingLoadedForFirstTime>
+       <messageCustomerNumberNotFound>Kundennummer nicht gefunden</messageCustomerNumberNotFound>
+       <messageNoCustomerContactPersonFound>Kein Ansprechpartner gefunden</messageNoCustomerContactPersonFound>
+       <messagePleaseAddAtlist1ContactPerson>Bitte mindestens einen Ansprechpartner auswählen</messagePleaseAddAtlist1ContactPerson>
+       <messageActivityYouMustAddNewActivity>Bitte eine neue Aktivität erfassen</messageActivityYouMustAddNewActivity>
+       <messageAuftragBtn>Ihr Auftrag wurde erfolgreich in den integrA Warenkorb übertragen</messageAuftragBtn>
+       <messageAngeboteBtn>Ihr Angebot wurde erfolgreich in den integrA Warenkorb übertragen</messageAngeboteBtn>
+       <messageMunclichesAngeboteBtn>Ihr mündliches Angebot wurde erfolgreich in den integrA Warenkorb übertragen</messageMunclichesAngeboteBtn>
+       <messageLostSaleBtn>Ihr LostSale wurde erfolgreich in den integrA Warenkorb übertragen</messageLostSaleBtn>
+       <messageSelectOneReasonForRejection>Bitte geben Sie mindesten einen Ablehnungsgrund ein</messageSelectOneReasonForRejection>
+       <messageSaveData>Bitte zuerst die Daten Speichern</messageSaveData>
+       <messageMapSaved>Karte wurde übernommen.</messageMapSaved>
+       <messageWithoutCustoer>Sind Sie sicher,dass Sie ohne Kunde fortfahren möchten?</messageWithoutCustoer>
+       <labelUseMap>Karte verwenden</labelUseMap>
+       <labelRoadway1>FS:Fahrstreifen FB:Fahrbahn</labelRoadway1>
+       <messageBvoConfirm>Sind Sie sicher dass Sie die BvO abschließen möchten?</messageBvoConfirm>
+       <messageBvoSaved>Ihre BvO wird übertragen</messageBvoSaved>
+       <messagePleaseSelectDeviceGroupItem>Bitte Höhengruppe auswählen</messagePleaseSelectDeviceGroupItem>
+       <labelBvoResume>BvO fortsetzen</labelBvoResume>
+       <labelAlternateDeviceUnit>Alternatives Gerät</labelAlternateDeviceUnit>
+       <labelAlternateDevice>Alternatives Gerät</labelAlternateDevice>
+       <messageTheCustomerAgreementDoesNotContainPrices>Die Kundenvereinbarung enthält keine Preise. Bitte Standardpreise auswählen</messageTheCustomerAgreementDoesNotContainPrices>
+       <messageLeaveBvo>sind sie sicher dass sie die BvO komplett löschen möchten?</messageLeaveBvo>
+       <messageDrawingSaved>Skizze wurde übernomen</messageDrawingSaved>
+       <messageMietdauermussGreterThenZero>Mietdauer muss > 0</messageMietdauermussGreterThenZero>
+       <messageBvoStored>Ihre BvO wurde zwischengespeichert</messageBvoStored>
+       <labelSelectText>Auswählen</labelSelectText>
+       <labelCustomerOfflineData>Offline Kunden Daten</labelCustomerOfflineData>
+       <labelCustomerSearch>Kunden Suche</labelCustomerSearch>
+       <labelConfirmPassword>Neues Passwort bestätigen</labelConfirmPassword>
+       <messageBothPasswordMustMatch>Passwort stimmt nicht überein</messageBothPasswordMustMatch>
+       <labelLocation>Location</labelLocation>
+       <labelForgotPassword>Passwort vergessen</labelForgotPassword>
+       <labelProjectSearch>Projekt Suche</labelProjectSearch>
+       <labelDescription>Beschreibung</labelDescription>
+       <messageBvoSentByWifi>Die BvO kann nur im WLAN gesendet werden - Dateien größer 10 MB</messageBvoSentByWifi>
+       <labelLongitude>Längengrad</labelLongitude>
+       <labelLatitude>Breitengrad</labelLatitude>
+       <messagePleaseSelectBranch>Es sind nicht alle Pflichtfelder ausgefüllt! Bitte ergänzen!</messagePleaseSelectBranch>
+       <messagePleaseSelectOneEmailId>Bitte mindestens eine E-Mail Aderesse auswählen</messagePleaseSelectOneEmailId>
+       <labelSendEmailToMe>An eigene E-Mail Adresse senden</labelSendEmailToMe>
+       <messagePleaseRemoveFlatRate>Bitte Transportpauschale entfernen</messagePleaseRemoveFlatRate>
+       <messageActivityIsInFuture>Die Aktivität liegt in der Zukunft und kann nicht als realisiert gekennzeichnet werden</messageActivityIsInFuture>
+       <labelAppVersion>App Version</labelAppVersion>
+       <messageBvOEmailSendSuccessful>Die BvO wird versendet! Folgende Mitarbeiter werden in Kürze informiert!</messageBvOEmailSendSuccessful>
+       <messagePleaseSelectGerateType>Bitte wählen Sie einen Gerätetyp aus.</messagePleaseSelectGerateType>
+       <labelLogout>Abmelden</labelLogout>
+       <messageValueMustBeLessThen100>Ungültiger Wert - muss kleiner als 100 sein</messageValueMustBeLessThen100>
+       <messageAreYouSureWantToLogout>Möchten Sie sich wirklich Abmelden? Ihre offline gespeicherten Daten werden dabei gelöscht!</messageAreYouSureWantToLogout>
+       <messagePasswordChangedSuccessfully>Kennwort erfolgreich geändert</messagePasswordChangedSuccessfully>
+       <messageEnterYourPlaceHere>PLZ, Ort, Straße</messageEnterYourPlaceHere>
+       <messageCantEnterMoreThen3devices>Kann nicht mehr als 3 alternative Geräte hinzufügen. Bitte entfernen Sie eines der Geräte</messageCantEnterMoreThen3devices>
+       <messagePleaseSelectMainDevice>Bitte wählen Sie ein Hauptgerät</messagePleaseSelectMainDevice>
+       <messageLoadMoreData>Weitere Kunden anzeigen</messageLoadMoreData>
+       <messageLoadMoreProject>Weitere Projekte anzeigen</messageLoadMoreProject>
+       <labelCustomerPageSize>Anz. Kunden in Suchliste </labelCustomerPageSize>
+       <messageSuccessfullySaved>Erfolgreich gespeichert</messageSuccessfullySaved>
+       <messageEquipmentSizeMustBeLessThen5>Ausrüstung Größe muss kleiner als 5 sein</messageEquipmentSizeMustBeLessThen5>
+       <labelSet>Festlegen</labelSet>
+       <labelCurrentPassword>Aktuelles Passwort</labelCurrentPassword>
+       <messageIncorrectEmailOrPassword>Falsche E-Mail oder Passwort</messageIncorrectEmailOrPassword>
+       <messageSelectDeviceType>Gerätetyp auswählen</messageSelectDeviceType>
+       <labelProjectStage>Bühnen aussen</labelProjectStage>
+       <labelProjectStage1>Bühnen innen</labelProjectStage1>
+       <labelProjectArt>Projektart</labelProjectArt>
+       <labelProjectPhase>Akt. Phase</labelProjectPhase>
+       <labelMeetings>Termine</labelMeetings>
+       <labelProjectDetails>Objekt Details</labelProjectDetails>
+       <messageMatchCodeNotFound>Matchcode nicht gefunden</messageMatchCodeNotFound>
+       <messageSelectProjectFirst>Bitte wählen Sie zuerst ein Projekt aus</messageSelectProjectFirst>
+       <labelMountingEnd>Montage Ende</labelMountingEnd>
+       <labelFaxBuildingSite>Fax Baustelle</labelFaxBuildingSite>
+       <messageCancelAddingTrade>Abbrechen Neuer Handels hinzufügen</messageCancelAddingTrade>
+       <labelKASalesPreviousYear>KA_Umsatz_Vorjahr</labelKASalesPreviousYear>
+       <labelKASalesCurrent>KA_Umsatz_LFD</labelKASalesCurrent>
+       <labelKASalesLast12Month>KA_Umsatz_12_Monate</labelKASalesLast12Month>
+       <labelSalesBoniDate>Boni_Datum</labelSalesBoniDate>
+       <messagePasswordLengthMustBeGreaterThen>Passwort muss mindestens 5-stellig sein</messagePasswordLengthMustBeGreaterThen>
+       <labelCustomerDetailsSpace>Kundendetails</labelCustomerDetailsSpace>
+       <labelPropertyDetailsSpace>Objektdetails</labelPropertyDetailsSpace>
+       <labelOfferDetailsSpace>Angebotdetails</labelOfferDetailsSpace>
+       <labelProjectDetailsSpace>Projektdetails</labelProjectDetailsSpace>
+       <labelShare>Senden</labelShare>
+       <labelBranch1>Branche</labelBranch1>
+       <messageUnderConstruction>Im Bau</messageUnderConstruction>
+       <messagePhoneValidation>Der Ländercode muss mit einem „+“ beginnen.Nach dem Ländercode folgt ein  Leerzeichen, dann die Vorwahl (ohne „0“) und anschließend Telefonnummer, Bindestrich und Durchwahl.</messagePhoneValidation>
+       <labelBvoSent>Gesendete BvO</labelBvoSent>
+       <labelBvoDraft>Fortsetzen</labelBvoDraft>
+       <messageEmailValidation>Bitte geben Sie eine gültige E-Mail Adresse ein!</messageEmailValidation>
+       <messageSelectEvent>Bitte Termin auswählen</messageSelectEvent>
+       <messageLargeNumber>Wert zu groß</messageLargeNumber>
+       <labelVisitingCardSubject>Visitenkarte von</labelVisitingCardSubject>
+       <messageBvoSave>Möchten Sie die BvO Zwischenspeichern?</messageBvoSave>
+       <labelMr>Herr</labelMr>
+       <labelBvoNotUploaded>Die BvO ist nicht vollständig hochgeladen</labelBvoNotUploaded>
+       <labelBvoProcessed>Postausgang BvO</labelBvoProcessed>
+       <labelWithRealized>Mit realisierten Aktivitäten</labelWithRealized>
+       <messageErrorOccured>Ein unerwarteter Fehler ist aufgetreten und integrA Mobile wird geschlossen.Möchten Sie die Fehlerbeschreibung an das integrA Mobile Entwicklungsteam schicken? Sie helfen uns dadurch integrA Mobile stabiler zu machen.</messageErrorOccured>
+       <messageEmailAddress>Bitte benutzen Sie ausschließlich ihre mateco E-Mail Adresse</messageEmailAddress>
+       <labelNewProject>Erfassung Projekt</labelNewProject>
+       <labelBusinessPhone>Geschäftlich</labelBusinessPhone>
+       <messageEnter>Geben</messageEnter>
+       <labelCurrentLanguage>Aktuelle gewählte Sprache</labelCurrentLanguage>
+       <labelOfflineCustomer>Wählen Sie Kunden, um offline zu speichern</labelOfflineCustomer>
+       <labelSetPages>Stellen Sie Seiten, um Kunden offline anzeigen</labelSetPages>
+       <labelLogoutFromApp>Abmelden von App</labelLogoutFromApp>
+       <labelFirm>Firma</labelFirm>
+       <labelTelefonnummern>Telefonnummern</labelTelefonnummern>
+       <labelMobiltelefon>Mobiltelefon</labelMobiltelefon>
+       <labelCurrentWeek>Aktuelle Woche</labelCurrentWeek>
+       <labelTrl>Tel. Baustelle</labelTrl>
+       <labelMontBegin>Montage Beginn</labelMontBegin>
+       <labelAddTrade>Erfassung Gewerke</labelAddTrade>
+       <labelPlease>Bitte</labelPlease>
+       <labelEnter>eingeben</labelEnter>
+       <labelEmailBody>Nachricht an oben ausgewählte(n) Empfänger</labelEmailBody>
+       <messageAuftragSelectOne>Zur Auftragsanlage bitte nur einen Eintrag auswählen</messageAuftragSelectOne>
+       <labelAnspMobile>AP Mobile</labelAnspMobile>
+       <messageGerateTypNotAvailable>Für diese Gerätegruppe gibt es keine Vereinbarung – bitte Standardpreise auswählen oder Gerätegruppe ändern!</messageGerateTypNotAvailable>
+       <labelSendDataToAdmin>Fehlermeldungen an IT Team senden</labelSendDataToAdmin>
+       <labelSendDataForAnalysis> </labelSendDataForAnalysis>
+       <labelBVOUploadSize>Max. Dateigröße in MB die ohne WLAN gesendet wird. Größere Dateien werden nur im WLAN Netz übertragen!</labelBVOUploadSize>
+       <labelBVOUploadSizeHeading> </labelBVOUploadSizeHeading>
+       <labelForSupportCallHeading>Telefonische Hilfe bei Problemstellungen</labelForSupportCallHeading>
+       <labelForSupportCallInfo> </labelForSupportCallInfo>
+       <labelForSupportEmailHeading>For issues please Email</labelForSupportEmailHeading>
+       <labelForSupportEmailInfo>For issues please Email</labelForSupportEmailInfo>
+       <buttonSupportEmail>Send Email</buttonSupportEmail>
+       <messageGewerkeAlreadyExists>Das Gewerk existiert bereits. Bitte ein anderes auswählen</messageGewerkeAlreadyExists>
+
+       <messageFailer>Warenkorb eintrag ist OFFLINE gespeichert. Wird automatisch übertragen.</messageFailer>
+
+       <labelDisable>Eingabehilfe</labelDisable>
+       <labelReset>zurückstellen</labelReset>
+       <labelWeekand>inkl. Wochenende</labelWeekand>
+
+       <messageMatchcodeNotMatch>Fehler: Bitte den Kunde erneut laden!</messageMatchcodeNotMatch>
+       <messagePleaseSelectLegalForm>Es sind nicht alle Pflichtfelder ausgefüllt! Bitte ergänzen!</messagePleaseSelectLegalForm>
+       <labelCustomervon>Kunden von</labelCustomervon>
+
+       <labelIndustrie>Industrie</labelIndustrie>
+        <labelStrasse>Strasse</labelStrasse>
+        <labelGenehmi>Genehmigungsgebühr</labelGenehmi>
+
+	</Language>
+    <Language>
+        <languageName>English</languageName>
+        <labelEnter>eingeben</labelEnter>
+        <languageCode>en</languageCode>
+        <languageFlag>english</languageFlag>
+        <labelZipCode>Zip Code</labelZipCode>
+        <labelPlace>Place</labelPlace>
+        <labelTelephone>Telephone</labelTelephone>
+        <labelBonusIndex>Bonus Index</labelBonusIndex>
+        <labelTotalOutput>Total Output</labelTotalOutput>
+        <labelSalesRunning>Running Sales</labelSalesRunning>
+        <labelSalesPreviousYear>Previous Year Sales</labelSalesPreviousYear>
+        <labelSalesLatest>Lastes Sales</labelSalesLatest>
+        <labelSales>Sales</labelSales>
+        <labelSales12Month>Sales 12 Month</labelSales12Month>
+        <labelGeneral>general</labelGeneral>
+        <labelContacts>Contracts</labelContacts>
+        <labelMatchcode>Match Code</labelMatchcode>
+        <labelCountry>Country</labelCountry>
+        <labelPhone>Phone</labelPhone>
+        <labelFax>Fax</labelFax>
+        <labelBusiness>Business</labelBusiness>
+        <labelEmail>Email</labelEmail>
+        <labelArea>Area</labelArea>
+        <labelCreditLimit>Credit Limit</labelCreditLimit>
+        <labelPayment>Payment</labelPayment>
+        <labelAddDate>Add Date</labelAddDate>
+        <labelCustomerBonus>Customer Bonus</labelCustomerBonus>
+        <labelWithContract>With Contract</labelWithContract>
+        <labelSalutation>Salutation</labelSalutation>
+        <labelTitle>Title</labelTitle>
+        <labelFirstName>First Name</labelFirstName>
+        <labelLastName>Last Name</labelLastName>
+        <labelFunction>Function</labelFunction>
+        <labelDecisionMakers>Decision Makers</labelDecisionMakers>
+        <labelAdditionalInfo>Additional Info</labelAdditionalInfo>
+        <labelWithContract>Additional Info</labelWithContract>
+        <labelDocumentLanguage>Document Language</labelDocumentLanguage>
+        <labelFeature>Feature</labelFeature>
+        <labelMobile>Mobile</labelMobile>
+        <labelName>Name</labelName>
+        <labelRoad>Road</labelRoad>
+        <labelWebsite>Web Site</labelWebsite>
+        <labelLegalForm>Legal Form</labelLegalForm>
+        <labelOwner>Owner</labelOwner>
+        <labelCustomerNo>Customer Number</labelCustomerNo>
+        <labelKanr>Kanr</labelKanr>
+        <labelResponsiblePerson>Responsible Person</labelResponsiblePerson>
+        <labelVatNo>Vat No</labelVatNo>
+        <labelOrderNo>Order No</labelOrderNo>
+        <labelPaymentDeadline>Label Payment Deadline</labelPaymentDeadline>
+        <labelOrderBacklog>Order Backlog</labelOrderBacklog>
+        <labelSalesPotential>Sales Potential</labelSalesPotential>
+        <labelActivity>Activity</labelActivity>
+        <labelTopic>Topic</labelTopic>
+        <labelStartTime>Start Time</labelStartTime>
+        <labelEndTime>End Time</labelEndTime>
+        <labelOffer>Offer</labelOffer>
+        <labelProject>Project</labelProject>
+        <labelRealized>Realized</labelRealized>
+        <labelFixedTime>Fixed time</labelFixedTime>
+        <labelEmployee>Employee</labelEmployee>
+        <labelOpenOrders>Open Orders</labelOpenOrders>
+        <labelContractNo>Contract Number</labelContractNo>
+        <labelNL>NL</labelNL>
+        <labelHGRP>HGRP</labelHGRP>
+        <labelDesiredDevice>Desired Device</labelDesiredDevice>
+        <labelDelivered>Delivered</labelDelivered>
+        <labelArrival>Arrival</labelArrival>
+        <labelMD>MD</labelMD>
+        <labelUnit>Unit</labelUnit>
+        <labelLP>LP</labelLP>
+        <labelCape>Cape</labelCape>
+        <labelTP>TP</labelTP>
+        <labelSB>SB</labelSB>
+        <labelCompletedOffers>Completed Offers</labelCompletedOffers>
+        <labelOpenOffer>Open Offers</labelOpenOffer>
+        <labelCreatedOn>Created On</labelCreatedOn>
+        <labelDeviceType>Device type</labelDeviceType>
+        <labelQuantity>Quantity</labelQuantity>
+        <labelRelay>relay</labelRelay>
+        <labelPrice>Price</labelPrice>
+        <labelHaftb>Haftb</labelHaftb>
+        <labelStatus>Status</labelStatus>
+        <labelLostSale>Lost Sale</labelLostSale>
+        <labelRentalPrice>Rental Price</labelRentalPrice>
+        <labelReasonForRejection>reason for Rejection</labelReasonForRejection>
+        <labelGenerally>Generally</labelGenerally>
+        <labelTrades>Trades</labelTrades>
+        <labelNotes>Notes</labelNotes>
+        <labelStartOfConstruction>Start Of Construction</labelStartOfConstruction>
+        <labelEndOfConstruction>End of Construction</labelEndOfConstruction>
+        <labelSize>Size</labelSize>
+        <labelHeight>Height</labelHeight>
+        <labelTypeOfProject>Type of Project</labelTypeOfProject>
+        <labelProjectType>Project Type</labelProjectType>
+        <labelActPhase>Act Phase</labelActPhase>
+        <labelDateOfUpdate>Date Of Update</labelDateOfUpdate>
+        <labelDate>Date</labelDate>
+        <labelStatesADM>States ADM</labelStatesADM>
+        <labelAbgeschlosse>Abgeschlosse</labelAbgeschlosse>
+        <labelRamp>Ramp</labelRamp>
+        <labelMatureWhite>Mature White</labelMatureWhite>
+        <labelDesignation>Designation</labelDesignation>
+        <labelAnspPartner>Ansp.Partner</labelAnspPartner>
+        <labelPurchaser>Purchaser</labelPurchaser>
+        <labelApOnSite>Ap On Site</labelApOnSite>
+        <labelInsertDate>Insert Date</labelInsertDate>
+        <labelOperationalLife>Operational Life</labelOperationalLife>
+        <labelBuildingProject>Building Project</labelBuildingProject>
+        <labelAccess>Access</labelAccess>
+        <labelRegistrationRequired>Registration Required</labelRegistrationRequired>
+        <labelWorkToBePerformed>Work to be performed</labelWorkToBePerformed>
+        <labelKnickPointHigh>Knick Point High</labelKnickPointHigh>
+        <labelInterferingEdgesAt>Interfering edges at</labelInterferingEdgesAt>
+        <labelOther>Other</labelOther>
+        <labelToday>Today</labelToday>
+        <labelCustomer>Customer</labelCustomer>
+        <labelCustomerDetails>Customer Details</labelCustomerDetails>
+        <labelPropertyDetails>Property Details</labelPropertyDetails>
+        <labelOfferDetails>Offer Details</labelOfferDetails>
+        <labelNotice>Notice</labelNotice>
+        <labelActivityDetails>Activity Details</labelActivityDetails>
+        <labelOverDue>Over due</labelOverDue>
+        <labelFuture>Future</labelFuture>
+        <labelFrom>From</labelFrom>
+        <labelTotalOutput>Total Output</labelTotalOutput>
+        <labelFixedTimes>Fixed Times</labelFixedTimes>
+        <labelOk>Ok</labelOk>
+        <labelAbort>Abort</labelAbort>
+        <labelAppSetting>App Settings</labelAppSetting>
+        <labelAccountSetting>Account Settings</labelAccountSetting>
+        <labelOfflineData>Offline Data</labelOfflineData>
+        <labelHelp>Help</labelHelp>
+        <labelRefreshInterval>Refresh Interval</labelRefreshInterval>
+        <labelLanguage>Language</labelLanguage>
+        <labelOfflineViewData>Offline View Data</labelOfflineViewData>
+        <labelEmailAddress>Email Address</labelEmailAddress>
+        <labelPassword>Password</labelPassword>.
+        <labelAddress>Address</labelAddress>
+		<labelLastSyncTime>Last Synchronize Time</labelLastSyncTime>
+		<labelSyncNow>Synchronize now</labelSyncNow>
+		<labelCleanUpOfflineData>Clean Up Offline Data</labelCleanUpOfflineData>
+		<labelMemo>Memo</labelMemo>
+		<labelHideRetired>Hide retired</labelHideRetired>
+		<labelCustomerDistributionType>Customer Distribution Type</labelCustomerDistributionType>
+		<labelCustomerTypeTrend>Customer Type Trend</labelCustomerTypeTrend>
+		<labelLostSaleReason>Lost Sale Reason</labelLostSaleReason>
+		<labelUsIdNr>UdIdNrn</labelUsIdNr>
+		<labelLevelGroup>Level Group</labelLevelGroup>
+		<labelEquipment>Equipment</labelEquipment>
+		<labelRental>Rental</labelRental>
+		<labelIntegraCalenderFrom>Integra Calender From</labelIntegraCalenderFrom>
+		<labelTo>To</labelTo>
+		<labelImportHelp>Import Help</labelImportHelp>
+		<labelContactNo>Contact No</labelContactNo>
+		<labelFiveTenTargetPrice>5-10 Target Price</labelFiveTenTargetPrice>
+		<labelDayMiniPrice>Day Mini Price</labelDayMiniPrice>
+		<labelElevenTwentyTargetPrice>11-20 Target Price</labelElevenTwentyTargetPrice>
+		<labelAboveTwentyOneTargetPrice>Ab 21 Target Price</labelAboveTwentyOneTargetPrice>
+		<labelTransport>Transport</labelTransport>
+		<labelApproach>Approach</labelApproach>
+		<labelDeparture>Departure</labelDeparture>
+		<labelAdditionalCargoPrice>AdditionalCargoPrice</labelAdditionalCargoPrice>
+		<labelFlateRate>Flate - Rate</labelFlateRate>
+		<labelLandUse>Land Use</labelLandUse>
+		<labelUseZipCode>Use Zip Code</labelUseZipCode>
+		<labelOfUse>Of Use</labelOfUse>
+		<labelReadUse>Read Use</labelReadUse>
+		<labelAddition>Addition</labelAddition>
+		<labelContractSpot>Contract Spot</labelContractSpot>
+		<labelAnspTelefon>Ansp. Telefon</labelAnspTelefon>
+		<labelTollKilometers>Toll Kilometers</labelTollKilometers>
+		<labelCost>Cost</labelCost>
+		<labelHandlingFee>Handling Fee</labelHandlingFee>
+		<labelTotal>Total</labelTotal>
+	   <labelNewAddress>New Address</labelNewAddress>
+	   <labelCurrentAddress>Current Address</labelCurrentAddress>
+	   <messageBvoUploadFailed>Fehler beim Senden der BvO – die BvO wurde zwischengespeichert!</messageBvoUploadFailed>
+       <labelInsertData>Insert Date</labelInsertData>
+       <labelSiteInspectionWithoutCustomer>Without Customer</labelSiteInspectionWithoutCustomer>
+       <labelMap>Map</labelMap>
+       <labelUpdate>Update</labelUpdate>
+       <labelCamera>Camera</labelCamera>
+       <labelGallery>Gallery</labelGallery>
+       <labelAccessObstruction>Access Obstruction</labelAccessObstruction>
+       <labelDesclaimer>Desclaimer</labelDesclaimer>
+       <labelAccessForest>Access Forest /Dirt Road</labelAccessForest>
+       <labelWhich>Which</labelWhich>
+       <labelFor>For</labelFor>
+       <labelAccessLying>Access laying</labelAccessLying>
+       <labelStk>Stk.</labelStk>
+       <labelDirections>Directions</labelDirections>
+       <labelVerdSewers>Verd. sewers</labelVerdSewers>
+       <labelLoadAccess>Load Access</labelLoadAccess>
+       <labelLoadStand>Load Stand</labelLoadStand>
+       <labelMaxTrafficLoad>Max. Traffic load</labelMaxTrafficLoad>
+       <labelAdditionalSupportingMaterial>Additional supporting material:</labelAdditionalSupportingMaterial>
+       <labelUndergroundStand>Underground Stand</labelUndergroundStand>
+       <labelRoadGrade>Road grade</labelRoadGrade>
+       <labelAdditionalAccessories>Additional Accessories:</labelAdditionalAccessories>
+       <labelPracticability>Practicability</labelPracticability>
+       <labelSummer>Summer</labelSummer>
+       <labelWinter>Winter</labelWinter>
+       <labelWetness>Wetness</labelWetness>
+       <LabelDrivingPlates>Driving plates</LabelDrivingPlates>
+       <labelBongossiPlates>Bongossi plates</labelBongossiPlates>
+       <labelPublicRoadCountry>Public Road Country</labelPublicRoadCountry>
+       <labelPrivateProperty>Private Property</labelPrivateProperty>
+       <labelInterior>Interior</labelInterior>
+       <labelOutdoor>Outdoor</labelOutdoor>
+       <labelPowerLiftSystem>Power-Lift System</labelPowerLiftSystem>
+       <labelPowerGenerator>Power Generator</labelPowerGenerator>
+       <labelAcquisitionDate>Acquisition Date</labelAcquisitionDate>
+       <labelAuthOwner>Auth-owner</labelAuthOwner>
+       <labelAnsbach>Ansbach.</labelAnsbach>
+       <labelFaxNo>Fax</labelFaxNo>
+       <labelIsFord>is ford.</labelIsFord>
+       <labelAuthCommunity>Auth-community</labelAuthCommunity>
+       <labelAuthPt>Auth-PT</labelAuthPt>
+       <labelAuthTaxiAssociation>Auth-Taxi Association</labelAuthTaxiAssociation>
+       <labelAbsperrma>Absperrmaßnahmen</labelAbsperrma>
+       <labelSketch>Sketch</labelSketch>
+       <labelTrafficSignPlanRequired>Traffic sign plan required</labelTrafficSignPlanRequired>
+       <labelPreparationOfStoppingSigns>Preparation of Stopping Signs </labelPreparationOfStoppingSigns>
+       <labelLayingBusStop>Laying Bus Stop</labelLayingBusStop>
+       <labelTransferTaxiStand>Transfer Taxi Stand</labelTransferTaxiStand>
+       <labelLayingHandicappedParking>Laying Handicapped Parking</labelLayingHandicappedParking>
+       <labelDeviceGroup>Device Group</labelDeviceGroup>
+       <labelHeightScale>Height Scale</labelHeightScale>
+       <labelHeightScale1>Height from</labelHeightScale1>
+       <labelAlternativeDeviceType>Alternative Device</labelAlternativeDeviceType>
+       <labelDeviceTypeNumber>Device-type Number</labelDeviceTypeNumber>
+       <labelWorkinhHeight>Working Height</labelWorkinhHeight>
+       <labelLateralReach>Lateral Reach</labelLateralReach>
+       <labelMaxLength>Max. Length</labelMaxLength>
+       <labelMaxBreadth>Max. Breadth</labelMaxBreadth>
+       <labelMaxHeight>Max. Height</labelMaxHeight>
+       <labelMaxWeight>Max.Weight</labelMaxWeight>
+       <labelBasketLoad>Basket Load</labelBasketLoad>
+       <labelBoomLength>Boom Length</labelBoomLength>
+       <labelDiesel>Diesel</labelDiesel>
+       <labelElectrostatics>Electrostatics</labelElectrostatics>
+       <labelFourWheel>Four Wheel</labelFourWheel>
+       <labelChainRubber>Chain Rubber</labelChainRubber>
+       <labelWhiteReef>White Reef</labelWhiteReef>
+       <labelColor>Color</labelColor>
+       <labelClear>Clear</labelClear>
+       <labelYes>Yes</labelYes>
+       <labelNo>No</labelNo>
+       <labelSearch>Search</labelSearch>
+       <labelHome>Home</labelHome>
+       <labelSiteInspection>Site Inspection</labelSiteInspection>
+       <labelVisitPlan>Visit Plan</labelVisitPlan>
+       <labelExtra>Extra</labelExtra>
+       <labelNew>New</labelNew>
+       <labelCustomerData>Customer Data</labelCustomerData>
+       <labelContactPerson>Contact Person</labelContactPerson>
+       <labelDashBoard>DashBoard</labelDashBoard>
+       <labelResume>Resume</labelResume>
+       <labelDailyAgenda>Daily Agenda</labelDailyAgenda>
+       <labelWeeklyAgenda>Weekly Agenda</labelWeeklyAgenda>
+       <labelSendVisitingCard>Send Visiting Card</labelSendVisitingCard>
+       <labelDevice>Geräte</labelDevice>
+       <labelAdditionalMobileWindPower>Additional Mobile / Wind Power</labelAdditionalMobileWindPower>
+       <labelSiteNo>Site No. / Side ID</labelSiteNo>
+       <labelNetworkOperator>Network Operator</labelNetworkOperator>
+       <labelMoreAntennasAvailable>More antennas available [m] </labelMoreAntennasAvailable>
+       <labelCurrentGroundingNecessary>Current grounding necessary</labelCurrentGroundingNecessary>
+       <labelSteelConstruction>Steel Construction. WtAnt. [Kg] </labelSteelConstruction>
+       <labelTieDown>Tie-down straps Verle.</labelTieDown>
+       <labelBasePlan>Base plan prev.</labelBasePlan>
+       <labelWhatToDo>What to do </labelWhatToDo>
+       <labelNumberWKA>Number WKA</labelNumberWKA>
+       <labelWKAType>WKA-Type / Manufacturer</labelWKAType>
+       <labelBoltingWKA>Bolting WKA</labelBoltingWKA>
+       <labelShutDown>Shutdown : </labelShutDown>
+       <labelMicrowave>Microwave</labelMicrowave>
+       <labelElectricityPylon>Electricity pylon</labelElectricityPylon>
+       <labelWindPower>Wind Power</labelWindPower>
+       <labelCableLaying>Cable laying</labelCableLaying>
+       <labelAdequateSpacing>Adequate spacing between poles</labelAdequateSpacing>
+       <labelLaneRoadway>Lane Roadway</labelLaneRoadway>
+       <labelDirection>Direction</labelDirection>
+       <labelLane>Lane</labelLane>
+       <labelNumber>Number</labelNumber>
+       <labelGoAway>Go Away</labelGoAway>
+       <labelRoadway>Road Away</labelRoadway>
+       <labelAvailable>Available</labelAvailable>
+       <labelDuringConstruction>During Construction Period</labelDuringConstruction>
+       <labelUsuallyPlan>Usually Plan By RSA 95</labelUsuallyPlan>
+       <labelPermits>Permits</labelPermits>
+       <labelperformWorkLabels>PerformWork Labels</labelperformWorkLabels>
+       <labelOperatingEnvironment>Operarting Environment</labelOperatingEnvironment>
+       <labelInrinsicActivity>Inrinsic Activity</labelInrinsicActivity>
+       <labelVerbleOffered>Verble Offered</labelVerbleOffered>
+       <labelEquipmentRent>Equipment Rent</labelEquipmentRent>
+       <labelCache>Cache</labelCache>
+       <labelGesAmenities>Ges. Amenities</labelGesAmenities>
+       <labelSatntag>Satntag</labelSatntag>
+       <labelServicePackages>Service Packages</labelServicePackages>
+       <labelBranch>Branch</labelBranch>
+       <labelManufacturer>Manufacturer</labelManufacturer>
+       <labelType>Type</labelType>
+       <labelHF>HF</labelHF>
+
+       <labelSP>SP</labelSP>
+       <labelHB>HB</labelHB>
+       <labelBest>Best</labelBest>
+
+       <labelSatellite>Satellite View</labelSatellite>
+       <labelNormal>Normal View</labelNormal>
+
+       <labelSubmit>Submit</labelSubmit>
+       <labelPowerLiftSystem>Power-Lift System</labelPowerLiftSystem>
+       <labelToll>Toll</labelToll>
+       <labelLiabilityLimitation>Liability Limitation</labelLiabilityLimitation>
+       <labelOrder>Order</labelOrder>
+       <labelCockpit>Cockpit</labelCockpit>
+       <labelPricing>Pricing</labelPricing>
+       <labelPricing>Pricing</labelPricing>
+       <labelPricingDetail>Pricing Detail</labelPricingDetail>
+       <labelPricingGetheringActivity>Gethering Activity</labelPricingGetheringActivity>
+       <labelKinkPointHigh>Kink-point\n high[m]</labelKinkPointHigh>
+       <labelSiteInspectionNew>Insert Data</labelSiteInspectionNew>
+       <labelPhotos>Photos</labelPhotos>
+       <labelDeviceData>Device Data-Unit</labelDeviceData>
+       <labelLogistics>Logistics</labelLogistics>
+       <labelAvailability>Availability</labelAvailability>
+       <labelGeratermiete>Gerätemiete</labelGeratermiete>
+       <labelLimitationOfLiability>Limitation of liability</labelLimitationOfLiability>
+       <labelTermsofPayment>Terms of payment</labelTermsofPayment>
+       <labelPaysNoAdvancePayment>Pays no advance payment</labelPaysNoAdvancePayment>
+       <labelCashDiscount>Cash discount</labelCashDiscount>
+       <labelTheCustomerHasChosenAnAlternativeMtecoUnit>The customer has chosen an alternative mateco unit</labelTheCustomerHasChosenAnAlternativeMtecoUnit>
+       <labelTheCustomerDoesNotHaveNeedLess>The customer does not have need less</labelTheCustomerDoesNotHaveNeedLess>
+       <labelTheCustomerHasNotReceivedTheOrder>The customer has not received the order</labelTheCustomerHasNotReceivedTheOrder>
+       <labelCompetitor>Competitor</labelCompetitor>
+       <labelAlert>Alert</labelAlert>
+       <messageProviders>No Providers are available.Location not found.Please enable GPS or Network.</messageProviders>
+       <messageDelete>Are you sure you want to delete?</messageDelete>
+       <messageSelectImageFrom>Select image from</messageSelectImageFrom>
+       <messageEnterNotes>Enter Notes</messageEnterNotes>
+       <messageNetworkNotAvailable>Network not available</messageNetworkNotAvailable>
+       <messageError>Error</messageError>
+       <messageWaitWhileLoading>Please wait while loading</messageWaitWhileLoading>
+       <labelChangePassword>Change Password </labelChangePassword>
+       <labelLogin>Login</labelLogin>
+       <labelUsername>Username</labelUsername>
+       <messageSelectCustomerFirst>Please select customer first</messageSelectCustomerFirst>
+       <messageInputSearchParameter>Please input some search parameter</messageInputSearchParameter>
+       <messageSearchQueryBroad>Your search query is too broad</messageSearchQueryBroad>
+       <messageLoadCustomerFirst>Please load customer first</messageLoadCustomerFirst>
+       <labelRequired>Required</labelRequired>
+       <messageNotValidEmail>Not a valid Email</messageNotValidEmail>
+       <messageNotValidWebsite>Not a valid Website</messageNotValidWebsite>
+       <messageNotValidNumber>Not a valid Number</messageNotValidNumber>
+       <messageNoCustomerSelected>No customer selected</messageNoCustomerSelected>
+       <messageNoCustomerLoaded>No customer loaded</messageNoCustomerLoaded>
+       <messageSelectItemToRemove>Please select item</messageSelectItemToRemove>
+       <labelofflineSettings>Offline Settings</labelofflineSettings>
+       <messageCustomerupdated>Customer updated</messageCustomerupdated>
+       <messageContactPersonInserted>Contact person inserted</messageContactPersonInserted>
+       <messageCustomerLoaded>Customer loaded</messageCustomerLoaded>
+       <messageFunctionImplemented>Function will be implemented soon</messageFunctionImplemented>
+       <messageNoEmployees>There are no employees</messageNoEmployees>
+       <messageNoOffers>There are no offers</messageNoOffers>
+       <messageNoContactPersons>There are no contact persons</messageNoContactPersons>
+       <messageNoPeojects>There are no projects</messageNoPeojects>
+       <labelCompletedOrders>Completed orders</labelCompletedOrders>
+       <labelOpenOffers>Open offers</labelOpenOffers>
+       <labelTypeOfProjct>Type of project</labelTypeOfProjct>
+       <labelActivityPhase>Activity Phase</labelActivityPhase>
+       <labelCleanUpData>Clean up offline data</labelCleanUpData>
+       <labelDelete>Delete</labelDelete>
+       <labelPhoneCalls>Phone calls</labelPhoneCalls>
+       <labelFuture>Future</labelFuture>
+       <labelAdd>Add</labelAdd>
+       <labelCancel>Cancel</labelCancel>
+       <messageSelectEquipment>Please select equipment</messageSelectEquipment>
+       <labelSelect>----------</labelSelect>
+       <messageCustomerStored>Customer stored Offline</messageCustomerStored>
+       <labelWidth>Width[m]</labelWidth>
+       <labelNote>Note</labelNote>
+       <messageMaximumSizeToStoreCustomer>There are already 50 customer stored offline. You can not store more. To Store Customer data please delete some customer.</messageMaximumSizeToStoreCustomer>
+       <labelMessage>Message</labelMessage>
+       <labelGel_Gerat>Gel_Gerat</labelGel_Gerat>
+       <labelKaP>KaP</labelKaP>
+       <labelMandant>Mandant</labelMandant>
+       <labelMietende>Mietende</labelMietende>
+       <labelRegion>Region</labelRegion>
+       <labelSelbstbehalt>Selbstabholung</labelSelbstbehalt>
+       <labelSelbstbehalt2>Selbstbehalt</labelSelbstbehalt2>
+       <labelVers_LP>Vers_LP</labelVers_LP>
+       <labelVers_TP>Vers_TP</labelVers_TP>
+       <labelWunschgerat>Wunschgerat</labelWunschgerat>
+       <labelContact>Contact</labelContact>
+       <labelInsurance>Insurance</labelInsurance>
+       <messageSelectFeature>Select Feature</messageSelectFeature>
+       <messageSelectEmployee>Select Employee</messageSelectEmployee>
+       <messageSelectContactPerson>Select Contact Person</messageSelectContactPerson>
+       <labelConfirmation>Confirmation</labelConfirmation>
+       <messageCancelAddingActivity>Are you sure want to cancel Add activity</messageCancelAddingActivity>
+       <messageCancelAddingContactPerson>Are you sure want to cancel Add contact person</messageCancelAddingContactPerson>
+       <messageNoResultFound>No Result Found</messageNoResultFound>
+       <messageCustomerNotFound>Customer Not Found</messageCustomerNotFound>
+       <messageSelectStartTime>Select Start Time</messageSelectStartTime>
+       <messageEndTimeGreaterThenStartTime>End time should be greater than in time</messageEndTimeGreaterThenStartTime>
+       <messageNoActivityFound>No Activity Found</messageNoActivityFound>
+       <messageNoTradeFound>No Trade Found</messageNoTradeFound>
+       <messagePleaseSelectDate>Please Select Date</messagePleaseSelectDate>
+       <messagePleaseSelectActivityType>Please Select Activity Type</messagePleaseSelectActivityType>
+       <messagePleaseSelectActivity>Please Select Activity</messagePleaseSelectActivity>
+       <messageDateMustBeLessThen2079>Date Year Must be less then 2079</messageDateMustBeLessThen2079>
+       <messageCustomerAlreadyExistsUpdatingContent>Customer already exists. Updating content</messageCustomerAlreadyExistsUpdatingContent>
+       <messageCachePriceAddedToCacheCart>Your Cache pricing added successful in Cache shopping cart</messageCachePriceAddedToCacheCart>
+       <messagePleaseSelectCartItem>Please Select Cart Item</messagePleaseSelectCartItem>
+       <messageYourOrderSuccessfullyTransferredToCart>Your order has been successfully transferred to the integrA cart</messageYourOrderSuccessfullyTransferredToCart>
+       <messageYourDealsSuccessfullyTransferredToCart>Your deals has been successfully transferred to the integrA cart</messageYourDealsSuccessfullyTransferredToCart>
+       <messagePleaseEnterReasonForRejection>Please Enter Reason For Rejection</messagePleaseEnterReasonForRejection>
+       <messageErrorAtParsing>Error At Parsing. May be bad result from request.</messageErrorAtParsing>
+       <messagePleaseWaitWhileDataBeingLoadedForFirstTime>Please wait while it is being loaded Data for the first start.</messagePleaseWaitWhileDataBeingLoadedForFirstTime>
+       <messageCustomerNumberNotFound>Customer Number Not Found</messageCustomerNumberNotFound>
+       <messageNoCustomerContactPersonFound>No Customer Contact Person Found</messageNoCustomerContactPersonFound>
+       <messagePleaseAddAtlist1ContactPerson>Please add at list 1 Contact Person</messagePleaseAddAtlist1ContactPerson>
+       <messageActivityYouMustAddNewActivity>Must needed to add New Activity</messageActivityYouMustAddNewActivity>
+       <messageAuftragBtn>Your order has been successfully transferred to the integrA cart</messageAuftragBtn>
+       <messageAngeboteBtn>Your deals has been successfully transferred to the integrA cart</messageAngeboteBtn>
+       <messageMunclichesAngeboteBtn>Your verbal been successfully transferred into the integrand cart</messageMunclichesAngeboteBtn>
+       <messageLostSaleBtn>Your lost sale was successfully transferred to the integrA cart</messageLostSaleBtn>
+       <messageSelectOneReasonForRejection>Please enter at least one reason for rejection</messageSelectOneReasonForRejection>
+       <messageSaveData>First Save Data</messageSaveData>
+       <messageDataSaved>Data saved</messageDataSaved>
+       <messageWithoutCustoer>Are you sure you want to proceed without customer?</messageWithoutCustoer>
+       <labelUseMap>Use Map</labelUseMap>
+       <labelRoadway1>Lane Roadways</labelRoadway1>
+       <messageBvoConfirm>Are you sure you want to upload BvO?</messageBvoConfirm>
+       <messageBvoSaved>BvO was successfully sent to server</messageBvoSaved>
+       <messagePleaseSelectDeviceGroupItem>Please selections height group</messagePleaseSelectDeviceGroupItem>
+       <labelBvoResume>Resume</labelBvoResume>
+       <labelAlternateDeviceUnit>Alternatives Device </labelAlternateDeviceUnit>
+       <labelAlternateDevice>Alternatives Device</labelAlternateDevice>
+       <messageTheCustomerAgreementDoesNotContainPrices>The Customer Agreement does not contain prices. Please standard</messageTheCustomerAgreementDoesNotContainPrices>
+       <messageMapSaved>Map has been saved</messageMapSaved>
+       <messageLeaveBvo>Are you sure you want to exit BvO completely?</messageLeaveBvo>
+       <messageDrawingSaved>Sketch saved</messageDrawingSaved>
+       <messageMietdauermussGreterThenZero>Rental period must be > 0</messageMietdauermussGreterThenZero>
+       <messageBvoStored>Your BvO is saved</messageBvoStored>
+       <labelSelectText>Select</labelSelectText>
+       <labelCustomerOfflineData>Customer Offline Data</labelCustomerOfflineData>
+       <labelCustomerSearch>Customer Search</labelCustomerSearch>
+       <labelConfirmPassword>New Confirm Password</labelConfirmPassword>
+       <messageBothPasswordMustMatch>Both Password must match</messageBothPasswordMustMatch>
+       <labelLocation>Location</labelLocation>
+       <labelForgotPassword>Forgot Password</labelForgotPassword>
+       <labelProjectSearch>Project Search</labelProjectSearch>
+       <labelDescription>Description</labelDescription>
+       <messageBvoSentByWifi>The BVO can only be sent to the WLAN - files larger than 10 MB</messageBvoSentByWifi>
+       <labelLongitude>Longitude</labelLongitude>
+       <labelLatitude>Latitude</labelLatitude>
+       <messagePleaseSelectBranch>Es sind nicht alle Pflichtfelder ausgefüllt! Bitte ergänzen!</messagePleaseSelectBranch>
+       <messagePleaseSelectOneEmailId>Please Select one Email Id</messagePleaseSelectOneEmailId>
+       <labelSendEmailToMe>Send Email to me</labelSendEmailToMe>
+       <messagePleaseRemoveFlatRate>Please remove Flat Rate</messagePleaseRemoveFlatRate>
+       <messageActivityIsInFuture>Activity is in future and cannot be labeled as realized</messageActivityIsInFuture>
+       <labelAppVersion>App Version</labelAppVersion>
+       <messageBvOEmailSendSuccessful>Email send successful</messageBvOEmailSendSuccessful>
+       <messagePleaseSelectGerateType>Please Select device type</messagePleaseSelectGerateType>
+       <labelLogout>Logout</labelLogout>
+       <messageValueMustBeLessThen100>Value must be less then 100</messageValueMustBeLessThen100>
+       <messageAreYouSureWantToLogout>Are you sure you want to logout from application ? All your data will be deleted.</messageAreYouSureWantToLogout>
+       <messagePasswordChangedSuccessfully>Password changed successfully</messagePasswordChangedSuccessfully>
+       <messageEnterYourPlaceHere>Enter your place here</messageEnterYourPlaceHere>
+       <messageCantEnterMoreThen3devices>Can't add more then 3 alternative devices. Please remove one of devices to add new.</messageCantEnterMoreThen3devices>
+       <messagePleaseSelectMainDevice>Please select main device first</messagePleaseSelectMainDevice>
+       <messageLoadMoreData>Load More Data</messageLoadMoreData>
+       <messageLoadMoreProject>Load More Project</messageLoadMoreProject>
+       <labelCustomerPageSize>Customer Page Size</labelCustomerPageSize>
+       <messageSuccessfullySaved>Saved Successfully</messageSuccessfullySaved>
+       <messageEquipmentSizeMustBeLessThen5>Equipment size must be less then 5</messageEquipmentSizeMustBeLessThen5>
+       <labelSet>Set</labelSet>
+       <labelCurrentPassword>Current Password</labelCurrentPassword>
+       <messageIncorrectEmailOrPassword>Incorrect Email or Password</messageIncorrectEmailOrPassword>
+       <messageSelectDeviceType>Select Device Type</messageSelectDeviceType>
+       <labelProjectStage>Groynes Outside</labelProjectStage>
+       <labelProjectStage1>Groynes inside</labelProjectStage1>
+       <labelProjectArt>Project Art</labelProjectArt>
+       <labelProjectPhase>Project Phase</labelProjectPhase>
+       <labelMeetings>Meetings</labelMeetings>
+       <labelProjectDetails>Project Details</labelProjectDetails>
+       <messageMatchCodeNotFound>Match code not found</messageMatchCodeNotFound>
+       <messageSelectProjectFirst>Please select project first</messageSelectProjectFirst>
+       <labelMountingEnd>Mounting end</labelMountingEnd>
+       <labelFaxBuildingSite>Fax Building Site</labelFaxBuildingSite>
+       <messageCancelAddingTrade>Cancel Add New Trade</messageCancelAddingTrade>\
+       <labelKASalesPreviousYear>KA_SALES_PREVIOUS_YEAR</labelKASalesPreviousYear>
+       <labelKASalesCurrent>KA_SALES_Current</labelKASalesCurrent>
+       <labelKASalesLast12Month>KA_SALES_Last_12_Month</labelKASalesLast12Month>
+       <labelSalesBoniDate>Boni date</labelSalesBoniDate>
+       <messagePasswordLengthMustBeGreaterThen>Password length must not be less then 5</messagePasswordLengthMustBeGreaterThen>
+       <labelCustomerDetailsSpace>Kundendetails</labelCustomerDetailsSpace>
+       <labelPropertyDetailsSpace>Objektdetails</labelPropertyDetailsSpace>
+       <labelOfferDetailsSpace>Angebotdetails</labelOfferDetailsSpace>
+       <labelProjectDetailsSpace>Projectdetails</labelProjectDetailsSpace>
+       <labelShare>Send</labelShare>
+       <labelBranch1>Branch</labelBranch1>
+       <messageUnderConstruction>Under Construction</messageUnderConstruction>
+       <messagePhoneValidation>The country code must begin with a "+".After the country code followed by a space, then the area code (without "0") and then phone number, dash and ext.</messagePhoneValidation>
+       <labelBvoSent>Sent</labelBvoSent>
+       <labelBvoDraft>Resume</labelBvoDraft>
+       <messageEmailValidation>Please enter a valid e - mail address!</messageEmailValidation>
+       <messageSelectEvent>Select Event</messageSelectEvent>
+       <messageLargeNumber>Value is too large</messageLargeNumber>
+       <labelVisitingCardSubject>Visiting card by</labelVisitingCardSubject>
+       <messageBvoSave>Are you want to save Bvo?</messageBvoSave>
+       <labelMr>Mr.</labelMr>
+       <labelBvoNotUploaded>The Site Inspection is not fully uploaded</labelBvoNotUploaded>
+       <labelBvoProcessed>Outbox</labelBvoProcessed>
+       <labelWithRealized>With realized activities</labelWithRealized>
+       <messageErrorOccured>An unexpected error has occurred and Integra Mobile closes.Want to send the error description to the Integra Mobile development team? They help us thereby make Integra Mobile stable.</messageErrorOccured>
+       <messageEmailAddress>Please exclusively use mateco email address</messageEmailAddress>
+       <labelNewProject>Capture Project</labelNewProject>
+       <labelBusinessPhone>Business</labelBusinessPhone>
+       <messageEnter>Enter</messageEnter>
+       <labelCurrentLanguage>Current Selected Language</labelCurrentLanguage>
+       <labelOfflineCustomer>Select Customers to Store Offline</labelOfflineCustomer>
+       <labelSetPages>Set Pages to View Customers Offline</labelSetPages>
+       <labelLogoutFromApp>Logout from App</labelLogoutFromApp>
+       <labelFirm>Firma</labelFirm>
+       <labelTelefonnummern>Telefon Numbers</labelTelefonnummern>
+       <labelMobiltelefon>Mobile</labelMobiltelefon>
+       <labelCurrentWeek>Current Week</labelCurrentWeek>
+       <labelTrl>Tel. Construction</labelTrl>
+       <labelMontBegin>Mounting Begin</labelMontBegin>
+       <labelAddTrade>Add Trade</labelAddTrade>
+       <labelPlease>Please</labelPlease>
+       <labelEmailBody>Nachricht an oben ausgewählte(n) Empfänger</labelEmailBody>
+       <messageAuftragSelectOne>Zur Auftragsanlage bitte nur einen Eintrag auswählen</messageAuftragSelectOne>
+       <labelAnspMobile>AP Mobile</labelAnspMobile>
+       <messageGerateTypNotAvailable>Für diese Gerätegruppe gibt es keine Vereinbarung – bitte Standardpreise auswählen oder Gerätegruppe ändern!</messageGerateTypNotAvailable>
+       <labelSendDataToAdmin>Send data to admin</labelSendDataToAdmin>
+       <labelSendDataForAnalysis>Send data for analysis</labelSendDataForAnalysis>
+       <labelBVOUploadSize>Bvo Upload Max Size From Mobile Data</labelBVOUploadSize>
+       <labelBVOUploadSizeHeading>Bvo Upload Max Size From Mobile Data</labelBVOUploadSizeHeading>
+       <labelForSupportCallHeading>For issues please contact</labelForSupportCallHeading>
+       <labelForSupportCallInfo>For issues please contact</labelForSupportCallInfo>
+       <labelForSupportEmailHeading>For issues please Email</labelForSupportEmailHeading>
+       <labelForSupportEmailInfo>For issues please Email</labelForSupportEmailInfo>
+       <buttonSupportEmail>Send Email</buttonSupportEmail>
+       <messageGewerkeAlreadyExists>Gererk already Exists. Please select another Gewerke.</messageGewerkeAlreadyExists>
+
+       <messageFailer>Warenkorb eintrag ist OFFLINE gespeichert. Wird automatisch übertragen.</messageFailer>
+       <labelDisable>Eingabehilfe</labelDisable>
+       <labelReset>zurückstellen</labelReset>
+       <labelWeekand>inkl. Wochenende</labelWeekand>
+
+       <messageMatchcodeNotMatch>Error: Please re-load the customer.</messageMatchcodeNotMatch>
+       <messagePleaseSelectLegalForm>Es sind nicht alle Pflichtfelder ausgefüllt! Bitte ergänzen!</messagePleaseSelectLegalForm>
+       <labelCustomervon>Kunden von</labelCustomervon>
+
+       <labelIndustrie>Industrie</labelIndustrie>
+                               <labelStrasse>Strasse</labelStrasse>
+                               <labelGenehmi>Genehmigungsgebühr</labelGenehmi>
+	</Language>
+
+	<Language>
+                            <languageName>Polski</languageName>
+                            <labelEnter>eingeben</labelEnter>
+                            <languageCode>pl</languageCode>
+                            <languageFlag>polski</languageFlag>
+                            <labelZipCode>kod pocztowy</labelZipCode>
+                            <labelPlace>Miejscowość</labelPlace>
+                            <labelTelephone>Telefon</labelTelephone>
+                            <labelBonusIndex>Bonus Index</labelBonusIndex>
+                            <labelTotalOutput>Razem OP</labelTotalOutput>
+                            <labelSalesRunning>Obroty bież.</labelSalesRunning>
+                            <labelSalesPreviousYear>Obroty roku poprzed.</labelSalesPreviousYear>
+                            <labelSalesLatest>Ostatnie obroty</labelSalesLatest>
+                            <labelSales>Obroty</labelSales>
+                            <labelSales12Month>Obroty ostat. 12 m-cy</labelSales12Month>
+                            <labelGeneral>Obrót całkowity</labelGeneral>
+                            <labelContacts>Osoba kontaktowa</labelContacts>
+                            <labelMatchcode>Kod klienta</labelMatchcode>
+                            <labelCountry>Kraj</labelCountry>
+                            <labelPhone>Telefon</labelPhone>
+                            <labelFax>Fax</labelFax>
+                            <labelBusiness>Branża</labelBusiness>
+                            <labelEmail>E-mail</labelEmail>
+                            <labelArea>Rejon</labelArea>
+                            <labelCreditLimit>Limit kredytowy</labelCreditLimit>
+                            <labelPayment>Temin płatnosci</labelPayment>
+                            <labelAddDate>Wprowadź datę</labelAddDate>
+                            <labelCustomerBonus>Klient premiowy</labelCustomerBonus>
+                            <labelWithContract>Klient umowy</labelWithContract>
+                            <labelSalutation>Pan/Pani</labelSalutation>
+                            <labelTitle>Tytuł</labelTitle>
+                            <labelFirstName>Imię</labelFirstName>
+                            <labelLastName>Nazwisko</labelLastName>
+                            <labelFunction>Funkcja</labelFunction>
+                            <labelDecisionMakers>Osoba decyzyjna</labelDecisionMakers>
+                            <labelAdditionalInfo>Dodatkowe informacje</labelAdditionalInfo>
+                            <labelWithContract>Klient umowy</labelWithContract>
+                            <labelDocumentLanguage>Język dokumentu</labelDocumentLanguage>
+                            <labelFeature>Cecha</labelFeature>
+                            <labelMobile>Komórka</labelMobile>
+                            <labelName>Nazwa</labelName>
+                            <labelRoad>Ulica</labelRoad>
+                            <labelWebsite>Internet</labelWebsite>
+                            <labelLegalForm>Forma prawna</labelLegalForm>
+                            <labelOwner>Właściciel</labelOwner>
+                            <labelCustomerNo>Klient</labelCustomerNo>
+                            <labelKanr>Nr zlec.</labelKanr>
+                            <labelResponsiblePerson>Osoba kontaktowa</labelResponsiblePerson>
+                            <labelVatNo>NIP</labelVatNo>
+                            <labelOrderNo>Nr zamowienia</labelOrderNo>
+                            <labelPaymentDeadline>Termin płatności</labelPaymentDeadline>
+                            <labelOrderBacklog>Zawartość zlecenia</labelOrderBacklog>
+                            <labelSalesPotential>Potencjał obrotów</labelSalesPotential>
+                            <labelActivity>Aktywność</labelActivity>
+                            <labelTopic>Temat</labelTopic>
+                            <labelStartTime>Godzina rozpoczęcia</labelStartTime>
+                            <labelEndTime>Godzina zakończenia</labelEndTime>
+                            <labelOffer>Oferta</labelOffer>
+                            <labelProject>Projekt</labelProject>
+                            <labelRealized>Zrealizowano</labelRealized>
+                            <labelFixedTime>Stałe godziny</labelFixedTime>
+                            <labelEmployee>Pracownik</labelEmployee>
+                            <labelOpenOrders>Otwarte zlecenie</labelOpenOrders>
+                            <labelContractNo>Nr zlecenia</labelContractNo>
+                            <labelNL>Oddział</labelNL>
+                            <labelHGRP>Desired Device</labelHGRP>
+                            <labelDesiredDevice>Żądany typ</labelDesiredDevice>
+                            <labelDelivered>Dostarczony</labelDelivered>
+                            <labelArrival>Początek wynajmu</labelArrival>
+                            <labelMD>Czas trwana najmu</labelMD>
+                            <labelUnit>Jednostka</labelUnit>
+                            <labelLP>Cena podstawowa</labelLP>
+                            <labelCape>Cape</labelCape>
+                            <labelTP>Cena transportu</labelTP>
+                            <labelSB>SB</labelSB>
+                            <labelCompletedOffers>Zlecenia zamknięte</labelCompletedOffers>
+                            <labelOpenOffer>Otwarte zlecenia</labelOpenOffer>
+                            <labelCreatedOn>Sporządz. dnia</labelCreatedOn>
+                            <labelDeviceType>Device type</labelDeviceType>
+                            <labelQuantity>Ilość</labelQuantity>
+                            <labelRelay>Grupa</labelRelay>
+                            <labelPrice>Cena</labelPrice>
+                            <labelHaftb>Ogranicz. odp. OC</labelHaftb>
+                            <labelStatus>Status</labelStatus>
+                            <labelLostSale>Lost sale</labelLostSale>
+                            <labelRentalPrice>Cena wynajmu</labelRentalPrice>
+                            <labelReasonForRejection>Powód odrzucenia</labelReasonForRejection>
+                            <labelGenerally>Ogólnie</labelGenerally>
+                            <labelTrades>Branża</labelTrades>
+                            <labelNotes>Notatki</labelNotes>
+                            <labelStartOfConstruction>Początek budowy</labelStartOfConstruction>
+                            <labelEndOfConstruction>Koniec budowy</labelEndOfConstruction>
+                            <labelSize>Wielkość (m2)</labelSize>
+                            <labelHeight>Wysokość</labelHeight>
+                            <labelTypeOfProject>Typ projektu</labelTypeOfProject>
+                            <labelProjectType>Typ projektu</labelProjectType>
+                            <labelActPhase>Aktualna faza</labelActPhase>
+                            <labelDateOfUpdate>Aktualna data</labelDateOfUpdate>
+                            <labelDate>Data</labelDate>
+                            <labelStatesADM>Odpowiedzialny przedstawiciel</labelStatesADM>
+                            <labelAbgeschlosse>Zakończone</labelAbgeschlosse>
+                            <labelRamp>Rampa</labelRamp>
+                            <labelMatureWhite>Białe opony</labelMatureWhite>
+                            <labelDesignation>Przeznaczenie</labelDesignation>
+                            <labelAnspPartner>Osoba kontaktowa</labelAnspPartner>
+                            <labelPurchaser>Zamawiający</labelPurchaser>
+                            <labelApOnSite>Kontakt na budowie</labelApOnSite>
+                            <labelInsertDate>Wstaw datę</labelInsertDate>
+                            <labelOperationalLife>Okres użytkowania</labelOperationalLife>
+                            <labelBuildingProject>Budowa</labelBuildingProject>
+                            <labelAccess>Dostęp</labelAccess>
+                            <labelRegistrationRequired>Wymagana rejestracja</labelRegistrationRequired>
+                            <labelWorkToBePerformed>Wykonywane prace</labelWorkToBePerformed>
+                            <labelKnickPointHigh>Kąt wysokości</labelKnickPointHigh>
+                            <labelInterferingEdgesAt>Interfering edges at</labelInterferingEdgesAt>
+                            <labelOther>Inne</labelOther>
+                            <labelToday>Dziś</labelToday>
+                            <labelCustomer>Klient</labelCustomer>
+                            <labelCustomerDetails>Opis klienta</labelCustomerDetails>
+                            <labelPropertyDetails>Opis obiektu</labelPropertyDetails>
+                            <labelOfferDetails>Opis oferty</labelOfferDetails>
+                            <labelNotice>Notatka</labelNotice>
+                            <labelActivityDetails>Opis aktywności</labelActivityDetails>
+                            <labelOverDue>Zaległy</labelOverDue>
+                            <labelFuture>Przyszłość</labelFuture>
+                            <labelFrom>Od</labelFrom>
+                            <labelTotalOutput>OP razem</labelTotalOutput>
+                            <labelFixedTimes>Stałe godziny</labelFixedTimes>
+                            <labelOk>OK</labelOk>
+                            <labelAbort>Anulować</labelAbort>
+                            <labelAppSetting>Ustawienia aplikacji</labelAppSetting>
+                            <labelAccountSetting>Ustawienia konta</labelAccountSetting>
+                            <labelOfflineData>Dane offline</labelOfflineData>
+                            <labelHelp>Pomoc</labelHelp>
+                            <labelRefreshInterval>Aktualizacja danych w trybie offline</labelRefreshInterval>
+                            <labelLanguage>Język</labelLanguage>
+                            <labelOfflineViewData>Widok offline</labelOfflineViewData>
+                            <labelEmailAddress>E-Mail</labelEmailAddress>
+                            <labelPassword>Hasło</labelPassword>
+                            <labelAddress>Adres</labelAddress>
+                    		<labelLastSyncTime>Ostatnia synchronizacja</labelLastSyncTime>
+                    		<labelSyncNow>Synchronizuj teraz</labelSyncNow>
+                    		<labelCleanUpOfflineData>Wyczyść dane offline</labelCleanUpOfflineData>
+                    		<labelMemo>Notatka</labelMemo>
+                    		<labelHideRetired>Ukryj wycofane</labelHideRetired>
+                    		<labelCustomerDistributionType>Typ dystrybucji klienta</labelCustomerDistributionType>
+                    		<labelCustomerTypeTrend>Trend typu klienta</labelCustomerTypeTrend>
+                    		<labelLostSaleReason>Powód utraconego zlecenia</labelLostSaleReason>
+                    		<labelUsIdNr>UdIdNrn</labelUsIdNr><labelBrand>Marka</labelBrand>
+                    		<labelLevelGroup>Grupa wysokościowa</labelLevelGroup>
+                    		<labelEquipment>Wyposażenie</labelEquipment>
+                    		<labelRental>Wynajem</labelRental>
+                    		<labelIntegraCalenderFrom>Kalendarz</labelIntegraCalenderFrom>
+                    		<labelTo>Do</labelTo>
+                    		<labelImportHelp>Pomoc</labelImportHelp>
+                    		<labelContactNo>Nr kontraktowy</labelContactNo>
+                    		<labelFiveTenTargetPrice>Cena 5-10 dni</labelFiveTenTargetPrice>
+                    		<labelDayMiniPrice>Cena minimalna</labelDayMiniPrice>
+                    		<labelElevenTwentyTargetPrice>Cena 11-20 dni</labelElevenTwentyTargetPrice>
+                    		<labelAboveTwentyOneTargetPrice>Cena od 21 dni</labelAboveTwentyOneTargetPrice>
+                    		<labelTransport>Transport</labelTransport>
+                    		<labelApproach>Dostawa</labelApproach>
+                    		<labelDeparture>Odbiór</labelDeparture>
+                    		<labelAdditionalCargoPrice>Cena doładunku</labelAdditionalCargoPrice>
+                    		<labelFlateRate>Ryczałt</labelFlateRate>
+                    		<labelLandUse>Miejsce użytkowania</labelLandUse>
+                    		<labelUseZipCode>Kod pocztowy</labelUseZipCode>
+                    		<labelOfUse>Obsługa</labelOfUse>
+                    		<labelReadUse>Zastosowanie drogowe</labelReadUse>
+                    		<labelAddition>Dodatek</labelAddition>
+                    		<labelContractSpot>Kontakt na budowie</labelContractSpot>
+                    		<labelAnspTelefon>Telefon osoby kontaktowej</labelAnspTelefon>
+                    		<labelTollKilometers>Dystans</labelTollKilometers>
+                    		<labelCost>Koszt</labelCost>
+                    		<labelHandlingFee>Opłata manipulacyjna</labelHandlingFee>
+                    		<labelTotal>Łącznie</labelTotal>
+                    	   <labelNewAddress>Nowy adres</labelNewAddress>
+                    	   <labelCurrentAddress>Aktulany adres</labelCurrentAddress>
+                    	   <messageBvoUploadFailed>Fehler beim Senden der BvO – die BvO wurde zwischengespeichert!</messageBvoUploadFailed>
+                           <labelInsertData>Wstaw datę</labelInsertData>
+                           <labelSiteInspectionWithoutCustomer>Bez klienta</labelSiteInspectionWithoutCustomer>
+                           <labelMap>Mapa</labelMap>
+                           <labelUpdate>Aktualizacja</labelUpdate>
+                           <labelCamera>Aparat</labelCamera>
+                           <labelGallery>Galeria</labelGallery>
+                           <labelAccessObstruction>Bariery w dostępie</labelAccessObstruction>
+                           <labelDesclaimer>Zrzeczenie się</labelDesclaimer>
+                           <labelAccessForest>Dostęp lasem/drogą polną</labelAccessForest>
+                           <labelWhich>Który</labelWhich>
+                           <labelFor>Dla</labelFor>
+                           <labelAccessLying>Access laying</labelAccessLying>
+                           <labelStk>Szt.</labelStk>
+                           <labelDirections>Dojazd</labelDirections>
+                           <labelVerdSewers>Verd. sewers</labelVerdSewers>
+                           <labelLoadAccess>Obciążenie pojazdu</labelLoadAccess>
+                           <labelLoadStand>Obciążenie podłoża</labelLoadStand>
+                           <labelMaxTrafficLoad>Max. cięż. dop.</labelMaxTrafficLoad>
+                           <labelAdditionalSupportingMaterial>Dodatk. podpory</labelAdditionalSupportingMaterial>
+                           <labelUndergroundStand>Underground Stand</labelUndergroundStand>
+                           <labelRoadGrade>Klasa drogi</labelRoadGrade>
+                           <labelAdditionalAccessories>Dodatkowe akcesoria</labelAdditionalAccessories>
+                           <labelPracticability>Wykonalność</labelPracticability>
+                           <labelSummer>Lato</labelSummer>
+                           <labelWinter>Zima</labelWinter>
+                           <labelWetness>Wilgotność</labelWetness>
+                           <LabelDrivingPlates>Płyty jezdne</LabelDrivingPlates>
+                           <labelBongossiPlates>Płyty Bongossi</labelBongossiPlates>
+                           <labelPublicRoadCountry>Krajowa droga publiczna</labelPublicRoadCountry>
+                           <labelPrivateProperty>Prywatna własność</labelPrivateProperty>
+                           <labelInterior>Wewnętrzny</labelInterior>
+                           <labelOutdoor>Zewnętrzny</labelOutdoor>
+                           <labelPowerLiftSystem>Power-Lift System</labelPowerLiftSystem>
+                           <labelPowerGenerator>Generator prądu</labelPowerGenerator>
+                           <labelAcquisitionDate>Data odwiedzin</labelAcquisitionDate>
+                           <labelAuthOwner>Dopuszcz. właściciela</labelAuthOwner>
+                           <labelAnsbach>Ansbach</labelAnsbach>
+                           <labelFaxNo>Fax</labelFaxNo>
+                           <labelIsFord>Wniosek</labelIsFord>
+                           <labelAuthCommunity>Auth-community</labelAuthCommunity>
+                           <labelAuthPt>Auth-PT</labelAuthPt>
+                           <labelAuthTaxiAssociation>Auth-Taxi Association</labelAuthTaxiAssociation>
+                           <labelAbsperrma>Zamknięcie dróg</labelAbsperrma>
+                           <labelSketch>Szkic</labelSketch>
+                           <labelTrafficSignPlanRequired>Wymagany plan znaków drodowych</labelTrafficSignPlanRequired>
+                           <labelPreparationOfStoppingSigns>Zestaw. znaków zakazów zatrzymywania</labelPreparationOfStoppingSigns>
+                           <labelLayingBusStop>Układ przystanków autobusowych</labelLayingBusStop>
+                           <labelTransferTaxiStand>Przeniesienie postoju taksowek</labelTransferTaxiStand>
+                           <labelLayingHandicappedParking>Uklad parkingów dla niepełnosprawnych</labelLayingHandicappedParking>
+                           <labelDeviceGroup>Grupa urządzeń</labelDeviceGroup>
+                           <labelHeightScale>Skala wysokości</labelHeightScale>
+                           <labelHeightScale1>Wysokość od/do</labelHeightScale1><labelDeviceType>Typ urządzenia</labelDeviceType>
+                           <labelAlternativeDeviceType>Alternatywny typ urządzenia</labelAlternativeDeviceType>
+                           <labelDeviceTypeNumber>Ilość typów urządzeń</labelDeviceTypeNumber>
+                           <labelWorkinhHeight>Wysokość robocza</labelWorkinhHeight>
+                           <labelLateralReach>Wysięg boczny</labelLateralReach>
+                           <labelMaxLength>Max. długość</labelMaxLength>
+                           <labelMaxBreadth>Max. szerokość</labelMaxBreadth>
+                           <labelMaxHeight>Max. wysokość</labelMaxHeight>
+                           <labelMaxWeight>Max. waga</labelMaxWeight>
+                           <labelBasketLoad>Ładowność kosza</labelBasketLoad>
+                           <labelBoomLength>Długość ramienia</labelBoomLength>
+                           <labelDiesel>Diesel</labelDiesel>
+                           <labelElectrostatics>Elektryczny</labelElectrostatics>
+                           <labelFourWheel>4 koła</labelFourWheel>
+                           <labelChainRubber>Gąsienice</labelChainRubber>
+                           <labelWhiteReef>Białe opony</labelWhiteReef>
+                           <labelColor>Kolor</labelColor>
+                           <labelClear>Czysty</labelClear>
+                           <labelYes>Tak</labelYes>
+                           <labelNo>Nie</labelNo>
+                           <labelSearch>szukaj</labelSearch>
+                           <labelHome>strona startowa</labelHome>
+                           <labelSiteInspection>Kontrola miejsca budowy</labelSiteInspection>
+                           <labelVisitPlan>plan wizyt </labelVisitPlan>
+                           <labelExtra>dodatkowo</labelExtra>
+                           <labelNew>nowy</labelNew>
+                           <labelCustomerData>Dane klienta</labelCustomerData>
+                           <labelContactPerson>Osoba kontaktowa</labelContactPerson>
+                           <labelDashBoard>deska rozdzielcza</labelDashBoard>
+                           <labelResume>wznów</labelResume>
+                           <labelDailyAgenda>Terminarz dzienny</labelDailyAgenda>
+                           <labelWeeklyAgenda>Terminarz tygodniowy</labelWeeklyAgenda>
+                           <labelSendVisitingCard>wyślij wizytówkę</labelSendVisitingCard>
+                           <labelDevice>Urządzenie</labelDevice>
+                           <labelAdditionalMobileWindPower>Dodadtkowy numer telefonu</labelAdditionalMobileWindPower>
+                           <labelSiteNo>numer budowy</labelSiteNo>
+                           <labelNetworkOperator>operator sieciowy</labelNetworkOperator>
+                           <labelMoreAntennasAvailable>More antennas available [m]</labelMoreAntennasAvailable>
+                           <labelCurrentGroundingNecessary>Konieczne uziemienie</labelCurrentGroundingNecessary>
+                           <labelSteelConstruction>konstrukcja stalowa [kg]</labelSteelConstruction>
+                           <labelTieDown>pasy mocujące</labelTieDown>
+                           <labelBasePlan>Istnieje plan bazowy</labelBasePlan>
+                           <labelWhatToDo>co robić</labelWhatToDo>
+                           <labelNumberWKA>numer WKA</labelNumberWKA>
+                           <labelWKAType>typ WKA/ Producent</labelWKAType>
+                           <labelBoltingWKA>Bolting WKA</labelBoltingWKA>
+                           <labelShutDown>zamknięcie</labelShutDown>
+                           <labelMicrowave>Kuchenka mikrofalowa</labelMicrowave>
+                           <labelElectricityPylon>słup wysokiego napięcia</labelElectricityPylon>
+                           <labelWindPower>siła wiatru</labelWindPower>
+                           <labelCableLaying>ułożenie kabli</labelCableLaying>
+                           <labelAdequateSpacing>odpowiednie odstępy między słupami</labelAdequateSpacing>
+                           <labelLaneRoadway>linia jezdni</labelLaneRoadway>
+                           <labelDirection>Kierunek</labelDirection>
+                           <labelLane>Linia</labelLane>
+                           <labelNumber>Numer</labelNumber>
+                           <labelGoAway>wyjdź</labelGoAway>
+                           <labelRoadway>Droga</labelRoadway>
+                           <labelAvailable>dostępny</labelAvailable>
+                           <labelDuringConstruction>w trakcie budowy</labelDuringConstruction>
+                           <labelUsuallyPlan>zwykle planowane przez RSA 95</labelUsuallyPlan>
+                           <labelPermits>Okresy</labelPermits>
+                           <labelperformWorkLabels>przygotuj kartę pracy</labelperformWorkLabels>
+                           <labelOperatingEnvironment>środowisko operacyjne</labelOperatingEnvironment>
+                           <labelInrinsicActivity>czynności wewnętrzne</labelInrinsicActivity>
+                           <labelVerbleOffered>Oferta ustna</labelVerbleOffered>
+                           <labelEquipmentRent>Wynajem sprzetu</labelEquipmentRent>
+                           <labelCache>cache</labelCache>
+                           <labelGesAmenities>Wyposażenie</labelGesAmenities>
+                           <labelSatntag>Dzień postoju</labelSatntag>
+                           <labelServicePackages>Pakiety usług</labelServicePackages>
+                           <labelBranch>oddział</labelBranch>
+                           <labelManufacturer>Producent</labelManufacturer>
+                           <labelType>Rodzaj</labelType>
+                           <labelHF>Opłata manipulacyjna</labelHF>
+
+                           <labelSP>SP</labelSP>
+                           <labelHB>HB</labelHB>
+                           <labelBest>Best</labelBest>
+
+                           <labelSatellite>Widok z satelity</labelSatellite>
+                           <labelNormal>Widok normalny</labelNormal>
+
+                           <labelSubmit>potwierdź</labelSubmit>
+                           <labelPowerLiftSystem>system podnoszenia</labelPowerLiftSystem>
+                           <labelToll>Myto</labelToll>
+                           <labelLiabilityLimitation>Ograniczenie odpowiedzialności</labelLiabilityLimitation>
+                           <labelOrder>zamówienie</labelOrder>
+                           <labelCockpit>kokpit</labelCockpit>
+                           <labelPricing>ceny</labelPricing>
+                           <labelPricing>ceny</labelPricing>
+                           <labelPricingDetail>szczegóły dot. cen</labelPricingDetail>
+                           <labelPricingGetheringActivity>Aktywność zbiorczo</labelPricingGetheringActivity>
+                           <labelKinkPointHigh>wysokość punktu załamania [m]</labelKinkPointHigh>
+                           <labelSiteInspectionNew>wpisz datę</labelSiteInspectionNew>
+                           <labelPhotos>zdjęcia</labelPhotos>
+                           <labelDeviceData>Dane sprzętu</labelDeviceData>
+                           <labelLogistics>logistyka</labelLogistics>
+                           <labelAvailability>dostępność</labelAvailability>
+                           <labelGeratermiete>Wynajem sprzętu</labelGeratermiete>
+                           <labelLimitationOfLiability>zakres odpowiedzialności</labelLimitationOfLiability>
+                           <labelTermsofPayment>warunki płatności</labelTermsofPayment>
+                           <labelPaysNoAdvancePayment>bez opłaty z góry</labelPaysNoAdvancePayment>
+                           <labelCashDiscount>rabat gotówkowy</labelCashDiscount>
+                           <labelTheCustomerHasChosenAnAlternativeMtecoUnit>Klient wybrał urzadzenie alternatywne</labelTheCustomerHasChosenAnAlternativeMtecoUnit>
+                           <labelTheCustomerDoesNotHaveNeedLess>Klient nie ma zapotrzebowania</labelTheCustomerDoesNotHaveNeedLess>
+                           <labelTheCustomerHasNotReceivedTheOrder>Klient nie otrzymał zamówienia</labelTheCustomerHasNotReceivedTheOrder>
+                           <labelCompetitor>Konkurent</labelCompetitor>
+                           <labelAlert>Alert</labelAlert>
+                           <messageProviders>Brak dostepnych dostawców. Lokalizacja nieodnaleziona. Proszę połączyć się z GPSem lub siecią.</messageProviders>
+                           <messageDelete>czy na pewno chcesz to usunąć?</messageDelete>
+                           <messageSelectImageFrom>wybierz grafikę z</messageSelectImageFrom>
+                           <messageEnterNotes>wprowadź notatki</messageEnterNotes>
+                           <messageNetworkNotAvailable>sieć niedostępna</messageNetworkNotAvailable>
+                           <messageError>błąd</messageError>
+                           <messageWaitWhileLoading>proszę czekać</messageWaitWhileLoading>
+                           <labelChangePassword>zmień hasło</labelChangePassword>
+                           <labelLogin>zaloguj</labelLogin>
+                           <labelUsername>nazwa użytkownika</labelUsername>
+                           <messageSelectCustomerFirst>Proszę najpierw wybrać klienta</messageSelectCustomerFirst>
+                           <messageInputSearchParameter>proszę wprowadzić jakieś parametry wyszukiwania</messageInputSearchParameter>
+                           <messageSearchQueryBroad>twój zakres poszukiwac jest zbyt szeroki</messageSearchQueryBroad>
+                           <messageLoadCustomerFirst>proszę najpierw wybrać klienta</messageLoadCustomerFirst>
+                           <labelRequired>wymagany</labelRequired>
+                           <messageNotValidEmail>niepoprawny adres email</messageNotValidEmail>
+                           <messageNotValidWebsite>niepoprawny  adres strony</messageNotValidWebsite>
+                           <messageNotValidNumber>niepoprawny  numer</messageNotValidNumber>
+                           <messageNoCustomerSelected>klient nie został wybrany</messageNoCustomerSelected>
+                           <messageNoCustomerLoaded>klient nie został załadowany</messageNoCustomerLoaded>
+                           <messageSelectItemToRemove>proszę wybrac produkt</messageSelectItemToRemove>
+                           <labelofflineSettings>ustawienia offline</labelofflineSettings>
+                           <messageCustomerupdated>zaktualizowany klient</messageCustomerupdated>
+                           <messageContactPersonInserted>prowadzono osobę kontaktową</messageContactPersonInserted>
+                           <messageCustomerLoaded>klient załadowany</messageCustomerLoaded>
+                           <messageFunctionImplemented>funkcja zostanie wprowadzona wkrótce</messageFunctionImplemented>
+                           <messageNoEmployees>brak pracowników</messageNoEmployees>
+                           <messageNoOffers>brak ofert</messageNoOffers>
+                           <messageNoContactPersons>brak osób kontaktowych</messageNoContactPersons>
+                           <messageNoPeojects>Brak projektów</messageNoPeojects>
+                           <labelCompletedOrders>zrealizowane zamówienia</labelCompletedOrders>
+                           <labelOpenOffers>otwarte oferty</labelOpenOffers>
+                           <labelTypeOfProjct>typ projektu</labelTypeOfProjct>
+                           <labelActivityPhase>faza czynności</labelActivityPhase>
+                           <labelCleanUpData>wyczyśc dane offline</labelCleanUpData>
+                           <labelDelete>usuń</labelDelete>
+                           <labelPhoneCalls>Połączenia telefoniczne</labelPhoneCalls>
+                           <labelFuture>Przyszłość</labelFuture>
+                           <labelAdd>Dodaj</labelAdd>
+                           <labelCancel>Anulowac</labelCancel>
+                           <messageSelectEquipment>Proszę wybrać sprzęt</messageSelectEquipment>
+                           <labelSelect>----------</labelSelect>
+                           <messageCustomerStored>Klient zapiany offline</messageCustomerStored>
+                           <labelWidth>Szerokość</labelWidth>
+                           <labelNote>Notatka</labelNote>
+                           <messageMaximumSizeToStoreCustomer>50 klientów zostało już zapisanych offline.Nie można zapisać więcej. Aby zapisac kolejnego klienta należy usunąć  jednego z dotychczasowo zapisanych.</messageMaximumSizeToStoreCustomer>
+                           <labelMessage>Wiadomość</labelMessage>
+                           <labelGel_Gerat>Typ urządzenia</labelGel_Gerat>
+                           <labelKaP>Cena z kontraktu</labelKaP>
+                           <labelMandant>Klient</labelMandant>
+                           <labelMietende>Koniec wynajmu</labelMietende>
+                           <labelRegion>Region</labelRegion>
+                           <labelSelbstbehalt>Udział własny</labelSelbstbehalt>
+                           <labelSelbstbehalt2>Selbstbehalt</labelSelbstbehalt2>
+                           <labelVers_LP>Cena ubezpieczenia</labelVers_LP>
+                           <labelVers_TP>Faktyczna cena ubezpieczenia</labelVers_TP>
+                           <labelWunschgerat>Żądany sprzęt</labelWunschgerat>
+                           <labelContact>kontakt</labelContact>
+                           <labelInsurance>ubezpieczenie</labelInsurance>
+                           <messageSelectFeature>Wybierz prawcodawcę</messageSelectFeature>
+                           <messageSelectEmployee>Wybierz Pracownika</messageSelectEmployee>
+                           <messageSelectContactPerson>Wybierz osobę kontaktową</messageSelectContactPerson>
+                           <labelConfirmation>Potwierdzenia</labelConfirmation>
+                           <messageCancelAddingActivity>Czy na pewno chcesz usunąć czynność?</messageCancelAddingActivity>
+                           <messageCancelAddingContactPerson>Czy na pewno chcesz usunąc osobę kontaktową?</messageCancelAddingContactPerson>
+                           <messageNoResultFound>nie znaleziono żadnych wyników</messageNoResultFound>
+                           <messageCustomerNotFound>klienta nie znaleziono</messageCustomerNotFound>
+                           <messageSelectStartTime>wybierz godzinę rozpoczęcia</messageSelectStartTime>
+                           <messageEndTimeGreaterThenStartTime>Czas zakończenia powinien być późniejszy niż czas rozpoczęcia</messageEndTimeGreaterThenStartTime>
+                           <messageNoActivityFound>Nie znaleziono aktywności</messageNoActivityFound>
+                           <messageNoTradeFound>nie znaleziono transakcji</messageNoTradeFound>
+                           <messagePleaseSelectDate>Proszę wybrac datę</messagePleaseSelectDate>
+                           <messagePleaseSelectActivityType>Proszę wybrać rodzaj aktywności</messagePleaseSelectActivityType>
+                           <messagePleaseSelectActivity>Proszę wybrać aktywność</messagePleaseSelectActivity>
+                           <messageDateMustBeLessThen2079>Proszę sprawdzić datę</messageDateMustBeLessThen2079>
+                           <messageCustomerAlreadyExistsUpdatingContent>Taki klient już istanieje. Czy chcesz uaktualnić dane?</messageCustomerAlreadyExistsUpdatingContent>
+                           <messageCachePriceAddedToCacheCart>Przeniesiono do schowka</messageCachePriceAddedToCacheCart>
+                           <messagePleaseSelectCartItem>Proszę wybrać pozycję</messagePleaseSelectCartItem>
+                           <messageYourOrderSuccessfullyTransferredToCart>Twoje zamówienie zostało przekazane do IntegrA cart</messageYourOrderSuccessfullyTransferredToCart>
+                           <messageYourDealsSuccessfullyTransferredToCart>Twoja umowa została przekazana do IntegrA cart</messageYourDealsSuccessfullyTransferredToCart>
+                           <messagePleaseEnterReasonForRejection>Proszę podać przynajmniej jeden powód odmowy</messagePleaseEnterReasonForRejection>
+                           <messageErrorAtParsing>Błąd w przesyle danych - spróbuj jeszcze raz</messageErrorAtParsing>
+                           <messagePleaseWaitWhileDataBeingLoadedForFirstTime>Proszę poczekać na załadowanie danych</messagePleaseWaitWhileDataBeingLoadedForFirstTime>
+                           <messageCustomerNumberNotFound>Nie znaleziono numeru klienta</messageCustomerNumberNotFound>
+                           <messageNoCustomerContactPersonFound>Nie znaleziono osoby kontaktowej</messageNoCustomerContactPersonFound>
+                           <messagePleaseAddAtlist1ContactPerson>Proszę dodać przynajmniej jedną osobę kontaktową</messagePleaseAddAtlist1ContactPerson>
+                           <messageActivityYouMustAddNewActivity>Wymagane jest dodanie nowej aktywności</messageActivityYouMustAddNewActivity>
+                           <messageAuftragBtn>Twoje zamówienie zostało przekazane do Integra cart</messageAuftragBtn>
+                           <messageAngeboteBtn>Twoja umowa została przekazana do Integra cart</messageAngeboteBtn>
+                           <messageMunclichesAngeboteBtn>Twoja ustna oferta została przekazana do Integra cart</messageMunclichesAngeboteBtn>
+                           <messageLostSaleBtn>Twoja ostatnia sprzedaz została przekazana do Integra cart</messageLostSaleBtn>
+                           <messageSelectOneReasonForRejection>Proszę podać przynajmniej jeden powód odmowy</messageSelectOneReasonForRejection>
+                           <messageSaveData>W pierwszej kolejności proszę zapisać datę</messageSaveData>
+                           <messageDataSaved>data została zapisana</messageDataSaved>
+                           <messageWithoutCustoer>Czy na pewno chcesz kontynuować bez klienta?</messageWithoutCustoer>
+                           <labelUseMap>użyj mapy</labelUseMap>
+                           <labelRoadway1>Lane Roadways</labelRoadway1>
+                           <messageBvoConfirm>Czy na pewno chcesz zakończyć BVO?</messageBvoConfirm>
+                           <messageBvoSaved>BvO zostało zapisane na serwerze</messageBvoSaved>
+                           <messagePleaseSelectDeviceGroupItem>Wybierz grupę wysokościową sprzętu</messagePleaseSelectDeviceGroupItem>
+                           <labelBvoResume>kontynuuj</labelBvoResume>
+                           <labelAlternateDeviceUnit>Alternatives Device </labelAlternateDeviceUnit>
+                           <labelAlternateDevice>Alternatives Device</labelAlternateDevice>
+                           <messageTheCustomerAgreementDoesNotContainPrices>w umowie z klientem nie zostały uwzględnione ceny</messageTheCustomerAgreementDoesNotContainPrices>
+                           <messageMapSaved>mapa została zapisana</messageMapSaved>
+                           <messageLeaveBvo>czy na pewno chcesz zakończyć pracę z BVO?</messageLeaveBvo>
+                           <messageDrawingSaved>szkic został zapisany</messageDrawingSaved>
+                           <messageMietdauermussGreterThenZero>minimalny okres wynajmu to 1 dzień</messageMietdauermussGreterThenZero>
+                           <messageBvoStored>twoje BVO zostało zapisane</messageBvoStored>
+                           <labelSelectText>wybierz</labelSelectText>
+                           <labelCustomerOfflineData>Customer Offline Data</labelCustomerOfflineData>
+                           <labelCustomerSearch>wyszukiwarka klientów</labelCustomerSearch>
+                           <labelConfirmPassword>nowe potwierdzone hasło</labelConfirmPassword>
+                           <messageBothPasswordMustMatch>Obydwa hasła muszą być jednakowe</messageBothPasswordMustMatch>
+                           <labelLocation>Lokalizacja</labelLocation>
+                           <labelForgotPassword>zapomniałeś hasło?</labelForgotPassword>
+                           <labelProjectSearch>Wuszukiwarka projektów</labelProjectSearch>
+                           <labelDescription>Opis</labelDescription>
+                           <messageBvoSentByWifi>BVO może być wysłane tylko do WLAN- pliki większe niż 10 MB</messageBvoSentByWifi>
+                           <labelLongitude>długość geograficzna</labelLongitude>
+                           <labelLatitude>szerokość geograficzna</labelLatitude>
+                           <messagePleaseSelectBranch>Es sind nicht alle Pflichtfelder ausgefüllt! Bitte ergänzen!</messagePleaseSelectBranch>
+                           <messagePleaseSelectOneEmailId>Proszę wybrać jeden adres email</messagePleaseSelectOneEmailId>
+                           <labelSendEmailToMe>Wyślij wiadomość do mnie</labelSendEmailToMe>
+                           <messagePleaseRemoveFlatRate>Proszę usunąc stawkę ryczałtową</messagePleaseRemoveFlatRate>
+                           <messageActivityIsInFuture>Czynność ta będzie miała miejsce w przyszłości, nie może zostać oznaczona jako zrealizowana</messageActivityIsInFuture>
+                           <labelAppVersion>Wersja aplikacji</labelAppVersion>
+                           <messageBvOEmailSendSuccessful>Wiadomość została wysłana z powodzeniem</messageBvOEmailSendSuccessful>
+                           <messagePleaseSelectGerateType>Proszę wybrać rodzaj urządzenia</messagePleaseSelectGerateType>
+                           <labelLogout>wyloguj</labelLogout>
+                           <messageValueMustBeLessThen100>Wartość musi być mniejsza niż 100</messageValueMustBeLessThen100>
+                           <messageAreYouSureWantToLogout>Czy na pewno chcesz się wylogować? Wszystkie dane zostaną usunięte</messageAreYouSureWantToLogout>
+                           <messagePasswordChangedSuccessfully>Hasło zostało zmienione z powodzeniem</messagePasswordChangedSuccessfully>
+                           <messageEnterYourPlaceHere>Proszę tu wpisać adres</messageEnterYourPlaceHere>
+                           <messageCantEnterMoreThen3devices>Nie można dodać więcej niż 3 alternatywne urządzenia. Proszę usunąć jedno z urządzeń by móc dodać kolejne.</messageCantEnterMoreThen3devices>
+                           <messagePleaseSelectMainDevice>Proszę najpierw wybrać główne urządzenie</messagePleaseSelectMainDevice>
+                           <messageLoadMoreData>Załaduj więcej danych</messageLoadMoreData>
+                           <messageLoadMoreProject>Załaduj więcej projektów</messageLoadMoreProject>
+                           <labelCustomerPageSize>Ilość klientów na liście wyszukiwania</labelCustomerPageSize>
+                           <messageSuccessfullySaved>Zapisano z powodzeniem</messageSuccessfullySaved>
+                           <messageEquipmentSizeMustBeLessThen5>Rozmiar sprzątu musi być mniejszy niż 5</messageEquipmentSizeMustBeLessThen5>
+                           <labelSet>ustaw</labelSet>
+                           <labelCurrentPassword>Aktualne hasło</labelCurrentPassword>
+                           <messageIncorrectEmailOrPassword>Niepoprawny email lub hasło</messageIncorrectEmailOrPassword>
+                           <messageSelectDeviceType>wybierz typ urządzenia</messageSelectDeviceType>
+                           <labelProjectStage>Podesty zewn.</labelProjectStage>
+                           <labelProjectStage1>Podesty wewn.</labelProjectStage1>
+                           <labelProjectArt>Projekt artystyczny</labelProjectArt>
+                           <labelProjectPhase>Etap projektu</labelProjectPhase>
+                           <labelMeetings>Spotkania</labelMeetings>
+                           <labelProjectDetails>Szczegóły projektu</labelProjectDetails>
+                           <messageMatchCodeNotFound>Nie znaleziono pasującego kodu</messageMatchCodeNotFound>
+                           <messageSelectProjectFirst>Proszę najpierw wybrać projekt</messageSelectProjectFirst>
+                           <labelMountingEnd>zakończeniu montażu</labelMountingEnd>
+                           <labelFaxBuildingSite>numer fax na budowie</labelFaxBuildingSite>
+                           <messageCancelAddingTrade>Przerwij dodawnie nowej pozycji</messageCancelAddingTrade>
+                           <labelKASalesPreviousYear>obroty ubiegłego roku</labelKASalesPreviousYear>
+                           <labelKASalesCurrent>bieżące obroty</labelKASalesCurrent>
+                           <labelKASalesLast12Month>Obroty ostatnich 12 miesięcy</labelKASalesLast12Month>
+                           <labelSalesBoniDate>Data ratingu</labelSalesBoniDate>
+                           <messagePasswordLengthMustBeGreaterThen>hasło musi się składać z co najmniej 5 znaków</messagePasswordLengthMustBeGreaterThen>
+                           <labelCustomerDetailsSpace>szczegóły dotyczęce klienta</labelCustomerDetailsSpace>
+                           <labelPropertyDetailsSpace>szczegóły obiektu</labelPropertyDetailsSpace>
+                           <labelOfferDetailsSpace>szczegóły oferty</labelOfferDetailsSpace>
+                           <labelProjectDetailsSpace>szczegóły projektu</labelProjectDetailsSpace>
+                           <labelShare>wyślij</labelShare>
+                           <labelBranch1>oddział</labelBranch1>
+                           <messageUnderConstruction>w trakcie budowy</messageUnderConstruction>
+                           <messagePhoneValidation>Międyznarodowy numer kierunkowy musi poprzedzać  "+", następnie spacja, numer kierunkowy danego miasta (bez "0") i numer telefonu</messagePhoneValidation>
+                           <labelBvoSent>wyślij</labelBvoSent>
+                           <labelBvoDraft>kontynuuj</labelBvoDraft>
+                           <messageEmailValidation>Proszę wprowdzić prawidłowy adres email</messageEmailValidation>
+                           <messageSelectEvent>wybierz wydarzenie</messageSelectEvent>
+                           <messageLargeNumber>Zbyt duża wartość</messageLargeNumber>
+                           <labelVisitingCardSubject>Karta wizyty</labelVisitingCardSubject>
+                           <messageBvoSave>czy chcesz zapisać BVO?</messageBvoSave>
+                           <labelMr>pan</labelMr>
+                           <labelBvoNotUploaded>BVO nie jest całkowicie załadowany</labelBvoNotUploaded>
+                           <labelBvoProcessed>skrzynka nadawcza</labelBvoProcessed>
+                           <labelWithRealized>z aktywnościami zrealizowanymi</labelWithRealized>
+                           <messageErrorOccured>Wystąpił nieprzewidziany błąd i Integra Mobile została zamknięta. Czy chcesz wysłac informację o błędzie? </messageErrorOccured>
+                           <messageEmailAddress>Proszę używać wyłącznie adresów mailowych mateco</messageEmailAddress>
+                           <labelNewProject>Założenie projektu</labelNewProject>
+                           <labelBusinessPhone>Biznes</labelBusinessPhone>
+                           <messageEnter>Wejście</messageEnter>
+                           <labelCurrentLanguage>Wybrany bieżacy język</labelCurrentLanguage>
+                           <labelOfflineCustomer>Wybierz klientów do zapamiętania offline</labelOfflineCustomer>
+                           <labelSetPages>Wybierz strony do oglądania offline</labelSetPages>
+                           <labelLogoutFromApp>Wyloguj</labelLogoutFromApp>
+                           <labelFirm>Firma</labelFirm>
+                           <labelTelefonnummern>Numery telefonów</labelTelefonnummern>
+                           <labelMobiltelefon>Komórka</labelMobiltelefon>
+                           <labelCurrentWeek>bieżący tydzień </labelCurrentWeek>
+                           <labelTrl>Telefon kontaktowy na budowie</labelTrl>
+                           <labelMontBegin>początek montażu</labelMontBegin>
+                           <labelAddTrade>Załóż budowę</labelAddTrade>
+                           <labelPlease>Proszę</labelPlease>
+                           <labelEmailBody>Wiadomość do odbiorcy jak powyżej</labelEmailBody>
+                           <messageAuftragSelectOne>Do założenia zlecenia proszę wybrac tylko jeden wpis.</messageAuftragSelectOne>
+                           <labelAnspMobile>Aplikacja mobilna</labelAnspMobile>
+                           <messageGerateTypNotAvailable>Dla tej grupy sprzetowej nie ma uzgodnień cenowych. Proszę wybrać ceny standardowe lub zmienić grupę sprzętu. </messageGerateTypNotAvailable>
+                           <labelSendDataToAdmin>Wyslij dane administratorowi</labelSendDataToAdmin>
+                           <labelSendDataForAnalysis>SWyslij dane do analizy </labelSendDataForAnalysis>
+                           <labelBVOUploadSize>Max wielkośc pliku do wysłania bez WLAN. Większe pliki będą wysyłane tylko poprzez sieć WLAN.</labelBVOUploadSize>
+                           <labelBVOUploadSizeHeading>Max wielkośc pliku do wysłania bez WLAN. Większe pliki będą wysyłane tylko poprzez sieć WLAN. </labelBVOUploadSizeHeading>
+                           <labelForSupportCallHeading>W przypadku problemów prosimy o kontakt</labelForSupportCallHeading>
+                           <labelForSupportCallInfo>W przypadku problemów prosimy o kontakt</labelForSupportCallInfo>
+                           <labelForSupportEmailHeading>W przypadku problemów prosimy o kontakt</labelForSupportEmailHeading>
+                           <labelForSupportEmailInfo>W przypadku problemów prosimy o kontakt</labelForSupportEmailInfo>
+                           <buttonSupportEmail>Wyślij wiadomość </buttonSupportEmail>
+                           <messageGewerkeAlreadyExists>Miejsce budowy już istnieje, proszę wybrać inne.</messageGewerkeAlreadyExists>
+
+                           <messageFailer>Warenkorb eintrag ist OFFLINE gespeichert. Wird automatisch übertragen.</messageFailer>
+                           <labelDisable>Pomoc przy wprowadzaniu</labelDisable>
+                           <labelReset>zurückstellen</labelReset>
+                           <labelWeekand>inkl. Wochenende</labelWeekand>
+
+                           <messageMatchcodeNotMatch>Fehler: Bitte den Kunde erneut laden!</messageMatchcodeNotMatch>
+                           <messagePleaseSelectLegalForm>Es sind nicht alle Pflichtfelder ausgefüllt! Bitte ergänzen!</messagePleaseSelectLegalForm>
+                        <labelCustomervon>Kunden von</labelCustomervon>
+
+                        <labelIndustrie>Industrie</labelIndustrie>
+                        <labelStrasse>Strasse</labelStrasse>
+                        <labelGenehmi>Genehmigungsgebühr</labelGenehmi>
+        	</Language>
+
+
+</data>

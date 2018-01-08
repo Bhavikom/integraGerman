@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_selection"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutListStandardPriceRowParentElement"
+        style="@style/padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.250"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/txtPricing2KaNrHeightGroupDataRow"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="height group" />
+
+            <TextView
+                android:id="@+id/txtPricing2KaNrListPriceDataRow"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="list Price" />
+
+            <TextView
+                android:id="@+id/txtPricing2KaNrSortDataRow"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="Sort" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearTags"
+            style="@style/padding_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/txtPricing2KaNrRDataRow"-->
+            <!--style="@style/TextView_Black"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="R" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/txtPricing2KaNrMDataRow"-->
+            <!--style="@style/TextView_Black"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:text="M" />-->
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

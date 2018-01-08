@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="@dimen/textview_font_size"
+                            android:id="@+id/labelCustomerNewMatchCode"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:drawablePadding="10dp"
+                            android:text="@string/Matchcode"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:maxLength="8"
+                            android:id="@+id/textCustomerNewMatachCode"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:gravity="right">
+
+                            <TextView
+
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewName1"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/icn_user"
+                                android:drawablePadding="10dp"
+                                android:text="Name 1 *"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:maxLength="40"
+                            android:id="@+id/textCustomerNewName1"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+                            android:paddingLeft="10dp"
+                            android:layout_marginLeft="@dimen/ten_sp"
+                            android:singleLine="true">
+
+                            <requestFocus />
+                        </EditText>
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:gravity="right">
+
+                            <TextView
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewName2"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/icn_user"
+                                android:drawablePadding="10dp"
+                                android:text="Name 2"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:maxLength="40"
+                            android:id="@+id/textCustomerNewName2"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+                            android:paddingLeft="10dp"
+                            android:layout_marginLeft="@dimen/ten_sp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:gravity="right">
+
+                            <TextView
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewName3"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/icn_user"
+                                android:drawablePadding="10dp"
+                                android:text="Name 3"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:maxLength="40"
+                            android:id="@+id/textCustomerNewName3"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+                            android:paddingLeft="10dp"
+                            android:layout_marginLeft="@dimen/ten_sp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textSize="@dimen/textview_font_size"
+                            android:id="@+id/labelCustomerNewRoad"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:drawableLeft="@drawable/icn_blank"
+                            android:drawablePadding="10dp"
+                            android:text="Road"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:maxLength="40"
+                            android:id="@+id/textCustomerNewRoad"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textSize="@dimen/textview_font_size"
+                            android:id="@+id/labelCustomerNewZipcode"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:drawableLeft="@drawable/icn_blank"
+                            android:drawablePadding="10dp"
+                            android:text="Zip Code"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+
+                            android:id="@+id/textCustomerNewZipCode"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+                            android:digits="0,1,2,3,4,5,6,7,8,9,,"
+                            android:inputType="text"
+                            android:maxLength="5"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textSize="@dimen/textview_font_size"
+                            android:id="@+id/labelCustomerNewPlace"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:drawableLeft="@drawable/icn_blank"
+                            android:drawablePadding="10dp"
+                            android:text="Place"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:maxLength="30"
+                            android:id="@+id/textCustomerNewPlace"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textSize="@dimen/textview_font_size"
+                            android:id="@+id/labelCustomerNewCountry"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:drawableLeft="@drawable/icn_blank"
+                            android:drawablePadding="10dp"
+                            android:text="Country"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.65"
+
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/spinnerCustomerNewCountry"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+
+                                android:singleLine="true" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.50"
+                            android:gravity="right">
+
+                            <TextView
+                                android:text="Telefon"
+                                android:id="@+id/labelCustomerNewPhone"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/icn_phone"
+
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textStyle="normal" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:maxLength="25"
+                            android:id="@+id/textCustomerNewPhone"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="0dp"
+                            android:layout_weight="0.6"
+                            android:hint="Telefon"
+                            android:inputType="phone"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+                        <ImageView
+                            android:id="@+id/imageViewCall"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/icn_dial" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:gravity="right">
+
+                            <TextView
+                                android:id="@+id/labelCustomerNewFax"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/icn_fax"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:maxLength="25"
+                            android:id="@+id/textCustomerNewFax"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.65"
+                            android:drawablePadding="5dp"
+                            android:hint="Telefax"
+                            android:inputType="phone"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:gravity="right">
+
+                            <TextView
+                                android:id="@+id/labelCustomerNewEmail"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/icn_email"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:maxLength="50"
+                            android:id="@+id/textCustomerNewEmail"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.65"
+                            android:hint="E-Mail"
+                            android:inputType="textEmailAddress"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/customer_new_row_height"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.40"
+                            android:gravity="right">
+
+                            <TextView
+                                android:id="@+id/labelCustomerNewWebsite"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/icn_website"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:maxLength="50"
+                            android:id="@+id/textCustomerNewWebsite"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.65"
+                            android:hint="Webseite"
+                            android:inputType="textUri"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.01" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0.85"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/customer_new_row_height"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textStyle="bold"
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewLegalForm"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.500"
+                                android:text="Legal Form"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <LinearLayout
+                                style="@style/EditTextCustNew_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.8"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingLeft="10dp">
+
+                                <Spinner
+                                    android:id="@+id/spinnerCustomerNewLegalForm"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:singleLine="true" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/customer_new_row_height"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewOwner"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.500"
+                                android:text="Owner"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <EditText
+                                android:maxLength="30"
+                                android:id="@+id/textCustomerNewOwner"
+                                style="@style/EditTextCustNew_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.8"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/customer_new_row_height"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewVatnr"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.500"
+                                android:text="VATnr"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <EditText
+                                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-,."
+                                android:maxLength="11"
+                                android:id="@+id/textCustomerNewVatNo"
+                                style="@style/EditTextCustNew_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.8"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/customer_new_row_height"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewOrderNo"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.500"
+                                android:text="Order No."
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <EditText
+                                android:maxLength="30"
+                                android:id="@+id/textCustomerNewOrderNo"
+                                style="@style/EditTextCustNew_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.8"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true" />
+                        </LinearLayout>
+
+                        <!--<LinearLayout-->
+                        <!--style="@style/padding_style"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/labelCustomerNewOrderBacklog"-->
+                        <!--style="@style/TextView_Black_Right"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="0.3"-->
+                        <!--android:text="Order Backlog"-->
+                        <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
+                        <!--<EditText-->
+                        <!--android:id="@+id/textCustomerNewOrderBackLog"-->
+                        <!--style="@style/EditTextCustNew_bg"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_weight="0.7"-->
+                        <!--android:paddingLeft="10dp"-->
+                        <!--android:singleLine="true" />-->
+                        <!--</LinearLayout>-->
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/customer_new_row_height"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewSalesPotential"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.500"
+                                android:text="Sales potential"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <EditText
+                                android:inputType="phone"
+                                android:id="@+id/textCustomerNewSalesPotential"
+                                style="@style/EditTextCustNew_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.8"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/customer_new_row_height"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textStyle="bold"
+                                android:textSize="@dimen/textview_font_size"
+                                android:id="@+id/labelCustomerNewBranch"
+                                style="@style/TextView_Black_Right"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.500"
+                                android:text="Branch"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <LinearLayout
+                                style="@style/EditTextCustNew_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.8"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingLeft="10dp">
+
+                                <Spinner
+                                    android:id="@+id/spinnerCustomerNewBranch"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:singleLine="true" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_weight="0.4"
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"/>
+                            <LinearLayout
+                                android:layout_marginLeft="@dimen/ten_sp"
+                                style="@style/EditTextCustNew_bg"
+                                android:layout_weight="0.6"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+                            <RadioGroup
+                                android:gravity="center_vertical"
+                                android:id="@+id/radioGrp"
+                                style="@style/padding_style"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginRight="3dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:paddingLeft="5dp"
+                                    android:layout_weight="0.5"
+                                    android:id="@+id/rdBtnIndustrie"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="0dp"
+                                    android:gravity="left|center_vertical"
+                                    android:text="Industrie" />
+
+                                <RadioButton
+                                    android:paddingLeft="5dp"
+                                    android:layout_weight="0.5"
+                                    android:id="@+id/rdBtnStrasse"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="0dp"
+                                    android:gravity="left|center_vertical"
+                                    android:text="Strasse" />
+                            </RadioGroup>
+                                </LinearLayout>
+                            <!--<LinearLayout
+                                android:weightSum="1"
+                                android:layout_weight="0.500"
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:gravity="center"
+                                android:layout_height="match_parent">
+                                <TextView
+
+                                    android:layout_weight="0.5"
+                                    android:gravity="right|center_vertical"
+                                    android:text="Industrie"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    />
+                                <TextView
+                                    android:layout_weight="0.5"
+                                    android:gravity="right|center_vertical"
+                                    android:text="Strasse"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    />
+                            </LinearLayout>-->
+
+                        </LinearLayout>
+                        <!--<LinearLayout-->
+                        <!--style="@style/padding_style"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/labelCustomerNewKanr"-->
+                        <!--style="@style/TextView_Black_Right"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="0.3"-->
+                        <!--android:text="KANr"-->
+                        <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
+                        <!--<EditText-->
+                        <!--android:id="@+id/textCustomerNewKaNr"-->
+                        <!--style="@style/EditTextCustNew_bg"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_weight="0.7"-->
+                        <!--android:paddingLeft="10dp"-->
+                        <!--android:singleLine="true" />-->
+                        <!--</LinearLayout>-->
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.01" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</ScrollView>

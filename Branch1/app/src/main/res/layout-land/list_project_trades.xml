@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/EditText_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/labelProjectTradeMatchCode"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Match Code" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/imageSortMatchCode"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <TextView
+                    android:id="@+id/labelProjectTradeGewerk"
+                    style="@style/TextView_Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp"
+                    android:text="Trades" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/imageSortGewerk"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="#777777" />
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/project_search_trade_widget_height"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/listViewProjectTrades"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice" />
+
+            </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

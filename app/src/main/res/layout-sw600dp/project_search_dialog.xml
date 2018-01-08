@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/linearMain">
+
+
+        <HorizontalScrollView
+            android:scrollbarThumbHorizontal="@color/bg_tab_indicator"
+            android:fadeScrollbars="false"
+            android:id="@+id/horizontalScrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"
+                        android:id="@+id/btnSearch"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:background="@drawable/icn_search"/>
+                    <Button
+                        android:layout_toLeftOf="@+id/btnSearch"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginLeft="15sp"
+                        android:id="@+id/btnDone"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:background="@drawable/icn_done"/>
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchMatchCode"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchDescription"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchTypeOfProject"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchStreetAddress"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchPlace"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchFrom"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchTo"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textProjectSearchEmployee"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchMatchCode"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Matchcode"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchDescription"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Description"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchTypeOfProject"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Type of Project"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchStreetAddress"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Street Address"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchPlace"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Place"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchFrom"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="From"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchTo"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="To"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/labelProjectSearchEmployee"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Employee"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ListView
+                        android:layout_weight="1"
+                        android:id="@+id/listViewProjects"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp">
+
+                    </ListView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+</LinearLayout>
+
+

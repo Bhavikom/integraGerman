@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:visibility="gone"
+            android:layout_margin="5sp"
+            android:id="@+id/btnSearch"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:background="@drawable/icn_search"/>
+
+    </LinearLayout>
+    <HorizontalScrollView
+        android:fillViewport="false"
+        android:scrollbarThumbHorizontal="@color/bg_tab_indicator"
+        android:fadeScrollbars="false"
+        android:id="@+id/horizontal3"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:weightSum="1.78"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="number"
+                    android:id="@+id/textCustomerSearchCustomerNo"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.12"
+                    android:layout_height="match_parent"
+                    android:maxLength="8"
+                    android:gravity="center"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="number"
+                    android:id="@+id/textCustomerSearchKanr"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.10"
+                    android:layout_height="match_parent"
+                    android:maxLength="5"
+                    android:gravity="center"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+                <FrameLayout android:layout_width="0dp"
+                    android:layout_weight="0.14"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                        android:id="@+id/textCustomerSearchMatchCode"
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        style="@style/EditText_customer_search_bg"
+                        android:layout_height="match_parent"
+                        android:imeOptions="flagNoExtractUi|actionSearch"/>
+                    <ProgressBar
+                        android:id="@+id/pb_loading_indicator"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:visibility="gone"/>
+                </FrameLayout>
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:id="@+id/textCustomerSearchName1"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:gravity="center"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:id="@+id/textCustomerSearchRoad"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:gravity="center"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="number"
+                    android:id="@+id/textCustomerSearchZipCode"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.10"
+                    android:maxLength="5"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:id="@+id/textCustomerSearchPlace"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.12"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="phone"
+                    android:id="@+id/textCustomerSearchTel"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="text"
+                    android:id="@+id/textCustomerSearchUstIDNr"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    style="@style/EditTextCustNew_bg"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18">
+
+                    <Spinner
+                        android:id="@+id/spinnerCustomerContactPersonSalutation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="text"
+                    android:id="@+id/textCustomerSearchVorName"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:gravity="center"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="text"
+                    android:id="@+id/textCustomerSearchNachName"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:gravity="center"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:inputType="text"
+                    android:id="@+id/textCustomerSearchAnspTelefon"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="1.78"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchCustomerNo"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.12"
+                    android:layout_height="match_parent"
+                    android:ellipsize="marquee"
+                    android:textStyle="bold"
+                    android:text="Cutomer No." />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchKanr"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.10"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:text="KaNr" />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchMatchCode"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.14"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:text="Match Code" />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchName1"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:text="Name 1" />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchRoad"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:text="Road" />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchZipCode"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.10"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="Zip Code" />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchPlace"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.12"
+                    android:hint="Place" />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchTel"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:text="Tel" />
+                <TextView
+                    android:id="@+id/labelCustomerSearchUstIDNr"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:text="Tel" />
+                <TextView
+                    android:id="@+id/labelCustomerSearchAnrede"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:text="Tel" />
+                <TextView
+                    android:id="@+id/labelCustomerSearchVorname"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:text="Tel" />
+                <TextView
+                    android:id="@+id/labelCustomerSearchNachname"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:maxLength="11"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"
+                    android:text="Tel" />
+
+                <TextView
+                    android:id="@+id/labelCustomerSearchAnspTelephone"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:ellipsize="marquee"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:text="Tel" />
+
+            </LinearLayout>
+            <!--<FrameLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView
+                    android:id="@+id/textCustomerSearchMatchCode"
+                    android:inputType="textCapSentences"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:imeOptions="flagNoExtractUi|actionSearch"/>
+                <ProgressBar
+                    android:id="@+id/pb_loading_indicator"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"/>
+            </FrameLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+
+                <ListView
+                    android:layout_weight="1"
+                    android:id="@+id/listviewContactPersonList"
+                    style="@style/EditText_customer_search_bg"
+                    android:layout_width="match_parent"
+                    android:listSelector="@drawable/listitem_selector"
+                    android:choiceMode="singleChoice"
+                    android:layout_height="0sp">
+
+                </ListView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:minHeight="@dimen/list_item_height_big"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/labelItemNL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="3"
+            android:maxEms="3"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemAngebot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="8"
+            android:maxEms="8"
+            style="@style/listItem"/>
+
+        <TextView
+            android:id="@+id/labelItemErstellt_am"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:maxEms="10"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemHohengruppe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="12"
+            android:maxEms="12"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemGeraetetyp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="6"
+            android:maxEms="6"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemAnzahlGeraete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="6"
+            android:maxEms="6"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemMietdauer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="6"
+            android:maxEms="6"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemStaffel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="18"
+            android:maxEms="18"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemPreis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="5"
+            android:maxEms="5"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemHaftb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="6"
+            android:maxEms="6"
+            style="@style/listItem" />
+
+        <TextView
+            android:id="@+id/labelItemStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="12"
+            android:minEms="12"
+            style="@style/listItem" />
+
+    </LinearLayout>
+
+</LinearLayout>

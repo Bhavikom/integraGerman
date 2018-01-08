@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProjectTradeName1"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Name1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp">
+
+                <EditText
+                    android:id="@+id/textProjectTradeName1"
+                    style="@style/EditText_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:maxLength="20"
+                    android:minHeight="@dimen/project_search_trade_widget_height" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProjectTradeName2"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Name2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp">
+
+
+                <EditText
+                    android:id="@+id/textProjectTradeName2"
+                    style="@style/EditText_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:minHeight="@dimen/project_search_trade_widget_height" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProjectTradeKundenNr"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Customer-number"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7">
+
+                    <EditText
+                        android:id="@+id/textProjectTradeKundenNr"
+                        style="@style/EditText_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:minHeight="@dimen/project_search_trade_widget_height" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/labelProjectTradeRoad"
+                        style="@style/TextView_Black_Right"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:text="Road"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/textProjectTradeRoad"
+                        style="@style/EditText_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:minHeight="@dimen/project_search_trade_widget_height" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProjectTradeZipCode"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Zip-code"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7">
+
+                    <EditText
+                        android:id="@+id/textProjectTradeZipCode"
+                        style="@style/EditText_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:minHeight="@dimen/project_search_trade_widget_height" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/labelProjectTradePlace"
+                        style="@style/TextView_Black_Right"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:text="Place"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/textProjectTradePlace"
+                        style="@style/EditText_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:minHeight="@dimen/project_search_trade_widget_height" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.31"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/labelProjectTradePhone"
+                    style="@style/TextView_Black_Right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icn_phone"
+                    android:drawablePadding="5dp"
+                    android:text="Phone"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7">
+
+                    <EditText
+                        android:id="@+id/textProjectTradePhone"
+                        style="@style/EditText_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:minHeight="@dimen/project_search_trade_widget_height" />
+
+                    <ImageButton
+                        android:id="@+id/imageButtonCallPhone"
+                        style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icn_dial" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.21"
+                        android:gravity="right">
+
+                        <TextView
+                            android:id="@+id/labelProjectTradeFax"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/icn_fax"
+                            android:drawablePadding="5dp"
+                            android:text="Fax"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/textProjectTradeFax"
+                        style="@style/EditText_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:minHeight="@dimen/project_search_trade_widget_height" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProjectTradeTrade"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Trades"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.9"
+                android:background="@drawable/white_border_click"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/project_search_trade_widget_height">
+
+                <Spinner
+                    android:id="@+id/spinnerProjectDetailTradeTrade"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProjectTradeContactPerson"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Ansp."
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.9"
+                android:background="@drawable/white_border_click"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/project_search_trade_widget_height">
+
+
+                <Spinner
+                    android:id="@+id/spinnerProjectDetailTradeContactPerson"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.9" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textMont"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Mont. begin"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/labelTradeStartDate"
+                    style="@style/EditText_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:editable="false"
+                    android:gravity="left|center"
+                    android:minHeight="@dimen/project_search_trade_widget_height"
+                    android:singleLine="true"
+                    android:text="" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonTradeStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:src="@drawable/icn_date" />
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProjectDetailTradeMountingEnd"
+                style="@style/TextView_Black_Right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Mounting end"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/textProjectDetailTradeMountingEnd"
+                    style="@style/EditText_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:editable="false"
+                    android:gravity="left|center"
+                    android:minHeight="@dimen/project_search_trade_widget_height"
+                    android:singleLine="true"
+                    android:text="" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonTradeEndDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:src="@drawable/icn_date" />
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.31"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/labelProjectDetailTelephoneConstruction"
+                    style="@style/TextView_Black_Right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icn_phone"
+                    android:drawablePadding="5dp"
+                    android:text="Tel. contruction"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp">
+
+                <EditText
+                    android:id="@+id/textProjectDetailTelephoneConstruction"
+                    style="@style/EditText_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:inputType="phone"
+                    android:maxLength="25"
+                    android:minHeight="@dimen/project_search_trade_widget_height" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonCallTelephone"
+                    style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icn_dial" />
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/project_trade_row_height"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.31"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/labelProjectDetailTradeFaxBuildingSite"
+                    style="@style/TextView_Black_Right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icn_fax"
+                    android:drawablePadding="5dp"
+                    android:text="Fax building site"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp">
+
+                <EditText
+                    android:id="@+id/textProjectDetailTradeFaxBuildingSite"
+                    style="@style/EditText_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:inputType="phone"
+                    android:maxLength="25"
+                    android:minHeight="@dimen/project_search_trade_widget_height" />
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.78" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_selection"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        style="@style/padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtPricing2KaNrMoreThenHoehengruppeDataHeaderRow"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="height group"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/txtPricing2KaNrMoreThenListenpreisDataHeaderRow"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="list Price"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/txtPricing2KaNrMoreThenSortDataHeaderRow"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sort"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearMoreThenHeaderTags"
+            style="@style/padding_style"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/txtPricing2KaNrRDataRow"-->
+            <!--style="@style/TextView_Black"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="R" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/txtPricing2KaNrMDataRow"-->
+            <!--style="@style/TextView_Black"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:text="M" />-->
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

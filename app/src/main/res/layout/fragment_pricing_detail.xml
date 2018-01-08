@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context="com.example.ssoft_13.ssoftdemo.MainActivity">
+
+    <ViewStub
+        android:id="@+id/stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/layoutLoadedCustomer"
+        android:layout="@layout/list_item_customer_loaded" />
+
+    <LinearLayout
+        android:id="@+id/linertop"
+        android:layout_below="@+id/stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/margin_left_right_xxxsmall">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Einsatzinformation"
+            android:textSize="@dimen/login_textsize"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/linertop"
+        android:id="@+id/linearBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_left_right_xxxsmall"
+
+        android:orientation="vertical">
+
+
+
+        <CheckBox
+            android:visibility="gone"
+            style="@style/padding_style"
+            android:button="@drawable/checkbox_bg"
+            android:id="@+id/checkBoxAnlieferung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkbox1_text"
+            android:textColor="@color/colorGreen"
+            android:textSize="@dimen/twenty_five_sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- start first row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_xxxsmall">
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxKann"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox2_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:minHeight="@dimen/edittext_height"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:scrollbars="vertical"
+                            android:maxLines="3"
+                            android:maxLength="240"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/edittextKannDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                            style="@style/EditText_Comman_white_bg"
+                            android:paddingLeft="@dimen/ten_sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+                <!-- end first row-->
+                <!-- start second row-->
+                <LinearLayout
+
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_small">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxLieferung"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox3_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:minHeight="@dimen/edittext_height"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/EditText_Comman_white_bg">
+                        <EditText
+                            android:maxLength="240"
+                            android:editable="false"
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack"
+                            android:inputType="none"
+                            android:background="@android:color/transparent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            style="@style/EditText_Comman_white_bg"
+                            android:minHeight="@dimen/edittext_height"
+                            android:id="@+id/textviewDateStart"
+                            />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/imgBtnFromDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5sp"
+                        android:scaleType="fitXY"
+                        android:background="@null"
+                        android:src="@drawable/icn_date" />
+
+                    <LinearLayout
+                        android:minHeight="@dimen/edittext_height"
+                        android:layout_weight="0.5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_marginLeft="@dimen/margin_left_right_xxxsmall">
+                    <EditText
+                        android:maxLength="240"
+                        android:editable="false"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:inputType="none"
+                        android:text=""
+                        android:id="@+id/textviewHourStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/edittext_height"
+                        style="@style/EditText_Comman_white_bg"
+                        />
+                        </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/imgBtnstartTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5sp"
+                        android:scaleType="fitXY"
+                        android:background="@null"
+                        android:src="@drawable/time" />
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="bis"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"/>
+
+                </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_xxxsmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_weight="0.6"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp">
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            style="@style/EditText_Comman_white_bg"
+                            >
+                            <EditText
+                                android:maxLength="240"
+                                android:background="@android:color/transparent"
+                                android:editable="false"
+                                android:gravity="center"
+                                android:textColor="@color/colorBlack"
+                                android:inputType="none"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:minHeight="@dimen/edittext_height"
+                                android:id="@+id/textviewDateEnd"
+                                />
+                        </LinearLayout>
+                        <ImageButton
+                            android:scaleType="fitXY"
+                            android:id="@+id/imgBtnToDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5sp"
+                            android:background="@null"
+                            android:src="@drawable/icn_date" />
+                        <LinearLayout
+                            android:layout_weight="0.5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            style="@style/EditText_Comman_white_bg"
+                            android:layout_marginLeft="@dimen/margin_left_right_xxxsmall">
+                            <EditText
+                                android:maxLength="240"
+                                android:background="@android:color/transparent"
+                                android:editable="false"
+                                android:gravity="center"
+                                android:textColor="@color/colorBlack"
+                                android:id="@+id/textviewHourEnd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="@dimen/edittext_height"
+                                android:inputType="none"
+                                android:lines="1"
+                                style="@style/EditText_Comman_white_bg"/>
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/imgBtnendTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5sp"
+                            android:scaleType="fitXY"
+                            android:background="@null"
+                            android:src="@drawable/time" />
+                        <TextView
+                            android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- end second row-->
+                <!-- start third row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_small">
+
+                    <CheckBox
+                        android:textSize="@dimen/checkbox_text_size"
+                        android:button="@drawable/checkbox_bg"
+                        style="@style/padding_style"
+                        android:id="@+id/checkBoxVoranmeldung"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox4_text"
+
+                        />
+                    <RelativeLayout
+                        android:visibility="visible"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        >
+                        <EditText
+                            android:minHeight="@dimen/edittext_height"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:scrollbars="vertical"
+                            android:maxLines="3"
+                            android:maxLength="240"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/edittextVoranmeldungDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/imageviewQuetionMark1"
+                            style="@style/EditText_Comman_white_bg"
+
+                            android:paddingLeft="@dimen/ten_sp" />
+                        <ImageView
+                            android:visibility="gone"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageviewQuetionMark1"
+                            android:src="@drawable/icn_help"/>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+                <!-- end third row-->
+                <!-- start fourth row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_small">
+
+                    <CheckBox
+                        android:button="@drawable/checkbox_bg"
+                        style="@style/padding_style"
+                        android:id="@+id/checkBoxBenachrichtgung"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox5_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:minHeight="@dimen/edittext_height"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:scrollbars="vertical"
+                            android:maxLines="3"
+                            android:maxLength="240"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/edittextBenachrichDetial"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/imageviewQuetionMark2"
+                            android:paddingLeft="@dimen/ten_sp"
+                            style="@style/EditText_Comman_white_bg"/>
+                        <ImageView
+                            android:visibility="gone"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageviewQuetionMark2"
+                            android:src="@drawable/icn_help"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <!-- end fourth row-->
+                <!-- start fifth row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_small">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxRampena"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox6_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+
+                </LinearLayout>
+                <!-- end fifth row-->
+                <!-- start sixth row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_small">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxsonstige"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox7_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <EditText
+                        android:minHeight="@dimen/edittext_height"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:scrollbars="vertical"
+                        android:maxLines="3"
+                        android:maxLength="240"
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/edittextSonstigeDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/EditText_Comman_white_bg"
+                        android:paddingLeft="@dimen/ten_sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+                <!-- end sixth row-->
+                <!-- start seventh row-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_small"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        style="@style/EditTextCustNew_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6">
+                    <Spinner
+                        android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                        android:id="@+id/spinnerLadefahrzeug"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fiftee_sp" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_size_xxsmall"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox8_text"
+                        />
+
+                </LinearLayout>
+                <!-- end seventh row-->
+                <!-- start eight row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ten_sp"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                    android:layout_marginTop="@dimen/margin_left_right_small">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxEinweisung"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox9_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+
+                </LinearLayout>
+                <!-- end eight row-->
+                <!-- start ninth row-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ten_sp"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxSelbstfaher"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox10_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/fifteen_sp"/>
+
+                </LinearLayout>
+                <!-- end ninth row-->
+            </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearBottom"
+        android:layout_marginLeft="@dimen/twenty_sp"
+        style="@style/EditText_Comman_white_bg"
+        android:text="Submit"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/twenty_sp"
+        android:textSize="@dimen/twenty_sp"/>
+
+</LinearLayout>

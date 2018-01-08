@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="20sp"
+    android:layout_marginRight="20sp"
+    android:background="@drawable/popup_background"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+
+                style="@style/Button_Common_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:gravity="right">
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/buttonDone"
+                    android:background="@drawable/icn_done"
+                    android:layout_marginRight="25dp"/>
+                <Button
+                    android:layout_marginRight="15dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/buttonEdit"
+                    android:background="@drawable/icn_edit"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20sp"
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailActivity"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.250"
+                    android:text="Type"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_marginRight="50sp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.7"
+                    android:background="@drawable/white_border_click">
+
+                    <Spinner
+                        android:id="@+id/spinnerProjectActivityActivityType"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailTopic"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.250"
+                    android:text="Topic"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_marginRight="50sp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.7"
+                    android:background="@drawable/white_border_click">
+
+                    <Spinner
+                        android:id="@+id/spinnerProjectActivityActivityTopic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:gravity="center"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailStartDate"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.243"
+                    android:text="Date"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="0dp">
+
+                    <EditText
+
+                        android:id="@+id/labelProjectActivityStartDate"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.22"
+                        android:editable="false"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75">
+
+                        <ImageButton
+                            android:scaleType="fitXY"
+                            android:id="@+id/imageButtonProjectActivityStartDate"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@null"
+                            android:src="@drawable/icn_date" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:gravity="center"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailStartTime"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.243"
+                    android:text="Start Time "
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="0dp">
+
+                    <EditText
+
+                        android:gravity="center"
+                        android:id="@+id/labelProjectActivityStartTime"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:editable="false"
+                        android:singleLine="true" />
+
+                    <LinearLayout
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75">
+                        <ImageButton
+                            android:scaleType="fitXY"
+                            android:id="@+id/imageButtonStartTime"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@null"
+                            android:src="@drawable/time" />
+                    </LinearLayout>
+
+
+
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:gravity="center"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailEndTime"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.243"
+                    android:text="Date"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="normal" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="0dp">
+
+                    <EditText
+                        android:gravity="center"
+                        android:id="@+id/labelProjectActivityEndTime"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:editable="false"
+
+                        android:singleLine="true"
+                        android:text="" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75">
+
+                        <ImageButton
+                            android:scaleType="fitXY"
+                            android:id="@+id/imageButtonEndTime"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@null"
+                            android:src="@drawable/time" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:gravity="center"
+
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailOffer"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.282"
+                    android:text="Angebot"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.45"
+                    android:background="@drawable/white_border_click">
+
+                    <Spinner
+                        android:id="@+id/spinnerProjectActivityOffer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.40" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:gravity="center"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailKunde"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.250"
+                    android:text="Kunde"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_marginRight="50sp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewProjectActivityKunde"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:editable="false"
+                        android:gravity="left|center"
+                        android:singleLine="true"
+                        android:text=""></TextView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/buttonAddProjectActivityKunde"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="10dp"
+                            android:src="@drawable/icn_help" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:gravity="center"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/labelProject"
+                style="@style/TextView_Comman_Black_Right_Field"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.250"
+                android:text="Projekt"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_marginRight="50sp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/textViewProject"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:editable="false"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text=""></TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/buttonAddProject"
+                        style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="10dp"
+                        android:src="@drawable/icn_help" />
+
+                </LinearLayout>
+            </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/project_activity_row_height"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/labelProjectActivityDetailRealized"
+                        style="@style/TextView_Comman_Black_Right_Field"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.300"
+                        android:text="Realized"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="-5dp">
+
+                                <CheckBox
+                                    android:id="@+id/checkBoxProjectActivityRealized"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.3"
+                                    android:button="@drawable/checkbox_bg" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="0dp">
+
+                            <TextView
+                                android:id="@+id/labelProjectActivityDetailFixedTimes"
+                                style="@style/TextView_Comman_Black_Right_Field"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.180"
+                                android:text="Fixed times"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.4">
+
+                                <CheckBox
+                                    android:id="@+id/checkBoxProjectActivityFixedTimes"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.4"
+                                    android:button="@drawable/checkbox_bg" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--style="@style/padding_style"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+            <!--style="@style/TextView_Black_Right"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.3"-->
+            <!--android:text="States ADM"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.9"-->
+            <!--android:paddingLeft="10dp">-->
+
+            <!--<Spinner-->
+            <!--android:id="@+id/"-->
+            <!--style="@style/Spinner_bg"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.9" />-->
+            <!--</LinearLayout>-->
+
+
+            <!--</LinearLayout>-->
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="40sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailContacts"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.300"
+                    android:text="Contacts"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+
+
+                    <LinearLayout
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:minHeight="40dp"
+                        android:background="@drawable/white_border">
+                        <ListView
+                            android:id="@+id/listProjectActivityContacts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:choiceMode="singleChoice"
+                            android:minHeight="40dp"
+                            android:listSelector="@drawable/listitem_selector"/>
+
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_marginRight="50sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/buttonAddProjectActivityContacts"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="10dp"
+                            android:src="@drawable/icn_add" />
+
+                        <ImageButton
+                            android:id="@+id/buttonRemoveProjectActivityContacts"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="10dp"
+                            android:src="@drawable/icn_minus" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="40sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelProjectActivityDetailEmployee"
+                    style="@style/TextView_Comman_Black_Right_Field"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.300"
+                    android:text="Contacts"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:minHeight="40dp"
+                        android:background="@drawable/white_border">
+                        <ListView
+                            android:id="@+id/listViewProjectActivityEmployee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:choiceMode="singleChoice"
+                            android:minHeight="40dp"
+                            android:listSelector="@drawable/listitem_selector"/>
+
+
+                    </LinearLayout>
+
+
+
+
+
+                    <LinearLayout
+                        android:layout_marginRight="50sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/buttonAddProjectActivityEmployee"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="10dp"
+                            android:src="@drawable/icn_add" />
+
+                        <ImageButton
+                            android:id="@+id/buttonRemoveProjectActivityEmployee"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="10dp"
+                            android:src="@drawable/icn_minus" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="20sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/buttonDialogAddTradeCancel"
+                    style="@style/Button_Common_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Cancel"
+                    android:layout_marginBottom="10sp"
+                     android:paddingLeft="80sp"
+                    android:paddingRight="80sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/actionBack"
+        android:icon="@drawable/icn_left_arrow"
+        android:orderInCategory="100"
+        android:title="@string/action_back"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/actionWrong"
+        android:icon="@drawable/icn_delete"
+        android:orderInCategory="100"
+        android:title="@string/action_wrong"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/actionRight"
+        android:icon="@drawable/icn_done"
+        android:orderInCategory="100"
+        android:title="@string/action_right"
+        app:showAsAction="always" />
+
+    <!--<item
+        android:title="@string/blank"
+        android:icon="@drawable/icn_blank"
+        android:orderInCategory="100"
+        app:showAsAction="always" />-->
+
+    <item
+        android:id="@+id/actionSettings"
+        android:icon="@drawable/icn_setting"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="always" />
+</menu>

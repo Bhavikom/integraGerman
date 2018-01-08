@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context="com.example.ssoft_13.ssoftdemo.MainActivity">
+
+    <ViewStub
+        android:id="@+id/stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/layoutLoadedCustomer"
+        android:layout="@layout/list_item_customer_loaded" />
+
+    <LinearLayout
+        android:id="@+id/linertop"
+        android:layout_below="@+id/stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10sp">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Einsatzinformation"
+            android:textSize="@dimen/fourtee_sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/linertop"
+        android:id="@+id/linearBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten_sp"
+
+        android:orientation="vertical">
+
+
+
+        <CheckBox
+            android:visibility="gone"
+            style="@style/padding_style"
+            android:button="@drawable/checkbox_bg"
+            android:id="@+id/checkBoxAnlieferung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkbox1_text"
+            android:textColor="@color/colorGreen"
+            android:textSize="@dimen/twenty_five_sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           >
+
+            <LinearLayout
+                style="@style/EditText_Comman_white_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+
+                android:orientation="vertical">
+
+                <!-- start first row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxKann"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox2_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+
+                    <EditText
+                        android:minHeight="@dimen/thirtee_five_sp"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:scrollbars="vertical"
+                        android:maxLines="3"
+                        android:maxLength="240"
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/edittextKannDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_sp"
+                        android:layout_marginRight="@dimen/ten_sp"
+                        style="@style/EditText_Comman_white_bg"
+
+                        android:paddingLeft="@dimen/ten_sp" />
+                </LinearLayout>
+                <!-- end first row-->
+                <!-- start second row-->
+                <LinearLayout
+
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thirtee_five_sp"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxLieferung"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox3_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/hundred_twenty_sp"
+                        android:layout_height="wrap_content"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_marginLeft="@dimen/twenty_sp">
+                        <EditText
+                            android:editable="false"
+                            android:maxLength="240"
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack"
+                            android:inputType="none"
+                            android:background="@android:color/transparent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:text=""
+
+                            android:id="@+id/textviewDateStart"
+                            />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/imgBtnFromDate"
+                        android:layout_width="@dimen/thirtee_sp"
+                        android:layout_height="@dimen/thirtee_sp"
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:scaleType="fitXY"
+                        android:background="@null"
+                        android:src="@drawable/icn_date" />
+                    <!--<Spinner
+                        android:drawSelectorOnTop="true"
+                        android:id="@+id/spinner1"
+                        android:layout_width="@dimen/hundred_sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/twenty_sp"
+                        android:layout_marginRight="@dimen/ten_sp"
+                        android:background="@drawable/edittext_background"
+                        android:prompt="@string/defaultText"
+
+                        android:textSize="@dimen/twenty_sp"/>-->
+                    <LinearLayout
+                        android:layout_width="@dimen/seventee_sp"
+                        android:layout_height="wrap_content"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_marginLeft="@dimen/ten_sp">
+                    <EditText
+                        android:maxLength="240"
+                        android:editable="false"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:inputType="none"
+                        android:text=""
+                        android:id="@+id/textviewHourStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                        </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/imgBtnstartTime"
+                        android:layout_width="@dimen/thirtee_sp"
+                        android:layout_height="@dimen/thirtee_sp"
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:scaleType="fitXY"
+                        android:background="@null"
+                        android:src="@drawable/time" />
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/textviewMinuteStart"
+                        android:layout_width="@dimen/fiftee_sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:layout_marginRight="@dimen/ten_sp"
+                        style="@style/EditText_Comman_white_bg"
+                        android:gravity="center"
+                        android:maxLength="2"
+
+                        android:textSize="@dimen/twenty_sp"/>
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="bis"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"/>
+
+                </LinearLayout>
+                <!-- end second row-->
+                <LinearLayout
+
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thirtee_five_sp"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <View
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:visibility="invisible"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox3_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/fifteen_sp"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/hundred_twenty_sp"
+                        android:layout_height="wrap_content"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_marginLeft="@dimen/twenty_sp">
+                        <EditText
+                            android:maxLength="240"
+                            android:background="@android:color/transparent"
+                            android:editable="false"
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack"
+                            android:inputType="none"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:text=""
+
+                            android:id="@+id/textviewDateEnd"
+                            />
+                    </LinearLayout>
+                    <ImageButton
+
+                        android:id="@+id/imgBtnToDate"
+                        android:layout_width="@dimen/thirtee_sp"
+                        android:layout_height="@dimen/thirtee_sp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:src="@drawable/icn_date" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/seventee_sp"
+                        android:layout_height="wrap_content"
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_marginLeft="@dimen/ten_sp">
+                        <EditText
+                            android:maxLength="240"
+                            android:background="@android:color/transparent"
+                            android:editable="false"
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/textviewHourEnd"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="none"
+                            android:lines="1"
+                            />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/imgBtnendTime"
+                        android:layout_width="@dimen/thirtee_sp"
+                        android:layout_height="@dimen/thirtee_sp"
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:scaleType="fitXY"
+                        android:background="@null"
+                        android:src="@drawable/time" />
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/textviewMinuteEnd"
+                        android:layout_width="@dimen/fiftee_sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:layout_marginRight="@dimen/ten_sp"
+                        style="@style/EditText_Comman_white_bg"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:maxEms="2"
+                        android:textSize="@dimen/twenty_sp"
+                        android:maxLength="2"/>
+
+
+                </LinearLayout>
+
+
+                <!-- start third row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        android:button="@drawable/checkbox_bg"
+                        style="@style/padding_style"
+                        android:id="@+id/checkBoxVoranmeldung"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox4_text"
+                        android:textSize="@dimen/checkbox_text_size"
+                        />
+                    <RelativeLayout
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_sp"
+                        android:layout_marginRight="@dimen/ten_sp">
+                        <EditText
+                            android:minHeight="@dimen/thirtee_five_sp"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:scrollbars="vertical"
+                            android:maxLines="3"
+                            android:maxLength="240"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/edittextVoranmeldungDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/imageviewQuetionMark1"
+                            style="@style/EditText_Comman_white_bg"
+
+                            android:paddingLeft="@dimen/ten_sp" />
+                        <ImageView
+                            android:visibility="gone"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageviewQuetionMark1"
+                            android:src="@drawable/icn_help"/>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+                <!-- end third row-->
+                <!-- start fourth row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        android:button="@drawable/checkbox_bg"
+                        style="@style/padding_style"
+                        android:id="@+id/checkBoxBenachrichtgung"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox5_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_sp"
+                        android:layout_marginRight="@dimen/ten_sp">
+                        <EditText
+                            android:minHeight="@dimen/thirtee_five_sp"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:scrollbars="vertical"
+                            android:maxLines="3"
+                            android:maxLength="240"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/edittextBenachrichDetial"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/imageviewQuetionMark2"
+                            style="@style/EditText_Comman_white_bg"
+
+                            android:paddingLeft="@dimen/ten_sp" />
+                        <ImageView
+                            android:visibility="gone"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageviewQuetionMark2"
+                            android:src="@drawable/icn_help"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <!-- end fourth row-->
+                <!-- start fifth row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxRampena"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox6_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+
+                </LinearLayout>
+                <!-- end fifth row-->
+                <!-- start sixth row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxsonstige"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox7_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+
+                    <EditText
+                        android:maxLength="240"
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/edittextSonstigeDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_sp"
+                        android:layout_marginRight="@dimen/ten_sp"
+                        android:minHeight="@dimen/thirtee_five_sp"
+                        style="@style/EditText_Comman_white_bg"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:scrollbars="vertical"
+                        android:maxLines="3"
+                        android:paddingLeft="@dimen/ten_sp"
+                        />
+                </LinearLayout>
+                <!-- end sixth row-->
+                <!-- start seventh row-->
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/two_hundred_sp"
+                        android:layout_height="@dimen/fiftee_sp"
+                        style="@style/EditTextCustNew_bg">
+                    <Spinner
+                        android:id="@+id/spinnerLadefahrzeug"
+                        android:textSize="@dimen/twenty_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox8_text"
+                        />
+
+                </LinearLayout>
+                <!-- end seventh row-->
+                <!-- start eight row-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ten_sp"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxEinweisung"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox9_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/checkbox_text_size"/>
+
+                </LinearLayout>
+                <!-- end eight row-->
+                <!-- start ninth row-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ten_sp"
+                    android:layout_marginLeft="@dimen/ten_sp"
+                    android:layout_marginRight="@dimen/ten_sp"
+                    android:layout_marginTop="@dimen/twenty_sp">
+
+                    <CheckBox
+                        style="@style/padding_style"
+                        android:button="@drawable/checkbox_bg"
+                        android:id="@+id/checkBoxSelbstfaher"
+                        android:layout_width="@dimen/two_hundred_thirtee"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox10_text"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/fifteen_sp"/>
+
+                </LinearLayout>
+                <!-- end ninth row-->
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearBottom"
+        android:layout_marginLeft="@dimen/twenty_sp"
+        style="@style/EditText_Comman_white_bg"
+        android:text="Submit"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/twenty_sp"
+        android:textSize="@dimen/twenty_sp"/>
+
+</LinearLayout>

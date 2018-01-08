@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/labelAuftragNr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="8"
+                    style="@style/listItemHeader"/>
+
+                <TextView
+                    android:id="@+id/labelNL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="4"
+                    android:maxEms="4"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelKaNr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="6"
+                    android:maxEms="6"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelHohengruppe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="12"
+                    android:maxEms="12"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelWunschgerat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="12"
+                    android:maxEms="12"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelGel_Gerat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="8"
+                    android:maxEms="8"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelMietbeginn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="10"
+                    android:maxEms="10"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelMietdauer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="10"
+                    android:maxEms="10"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelEinheit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="10"
+                    android:maxEms="10"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelLP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="8"
+                    android:maxEms="8"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelKaP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="6"
+                    android:maxEms="6"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelTP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="8"
+                    android:maxEms="8"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelSelbstbehalt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="10"
+                    android:maxEms="10"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelVers_LP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="8"
+                    android:maxEms="8"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelVers_TP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="8"
+                    android:maxEms="8"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelEinsatzPLZ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="12"
+                    android:maxEms="12"
+                    style="@style/listItemHeader" />
+
+                <TextView
+                    android:id="@+id/labelEinsatzort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minEms="15"
+                    android:maxEms="15"
+                    style="@style/listItemHeader" />
+
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/labelItemDatumAb"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:ems="7"-->
+                    <!--style="@style/listItemHeader"/>-->
+                <!-- -->
+                <!--<TextView-->
+                    <!--android:id="@+id/labelGeraetegruppe"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minEms="6"-->
+                    <!--android:maxEms="6"-->
+                    <!--style="@style/listItemHeader" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/labelKundenNr"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minEms="5"-->
+                    <!--android:maxEms="5"-->
+                    <!--style="@style/listItemHeader" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/labelMandant"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minEms="4"-->
+                    <!--android:maxEms="4"-->
+                    <!--style="@style/listItemHeader" />-->
+                <!-- -->
+                <!--<TextView-->
+                    <!--android:id="@+id/labelMietende"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minEms="5"-->
+                    <!--android:maxEms="5"-->
+                    <!--style="@style/listItemHeader" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/labelRegion"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minEms="3"-->
+                    <!--android:maxEms="3"-->
+                    <!--style="@style/listItemHeader" />-->
+
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listViewCustomerCompletedOrderOrder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                style="@style/EditText_customer_search_bg"
+                android:choiceMode="singleChoice" >
+            </ListView>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

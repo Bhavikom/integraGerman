@@ -1,0 +1,98 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="site_inspection_row_height">40dp</dimen>
+    <dimen name="customer_new_row_height">40dp</dimen>
+    <dimen name="customer_daten_row_height">40dp</dimen>
+    <dimen name="site_inspection_operational_enviroment">40dp</dimen>
+    <dimen name="customer_activity_row_height">40dp</dimen>
+    <dimen name="pricing2_row_height">40dp</dimen>
+    <dimen name="project_search_generally_row_height">40dp</dimen>
+    <dimen name="project_search_generally_widget_height">40dp</dimen>
+    <dimen name="project_new_widget_height">40dp</dimen>
+    <dimen name="project_search_trade_widget_height">40dp</dimen>
+    <dimen name="project_activity_row_height">40dp</dimen>
+    <dimen name="project_trade_row_height">40dp</dimen>
+    <dimen name="project_new_row_height">40dp</dimen>
+    <dimen name="textview_font_size">20dp</dimen>
+
+    <dimen name="ten_sp">10dp</dimen>
+    <dimen name="fifteen_sp">15dp</dimen>
+    <dimen name="twenty_sp">20dp</dimen>
+    <dimen name="twenty_five_sp">25dp</dimen>
+    <dimen name="thirtee_sp">30dp</dimen>
+    <dimen name="thirtee_five_sp">35dp</dimen>
+    <dimen name="fourtee_sp">40dp</dimen>
+    <dimen name="fiftee_sp">50dp</dimen>
+    <dimen name="seventee_sp">70dp</dimen>
+    <dimen name="ninghty_sp">90dp</dimen>
+    <dimen name="hundred_sp">100dp</dimen>
+    <dimen name="hundred_twenty_sp">120dp</dimen>
+    <dimen name="two_hundred_sp">200dp</dimen>
+    <dimen name="two_hundred_thirtee">230dp</dimen>
+
+    /* calnedar control */
+    <dimen name="calendar_day_headers_paddingbottom">4dp</dimen>
+    <dimen name="calendar_month_topmargin">16dp</dimen>
+    <dimen name="calendar_month_title_bottommargin">4dp</dimen>
+    <dimen name="calendar_text_medium">18sp</dimen>
+    <dimen name="calendar_text_small">14sp</dimen>
+    <dimen name="dimen_margin_circle">4dp</dimen>
+    <dimen name="dimen_margin_circle.negative">-4dp</dimen>
+
+    <!-- dimension for mobile screens -->
+    <dimen name="toolbar_height">40dp</dimen>
+        <!-- left right top bottom margin-->
+    <dimen name="margin_left_right_xxxxsmall">2dp</dimen>
+    <dimen name="drawable_padding">2dp</dimen>
+    <dimen name="margin_left_right_xxxsmall">5dp</dimen>
+    <dimen name="margin_left_right_xxsmall">8dp</dimen>
+    <dimen name="margin_left_right_small">10dp</dimen>
+    <dimen name="margin_left_right_large">20dp</dimen>
+    <dimen name="margin_left_right_xx_large">40dp</dimen>
+    <dimen name="margin_left_right_xxx_large">60dp</dimen>
+    <dimen name="margin_top_small">20dp</dimen>
+
+    <dimen name="action_button_margin">5dp</dimen>
+
+    <bool name="isTablet">false</bool>
+
+    <!-- left right margin-->
+
+        <!-- text size-->
+    <dimen name="login_textsize">22dp</dimen>
+    <dimen name="button_text_size_bigger">18dp</dimen>
+    <dimen name="button_text_size">15dp</dimen>
+    <dimen name="list_item_textsize_small">10dp</dimen>
+    <dimen name="list_item_textsize">12dp</dimen>
+    <dimen name="text_size_xxxsmall">10dp</dimen>
+    <dimen name="text_size_xxsmall">12dp</dimen>
+    <dimen name="checkbox_text_size">12dp</dimen>
+    <dimen name="actionbar_title_size">14dp</dimen>
+    <dimen name="sliding_tab_textsize">5dp</dimen>
+        <!-- end text size-->
+
+        <!-- height width -->
+    <dimen name="button_height">17dp</dimen>
+    <dimen name="edittext_height">28dp</dimen>
+    <dimen name="spinner_height">40dp</dimen>
+    <dimen name="edittext_layout_height">30dp</dimen>
+    <dimen name="list_item_height_small">20dp</dimen>
+    <dimen name="list_item_height_big">30dp</dimen>
+    <dimen name="expandable_list_width">220dp</dimen>
+    <dimen name="pricing_listview_min_height">180dp</dimen>
+    <dimen name="select_mail_header_height">60dp</dimen>
+    <dimen name="imageview_height_width">25dp</dimen>
+    <dimen name="imageview_grid_size">150dp</dimen>
+    <dimen name="toggle_button_width">50dp</dimen>
+    <dimen name="toggle_button_height">25dp</dimen>
+
+        <!-- height-->
+
+
+
+
+
+
+</resources>

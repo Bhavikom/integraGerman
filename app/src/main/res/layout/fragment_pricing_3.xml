@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<ScrollView
+    android:layout_above="@+id/linearfooter"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:fillViewport="true"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ViewStub
+            android:id="@+id/stub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inflatedId="@+id/layoutLoadedCustomer"
+            android:layout="@layout/list_item_customer_loaded" />
+
+        <LinearLayout
+            android:id="@+id/linearMain"
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_left_right_xxxsmall"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearTop"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtTransport"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Transpot" />
+
+                    <LinearLayout
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtApproach"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5"
+                                android:gravity="right|center"
+                                android:text="Approach" />
+
+                            <EditText
+                                android:id="@+id/etApproachP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1"
+                                android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                android:hint="0"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+
+                            <TextView
+                                android:id="@+id/txtDeparture"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1"
+                                android:gravity="right|center"
+                                android:text="Departure" />
+
+                            <EditText
+                                android:id="@+id/etDepartureP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1"
+                                android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                android:hint="0"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/margin_left_right_xxxsmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtAdditionalCargoPrice"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+
+                                android:layout_weight="1.5"
+                                android:gravity="right|center"
+                                android:text="Additional Cargo Price" />
+
+                            <EditText
+                                android:id="@+id/etAdditionalCargoPriceP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1"
+                                android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                android:hint="0"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+
+                            <TextView
+                                android:id="@+id/txtFlateRate"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1"
+                                android:gravity="right|center"
+                                android:text="Flat-rate" />
+
+                            <EditText
+                                android:id="@+id/etFlatRateP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1"
+                                android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                android:hint="0"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtLiabilityLimitation"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Liability limitation" />
+
+                    <LinearLayout
+                        style="@style/EditText_Comman_white_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="0.6"
+                            android:minHeight="@dimen/spinner_height"
+                            style="@style/EditTextCustNew_bg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <Spinner
+
+                                android:id="@+id/spinnerSB"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                ></Spinner>
+                            <View
+                                android:layout_weight="0.4"
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"/>
+                        </LinearLayout>
+                        <RadioGroup
+                            android:visibility="gone"
+                            android:id="@+id/radioGrpSB"
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rdBtnSB500P3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="SB 500" />
+                            <RadioButton
+                                android:id="@+id/rdBtnSB1000P3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="SB 1000" />
+
+                            <RadioButton
+                                android:id="@+id/rdBtnSB2000P3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="SB 2000" />
+
+                            <RadioButton
+                                android:id="@+id/rdBtnSB3000P3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="SB 3000" />
+                        </RadioGroup>
+
+                        <CheckBox
+                            android:textSize="@dimen/text_size_xxxsmall"
+                            android:id="@+id/chkCalendarDailyP2"
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:button="@drawable/checkbox_bg"
+                            android:checked="false"
+                            android:text="Calander Daily" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtCost"
+                    style="@style/TextView_Black_Comman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Cost" />
+                <LinearLayout
+                    android:background="@drawable/icn_edittext_bg"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_weight="1"
+
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtPrice"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Cost" />
+
+                            <EditText
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:id="@+id/etCostP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                android:editable="false"
+                                android:hint="0.0"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtTransportCost"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Transpot" />
+
+                            <EditText
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:id="@+id/etTranspotP2"
+                                style="@style/EditText_Comman_disable_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="0.0"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtHandllingFee"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1"
+                                android:text="Handlling Fee" />
+
+                            <CheckBox
+                                android:gravity="center"
+                                android:id="@+id/chkHandllingFeeP2"
+                                style="@style/padding_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxxsmall"
+                                android:button="@drawable/checkbox_bg"
+                                android:enabled="false"
+                                android:text="" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtGesAmenities"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:layout_weight="1.5"
+                                android:text="Ges. Amenities" />
+
+                            <EditText
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:id="@+id/etGesAmenitiesP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                android:editable="false"
+                                android:hint="0.0"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtHaftb"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:layout_weight="1.5"
+                                android:text="Haftb." />
+
+                            <EditText
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:id="@+id/etHaftbP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                android:editable="false"
+                                android:hint="0.0"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="7"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtServicePackages"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1.5"
+                                android:text="Service Packages" />
+
+
+                            <CheckBox
+                                style="@style/padding_style"
+                                android:id="@+id/chkServicePackagesP2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxxsmall"
+                                android:button="@drawable/checkbox_bg"
+                                android:enabled="false"
+                                android:text="" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtEquipmentRent"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1.5"
+                                android:text="Equipment Rent" />
+
+                            <EditText
+                                android:id="@+id/etEuipmentRentP2"
+                                style="@style/EditText_Comman_disable_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:layout_weight="1"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="0.0"
+                                android:singleLine="true"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtSatntag"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:layout_weight="1.5"
+                                android:text="Satndtag" />
+                            <LinearLayout
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                                <EditText
+                                    android:maxLength="5"
+                                    android:id="@+id/etSatntagP2"
+                                    style="@style/EditText_Comman_white_bg"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.8"
+                                    android:digits="0,1,2,3,4,5,6,7,8,9,.,,"
+                                    android:hint="100"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="text"
+                                    android:singleLine="true" />
+
+                                <TextView
+                                    style="@style/TextView_Black_Comman"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=" %" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:layout_marginLeft="0sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:textStyle="bold"
+                                android:gravity="right"
+                                android:id="@+id/txtGenehmigungsgebiet"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="0dp"
+                                android:layout_weight="2.3"
+                                android:text="" />
+
+
+
+
+                            <CheckBox
+                                style="@style/padding_style"
+                                android:id="@+id/chkGenehmigungsgebiet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="0dp"
+                                android:button="@drawable/checkbox_bg"
+                                android:enabled="true"
+                                android:text="" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtToll"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="0dp"
+                                android:layout_weight="1.5"
+                                android:text="Toll" />
+
+                            <EditText
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:id="@+id/etTollP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="0dp"
+                                android:layout_weight="1"
+                                android:digits="0123456789"
+                                android:hint="0"
+                                android:inputType="number"
+                                android:maxLength="4"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="right|center"
+                                android:id="@+id/txtTotal"
+                                style="@style/TextView_Black_Comman"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="0dp"
+                                android:layout_weight="1.5"
+                                android:text="Total"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+                                android:id="@+id/etTotalP2"
+                                style="@style/EditText_Comman_white_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:editable="false"
+                                android:hint="0.0"
+                                android:inputType="none"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+
+                        </LinearLayout>
+
+                    <!--<LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtHandllingFee"
+                                style="@style/TextView_Black"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="0dp"
+                                android:layout_weight="1.5"
+                                android:text="Handlling Fee" />
+
+                            <CheckBox
+                                android:id="@+id/chkHandllingFeeP2"
+                                style="@style/padding_style"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="0.5"
+                                android:button="@drawable/checkbox_bg"
+                                android:enabled="false"
+                                android:text="" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/padding_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtToll"
+                                style="@style/TextView_Black"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:text="Toll" />
+
+                            <EditText
+                                android:id="@+id/etTollP2"
+                                style="@style/EditText_bg"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:digits="0,1,2,3,4,5,6,7,8,9"
+                                android:hint="0"
+                                android:inputType="phone"
+                                android:maxLength="4"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+                    </LinearLayout>-->
+
+
+
+                </LinearLayout>
+                </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCache"
+                    style="@style/Button_Common_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.3"
+                    android:text="Cache" />
+
+                <TextView
+                    android:id="@+id/txtNote"
+                    style="@style/TextView_Black_Comman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxxsmall"
+                    android:gravity="center"
+                    android:text="Note" />
+
+                <EditText
+                    android:gravity="left|top"
+                    android:id="@+id/etNoteP2"
+                    style="@style/EditText_Comman_white_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxxsmall"
+                    android:layout_weight="2.5"
+                    android:maxLines="5"
+                    android:maxLength="2000" />
+
+                <CheckBox
+                    android:textSize="@dimen/checkbox_text_size"
+                    android:id="@+id/chkInrinsicActivityP2"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxxsmall"
+                    android:layout_weight="1.3"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="Inrinsic Activity" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:minHeight="@dimen/hundred_sp"
+                android:id="@+id/linearListview"
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="5dp">
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_weight="0.4"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content">
+                        <CheckBox
+                            style="@style/padding_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/checkbox_bg"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:text=""
+                            android:visibility="invisible" />
+                        </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/txtBranch"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Branch" />
+
+                    <TextView
+                        android:id="@+id/txtHGRP"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="HGRP" />
+
+
+                    <TextView
+                        android:id="@+id/txtMD"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="MD" />
+
+                    <TextView
+                        android:id="@+id/txtRentalPrice"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Rental Price" />
+
+                    <TextView
+                        android:id="@+id/txtSB"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="SB" />
+
+                    <TextView
+                        android:id="@+id/txtHF"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="HF" />
+
+                    <TextView
+                        android:id="@+id/txtSP"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="SP" />
+
+                    <TextView
+                        android:id="@+id/txtHB"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="HB" />
+
+                    <TextView
+                        android:id="@+id/txtBest"
+                        style="@style/TextView_Black_Comman"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Best" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@drawable/white_border"
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/text_size_xxsmall"
+                    android:layout_height="match_parent">
+                    <de.mateco.integrAMobile.Helper.NestedListView
+                        android:id="@+id/lvPricing3LostSaleListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:choiceMode="multipleChoice"></de.mateco.integrAMobile.Helper.NestedListView>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+</LinearLayout>
+</ScrollView>
+    <LinearLayout
+        android:id="@+id/linearfooter"
+        android:layout_alignParentBottom="true"
+        style="@style/padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/txtShoppingCartContract"
+                style="@style/Button_Common_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="Contract" />
+
+            <Button
+                android:id="@+id/txtShoppingCartOffer"
+                style="@style/Button_Common_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="Offer" />
+
+            <Button
+                android:id="@+id/txtShoppingCartVerbalOffer"
+                style="@style/Button_Common_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Verbal Offer" />
+
+            <Button
+                android:id="@+id/txtShoppingCartLostSale"
+                style="@style/Button_Common_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Lost Sale" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

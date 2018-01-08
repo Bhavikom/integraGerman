@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralMatchCode"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Match Code"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralMatchCode"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:maxLength="8"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralDescription"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Description"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:maxLength="60"
+                            android:id="@+id/textProjectDetailGeneralDescription"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralRoad"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Road"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralRoad"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:maxLength="30"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralZipCode"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Zip"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:maxLength="10"
+                            android:id="@+id/textProjectDetailGeneralZipCode"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:digits="1234567890"
+                            android:inputType="phone"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralPlace"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Place"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+
+                            android:id="@+id/textProjectDetailGeneralPlace"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:maxLength="30"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralArea"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Area"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/white_border_click"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:paddingLeft="10dp">
+
+                            <Spinner
+                                android:id="@+id/spinnerProjectDetailGeneralArea"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="10dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralStartOfConstruction"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Start of construction"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralStartOfConstruction"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.3"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+
+                        <ImageButton
+                            android:id="@+id/imageButtonGenerallyStartDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="0.1"
+                            android:background="@null"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:src="@drawable/icn_date" />
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_weight="0.3"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralEndOfConstruction"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="End of construction"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralEndOfConstruction"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.3"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+
+                        <ImageButton
+                            android:id="@+id/imageButtonGenerallyEndDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="0.1"
+                            android:background="@null"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:src="@drawable/icn_date" />
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_weight="0.3"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralSize"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Size(m2)"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralSize"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:digits="0123456789"
+                            android:inputType="phone"
+                            android:maxLength="5"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralHeight"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Height"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralHeight"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:digits="0123456789"
+                            android:inputType="phone"
+                            android:maxLength="4"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralHighFrom"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="High from"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralHeightFrom"
+                            style="@style/EditText_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:inputType="phone"
+                            android:maxLength="5"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectStage"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Groyness Inside"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/white_border_click"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:paddingLeft="10dp">
+
+                            <Spinner
+                                android:id="@+id/spinnerProjectDetailGeneralStages"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectStage1"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Groyness Inside"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/white_border_click"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:paddingRight="5dp">
+
+                            <Spinner
+                                android:id="@+id/spinnerProjectDetailGeneralStages1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:id="@+id/labelProjectDetailGeneralProjectArt"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Project Art"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/white_border_click"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:paddingRight="5dp">
+
+                            <Spinner
+                                android:id="@+id/spinnerProjectDetailGeneralArt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectType"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Project Type"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/white_border_click"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:paddingRight="5dp">
+
+                            <Spinner
+                                android:id="@+id/spinnerProjectDetailGeneralType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectPhase"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Act. Phase"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/white_border_click"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:paddingRight="5dp">
+
+                            <Spinner
+                                android:id="@+id/spinnerProjectDetailGeneralPhase"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectDateOfUpdate"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Date of Update"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/textProjectDetailGeneralDateOfUpdate"
+                            style="@style/EditText_disable_bg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.3"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:singleLine="true" />
+                        <View
+                        android:layout_width="0dip"
+                        android:layout_weight="0.4"
+                        android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectZustAdm"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="States. ADM"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/white_border_click"
+                            android:paddingLeft="10dp"
+                            android:minHeight="@dimen/project_search_generally_widget_height"
+                            android:paddingRight="5dp" android:gravity="center_vertical">
+
+                            <Spinner
+                                android:id="@+id/spinnerProjectDetailGeneralZustAdm"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectAbgeschlosse"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Abgeschlosse"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxProjectDetailGeneralAbgeschlosse"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:paddingLeft="10dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectRamp"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Ramp"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxProjectDetailGeneralRamp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:paddingLeft="10dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/padding_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/project_search_generally_row_height"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/labelProjectDetailGeneralProjectMatureWhite"
+                            style="@style/TextView_Black_Right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:text="Mature White"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxProjectDetailGeneralMatureWhite"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0.7"
+                            android:paddingLeft="10dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

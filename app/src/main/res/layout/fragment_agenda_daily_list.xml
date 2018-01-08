@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin_left_right_xxxsmall"
+        android:layout_marginRight="@dimen/margin_left_right_xxxsmall"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/margin_left_right_xxxxsmall"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/labelFragmentAgendaDailyMeetings"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="Dates" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_border"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right_xxxxsmall"
+                    android:layout_marginRight="@dimen/margin_left_right_xxxxsmall"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/labelAgendaDailyMeetingDate"
+                        style="@style/TextView_listviewHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:textStyle="bold"
+                        android:text="Date" />
+
+                    <TextView
+                        android:id="@+id/labelAgendaDailyMeetingRealized"
+                        style="@style/TextView_listviewHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="Realized" />
+
+                    <TextView
+                        android:id="@+id/labelAgendaDailyMeetingDesignation"
+                        style="@style/TextView_listviewHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="Designation"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp" />
+
+
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="#777777" />
+
+                <ListView
+                    android:id="@+id/listViewMeeting"
+                    style="@style/ListView_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:choiceMode="singleChoice"></ListView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_left_right_xxxsmall"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/labelFragmentAgendaDailyPhoneCalls"
+                style="@style/TextView_Black_Comman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="PhoneCalls" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_border"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/labelAgendaDailyPhoneCallDate"
+                        style="@style/TextView_listviewHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:textStyle="bold"
+                        android:text="Date" />
+
+                    <TextView
+                        android:id="@+id/labelAgendaDailyPhoneCallRealized"
+                        style="@style/TextView_listviewHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="Realized" />
+
+                    <TextView
+                        android:id="@+id/labelAgendaDailyPhoneCallDesignation"
+                        style="@style/TextView_listviewHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="Designation"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp" />
+
+
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="#777777" />
+                <ListView
+                    android:id="@+id/listViewPhoneCalls"
+                    style="@style/ListView_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:choiceMode="singleChoice"></ListView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,190 @@
+package de.mateco.integrAMobile.model;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
+public class CustomerContactPersonAndFeatureAddModel implements Parcelable
+{
+    private String Kontakt, Titel, Anrede, Vorname, Nachname, Funktion, Telefon, Telefax, Mobil, Email, AenderungMitarbeiter,
+            Entscheider, Zusatzinfo, UserID;
+
+    private ArrayList<String> Merkmal;
+
+    public String getKontakt() {
+        return Kontakt;
+    }
+
+    public void setKontakt(String kontakt) {
+        Kontakt = kontakt;
+    }
+
+    public String getTitel() {
+        return Titel;
+    }
+
+    public void setTitel(String titel) {
+        Titel = titel;
+    }
+
+    public String getAnrede() {
+        return Anrede;
+    }
+
+    public void setAnrede(String anrede) {
+        Anrede = anrede;
+    }
+
+    public String getVorname() {
+        return Vorname;
+    }
+
+    public void setVorname(String vorname) {
+        Vorname = vorname;
+    }
+
+    public String getNachname() {
+        return Nachname;
+    }
+
+    public void setNachname(String nachname) {
+        Nachname = nachname;
+    }
+
+    public String getFunktion() {
+        return Funktion;
+    }
+
+    public void setFunktion(String funktion) {
+        Funktion = funktion;
+    }
+
+    public String getTelefon() {
+        return Telefon;
+    }
+
+    public void setTelefon(String telefon) {
+        Telefon = telefon;
+    }
+
+    public String getTelefax() {
+        return Telefax;
+    }
+
+    public void setTelefax(String telefax) {
+        Telefax = telefax;
+    }
+
+    public String getMobil() {
+        return Mobil;
+    }
+
+    public void setMobil(String mobil) {
+        Mobil = mobil;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getAenderungMitarbeiter() {
+        return AenderungMitarbeiter;
+    }
+
+    public void setAenderungMitarbeiter(String aenderungMitarbeiter) {
+        AenderungMitarbeiter = aenderungMitarbeiter;
+    }
+
+    public String getEntscheider() {
+        return Entscheider;
+    }
+
+    public void setEntscheider(String entscheider) {
+        Entscheider = entscheider;
+    }
+
+    public String getZusatzinfo() {
+        return Zusatzinfo;
+    }
+
+    public void setZusatzinfo(String zusatzinfo) {
+        Zusatzinfo = zusatzinfo;
+    }
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(String userID) {
+        UserID = userID;
+    }
+
+    public ArrayList<String> getMerkmal() {
+        return Merkmal;
+    }
+
+    public void setMerkmal(ArrayList<String> merkmal) {
+        Merkmal = merkmal;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.Kontakt);
+        dest.writeString(this.Titel);
+        dest.writeString(this.Anrede);
+        dest.writeString(this.Vorname);
+        dest.writeString(this.Nachname);
+        dest.writeString(this.Funktion);
+        dest.writeString(this.Telefon);
+        dest.writeString(this.Telefax);
+        dest.writeString(this.Mobil);
+        dest.writeString(this.Email);
+        dest.writeString(this.AenderungMitarbeiter);
+        dest.writeString(this.Entscheider);
+        dest.writeString(this.Zusatzinfo);
+        dest.writeString(this.UserID);
+        dest.writeSerializable(this.Merkmal);
+    }
+
+    public CustomerContactPersonAndFeatureAddModel() {
+    }
+
+    private CustomerContactPersonAndFeatureAddModel(Parcel in) {
+        this.Kontakt = in.readString();
+        this.Titel = in.readString();
+        this.Anrede = in.readString();
+        this.Vorname = in.readString();
+        this.Nachname = in.readString();
+        this.Funktion = in.readString();
+        this.Telefon = in.readString();
+        this.Telefax = in.readString();
+        this.Mobil = in.readString();
+        this.Email = in.readString();
+        this.AenderungMitarbeiter = in.readString();
+        this.Entscheider = in.readString();
+        this.Zusatzinfo = in.readString();
+        this.UserID = in.readString();
+        this.Merkmal = (ArrayList<String>) in.readSerializable();
+    }
+
+    public static final Creator<CustomerContactPersonAndFeatureAddModel> CREATOR = new Creator<CustomerContactPersonAndFeatureAddModel>() {
+        public CustomerContactPersonAndFeatureAddModel createFromParcel(Parcel source) {
+            return new CustomerContactPersonAndFeatureAddModel(source);
+        }
+
+        public CustomerContactPersonAndFeatureAddModel[] newArray(int size) {
+            return new CustomerContactPersonAndFeatureAddModel[size];
+        }
+    };
+}

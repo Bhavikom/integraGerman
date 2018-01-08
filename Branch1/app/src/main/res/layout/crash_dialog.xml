@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/title"
+        style="@android:style/TextAppearance.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="8dp"
+        android:paddingBottom="1dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingTop="8dp"
+        android:text="Crash Caught"
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:paddingTop="10sp"
+        android:textColor="@color/black"
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:text="Unfortunately integrAMobile has crashed. Do you want to clear app data? You need to re-login and your offline data will be cleared." />
+
+    <LinearLayout
+        android:padding="10sp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+
+        <Button
+            android:layout_margin="10sp"
+            style="@style/Button_bg"
+            android:id="@+id/btnYes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Yes" />
+
+
+        <Button
+            android:layout_margin="10sp"
+            style="@style/Button_bg"
+            android:id="@+id/btnNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+
+
+            android:text="No" />
+
+       <!-- <Button
+            android:id="@+id/btnReport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:onClick="onReportClick"
+            android:text="@string/btnReport" />-->
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

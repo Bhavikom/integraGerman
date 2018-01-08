@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_selection"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/linearOfflineStandardPriceStandardPriceRowParentElement"
+        style="@style/padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/padding_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandardHoehengruppeDataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="height group" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandardListenpreisDataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="list Price" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandardSortDataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sort" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearOfflineStandardPriceTags"
+            style="@style/padding_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_1_2_R_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="R" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_1_2_M_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="M" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_3_4_R_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="R" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_3_4_M_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="M" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_5_10_R_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="R" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_5_10_M_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="M" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_11_20_R_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="R" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_11_20_M_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="M" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_Ab_21_R_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="R" />
+
+            <TextView
+                android:id="@+id/txtPricing2OfflineStandard_Ab_21_M_DataRow"
+                style="@style/TextView_Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="M" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

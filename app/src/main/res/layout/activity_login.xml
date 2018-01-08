@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/primary"
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/mateco_logo" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_left_right_xxxxsmall"
+        android:background="@color/primary_dark"></LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_left_right_xxx_large"
+            android:layout_marginRight="@dimen/margin_left_right_xxx_large"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/labelLoginTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textColor="@color/primary_dark"
+                android:textSize="@dimen/login_textsize"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_marginTop="@dimen/margin_top_small"
+                android:id="@+id/edtUserName"
+                style="@style/EditText_Comman_white_bg"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin_top_small"
+                android:gravity="center"
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_weight="0.90"
+                    android:text=""
+                    android:id="@+id/edtPassword"
+                    style="@style/EditText_Comman_white_bg"
+                    android:singleLine="true"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+
+                    android:inputType="textPassword"
+                    android:hint="Password" />
+                <LinearLayout
+                    android:layout_weight="0.10"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+
+                        android:id="@+id/imgvisibility"
+                        android:layout_marginLeft="@dimen/ten_sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_visibility_off"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLogin"
+                style="@style/Button_Common_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_small"
+                android:text="Login" />
+
+            <Button
+                android:id="@+id/buttonForgotPassword"
+                style="@style/Button_Common_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_small"
+                android:text="Change password" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
+

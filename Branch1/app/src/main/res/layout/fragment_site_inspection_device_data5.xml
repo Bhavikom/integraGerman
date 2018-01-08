@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/labelDiesel"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:button="@drawable/checkbox_bg"
+                    android:checked="false"
+                    android:text="Diesel" />
+
+                <CheckBox
+                    android:id="@+id/labelElectrostatics"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="Electrostatics" />
+
+                <CheckBox
+                    android:id="@+id/labelFourWheel"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="Four Wheel" />
+
+                <CheckBox
+                    android:id="@+id/labelChainRubber"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="Chain-rubber" />
+
+                <CheckBox
+                    android:id="@+id/labelWhiteReef"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="White-reef" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/padding_style"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/labelPowerLiftSystem"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="Powerlift System" />
+
+                <CheckBox
+                    android:id="@+id/labelPowerGenerators"
+                    style="@style/padding_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:button="@drawable/checkbox_bg"
+                    android:text="PowerGenerators" />
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3">
+
+                    <CheckBox
+                        android:id="@+id/labelOthers"
+                        style="@style/padding_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/checkbox_bg"
+                        android:text="Others" />
+
+                    <EditText
+                        android:id="@+id/textOthers"
+                        style="@style/EditText_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLength="30" />
+                    <View
+                        android:layout_weight="0.150"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/labelDeviceGroup"
+                        style="@style/TextView_Black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Device Group" />
+
+                    <Spinner
+                        android:id="@+id/spnDeviceGroup"
+                        style="@style/Spinner_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </Spinner>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/labelHeightScale"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Height Scale" />
+
+                    <Spinner
+                        android:id="@+id/spnHeightScale"
+                        style="@style/Spinner_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </Spinner>
+                </LinearLayout>
+                <View
+                    android:layout_weight="0.4"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                style="@style/padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/labelDeviceType"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Device Type" />
+
+                    <Spinner
+                        android:id="@+id/spnDeviceType"
+                        style="@style/Spinner_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </Spinner>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/labelDeviceTypeNumber"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Device-type Number" />
+
+                    <Spinner
+                        android:id="@+id/spnDeviceTypeNumber"
+                        style="@style/Spinner_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </Spinner>
+                </LinearLayout>
+                <View
+                    android:layout_weight="0.4"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                style="@style/padding_style"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:gravity="center|right"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/labelAlternativeDevice"
+                        android:layout_width="wrap_content"
+                        style="@style/TextView_Black"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingLeft="0dp"
+                    android:layout_weight="1.5">
+
+                    <Spinner
+                        android:id="@+id/spnHeightScale1"
+                        style="@style/Spinner_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/EditText_bg"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1.5"
+                    android:minHeight="50dp"
+                    android:orientation="vertical">
+
+
+                    <ListView
+                        android:id="@+id/listViewAlternativeDevices"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:choiceMode="singleChoice"
+                        android:listSelector="@drawable/listitem_selector"
+                        android:minHeight="50dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/buttonAddAlterNativeDevice"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:src="@drawable/icn_add" />
+
+                        <ImageButton
+                            android:id="@+id/buttonRemoveAlterNativeDevice"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            style="@style/ImageView_bg_2dpcorner_2dpmargin"
+                            android:src="@drawable/icn_minus" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--style="@style/padding_style"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+                    <!--<TextView-->
+                        <!--style="@style/TextView_Black"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/labelAlterNativeDevice1" />-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/spinnerTestAlterNativeDevice1"-->
+                        <!--style="@style/Spinner_bg"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
+
+                    <!--</Spinner>-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:paddingRight="10dp">-->
+
+
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--style="@style/padding_style"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+                    <!--<TextView-->
+                        <!--style="@style/TextView_Black"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/labelAlterNativeDevice2" />-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/spinnerTestAlterNativeDevice2"-->
+                        <!--style="@style/Spinner_bg"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
+
+                    <!--</Spinner>-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:paddingRight="10dp">-->
+
+
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--style="@style/padding_style"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp">-->
+
+                    <!--<TextView-->
+                        <!--style="@style/TextView_Black"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/labelAlterNativeDevice3" />-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/spinnerTestAlterNativeDevice3"-->
+                        <!--style="@style/Spinner_bg"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
+
+                    <!--</Spinner>-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:paddingRight="10dp">-->
+
+
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="right">
+
+
+            </LinearLayout>
+            <HorizontalScrollView
+                android:scrollbarThumbHorizontal="@color/bg_tab_indicator"
+                android:fadeScrollbars="false"
+                android:id="@+id/horizontal3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+
+                <LinearLayout
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.15"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelWorkinhHeight"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Working Height" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPWorkingHeight1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            max="1"
+                            min="0"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPWorkingHeight2"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPWorkingHeight3"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/labelWorkinhHeight1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="25sp"
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.28"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelLateralReach"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Lateral Reach" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPLateralReach1"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPLateralReach2"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPLateralReach3"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPLateralReach4"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/labelLateralReach1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="25sp"
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.28"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelMaxLength"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Max. Length" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxLength1"
+                            max="3"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxLength2"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxLength3"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxLength4"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/labelMaxLength1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="25sp"
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.28"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelMaxBreadth"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Max. Breadth" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxBredth1"
+                            max="1"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxBredth2"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxBredth3"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxBredth4"
+                            max="9"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/labelMaxBreadth1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            </HorizontalScrollView>
+            <HorizontalScrollView
+                android:scrollbarThumbHorizontal="@color/bg_tab_indicator"
+                android:fadeScrollbars="false"
+                android:id="@+id/horizontal4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelMaxHeight"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Max. Height" />
+
+                    <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                        android:id="@+id/nPMaxHeight"
+                        android:layout_width="wrap_content"
+                        max="9"
+                        min="0"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp" />
+
+                    <TextView
+                        android:id="@+id/labelMaxHeight1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.28"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelMaxWeight"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Max. Weight" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxWeight1"
+                            max="50"
+                            min="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxWeight2"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxWeight3"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPMaxWeight4"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/labelMaxWeight1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="25sp"
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.28"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelBasketLoad"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Basket Load" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBasketLoad1"
+                            android:layout_width="wrap_content"
+                            max="2"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBasketLoad2"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBasketLoad3"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBasketLoad4"
+                            android:layout_width="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/labelBasketLoad1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="25sp"
+                    android:layout_marginBottom="15sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.28"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelBoomLength"
+                        style="@style/TextView_Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Boom Length" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBoomLength1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            max="2"
+                            min="0"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBoomLength2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBoomLength3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_centerInParent="true" />
+
+                        <de.mateco.integrAMobile.Helper.CustomNumberPicker
+                            android:id="@+id/nPBoomLength4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            max="9"
+                            min="0"
+                            android:layout_centerInParent="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/labelBoomLength1"
+                        style="@style/EditText_bg"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="125dp"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

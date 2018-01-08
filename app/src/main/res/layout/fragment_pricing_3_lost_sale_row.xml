@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/item_selection"
+    android:id="@+id/linearLostsaleRow"
+    android:layout_margin="@dimen/margin_left_right_xxxxsmall"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="0.4"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:textSize="@dimen/checkbox_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chkPricing3LostSaleData_row"
+                android:button="@drawable/checkbox_bg"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="" />
+        </LinearLayout>
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/txtBranchLSP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Branch" />
+
+        <TextView
+            android:id="@+id/txtHGRPLSP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="HGRP" />
+        <TextView
+            android:id="@+id/txtMDLSP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="MD" />
+
+        <TextView
+            android:id="@+id/txtRentalPriceLSP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Rental Price" />
+
+        <TextView
+            android:id="@+id/txtSBLSP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SB" />
+
+        <TextView
+            android:id="@+id/txtHFLSP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="HF" />
+        <TextView
+            android:id="@+id/txtSPP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SP" />
+        <TextView
+            android:id="@+id/txtHBP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="HB" />
+        <TextView
+            android:id="@+id/txtBestP3"
+            style="@style/TextView_Black_Comman"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Best" />
+    </LinearLayout>
+</LinearLayout>

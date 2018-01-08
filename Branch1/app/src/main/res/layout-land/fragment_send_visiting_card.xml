@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelSettingAppLanguage"
+                    style="@style/TextView_Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Language"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/labelCurrentLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current selected language:English" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/spinnerLanguageSelector"
+                    style="@style/Spinner_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></Spinner>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dark_grey"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelSettingAppCustomerOfflineData"
+                    style="@style/TextView_Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer offline data"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/labelCustomerOffline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Customers to store offline" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/buttonCustomerOfflineData"
+                    style="@style/Button_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dark_grey"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelSettingCustomerPageSize"
+                    style="@style/TextView_Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Page Size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/labelPageSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set Pages to View Customers offline" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <EditText
+                    android:layout_weight="0.5"
+                    android:id="@+id/textCustomerPageSize"
+                    android:layout_width="0sp"
+                    android:layout_height="47dp"
+                    android:background="@drawable/edittext_border"
+                    android:digits="0123456789"
+                    android:paddingLeft="5dp" />
+
+                <Button
+                    android:layout_weight="0.5"
+                    android:id="@+id/buttonSaveCustomerPageSize"
+                    style="@style/Button_bg"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dark_grey"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelBVOUploadSizeHeading"
+                    style="@style/TextView_Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Page Size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/labelBVOUploadSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set Pages to View Customers offline" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="0sp"
+                    android:layout_height="47dp"
+                    android:background="@drawable/edittext_border"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dp">
+
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/textBVOUploadLimit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:background="@null"
+                        android:digits="0123456789" />
+
+                    <TextView
+                        android:layout_weight="0.5"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:text="MB"
+                        android:layout_marginRight="5dp"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_weight="0.5"
+                    android:id="@+id/buttonSaveBVOUploadLimit"
+                    style="@style/Button_bg"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dark_grey"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelSettingAppLogout"
+                    style="@style/TextView_Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/labelLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout from App" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/buttonLogout"
+                    style="@style/Button_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"></LinearLayout>
+</LinearLayout>
