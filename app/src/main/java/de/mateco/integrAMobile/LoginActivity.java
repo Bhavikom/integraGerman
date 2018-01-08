@@ -63,6 +63,8 @@ import de.mateco.integrAMobile.model.SiteInspectionDeviceTypeModel;
 public class LoginActivity extends BaseActivity implements View.OnClickListener
 {
     // change in login activity for git on 8th jan.
+
+    // chage in working copy
     BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult;
     private ProgressDialog progressDialog;
     ProgressDialog prd;
