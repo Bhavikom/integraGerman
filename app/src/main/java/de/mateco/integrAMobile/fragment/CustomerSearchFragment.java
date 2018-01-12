@@ -445,10 +445,12 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         String loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber();
         listOfEmployee = db.getEmployees();
         for(int i = 0; i < listOfEmployee.size(); i++) {
-            if (listOfEmployee.get(i).getMitarbeiter().equals(loginPersonId)) {
-                checkBoxCustomer.setText(language.getLabelCustomervon()+" "
-                        +listOfEmployee.get(i).getNachname()+", "+listOfEmployee.get(i).getVorname());
-                break;
+            if(listOfEmployee.get(i) != null) {
+                if (listOfEmployee.get(i).getMitarbeiter().equals(loginPersonId)) {
+                    checkBoxCustomer.setText(language.getLabelCustomervon() + " "
+                            + listOfEmployee.get(i).getNachname() + ", " + listOfEmployee.get(i).getVorname());
+                    break;
+                }
             }
         }
 

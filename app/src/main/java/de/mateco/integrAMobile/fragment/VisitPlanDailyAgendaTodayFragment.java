@@ -417,7 +417,7 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                                 e.printStackTrace();
                             }
                             Log.e("otherurl", url);
-                            asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), false);
+                            asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), true);
                             asyncTask1.execute();
                         }
                     }
@@ -432,7 +432,7 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + dateString;
                 Log.e("todayurl", url);
-                asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }
             else

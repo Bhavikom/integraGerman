@@ -279,7 +279,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                                 e.printStackTrace();
                             }
                             Log.e("otherurl", url);
-                            asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), true);
+                            asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), false);
                             asyncTask1.execute();
                         }
                     }
@@ -294,8 +294,8 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + dateString;
                 Log.e("todayurl", url);
-                asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();
+                asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
+                asyncTask.execute(); // load adapter
             }
             else
             {

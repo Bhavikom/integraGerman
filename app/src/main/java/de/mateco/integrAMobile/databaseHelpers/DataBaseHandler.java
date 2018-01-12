@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -413,6 +414,8 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+
 
         String CREATE_PRICE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PRICE_JSON + " ("
 
@@ -1099,7 +1102,39 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addLadefahzeg(ArrayList<LadefahrzeugComboBoxItemModel> arraylist)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_LADEFAHRZEUG + " (Bezeichnung,id,Sprache) VALUES ( ?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < arraylist.size(); x++){
+
+                LadefahrzeugComboBoxItemModel model = new LadefahrzeugComboBoxItemModel();
+                model = arraylist.get(x);
+
+                stmt.bindString(1, model.getBezeichnung());
+                stmt.bindString(2, String.valueOf(model.getId()));
+                stmt.bindString(3, String.valueOf(model.getSprache()));
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try{
             for (int i = 0; i < arraylist.size(); i++)
             {
@@ -1113,14 +1148,17 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 db.insert(TABLE_LADEFAHRZEUG, null, values);
                 //Log.e("standard price", id+"");
             }
-            db.close();
+            db.setTransactionSuccessful();
+            //db.close();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
 
     }
@@ -1171,7 +1209,42 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addBranch(ArrayList<Pricing1BranchData> listOfBranches)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_BRANCH + " (designation,client," +
+                "ort,plz,strasses) VALUES ( ?,?,?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfBranches.size(); x++){
+
+                Pricing1BranchData branchData = new Pricing1BranchData();
+                branchData = listOfBranches.get(x);
+
+                stmt.bindString(1, branchData.getDesignation());
+                stmt.bindString(2, String.valueOf(branchData.getClientId()));
+                stmt.bindString(3, branchData.getOrt());
+                stmt.bindString(4, branchData.getPlz());
+                stmt.bindString(5, branchData.getStrasse());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+       /* SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (Pricing1BranchData branch : listOfBranches)
             {
@@ -1187,14 +1260,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 long id = db.replace(TABLE_BRANCH, null, values);
                 Log.e(" in db to add in branch tabled "," database opearation done : "+id);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
 
     }
@@ -1223,7 +1298,39 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addCustomerBranch(ArrayList<CustomerBranchModel> listOfBranches)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_CUSTOMER_BRANCH + " (id,name) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfBranches.size(); x++){
+
+                CustomerBranchModel customerBranchModel = new CustomerBranchModel();
+                customerBranchModel = listOfBranches.get(x);
+
+                stmt.bindString(1, customerBranchModel.getId());
+                stmt.bindString(2, customerBranchModel.getName());
+
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (CustomerBranchModel branch : listOfBranches)
             {
@@ -1234,20 +1341,53 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 long id = db.replace(TABLE_CUSTOMER_BRANCH, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addDevice(ArrayList<Pricing1DeviceData> listOfDeviceData)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_DEVICE + " (heightMainGroup,designation) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfDeviceData.size(); x++){
+
+                Pricing1DeviceData deviceDataModel = new Pricing1DeviceData();
+                deviceDataModel = listOfDeviceData.get(x);
+
+                stmt.bindString(1, String.valueOf(deviceDataModel.getHeight_main_group()));
+                stmt.bindString(2, deviceDataModel.getDesignation());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" device "," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (Pricing1DeviceData deviceData : listOfDeviceData)
             {
@@ -1258,20 +1398,54 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 long id = db.replace(TABLE_DEVICE, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }catch (Exception e){
-
+            db.endTransaction();
+            db.close();
         }
         finally {
+            db.endTransaction();
             db.close();
-        }
+        }*/
 
 
     }
 
     public void addPriceRental(ArrayList<Pricing1PriceRentalData> priceRents)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PRICE_RENTAL + " (designation,unit) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < priceRents.size(); x++){
+
+                Pricing1PriceRentalData priceRental = new Pricing1PriceRentalData();
+                priceRental = priceRents.get(x);
+
+                stmt.bindString(1, priceRental.getDesignation());
+                stmt.bindString(2, String.valueOf(priceRental.getUnit()));
+
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" for price rental "," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (Pricing1PriceRentalData priceRent : priceRents)
             {
@@ -1281,21 +1455,55 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 long id = db.replace(TABLE_PRICE_RENTAL, null, values);
 
             }
-            db.close();
+            db.setTransactionSuccessful();
+            //db.close();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
 
     }
 
     public void addCountries(ArrayList<CountryModel> countris)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_COUNTRY + " (id,designation) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < countris.size(); x++){
+
+                CountryModel countryModel = new CountryModel();
+                countryModel = countris.get(x);
+
+                stmt.bindString(1, countryModel.getCountryId());
+                stmt.bindString(2, countryModel.getCountryName());
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (CountryModel country : countris)
             {
@@ -1306,20 +1514,53 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 long id = db.replace(TABLE_COUNTRY, null, countryValues);
 
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addActivityTypes(ArrayList<ActivityTypeModel> activitieTypes)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_ACTIVITY_TYPE + " (id,name) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < activitieTypes.size(); x++){
+
+                ActivityTypeModel activityTypeModel = new ActivityTypeModel();
+                activityTypeModel = activitieTypes.get(x);
+                stmt.bindString(1, activityTypeModel.getActivityTypeId());
+                stmt.bindString(2, activityTypeModel.getActivityTypeName());
+
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ActivityTypeModel activity : activitieTypes)
             {
@@ -1328,20 +1569,53 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 countryValues.put(KEY_ACTIVITY_TYPE_NAME, activity.getActivityTypeName());
                 long id = db.replace(TABLE_ACTIVITY_TYPE, null, countryValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
-
+        finally {
+            db.endTransaction();
+            db.close();
+        }
+*/
     }
 
     public void addActivityTopics(ArrayList<ActivityTopicModel> activityTopics)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_ACTIVITY_TOPIC + " (id,name) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < activityTopics.size(); x++){
+
+                ActivityTopicModel activityTopicModel = new ActivityTopicModel();
+                activityTopicModel = activityTopics.get(x);
+
+                stmt.bindString(1, activityTopicModel.getActivityTopicId());
+                stmt.bindString(2, activityTopicModel.getActivityTopicName());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ActivityTopicModel activityTopic : activityTopics)
             {
@@ -1350,21 +1624,54 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 countryValues.put(KEY_ACTIVITY_TOPIC_NAME, activityTopic.getActivityTopicName());
                 long id = db.replace(TABLE_ACTIVITY_TOPIC, null, countryValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addLegalForms(ArrayList<LegalFormModel> legalForms)
     {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_RECHTS_FORM + " (id,designation) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < legalForms.size(); x++){
+
+                LegalFormModel legalFormModel = new LegalFormModel();
+                legalFormModel = legalForms.get(x);
+
+                stmt.bindString(1, legalFormModel.getRechtsFormId());
+                stmt.bindString(2, legalFormModel.getRechtsFormDesignation());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (LegalFormModel legalForm : legalForms)
             {
@@ -1373,20 +1680,53 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 countryValues.put(KEY_RECHTS_FORM_DESIGNATION, legalForm.getRechtsFormDesignation());
                 long id = db.replace(TABLE_RECHTS_FORM, null, countryValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }catch (Exception e){
-
+            db.endTransaction();
+            db.close();
         }
         finally {
+            db.endTransaction();
             db.close();
-        }
+        }*/
 
     }
 
     public void addSalutation(ArrayList<SalutationModel> salutations)
     {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_SALUTATION + " (id,designation) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < salutations.size(); x++){
+
+                SalutationModel salutationModel = new SalutationModel();
+                salutationModel = salutations.get(x);
+
+                stmt.bindString(1, salutationModel.getSalutationId());
+                stmt.bindString(2, salutationModel.getSalutationDesignation());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (SalutationModel salutation : salutations)
             {
@@ -1395,20 +1735,52 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 salutationValues.put(KEY_SALUTATION_DESIGNATION, salutation.getSalutationDesignation());
                 long id = db.replace(TABLE_SALUTATION, null, salutationValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }catch (Exception e){
-
+            db.endTransaction();
+            db.close();
         }
         finally {
+            db.endTransaction();
             db.close();
-        }
+        }*/
 
     }
 
     public void addEmployees(ArrayList<EmployeeModel> employees)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //db.beginTransaction();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_EMPLOYEE + " (id,employeeJson) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < employees.size(); x++){
+
+                EmployeeModel employeeModel = new EmployeeModel();
+                employeeModel = employees.get(x);
+
+                stmt.bindString(1, employeeModel.getMitarbeiter());
+                String json = new Gson().toJson(employeeModel);
+                stmt.bindString(2,json);
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (EmployeeModel employee : employees)
             {
@@ -1420,25 +1792,55 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 countryValues.put(KEY_EMPLOYEE_STRING_JSON, json);
                 long id = db.replace(TABLE_EMPLOYEE, null, countryValues);
             }
-            //db.setTransactionSuccessful();
+            db.setTransactionSuccessful();
            //db.endTransaction();
-            db.close();
+            //db.close();
         }
         catch (Exception e){
+            db.endTransaction();
             db.close();
         }
         finally {
-            //db.endTransaction();
+            db.endTransaction();
             db.close();
 
-        }
+        }*/
 
     }
 
     public void addFunction(ArrayList<FunctionModel> functions)
     {
-        if(functions != null && functions.size() > 0){
+        String sql = "INSERT OR REPLACE INTO " + TABLE_FUNCTION + " (id,designation) VALUES (?,?)";
+
+        try {
             SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < functions.size(); x++){
+
+                FunctionModel functionModel = new FunctionModel();
+                functionModel = functions.get(x);
+                stmt.bindString(1, functionModel.getFunctionId());
+                stmt.bindString(2, functionModel.getFunctionDesignation());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+        /*if(functions != null && functions.size() > 0){
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.beginTransaction();
             try {
                 for (FunctionModel function : functions)
                 {
@@ -1447,21 +1849,58 @@ public class DataBaseHandler extends SQLiteOpenHelper
                     functionValues.put(KEY_FUNCTION_DESIGNATION, function.getFunctionDesignation());
                     long id = db.replace(TABLE_FUNCTION, null, functionValues);
                 }
-                db.close();
+                db.setTransactionSuccessful();
             }
             catch (Exception e){
                 Log.e(" "," exception a; "+e.toString());
-            }
-            finally {
+                db.endTransaction();
                 db.close();
             }
-        }
+            finally {
+                db.endTransaction();
+                db.close();
+            }
+        }*/
     }
     public void addSiteInspectionDeviceType(ArrayList<SiteInspectionDeviceTypeModel> listOfSiteInspectionDeviceType)
     {
-        //SQLiteDatabase db = this.getWritableDatabase();
-        if(listOfSiteInspectionDeviceType != null){
+        String sql = "INSERT OR REPLACE INTO " + TABLE_DEVICE_TYPE + " (Bezeichnung,GeraeettypID,Hoehengruppe," +
+                "arbeitshoehe) VALUES ( ?,?,?,?)";
+
+        try {
             SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfSiteInspectionDeviceType.size(); x++){
+
+                SiteInspectionDeviceTypeModel deviceTypeModel = new SiteInspectionDeviceTypeModel();
+                deviceTypeModel = listOfSiteInspectionDeviceType.get(x);
+
+                stmt.bindString(1, deviceTypeModel.getBezeichnung());
+                stmt.bindString(2, deviceTypeModel.getGeraeettypID());
+                stmt.bindString(3, deviceTypeModel.getHoehengruppe());
+                stmt.bindString(4, deviceTypeModel.getArbeitshoehe());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        //SQLiteDatabase db = this.getWritableDatabase();
+        /*if(listOfSiteInspectionDeviceType != null){
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.beginTransaction();
             try {
                 //db.beginTransaction();
                 for (SiteInspectionDeviceTypeModel deviceType : listOfSiteInspectionDeviceType)
@@ -1474,21 +1913,56 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                     long id = db.replace(TABLE_DEVICE_TYPE, null, languageValues);
                 }
-                //db.setTransactionSuccessful();
+                db.setTransactionSuccessful();
                 //db.endTransaction();
-                db.close();
+                //db.close();
             }
             catch (Exception e){
                 Log.e(" "," exception a; "+e.toString());
-            }
-            finally {
+                db.endTransaction();
                 db.close();
             }
-        }
+            finally {
+                db.endTransaction();
+                db.close();
+            }
+        }*/
     }
     public void addDocumentLanguage(ArrayList<DocumentLanguageModel> languages)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_DOCUMENT_LANGUAGE + " (id,designation) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < languages.size(); x++){
+
+                DocumentLanguageModel documentLanguageModel = new DocumentLanguageModel();
+                documentLanguageModel = languages.get(x);
+
+                stmt.bindString(1, documentLanguageModel.getDocumentLanguageId());
+                stmt.bindString(2, documentLanguageModel.getDocumentLanguageDesignation());
+
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+               // Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (DocumentLanguageModel language : languages)
             {
@@ -1497,20 +1971,53 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 languageValues.put(KEY_DOCUMENT_LANGUAGE_DESIGNATION, language.getDocumentLanguageDesignation());
                 long id = db.replace(TABLE_DOCUMENT_LANGUAGE, null, languageValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addDecisionMakers(ArrayList<DecisionMakerModel> decisionMakers)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_DECISION_MAKER + " (id,designation) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < decisionMakers.size(); x++){
+
+                DecisionMakerModel decisionMakerModel = new DecisionMakerModel();
+                decisionMakerModel = decisionMakers.get(x);
+
+                stmt.bindString(1, decisionMakerModel.getDecisionMakerId());
+                stmt.bindString(2, decisionMakerModel.getDecisionMakerDesignation());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (DecisionMakerModel decisionMaker : decisionMakers)
             {
@@ -1519,19 +2026,52 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 decisionMakerValues.put(KEY_DECISION_MAKER_DESIGNATION, decisionMaker.getDecisionMakerDesignation());
                 long id = db.replace(TABLE_DECISION_MAKER, null, decisionMakerValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }catch (Exception e){
-
+            db.endTransaction();
+            db.close();
         }
         finally {
+            db.endTransaction();
             db.close();
-        }
+        }*/
 
     }
 
     public void addFeatures(ArrayList<FeatureModel> features)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_FEATURE + " (id,designation) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < features.size(); x++){
+
+                FeatureModel featureModel = new FeatureModel();
+                featureModel = features.get(x);
+
+                stmt.bindString(1, featureModel.getMerkmal());
+                stmt.bindString(2, featureModel.getBezeichnung());
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (FeatureModel feature : features)
             {
@@ -1540,14 +2080,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 featureValues.put(KEY_FEATURE_NAME, feature.getBezeichnung());
                 long id = db.replace(TABLE_FEATURE, null, featureValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
@@ -1563,7 +2105,38 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addProjectStage(ArrayList<ProjectStagesModel> listOfProjectsStage)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_STAGE + " (id,designation) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfProjectsStage.size(); x++){
+
+                ProjectStagesModel stagesModel = new ProjectStagesModel();
+                stagesModel = listOfProjectsStage.get(x);
+
+                stmt.bindString(1, stagesModel.getProjectStageId());
+                stmt.bindString(2, stagesModel.getProjectStageDesignation());
+
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+               // Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ProjectStagesModel projectStage : listOfProjectsStage)
             {
@@ -1572,20 +2145,54 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PROJECT_STAGE_DESIGNATION, projectStage.getProjectStageDesignation());
                 long id = db.replace(TABLE_PROJECT_STAGE, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addProjectArea(ArrayList<ProjectAreaModel> listOfProjectsArea)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_AREA + " (id,designation) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfProjectsArea.size(); x++){
+
+                ProjectAreaModel projectAreaModel = new ProjectAreaModel();
+                projectAreaModel = listOfProjectsArea.get(x);
+
+                stmt.bindString(1, projectAreaModel.getProjectAreaId());
+                stmt.bindString(2, projectAreaModel.getProjectAreaDesignation());
+
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ProjectAreaModel projectArea : listOfProjectsArea)
             {
@@ -1594,20 +2201,54 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PROJECT_AREA_DESIGNATION, projectArea.getProjectAreaDesignation());
                 long id = db.replace(TABLE_PROJECT_AREA, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
-
+        finally {
+            db.endTransaction();
+            db.close();
+        }
+*/
     }
 
     public void addProjectArt(ArrayList<ProjectArtModel> listOfProjectsArt)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_ART + " (id,designation) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfProjectsArt.size(); x++){
+
+                ProjectArtModel projectArtModel = new ProjectArtModel();
+                projectArtModel = listOfProjectsArt.get(x);
+
+                stmt.bindString(1, projectArtModel.getProjectArtId());
+                stmt.bindString(2, projectArtModel.getProjectArtdesignation());
+
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ProjectArtModel projectArt : listOfProjectsArt)
             {
@@ -1616,20 +2257,54 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PROJECT_ART_DESIGNATION, projectArt.getProjectArtdesignation());
                 long id = db.replace(TABLE_PROJECT_ART, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addProjectType(ArrayList<ProjectTypeModel> listOfProjectType)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_TYPE + " (id,designation) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfProjectType.size(); x++){
+
+                ProjectTypeModel projectTypeModel = new ProjectTypeModel();
+                projectTypeModel = listOfProjectType.get(x);
+
+                stmt.bindString(1, projectTypeModel.getProjectTypeId());
+                stmt.bindString(2, projectTypeModel.getProjectTypeDesignation());
+
+                stmt.execute();
+                stmt.clearBindings();
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+       /* SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ProjectTypeModel projectType : listOfProjectType)
             {
@@ -1638,20 +2313,55 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PROJECT_TYPE_DESIGNATION, projectType.getProjectTypeDesignation());
                 long id = db.replace(TABLE_PROJECT_TYPE, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+
+        }*/
 
     }
 
     public void addProjectPhase(ArrayList<ProjectPhaseModel> listOfProjectPhase)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_PHASE + " (id,designation) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfProjectPhase.size(); x++){
+
+                ProjectPhaseModel phaseModel = new ProjectPhaseModel();
+                phaseModel = listOfProjectPhase.get(x);
+
+                stmt.bindString(1, phaseModel.getProjectPhaseId());
+                stmt.bindString(2, phaseModel.getProjectPhaseDesignation());
+
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+               // Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ProjectPhaseModel projectPhase : listOfProjectPhase)
             {
@@ -1660,20 +2370,55 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PROJECT_TYPE_DESIGNATION, projectPhase.getProjectPhaseDesignation());
                 long id = db.replace(TABLE_PROJECT_PHASE, null, values);
             }
+            db.setTransactionSuccessful();
 
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addProjectTrade(ArrayList<ProjectTradeModel> listOfProjectTrade)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_TRADE + " (id,designation) VALUES (?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfProjectTrade.size(); x++){
+
+                ProjectTradeModel tradeModel = new ProjectTradeModel();
+                tradeModel = listOfProjectTrade.get(x);
+
+                stmt.bindString(1, tradeModel.getProjectTradeId());
+                stmt.bindString(2, tradeModel.getProjectTradeDesignation());
+
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (ProjectTradeModel projectTrade : listOfProjectTrade)
             {
@@ -1682,20 +2427,56 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PROJECT_TRADE_DESIGNATION, projectTrade.getProjectTradeDesignation());
                 long id = db.replace(TABLE_PROJECT_TRADE, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
     public void addPriceStaffel(ArrayList<PriceStaffelModel> listOfPriceStaffel)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_STAFFEL + " (Staffel,Bezeichnung,JsonObject) VALUES (?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfPriceStaffel.size(); x++){
+
+                PriceStaffelModel priceStaffelModel = new PriceStaffelModel();
+                priceStaffelModel = listOfPriceStaffel.get(x);
+
+                stmt.bindString(1, priceStaffelModel.getStaffel());
+                stmt.bindString(2, priceStaffelModel.getBezeichnung());
+                stmt.bindString(3, new Gson().toJson(priceStaffelModel));
+
+
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (PriceStaffelModel priceStaffel : listOfPriceStaffel)
             {
@@ -1705,14 +2486,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_JSON_OBJECT, new Gson().toJson(priceStaffel));
                 long id = db.replace(TABLE_STAFFEL, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
+            db.endTransaction();
+            db.close();
         }
         finally {
-
-        }
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
@@ -2725,11 +3508,10 @@ public class DataBaseHandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public void addPricingOfflineStandardPrice
-            (ArrayList<PricingOfflineStandardPriceData> listOfPriceOfflineStandardPrice)
+    public void addPricingOfflineStandardPrice(ArrayList<PricingOfflineStandardPriceData> listOfPriceOfflineStandardPrice)
     {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        /*SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
 
         try {
@@ -2784,26 +3566,123 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 //Log.e("standard price", id+"");
             }
             db.setTransactionSuccessful();
-            db.endTransaction();
-            //db.close();
         }
         catch (Exception e){
-
+            db.endTransaction();
+            db.close();
         }
         finally {
             {
-                //db.endTransaction();
+                db.endTransaction();
                 db.close();
 
             }
+        }*/
+        // you can use INSERT only
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PRICING_OFFLINE_STANDARD_PRICE + " (Bezeichnung,Hoehengruppe,Hoehenhauptgruppe," +
+                "HoehenhauptgruppeID,Listenpreis,Mandant,Niederlassung,TageM_11_20,TageM_1_2,TageM_3_4,TageM_5_10," +
+                "TageR_11_20,TageR_1_2,TageR_3_4,TageR_5_10,ab21TageM,ab21TageR,bis8StundenM,bis8StundenR,uber8StundenM,uber8StundenR) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+        /*
+         * According to the docs http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html
+         * Writers should use beginTransactionNonExclusive() or beginTransactionWithListenerNonExclusive(SQLiteTransactionListener)
+         * to start a transaction. Non-exclusive mode allows database file to be in readable by other threads executing queries.
+         */
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfPriceOfflineStandardPrice.size(); x++){
+
+                PricingOfflineStandardPriceData priceOfflineStandardPrice = new PricingOfflineStandardPriceData();
+                priceOfflineStandardPrice = listOfPriceOfflineStandardPrice.get(x);
+
+                stmt.bindString(1, priceOfflineStandardPrice.getBezeichnung());
+                stmt.bindString(2, priceOfflineStandardPrice.getHoehengruppe());
+                stmt.bindString(3, priceOfflineStandardPrice.getHoehenhauptgruppe());
+                stmt.bindString(4, String.valueOf(priceOfflineStandardPrice.getHoehenhauptgruppeID()));
+                stmt.bindString(5, String.valueOf(priceOfflineStandardPrice.getListenpreis()));
+                stmt.bindString(6, String.valueOf(priceOfflineStandardPrice.getMandant()));
+                stmt.bindString(7, String.valueOf(priceOfflineStandardPrice.getNiederlassung()));
+                stmt.bindString(8, String.valueOf(priceOfflineStandardPrice.getTageM_11_20()));
+                stmt.bindString(9, String.valueOf(priceOfflineStandardPrice.getTageM_1_2()));
+                stmt.bindString(10, String.valueOf(priceOfflineStandardPrice.getTageM_3_4()));
+                stmt.bindString(11, String.valueOf(priceOfflineStandardPrice.getTageM_5_10()));
+                stmt.bindString(12, String.valueOf(priceOfflineStandardPrice.getTageR_11_20()));
+                stmt.bindString(13, String.valueOf(priceOfflineStandardPrice.getTageR_1_2()));
+                stmt.bindString(14, String.valueOf(priceOfflineStandardPrice.getTageR_3_4()));
+                stmt.bindString(15, String.valueOf(priceOfflineStandardPrice.getTageR_5_10()));
+                stmt.bindString(16, String.valueOf(priceOfflineStandardPrice.getAb21TageM()));
+                stmt.bindString(17, String.valueOf(priceOfflineStandardPrice.getAb21TageR()));
+                stmt.bindString(18, String.valueOf(priceOfflineStandardPrice.getBis8StundenM()));
+                stmt.bindString(19, String.valueOf(priceOfflineStandardPrice.getBis8StundenR()));
+                stmt.bindString(20, String.valueOf(priceOfflineStandardPrice.getUber8StundenM()));
+                stmt.bindString(21, String.valueOf(priceOfflineStandardPrice.getUber8StundenR()));
+
+                stmt.execute();
+                stmt.clearBindings();
+
+                //long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable :  "+count);
+
+
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment "," excepiton while inser : "+e.toString());
         }
+
 
     }
 
 
     public void addPricingOfflineEquipmentData(ArrayList<PricingOfflineEquipmentData> listOfPriceOfflineEquipment)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PRICING_OFFLINE_EQUIPMENT_HEIGHT + " (Ausstattung,Bezeichnung,Hoehengruppe," +
+                "Hoehenhauptgruppe,bezeichnungName) VALUES ( ?,?,?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfPriceOfflineEquipment.size(); x++){
+
+                PricingOfflineEquipmentData priceOfflineEquipmentdata = new PricingOfflineEquipmentData();
+                priceOfflineEquipmentdata = listOfPriceOfflineEquipment.get(x);
+
+                stmt.bindString(1, priceOfflineEquipmentdata.getAusstattung());
+                stmt.bindString(2, priceOfflineEquipmentdata.getBezeichnung());
+                stmt.bindString(3, priceOfflineEquipmentdata.getHoehengruppe());
+                stmt.bindString(4, String.valueOf(priceOfflineEquipmentdata.getHoehenhauptgruppe()));
+                stmt.bindString(5, priceOfflineEquipmentdata.getBezeichnung_1());
+
+                stmt.execute();
+                stmt.clearBindings();
+
+               // long count =stmt.executeInsert();
+               // Log.e(" prepare statment "," count variable for equipment :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment "," excepiton while inser : "+e.toString());
+        }
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (int i = 0; i < listOfPriceOfflineEquipment.size(); i++)
             {
@@ -2818,14 +3697,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PRICING_OFFLINE_EQUIPMENT_HEIGHT_BEZEICHNUNG1, priceOfflineEquipment.getBezeichnung_1());
                 db.replace(TABLE_PRICING_OFFLINE_EQUIPMENT_HEIGHT, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
@@ -3349,7 +4230,39 @@ public class DataBaseHandler extends SQLiteOpenHelper
     public void addBuildingProject(ArrayList<SiteInspectionBuildingProjectModel> listOfSiteInspectionBuildingProject)
     {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_BUILDING_PROJECT + " (Bezeichnung,Bauvorhaben) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfSiteInspectionBuildingProject.size(); x++){
+
+                SiteInspectionBuildingProjectModel siteInspectionBuildingProjectModel = new SiteInspectionBuildingProjectModel();
+                siteInspectionBuildingProjectModel = listOfSiteInspectionBuildingProject.get(x);
+
+                stmt.bindString(1, siteInspectionBuildingProjectModel.getBezeichnung());
+                stmt.bindString(2, siteInspectionBuildingProjectModel.getBauvorhaben());
+
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+               // Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (int i = 0; i < listOfSiteInspectionBuildingProject.size(); i++) {
 
@@ -3363,21 +4276,54 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 db.replace(TABLE_BUILDING_PROJECT, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
 
     }
 
     public void addAccess(ArrayList<SiteInspectionAccessModel> listOfSiteInspectionAccess)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_ACCESS + " (Bezeichnung,Zugang) VALUES ( ?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfSiteInspectionAccess.size(); x++){
+
+                SiteInspectionAccessModel siteInspectionAccessModel = new SiteInspectionAccessModel();
+                siteInspectionAccessModel = listOfSiteInspectionAccess.get(x);
+
+                stmt.bindString(1, siteInspectionAccessModel.getBezeichnung());
+                stmt.bindString(2, siteInspectionAccessModel.getZugang());
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+               // Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (int i = 0; i < listOfSiteInspectionAccess.size(); i++) {
 
@@ -3390,14 +4336,17 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 db.replace(TABLE_ACCESS, null, values);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+
+        }*/
 
 
     }
@@ -4084,7 +5033,41 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addBuheneart(ArrayList<BuheneartModel> listOfBuheneart)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_BUHENEART + " (Bezeichnung,Buheneart,Sort," +
+                "Sprache) VALUES ( ?,?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            for(int x=0; x < listOfBuheneart.size(); x++){
+
+                BuheneartModel buheneartModel = new BuheneartModel();
+                buheneartModel = listOfBuheneart.get(x);
+
+                stmt.bindString(1, buheneartModel.getBezeichnung());
+                stmt.bindString(2, buheneartModel.getBuehnenArt());
+                stmt.bindString(3, buheneartModel.getSort());
+                stmt.bindString(4, buheneartModel.getSprache());
+                stmt.execute();
+                stmt.clearBindings();
+               // long count =stmt.executeInsert();
+              //  Log.e(" prepare statment "," count variable for device type :  "+count);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         try {
             for (BuheneartModel deviceType : listOfBuheneart)
             {
@@ -4096,14 +5079,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 long id = db.replace(TABLE_BUHENEART, null, languageValues);
             }
-            db.close();
+            db.setTransactionSuccessful();
         }
         catch (Exception e){
-
-        }
-        finally {
+            db.endTransaction();
             db.close();
         }
+        finally {
+            db.endTransaction();
+            db.close();
+        }*/
 
     }
 
@@ -4128,6 +5113,8 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfBuheneart;
     }
 
-
+    private void getPragma(SQLiteDatabase sqlDb){
+        sqlDb.execSQL("PRAGMA cache_size=10000");
+    }
 
 }

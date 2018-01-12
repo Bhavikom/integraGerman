@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.ConnectionClosedException;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -17,9 +18,13 @@ import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.SocketException;
+import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.zip.GZIPInputStream;
 
 import de.mateco.integrAMobile.Helper.CustomSSLFactory;
 import de.mateco.integrAMobile.Helper.DataHelper;
@@ -30,7 +35,7 @@ import de.mateco.integrAMobile.model.Language;
 /**
  * simple asynctask for calling service of get request
  */
-public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, String>
+public class BasicAsyncTaskGetRequest2 extends AsyncTask<NameValuePair, Void, String>
 {
 	private String url;
 	private OnAsyncResult listener;
@@ -41,7 +46,9 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
     private MatecoPriceApplication matecoPriceApplication;
     long startTime;
     long elapsedTime;
-	public BasicAsyncTaskGetRequest(String urls, OnAsyncResult listener, Context context, boolean isProgressEnabled)
+    HttpEntity httpEntity;
+    byte[] bytesArray = null;
+	public BasicAsyncTaskGetRequest2(String urls, OnAsyncResult listener, Context context, boolean isProgressEnabled)
 	{
 		this.url = urls;
 		this.listener = listener;
@@ -72,6 +79,11 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
 
             startTime = System.currentTimeMillis();
 
+            URL url2 = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection)url2.openConnection();
+            conn.setRequestProperty("Accept-Encoding", "gzip");
+            InputStream inputStream = new GZIPInputStream(conn.getInputStream());
+
             HttpClient httpclient = CustomSSLFactory.getNewHttpClient();
             //HttpClient httpclient = new DefaultHttpClient();
             httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
@@ -80,6 +92,10 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
             HttpGet httpGet = new HttpGet(url);
             httpGet.addHeader("Accept-Encoding", "gzip");
             HttpResponse response = httpclient.execute(httpGet);
+
+            httpEntity = response.getEntity();
+            //return EntityUtils.toByteArray(response.getEntity());
+            bytesArray = EntityUtils.toByteArray(response.getEntity());
             return EntityUtils.toString(response.getEntity());
            /*
             ArrayList<BasicNameValuePair> reqArguments = new ArrayList<BasicNameValuePair>();
@@ -171,7 +187,7 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
 
 	public interface OnAsyncResult 
 	{
-		void OnAsynResult(String result);
+		void OnAsynResult(String result,byte[] bytes);
 	}
 
 	protected void onPostExecute(String result)
@@ -186,11 +202,11 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
             }
             if (!result.equals("error"))
             {
-                listener.OnAsynResult(result);
+                listener.OnAsynResult(result,bytesArray);
             }
             else
             {
-                listener.OnAsynResult("error");
+                listener.OnAsynResult("error",null);
             }
         }
         catch (Exception e){

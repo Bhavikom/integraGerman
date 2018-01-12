@@ -341,11 +341,13 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
 
             if(customerStored != null) {
                 for (CountryModel model : listOfCountry) {
-                    if (model.getCountryName().equals(customerStored.getLand())) {
-                        selectedCountry = listOfCountry.get(listOfCountry.indexOf(model));
-                        spinnerCustomerDataCountry.setSelection(listOfCountry.indexOf(model) + 1);
-                        setCountry = true;
-                        break;
+                    if(model != null && customerStored.getLand() != null && model.getCountryName() != null) {
+                        if (model.getCountryName().equals(customerStored.getLand())) {
+                            selectedCountry = listOfCountry.get(listOfCountry.indexOf(model));
+                            spinnerCustomerDataCountry.setSelection(listOfCountry.indexOf(model) + 1);
+                            setCountry = true;
+                            break;
+                        }
                     }
 
                 }

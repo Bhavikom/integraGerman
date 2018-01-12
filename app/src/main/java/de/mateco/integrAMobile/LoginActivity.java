@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,12 +16,31 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.DataFormatException;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.Inflater;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
@@ -38,6 +58,7 @@ import de.mateco.integrAMobile.model.DocumentLanguageModel;
 import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.FeatureModel;
 import de.mateco.integrAMobile.model.FunctionModel;
+import de.mateco.integrAMobile.model.HintModel;
 import de.mateco.integrAMobile.model.LadefahrzeugComboBoxItemModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LegalFormModel;
@@ -171,7 +192,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResultLogin = new BasicAsyncTaskGetRequest.OnAsyncResult()
                     {
                         @Override
-                        public void OnAsynResult(String result)
+                        public void OnAsynResult(final String result)
                         {
                             Log.e("result", result);
                             if(result.equals("error"))
@@ -198,7 +219,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                     final ArrayList<LoginPersonModel> listOfUser = new ArrayList<>();
                                     LoginPersonModel.extractFromJson(result, listOfUser);
                                     //prd.setMessage(language.getMessagePleaseWaitWhileDataBeingLoadedForFirstTime());
-                                    onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
+                                    /*onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
                                     {
                                         @Override
                                         public void OnAsynResult(final String result)
@@ -257,6 +278,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                                                 prd.setProgress(0);
                                                                 prd.setMax(100);
                                                                 prd.setProgress(20);
+                                                                //InputStream in = IOUtils.toInputStream(source, "UTF-8");
+                                                                byte[] bytes = decompress2(result.getBytes());
+                                                                String str = new String(bytes, "UTF-8");
                                                                 MainServiceCallModel mainServiceCallModel = new Gson().fromJson(result, MainServiceCallModel.class);
                                                                 db.deleteTableAtLogin();
                                                                 ArrayList<PricingOfflineStandardPriceData> listOfOfflineStandardPrice = mainServiceCallModel.getListOfStandardPrice();
@@ -399,7 +423,189 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                     catch (IOException e)
                                     {
                                         e.printStackTrace();
-                                    }
+                                    }*/
+                                    String url = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
+                                    // for volley
+                                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url,
+                                            new Response.Listener<JSONObject>() {
+                                                @Override
+                                                public void onResponse(final JSONObject response) {
+                                                    Log.e(" ###### "," response of volley : "+response);
+                                                    try
+                                                    {
+                                                        new Thread(new Runnable()
+                                                        {
+                                                            @Override
+                                                            public void run()
+                                                            {
+                                                                try
+                                                                {
+
+                                                                    prd.setProgress(0);
+                                                                    prd.setMax(100);
+                                                                    prd.setProgress(20);
+                                                                    MainServiceCallModel mainServiceCallModel = new Gson().fromJson(response.toString(), MainServiceCallModel.class);
+                                                                    db.deleteTableAtLogin();
+
+                                                                    ArrayList<PricingOfflineStandardPriceData> listOfOfflineStandardPrice = mainServiceCallModel.getListOfStandardPrice();
+                                                                    db.addPricingOfflineStandardPrice(listOfOfflineStandardPrice); // 1
+
+                                                                    ArrayList<LadefahrzeugComboBoxItemModel> arraylistLadefahrzeug = mainServiceCallModel.getArraylsitLadefahrzeug();
+                                                                    db.addLadefahzeg(arraylistLadefahrzeug); // 2
+
+                                                                    prd.setProgress(0);
+                                                                    prd.setMax(100);
+                                                                    //prd.setMessage();
+                                                                    prd.setProgress(25);
+                                                                    Log.e("list of standard price", listOfOfflineStandardPrice.size() + "");
+                                                                    ArrayList<Pricing1PriceRentalData> rentalData = mainServiceCallModel.getListOfPriceRental();
+                                                                    db.addPriceRental(rentalData); // 3
+                                                                    prd.setProgress(0);
+                                                                    prd.setMax(100);
+                                                                    prd.setProgress(35);
+                                                                    ArrayList<PricingOfflineEquipmentData> listOfOfflineEquipment = mainServiceCallModel.getListOfEquipmentHeight();
+                                                                    db.addPricingOfflineEquipmentData(listOfOfflineEquipment); // 4
+                                                                    ArrayList<Pricing1DeviceData> deviceGroups = mainServiceCallModel.getListOfDeviceGroup();
+                                                                    db.addDevice(deviceGroups); // 5
+                                                                    prd.setProgress(0);
+                                                                    prd.setMax(100);
+                                                                    prd.setProgress(40);
+                                                                    ArrayList<Pricing1BranchData> branches = mainServiceCallModel.getListOfBranch();
+                                                                    db.addBranch(branches); // 6
+                                                                    ArrayList<LegalFormModel> legalForms = mainServiceCallModel.getListOfLegalForm();
+                                                                    db.addLegalForms(legalForms); // 7
+                                                                    prd.setProgress(0);
+                                                                    prd.setMax(100);
+                                                                    prd.setProgress(45);
+                                                                    ArrayList<CountryModel> countries = mainServiceCallModel.getListOfCountry();
+                                                                    db.addCountries(countries); // 8
+                                                                    ArrayList<SalutationModel> salutations = mainServiceCallModel.getListOfSalutations();
+                                                                    db.addSalutation(salutations); // 9
+                                                                    prd.setProgress(0);
+                                                                    prd.setMax(100);
+                                                                    prd.setProgress(50);
+                                                                    ArrayList<FunctionModel> functions = mainServiceCallModel.getListOfFunctions();
+                                                                    db.addFunction(functions); // 10
+                                                                    ArrayList<FeatureModel> listOfFeatures = mainServiceCallModel.getListOfFeatures();
+                                                                    db.addFeatures(listOfFeatures); // 11
+                                                                    prd.setProgress(55);
+                                                                    ArrayList<DocumentLanguageModel> languages = mainServiceCallModel.getListOfDocumentLanguage();
+                                                                    db.addDocumentLanguage(languages); // 12
+                                                                    ArrayList<DecisionMakerModel> listOfDecisionMaker = mainServiceCallModel.getListOfDecisionMaker();
+                                                                    db.addDecisionMakers(listOfDecisionMaker); // 13
+                                                                    prd.setProgress(60);
+                                                                    ArrayList<ActivityTypeModel> listOfActivityType = mainServiceCallModel.getListOfActivityType();
+                                                                    db.addActivityTypes(listOfActivityType); // 14
+                                                                    prd.setProgress(65);
+                                                                    ArrayList<ActivityTopicModel> listOfTopic = mainServiceCallModel.getListOfActivityTopic();
+                                                                    db.addActivityTopics(listOfTopic); // 15
+                                                                    ArrayList<EmployeeModel> listOfEmployee = mainServiceCallModel.getListOfEmployee();
+                                                                    db.addEmployees(listOfEmployee); // 16
+                                                                    prd.setProgress(70);
+                                                                    ArrayList<SiteInspectionDeviceTypeModel> listOfDeviceTypes = mainServiceCallModel.getListOfDeviceType();
+                                                                    db.addSiteInspectionDeviceType(listOfDeviceTypes);// 17
+                                                                    prd.setProgress(75);
+                                                                    ArrayList<SiteInspectionBuildingProjectModel> listOfBUildingProject = mainServiceCallModel.getListOfBuildingProject();
+                                                                    db.addBuildingProject(listOfBUildingProject); // 18
+                                                                    ArrayList<SiteInspectionAccessModel> listOfAccess = mainServiceCallModel.getListOfAccess();
+                                                                    db.addAccess(listOfAccess); // 19
+                                                                    ArrayList<PriceStaffelModel> listOfPriceStaffel = mainServiceCallModel.getListOfPriceStaffel();
+                                                                    db.addPriceStaffel(listOfPriceStaffel); // 20
+                                                                    prd.setProgress(80);
+                                                                    ArrayList<CustomerBranchModel> listOfCustomerBranch = mainServiceCallModel.getListOfCustomerBranch();
+                                                                    if(listOfCustomerBranch != null)
+                                                                        db.addCustomerBranch(listOfCustomerBranch); // 21
+                                                                    ArrayList<ProjectArtModel> listOfProjectArt = mainServiceCallModel.getListOfProjectArt();
+                                                                    if(listOfProjectArt != null)
+                                                                        db.addProjectArt(listOfProjectArt); // 22
+                                                                    ArrayList<ProjectTypeModel> listOfProjectType = mainServiceCallModel.getListOfProjectType();
+                                                                    if(listOfProjectType != null)
+                                                                        db.addProjectType(listOfProjectType); // 23
+                                                                    prd.setProgress(85);
+                                                                    ArrayList<ProjectPhaseModel> listOfProjectPhase = mainServiceCallModel.getListOfProjectPhase();
+                                                                    if(listOfProjectPhase != null)
+                                                                        db.addProjectPhase(listOfProjectPhase); // 24
+                                                                    ArrayList<ProjectStagesModel> listOfProjectStage = mainServiceCallModel.getListOfProjectStage();
+                                                                    if(listOfProjectStage != null)
+                                                                        db.addProjectStage(listOfProjectStage); // 25
+                                                                    ArrayList<ProjectTradeModel> listOfProjectTrade = mainServiceCallModel.getListOfProjectTrade();
+                                                                    prd.setProgress(90);
+                                                                    if(listOfProjectTrade != null)
+                                                                        db.addProjectTrade(listOfProjectTrade); // 26
+                                                                    prd.setProgress(95);
+                                                                    ArrayList<ProjectAreaModel> listOfArea = mainServiceCallModel.getListOfArea();
+                                                                    if(listOfArea != null)
+                                                                        db.addProjectArea(listOfArea); // 27
+                                                                    ArrayList<BuheneartModel> listOfBuheneart = mainServiceCallModel.getListOfBuheneart();
+                                                                    if(listOfBuheneart != null)
+                                                                        db.addBuheneart(listOfBuheneart); // 28
+                                                                    prd.setProgress(100);
+                                                                    prd.dismiss();
+                                                                    String json = new Gson().toJson(listOfUser);
+                                                                    matecoPriceApplication.saveLoginUser(DataHelper.LoginPerson, json);
+                                                                    Intent intentHome = new Intent(LoginActivity.this, HomeActivity.class);
+                                                                    startActivity(intentHome);
+                                                                    finish();
+                                                                }
+                                                                catch (Exception ex)
+                                                                {
+                                                                    //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                                                                    ex.printStackTrace();
+                                                                    prd.dismiss();
+                                                                    LoginActivity.this.runOnUiThread(new Runnable()
+                                                                    {
+                                                                        @Override
+                                                                        public void run()
+                                                                        {
+                                                                            showShortToast(language.getMessageErrorAtParsing());
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+                                                        }).start();
+
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        ex.printStackTrace();
+                                                        prd.dismiss();
+                                                        showShortToast(language.getMessageErrorAtParsing());
+                                                    }
+                                                }
+                                            }, new Response.ErrorListener() {
+
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.e(" ###### "," network problem : "+result);
+                                            prd.dismiss();
+                                            //showLongToast("Network problem while service calling before");
+                                            if(isCallservice) {
+                                                // showLongToast("service call start now");
+                                                isCallservice=false;
+                                                showProgressDialog();
+                                                Handler handler = new Handler();
+                                                handler.postDelayed(new Runnable() {
+                                                    public void run() {
+                                                        // Actions to do after 10 seconds
+                                                        String url = null;
+                                                        try {
+                                                            url = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
+                                                        } catch (UnsupportedEncodingException e) {e.printStackTrace();}
+                                                        if(DataHelper.isNetworkAvailable(LoginActivity.this)) {
+                                                            BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, LoginActivity.this, false);
+                                                            asyncTask.execute();
+                                                        }else {
+                                                            prd.dismiss();
+                                                            showShortToast(language.getMessageNetworkNotAvailable());
+                                                        }
+                                                    }
+                                                }, DataHelper.NETWORK_CALL_DURATION);
+                                            }
+                                        }
+                                    });
+
+                                    Volley.newRequestQueue(LoginActivity.this).add(req);
+
                                 }
                                 catch (Exception e)
                                 {
@@ -479,5 +685,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         if(prd != null && prd.isShowing()){
             prd.dismiss();
         }
+    }
+    public static byte[] decompress2(byte[] data) throws IOException, DataFormatException {
+        Inflater inflater = new Inflater();
+        inflater.setInput(data);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] buffer = new byte[1024];
+        while (!inflater.finished()) {
+            int count = inflater.inflate(buffer);
+            outputStream.write(buffer, 0, count);
+        }
+        outputStream.close();
+        byte[] output = outputStream.toByteArray();
+        //LOG.debug("Original: " + data.length);
+        //LOG.debug("Compressed: " + output.length);
+        return output;
+    }
+    public  String decompress(byte[] compressed) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(compressed);
+        GZIPInputStream gis = new GZIPInputStream(bis);
+        BufferedReader br = new BufferedReader(new InputStreamReader(gis, "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        br.close();
+        gis.close();
+        bis.close();
+        return sb.toString();
     }
 }

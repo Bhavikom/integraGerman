@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greenDaoGenerator/greenDaoGenerator.iml" filepath="$PROJECT_DIR$/greenDaoGenerator/greenDaoGenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/integraNormal.iml" filepath="$PROJECT_DIR$/integraNormal.iml" />
       <module fileurl="file://$PROJECT_DIR$/week-view/week-view.iml" filepath="$PROJECT_DIR$/week-view/week-view.iml" />
     </modules>

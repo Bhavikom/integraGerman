@@ -714,7 +714,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                     Log.e("url", url);
 
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
-                    asyncTask.execute();
+                    asyncTask.execute(); // get customer detail
                 }
                 catch (IOException ex)
                 {
@@ -792,7 +792,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                     //Projekt
                     Log.e("url", url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
-                    asyncTask.execute();
+                    asyncTask.execute(); // get Project detail
 
                 }
                 catch (IOException ex)
@@ -922,7 +922,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                             }
                             Log.e("otherurl", url);
                             BasicAsyncTaskGetRequest asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), true);
-                            asyncTask1.execute();
+                            asyncTask1.execute(); // load adapter
                         }
                     }
                 };
@@ -932,7 +932,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + dateString;
                 Log.e("todayurl", url);
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }
             else

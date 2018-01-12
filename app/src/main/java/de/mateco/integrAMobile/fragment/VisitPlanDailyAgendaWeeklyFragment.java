@@ -289,8 +289,9 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         mWeekView.setDateTimeInterpreter(this);
         listOfWeeklyAgenda = new ArrayList<>();
 
-        //if(isViewShown)
+        if(isViewShown) {
             adapterLoad();
+        }
         getActivity().invalidateOptionsMenu();
         setHasOptionsMenu(true);
 }
@@ -299,17 +300,20 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-       /* if (isVisibleToUser) {
+        if (isVisibleToUser) {
             isViewShown = true;
         } else {
             isViewShown = false;
-        }*/
+        }
         if (getView() != null) {
-            isViewShown = true;
+            if(isViewShown){
+                adapterLoad();
+            }
+            //isViewShown = true;
             // fetchdata() contains logic to show data when page is selected mostly asynctask to fill the data
-            adapterLoad();
+
         } else {
-            isViewShown = false;
+            //isViewShown = false;
         }
     }
 
