@@ -14,13 +14,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
+import de.mateco.integrAMobile.LoginActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
@@ -28,20 +37,30 @@ import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.ActivityTopicModel;
 import de.mateco.integrAMobile.model.ActivityTypeModel;
+import de.mateco.integrAMobile.model.BuheneartModel;
 import de.mateco.integrAMobile.model.CountryModel;
+import de.mateco.integrAMobile.model.CustomerBranchModel;
 import de.mateco.integrAMobile.model.DecisionMakerModel;
 import de.mateco.integrAMobile.model.DocumentLanguageModel;
 import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.FeatureModel;
 import de.mateco.integrAMobile.model.FunctionModel;
+import de.mateco.integrAMobile.model.LadefahrzeugComboBoxItemModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LegalFormModel;
 import de.mateco.integrAMobile.model.MainServiceCallModel;
+import de.mateco.integrAMobile.model.PriceStaffelModel;
 import de.mateco.integrAMobile.model.Pricing1BranchData;
 import de.mateco.integrAMobile.model.Pricing1DeviceData;
 import de.mateco.integrAMobile.model.Pricing1PriceRentalData;
 import de.mateco.integrAMobile.model.PricingOfflineEquipmentData;
 import de.mateco.integrAMobile.model.PricingOfflineStandardPriceData;
+import de.mateco.integrAMobile.model.ProjectAreaModel;
+import de.mateco.integrAMobile.model.ProjectArtModel;
+import de.mateco.integrAMobile.model.ProjectPhaseModel;
+import de.mateco.integrAMobile.model.ProjectStagesModel;
+import de.mateco.integrAMobile.model.ProjectTradeModel;
+import de.mateco.integrAMobile.model.ProjectTypeModel;
 import de.mateco.integrAMobile.model.SalutationModel;
 import de.mateco.integrAMobile.model.SiteInspectionAccessModel;
 import de.mateco.integrAMobile.model.SiteInspectionBuildingProjectModel;
@@ -55,7 +74,7 @@ public class SettingOfflineFragment extends BaseFragment implements View.OnClick
     private DataBaseHandler db;
     private TextView labelValueLastSynchTimeCustomer, labelValueLastSynchTimePricing, labelValueLastSynchTimeProject,
                 labelValueLastSynchTimeSiteInspection;
-    private Button buttonSyncNow1,buttonSyncNow2,buttonSyncNow3,buttonSyncNow4;
+    private Button buttonSyncNowCustomer, buttonSyncNowPricing, buttonSyncNowProject, buttonSyncNowSiteInspection;
 
 
     @Override
@@ -124,20 +143,20 @@ public class SettingOfflineFragment extends BaseFragment implements View.OnClick
         labelSiteInspection.setText(language.getLabelSiteInspection());
         labelLastSyncTime3.setText(language.getLabelLastSyncTime());
 
-        buttonSyncNow1 = (Button)rootView.findViewById(R.id.buttonSyncNow1);
-        buttonSyncNow2 = (Button)rootView.findViewById(R.id.buttonSyncNow2);
-        buttonSyncNow3 = (Button)rootView.findViewById(R.id.buttonSyncNow3);
-        buttonSyncNow4 = (Button)rootView.findViewById(R.id.buttonSyncNow4);
+        buttonSyncNowCustomer = (Button)rootView.findViewById(R.id.buttonSyncNow1);
+        buttonSyncNowPricing = (Button)rootView.findViewById(R.id.buttonSyncNow2);
+        buttonSyncNowProject = (Button)rootView.findViewById(R.id.buttonSyncNow3);
+        buttonSyncNowSiteInspection = (Button)rootView.findViewById(R.id.buttonSyncNow4);
 
-        buttonSyncNow1.setText(language.getLabelSyncNow());
-        buttonSyncNow2.setText(language.getLabelSyncNow());
-        buttonSyncNow3.setText(language.getLabelSyncNow());
-        buttonSyncNow4.setText(language.getLabelSyncNow());
+        buttonSyncNowCustomer.setText(language.getLabelSyncNow());
+        buttonSyncNowPricing.setText(language.getLabelSyncNow());
+        buttonSyncNowProject.setText(language.getLabelSyncNow());
+        buttonSyncNowSiteInspection.setText(language.getLabelSyncNow());
 
-        buttonSyncNow1.setOnClickListener(this);
-        buttonSyncNow2.setOnClickListener(this);
-        buttonSyncNow3.setOnClickListener(this);
-        buttonSyncNow4.setOnClickListener(this);
+        buttonSyncNowCustomer.setOnClickListener(this);
+        buttonSyncNowPricing.setOnClickListener(this);
+        buttonSyncNowProject.setOnClickListener(this);
+        buttonSyncNowSiteInspection.setOnClickListener(this);
     }
 
     @Override
@@ -213,7 +232,103 @@ public class SettingOfflineFragment extends BaseFragment implements View.OnClick
             prd.setMessage(language.getMessageWaitWhileLoading());
             prd.show();
 
-            BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
+            String url = null;
+            try {
+                url = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try
+                    {
+                        MainServiceCallModel mainServiceCallModel = new Gson().fromJson(response.toString(), MainServiceCallModel.class);
+                        db.deleteTableAtLogin();
+                        ArrayList<PricingOfflineStandardPriceData> listOfOfflineStandardPrice = mainServiceCallModel.getListOfStandardPrice();
+                        db.addPricingOfflineStandardPrice(listOfOfflineStandardPrice); // 1
+                        ArrayList<LadefahrzeugComboBoxItemModel> arraylistLadefahrzeug = mainServiceCallModel.getArraylsitLadefahrzeug();
+                        db.addLadefahzeg(arraylistLadefahrzeug); // 2
+                        ArrayList<Pricing1PriceRentalData> rentalData = mainServiceCallModel.getListOfPriceRental();
+                        db.addPriceRental(rentalData); // 3
+                        ArrayList<PricingOfflineEquipmentData> listOfOfflineEquipment = mainServiceCallModel.getListOfEquipmentHeight();
+                        db.addPricingOfflineEquipmentData(listOfOfflineEquipment); // 4
+                        ArrayList<Pricing1DeviceData> deviceGroups = mainServiceCallModel.getListOfDeviceGroup();
+                        db.addDevice(deviceGroups); // 5
+                        ArrayList<Pricing1BranchData> branches = mainServiceCallModel.getListOfBranch();
+                        db.addBranch(branches); // 6
+                        ArrayList<LegalFormModel> legalForms = mainServiceCallModel.getListOfLegalForm();
+                        db.addLegalForms(legalForms); // 7
+                        ArrayList<CountryModel> countries = mainServiceCallModel.getListOfCountry();
+                        db.addCountries(countries); // 8
+                        ArrayList<SalutationModel> salutations = mainServiceCallModel.getListOfSalutations();
+                        db.addSalutation(salutations); // 9
+                        ArrayList<FunctionModel> functions = mainServiceCallModel.getListOfFunctions();
+                        db.addFunction(functions); // 10
+                        ArrayList<FeatureModel> listOfFeatures = mainServiceCallModel.getListOfFeatures();
+                        db.addFeatures(listOfFeatures); // 11
+                        ArrayList<DocumentLanguageModel> languages = mainServiceCallModel.getListOfDocumentLanguage();
+                        db.addDocumentLanguage(languages); // 12
+                        ArrayList<DecisionMakerModel> listOfDecisionMaker = mainServiceCallModel.getListOfDecisionMaker();
+                        db.addDecisionMakers(listOfDecisionMaker); // 13
+                        ArrayList<ActivityTypeModel> listOfActivityType = mainServiceCallModel.getListOfActivityType();
+                        db.addActivityTypes(listOfActivityType); // 14
+                        ArrayList<ActivityTopicModel> listOfTopic = mainServiceCallModel.getListOfActivityTopic();
+                        db.addActivityTopics(listOfTopic); // 15
+                        ArrayList<EmployeeModel> listOfEmployee = mainServiceCallModel.getListOfEmployee();
+                        db.addEmployees(listOfEmployee); // 16
+                        ArrayList<SiteInspectionDeviceTypeModel> listOfDeviceTypes = mainServiceCallModel.getListOfDeviceType();
+                        db.addSiteInspectionDeviceType(listOfDeviceTypes); // 17
+                        ArrayList<SiteInspectionBuildingProjectModel> listOfBUildingProject = mainServiceCallModel.getListOfBuildingProject();
+                        db.addBuildingProject(listOfBUildingProject); // 18
+                        ArrayList<SiteInspectionAccessModel> listOfAccess = mainServiceCallModel.getListOfAccess();
+                        db.addAccess(listOfAccess); // 19
+                        ArrayList<PriceStaffelModel> listOfPriceStaffel = mainServiceCallModel.getListOfPriceStaffel();
+                        db.addPriceStaffel(listOfPriceStaffel); // 20
+                        ArrayList<CustomerBranchModel> listOfCustomerBranch = mainServiceCallModel.getListOfCustomerBranch();
+                        if(listOfCustomerBranch != null)
+                            db.addCustomerBranch(listOfCustomerBranch); // 21
+                        ArrayList<ProjectArtModel> listOfProjectArt = mainServiceCallModel.getListOfProjectArt();
+                        if(listOfProjectArt != null)
+                            db.addProjectArt(listOfProjectArt); // 22
+                        ArrayList<ProjectTypeModel> listOfProjectType = mainServiceCallModel.getListOfProjectType();
+                        if(listOfProjectType != null)
+                            db.addProjectType(listOfProjectType); // 23
+                        ArrayList<ProjectPhaseModel> listOfProjectPhase = mainServiceCallModel.getListOfProjectPhase();
+                        if(listOfProjectPhase != null)
+                            db.addProjectPhase(listOfProjectPhase); // 24
+                        ArrayList<ProjectStagesModel> listOfProjectStage = mainServiceCallModel.getListOfProjectStage();
+                        if(listOfProjectStage != null)
+                            db.addProjectStage(listOfProjectStage); // 25
+                        ArrayList<ProjectTradeModel> listOfProjectTrade = mainServiceCallModel.getListOfProjectTrade();
+                        if(listOfProjectTrade != null)
+                            db.addProjectTrade(listOfProjectTrade); // 26
+                        ArrayList<ProjectAreaModel> listOfArea = mainServiceCallModel.getListOfArea();
+                        if(listOfArea != null)
+                            db.addProjectArea(listOfArea); // 27
+                        ArrayList<BuheneartModel> listOfBuheneart = mainServiceCallModel.getListOfBuheneart();
+                        if(listOfBuheneart != null)
+                            db.addBuheneart(listOfBuheneart); // 28
+
+                        updateLastSynchTimeLabel();
+                        prd.dismiss();
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
+                        showShortToast(language.getMessageErrorAtParsing());
+                        prd.dismiss();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    prd.dismiss();
+                    showShortToast(language.getMessageError());
+                }
+            });
+            Volley.newRequestQueue(getActivity()).add(objectRequest);
+            /*BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
             {
                 @Override
                 public void OnAsynResult(String result)
@@ -233,6 +348,8 @@ public class SettingOfflineFragment extends BaseFragment implements View.OnClick
                         {
                             MainServiceCallModel mainServiceCallModel = new Gson().fromJson(result, MainServiceCallModel.class);
                             db.deleteTableAtLogin();
+
+
                             ArrayList<PricingOfflineStandardPriceData> listOfOfflineStandardPrice = mainServiceCallModel.getListOfStandardPrice();
                             db.addPricingOfflineStandardPrice(listOfOfflineStandardPrice);
                             ArrayList<Pricing1PriceRentalData> rentalData = mainServiceCallModel.getListOfPriceRental();
@@ -293,7 +410,7 @@ public class SettingOfflineFragment extends BaseFragment implements View.OnClick
             {
                 e.printStackTrace();
                 prd.dismiss();
-            }
+            }*/
         }
         else
         {

@@ -424,6 +424,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                     {
                                         e.printStackTrace();
                                     }*/
+
                                     String url = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                     // for volley
                                     JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url,
@@ -509,6 +510,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                                                     db.addBuildingProject(listOfBUildingProject); // 18
                                                                     ArrayList<SiteInspectionAccessModel> listOfAccess = mainServiceCallModel.getListOfAccess();
                                                                     db.addAccess(listOfAccess); // 19
+
                                                                     ArrayList<PriceStaffelModel> listOfPriceStaffel = mainServiceCallModel.getListOfPriceStaffel();
                                                                     db.addPriceStaffel(listOfPriceStaffel); // 20
                                                                     prd.setProgress(80);

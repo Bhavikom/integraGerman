@@ -1036,7 +1036,27 @@ public class DataBaseHandler extends SQLiteOpenHelper
     }
     public void addPriceInfo(String json)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PRICE_JSON + " (json_string) VALUES (?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+            stmt.bindString(1,json);
+            stmt.execute();
+            stmt.clearBindings();
+                // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
         try{
 
                 ContentValues values = new ContentValues();
@@ -1051,7 +1071,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         }
         finally {
             db.close();
-        }
+        }*/
     }
     public ArrayList<PriceInfoModelClass> getPriceInfo()
     {
@@ -2501,7 +2521,62 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addCustomer(CustomerDatabaseModel customerDatabaseModel)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_CUSTOMER + " (CustomerNo,KaNr,CustomerContact,MatchCode,Name1,Road" +
+                ",ZipCode,Place,Telephone,CustomerDetail,CustomerContactPerson,CustomerActivity,CustomerProject,CustomerOffer," +
+                "CustomerOpenOrder,CustomerCompletedOrder,CustomerOpenOffer,CustomerLostSale) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?" +
+                ",?,?,?,?)";
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+            stmt.bindString(1, customerDatabaseModel.getCustomerNo());
+            stmt.bindString(2, customerDatabaseModel.getKaNr());
+            stmt.bindString(3, customerDatabaseModel.getCustomerContact());
+            stmt.bindString(4, customerDatabaseModel.getMatchCode());
+            stmt.bindString(5, customerDatabaseModel.getName1());
+            stmt.bindString(6, customerDatabaseModel.getRoad());
+            stmt.bindString(7, customerDatabaseModel.getZipCode());
+            stmt.bindString(8, customerDatabaseModel.getPlace());
+            stmt.bindString(9, customerDatabaseModel.getTelephone());
+            String customerDetail = new Gson().toJson(customerDatabaseModel.getCustomerModel());
+            stmt.bindString(10, customerDetail);
+            String customerContactPerson = new Gson().toJson(customerDatabaseModel.getListOfContactPerson());
+            stmt.bindString(11, customerContactPerson);
+            String customerActivity = new Gson().toJson(customerDatabaseModel.getListOfActivity());
+            stmt.bindString(12, customerActivity);
+            String customerProject = new Gson().toJson(customerDatabaseModel.getListOfProject());
+            stmt.bindString(13, customerProject);
+            String customerOffer = new Gson().toJson(customerDatabaseModel.getListOfOffer());
+            stmt.bindString(14, customerOffer);
+            String customerOpenOrder = new Gson().toJson(customerDatabaseModel.getListOfOpenOrder());
+            stmt.bindString(15, customerOpenOrder);
+            String customerCompletedOrder = new Gson().toJson(customerDatabaseModel.getListOfCompletedOrder());
+            stmt.bindString(16, customerCompletedOrder);
+            String customerOpenOffer = new Gson().toJson(customerDatabaseModel.getListOfOffer());
+            stmt.bindString(17, customerOpenOffer);
+            String customerLostSale = new Gson().toJson(customerDatabaseModel.getListOfLostSale());
+            stmt.bindString(18, customerLostSale);
+
+
+            stmt.execute();
+            stmt.clearBindings();
+                // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            db.close();
+        }catch (Exception e){
+            db.endTransaction();
+            db.close();
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_CUSTOMER_CUSTOMER_NO, customerDatabaseModel.getCustomerNo());
         values.put(KEY_CUSTOMER_KANR, customerDatabaseModel.getKaNr());
@@ -2531,7 +2606,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         String customerLostSale = new Gson().toJson(customerDatabaseModel.getListOfLostSale());
         values.put(KEY_CUSTOMER_LOST_SALE, customerLostSale);
         db.replace(TABLE_CUSTOMER, null, values);
-        db.close();
+        db.close();*/
     }
 
     public void updateCustomerDetails(CustomerModel customerModel)
@@ -3488,7 +3563,43 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addLostSale(Pricing3LostSaleData lostSale)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_LOST_SALE + " (branch,hgrp,deviceType,manufacturer,type" +
+                ",md,rentalPrice,sb,hf,sp,hb,best,kundenNr) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            stmt.bindString(1,lostSale.getBranch());
+            stmt.bindString(2,lostSale.gethGRP());
+            stmt.bindString(3,lostSale.getDeviceType());
+            stmt.bindString(4,lostSale.getManufacturer());
+            stmt.bindString(5,lostSale.getType());
+            stmt.bindString(6, String.valueOf(lostSale.getMd()));
+            stmt.bindString(7, String.valueOf(lostSale.getRentalPrice()));
+            stmt.bindString(8, String.valueOf(lostSale.getSb()));
+            stmt.bindString(9,lostSale.getHfStatus());
+            stmt.bindString(10,lostSale.getSpStatus());
+            stmt.bindString(11, String.valueOf(lostSale.getHb()));
+            stmt.bindString(12,lostSale.getBest());
+            stmt.bindString(13,lostSale.getCustomerNo());
+            stmt.execute();
+            stmt.clearBindings();
+            // long count =stmt.executeInsert();
+            //Log.e(" prepare statment "," count variable for device type :  "+count);
+
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_LOST_SALE_BRANCH, lostSale.getBranch());
         values.put(KEY_LOST_SALE_HGRP, lostSale.gethGRP());
@@ -3505,7 +3616,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_LOST_CUSTOMER_KUNDEN_NR, lostSale.getCustomerNo());
         Log.e("Insert Lost Sale",values+"");
         db.insert(TABLE_LOST_SALE, null, values);
-        db.close();
+        db.close();*/
     }
 
     public void addPricingOfflineStandardPrice(ArrayList<PricingOfflineStandardPriceData> listOfPriceOfflineStandardPrice)
@@ -3926,7 +4037,40 @@ public class DataBaseHandler extends SQLiteOpenHelper
     }
 
     public void addPhoto(GridImage image) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PHOTO + " (bvoId,name,flag,path) VALUES (?,?,?,?)";
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            stmt.bindString(1, String.valueOf(image.getBvoId()));
+            if(image.getName() == null)
+                stmt.bindString(2,"");
+            else
+                stmt.bindString(2,  image.getName());
+
+            stmt.bindString(3, String.valueOf(image.getFlag()));
+            stmt.bindString(4,image.getPath());
+
+            stmt.execute();
+            stmt.clearBindings();
+            // long count =stmt.executeInsert();
+            //Log.e(" prepare statment "," count variable for device type :  "+count);
+
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            db.close();
+        }catch (Exception e){
+            db.endTransaction();
+            db.close();
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_BVO_ID,image.getBvoId());
         if(image.getName() == null)
@@ -3936,7 +4080,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_PHOTO_FLAG, image.getFlag());
         values.put(KEY_PHOTO_PATH, image.getPath());
         db.insert(TABLE_PHOTO, null, values);
-        db.close();
+        db.close();*/
     }
 
     public void deletePhoto(int id)
@@ -4073,7 +4217,58 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addDevice(SiteInspectionDeviceDataModel deviceDataModel)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT OR REPLACE INTO " + TABLE_DEVICE_DATA + " (bvoId,parentId,Alternativ," +
+                "Position,diesel,Elektro,Allrad,Kette_Gummi,Reifen_markierungsarm,powerLift,Stromerzeuger,Sonstiges," +
+                "SonstigesText,Geraetegruppe,Hoehengruppe,Geraetetyp,Anzahl,Arbeitshoehe," +
+                "SeitlicheReichweite,Laenge,Breite,Hoehe,Gewicht,Korbbelastung,Korbarmlaenge,Hauptgeraet) VALUES (?,?,?,?,?,?," +
+                "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+            stmt.bindString(1, String.valueOf(deviceDataModel.getBvoId()));
+            stmt.bindString(2, String.valueOf(deviceDataModel.getParentId()));
+            stmt.bindString(3, String.valueOf(deviceDataModel.getAlternativ()));
+            stmt.bindString(4, String.valueOf(deviceDataModel.getPosition()));
+            stmt.bindString(5, String.valueOf(deviceDataModel.getDiesel()));
+            stmt.bindString(6, String.valueOf(deviceDataModel.getElektro()));
+            stmt.bindString(7, String.valueOf(deviceDataModel.getAllrad()));
+            stmt.bindString(8, String.valueOf(deviceDataModel.getKette_Gummi()));
+            stmt.bindString(9, String.valueOf(deviceDataModel.getReifen_markierungsarm()));
+            stmt.bindString(10, String.valueOf(deviceDataModel.getPowerlift()));
+            stmt.bindString(11, String.valueOf(deviceDataModel.getStromerzeuger()));
+            stmt.bindString(12, String.valueOf(deviceDataModel.getSonstiges()));
+            stmt.bindString(13, deviceDataModel.getSonstigesText());
+            stmt.bindString(14, deviceDataModel.getGeraetegruppe());
+            stmt.bindString(15, deviceDataModel.getHoehengruppe());
+            stmt.bindString(16, deviceDataModel.getGeraetetyp());
+            stmt.bindString(17, String.valueOf(deviceDataModel.getAnzahl()));
+            stmt.bindString(18, deviceDataModel.getArbeitshoehe());
+            stmt.bindString(19, deviceDataModel.getSeitlicheReichweite());
+            stmt.bindString(20, deviceDataModel.getLaenge());
+            stmt.bindString(21, deviceDataModel.getBreite());
+            stmt.bindString(22, deviceDataModel.getHoehe());
+            stmt.bindString(23, String.valueOf(deviceDataModel.getGewicht()));
+            stmt.bindString(24,deviceDataModel.getKorbbelastung());
+            stmt.bindString(25,deviceDataModel.getKorbarmlaenge());
+            stmt.bindString(26, deviceDataModel.getHauptgeraet());
+            stmt.execute();
+            stmt.clearBindings();
+                // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            db.close();
+        }catch (Exception e){
+            db.endTransaction();
+            db.close();
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_BVO_ID,deviceDataModel.getBvoId());
         values.put(KEY_PARENT_ID,deviceDataModel.getParentId());
@@ -4103,7 +4298,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_HAUPTGERAT, deviceDataModel.getHauptgeraet());
         long id = db.insert(TABLE_DEVICE_DATA, null, values);
         Log.e("databser id", id + " parent id" + deviceDataModel.getParentId());
-        db.close();
+        db.close();*/
     }
 
     public void updateDeviceByParentId(int id,int parentId)
@@ -4353,6 +4548,39 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addSiteInspection(SiteInspectionModel siteInspectionModel)
     {
+        /*String sql = "INSERT OR REPLACE INTO " + TABLE_SITE_INSPECTION + " (uploadId,flag,date," +
+                "SiteInspectionDetail,AddtinalEnvironment,OperationalDataPermits,AdditionalMobileWindPower," +
+                "SelectMail) VALUES (?,?,?,?,?,?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            stmt.bindString(1, String.valueOf(0));
+            stmt.bindString(2, String.valueOf(0));
+            stmt.bindString(3, "");
+            stmt.bindString(4, new Gson().toJson(siteInspectionModel.getSiteInspectionNewModel()));
+            stmt.bindString(5, String.valueOf(siteInspectionModel.getSiteInspectionOperationalEnvironmentModel()));
+            stmt.bindString(6, String.valueOf(siteInspectionModel.getSiteInspectionOperationalDataPermitsModel()));
+            stmt.bindString(7, String.valueOf(siteInspectionModel.getSiteInspectionAdditionalMobileWindPowerModel()));
+            stmt.bindString(8, new Gson().toJson(siteInspectionModel.getListOfEmailAddress()));
+
+            stmt.execute();
+            stmt.clearBindings();
+                // long count =stmt.executeInsert();
+                //Log.e(" prepare statment "," count variable for device type :  "+count);
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }*/
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_UPLOAD_ID,0);
@@ -4851,8 +5079,105 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public void addPricing3InsertJson(String kundenNr, String Json,Pricing3InsertData priceInsert)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PRICING3INSERTJSON + " (kunndenNr,json,Kontakt,CustomerNr,Mandant,Warenkorbart," +
+                "Hoehengruppe,Einheit_Mietdauer,Mietdauer,Mietpreis,Standtag,Selbstbehalt,HandlingFee,ServicePauschale,Versicherung," +
+                "WochenendeMitversichert,TransportAnfahrt,TransportPauschal,TransportAbfahrt,Beiladungspauschale,Einsatzinformation," +
+                "Besteller_Telefon,Besteller_Email,Notiz,KaNr,AnsPartner,Besteller_Anrede,Besteller_Mobil,Mautkilometer," +
+                "Winterreifenpauschale,Bearbeitet,Kalendertage,Referenz,Geraetetyp,loginUserNumberrange,Ersteller," +
+                "branch,hgrp,deviceType,manufacturer,type,md,rentalPrice,sb,hf,sp,hb,best,kundenNr,isKann,isLieferung," +
+                "isVoranmeldung,isBenachrichtgung,isRampena,isSonstige,isEinweisung,isSelbstfahrer,kann,voranmeldung,benarchrichtung,sonstige,ladefahrzaug" +
+                ",start_date,start_time,end_date,end_time) VALUES (?,?,?," +
+                "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            getPragma(db);
+            db.beginTransactionNonExclusive();
+            // db.beginTransaction();
+            SQLiteStatement stmt = db.compileStatement(sql);
+
+            stmt.bindString(1,kundenNr);
+            stmt.bindString(2,Json);
+            stmt.bindString(3,  priceInsert.getKontakt());
+            stmt.bindString(4, priceInsert.getKundenNr());
+            stmt.bindString(5, String.valueOf(priceInsert.getMandant()));
+            stmt.bindString(6, String.valueOf(priceInsert.getWarenkorbart()));
+            stmt.bindString(7, priceInsert.getHoehengruppe());
+            stmt.bindString(8, String.valueOf(priceInsert.getEinheit_Mietdauer()));
+            stmt.bindString(9, String.valueOf(priceInsert.getMietdauer()));
+            stmt.bindString(10,priceInsert.getMietpreis());
+            stmt.bindString(11, String.valueOf(priceInsert.getStandtag()));
+            stmt.bindString(12, priceInsert.getSelbstbehalt());
+            stmt.bindString(13, String.valueOf(priceInsert.getHandlingFee()));
+            stmt.bindString(14, String.valueOf(priceInsert.getServicePauschale()));
+            stmt.bindString(15, String.valueOf(priceInsert.getVersicherung()));
+            stmt.bindString(16, String.valueOf(priceInsert.getWochenendeMitversichert()));
+            stmt.bindString(17, String.valueOf(priceInsert.getTransportAnfahrt()));
+            stmt.bindString(18, String.valueOf(priceInsert.getTransportPauschal()));
+            stmt.bindString(19, String.valueOf(priceInsert.getTransportAbfahrt()));
+            stmt.bindString(20, String.valueOf(priceInsert.getBeiladungspauschale()));
+            stmt.bindString(21, priceInsert.getEinsatzinformation());
+            stmt.bindString(22, priceInsert.getBesteller_Telefon());
+            stmt.bindString(23, priceInsert.getBesteller_Email());
+            stmt.bindString(24, priceInsert.getNotiz());
+            stmt.bindString(25, String.valueOf(priceInsert.getKaNr()));
+            stmt.bindString(26, priceInsert.getAnsPartner());
+            stmt.bindString(27, priceInsert.getBesteller_Anrede());
+            stmt.bindString(28, priceInsert.getBesteller_Mobil());
+            stmt.bindString(29, priceInsert.getMautkilometer());
+            stmt.bindString(30, String.valueOf(priceInsert.getWinterreifenpauschale()));
+            stmt.bindString(31, String.valueOf(priceInsert.getBearbeitet()));
+            stmt.bindString(32, String.valueOf(priceInsert.getKalendertage()));
+            stmt.bindString(33, priceInsert.getReferenz());
+            stmt.bindString(34, priceInsert.getGeraetetyp());
+            stmt.bindString(35, priceInsert.getUserID());
+            stmt.bindString(36, String.valueOf(priceInsert.getErsteller()));
+            stmt.bindString(37, priceInsert.getBranch());
+            stmt.bindString(38, priceInsert.gethGRP());
+            stmt.bindString(39, priceInsert.getDeviceType());
+            stmt.bindString(40, priceInsert.getManufacturer());
+            stmt.bindString(41, priceInsert.getType());
+            stmt.bindString(42, String.valueOf(priceInsert.getMd()));
+            stmt.bindString(43, String.valueOf(priceInsert.getRentalPrice()));
+            stmt.bindString(44, String.valueOf(priceInsert.getSb()));
+            stmt.bindString(45, priceInsert.getHfStatus());
+            stmt.bindString(46, priceInsert.getSpStatus());
+            stmt.bindString(47, String.valueOf(priceInsert.getHb()));
+            stmt.bindString(48, priceInsert.getBest());
+            stmt.bindString(49, priceInsert.getKundenNr());
+            stmt.bindString(50, String.valueOf(priceInsert.isKann()));
+            stmt.bindString(51, String.valueOf(priceInsert.isLieferung()));
+            stmt.bindString(52, String.valueOf(priceInsert.isVoranmeldung()));
+            stmt.bindString(53, String.valueOf(priceInsert.isBenachrichtgung()));
+            stmt.bindString(54, String.valueOf(priceInsert.isRampena()));
+            stmt.bindString(55, String.valueOf(priceInsert.isSonstige()));
+            stmt.bindString(56, String.valueOf(priceInsert.isEinweisung()));
+            stmt.bindString(57, String.valueOf(priceInsert.isSelbstfahrer()));
+            stmt.bindString(58, priceInsert.getStrKann());
+            stmt.bindString(59, priceInsert.getStrVoranmeldung());
+            stmt.bindString(60, priceInsert.getStrBenachrich());
+            stmt.bindString(61, priceInsert.getStrSonstige());
+            stmt.bindString(62, String.valueOf(priceInsert.getintLadeiahrzeug()));
+            stmt.bindString(63, priceInsert.getStrstartDate());
+            stmt.bindString(64,priceInsert.getStrstartTime());
+            stmt.bindString(65, priceInsert.getStrendDate());
+            stmt.bindString(66, priceInsert.getStrendTime());
+            stmt.execute();
+            stmt.clearBindings();
+            // long count =stmt.executeInsert();
+            //Log.e(" prepare statment "," count variable for device type :  "+count);
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            db.close();
+        }catch (Exception e){
+            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+        }
+
+        /*SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+
         values.put(KEY_PRICING3INSERTJSON_KUNDENNR, kundenNr);
         values.put(KEY_PRICING3INSERTJSON_JSON, Json);
         values.put(KEY_PRICING3INSERTJSON_Kontakt, priceInsert.getKontakt());
@@ -4860,14 +5185,12 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_PRICING3INSERTJSON_Mandant, priceInsert.getMandant());
         values.put(KEY_PRICING3INSERTJSON_Warenkorbart, priceInsert.getWarenkorbart());
         values.put(KEY_PRICING3INSERTJSON_Hoehengruppe, priceInsert.getHoehengruppe());
-        Log.e("Insert Hoehengruppe", "" + priceInsert.getHoehengruppe());
         values.put(KEY_PRICING3INSERTJSON_Einheit_Mietdauer, priceInsert.getEinheit_Mietdauer());
         values.put(KEY_PRICING3INSERTJSON_Mietdauer, priceInsert.getMietdauer());
         values.put(KEY_PRICING3INSERTJSON_Mietpreis, priceInsert.getMietpreis());
         values.put(KEY_PRICING3INSERTJSON_Standtag, priceInsert.getStandtag());
         values.put(KEY_PRICING3INSERTJSON_Selbstbehalt, priceInsert.getSelbstbehalt());
         values.put(KEY_PRICING3INSERTJSON_HandlingFee, priceInsert.getHandlingFee());
-        Log.e("Insert HandlingFee", "" + priceInsert.getHandlingFee());
         values.put(KEY_PRICING3INSERTJSON_ServicePauschale, priceInsert.getServicePauschale());
         values.put(KEY_PRICING3INSERTJSON_Versicherung, priceInsert.getVersicherung());
         values.put(KEY_PRICING3INSERTJSON_WochenendeMitversichert, priceInsert.getWochenendeMitversichert());
@@ -4889,11 +5212,8 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_PRICING3INSERTJSON_Kalendertage, priceInsert.getKalendertage());
         values.put(KEY_PRICING3INSERTJSON_Referenz, priceInsert.getReferenz());
         values.put(KEY_PRICING3INSERTJSON_Geraetetyp, priceInsert.getGeraetetyp());
-        Log.e("Insert Geraetetyp", "" + priceInsert.getGeraetetyp());
         values.put(KEY_PRICING3INSERTJSON_loginUserNumberrange, priceInsert.getUserID());
-        Log.e("Insert Userids", "" + priceInsert.getUserID());
         values.put(KEY_PRICING3INSERTJSON_Ersteller, priceInsert.getErsteller());
-        Log.e("Insert Ersteller", "" + priceInsert.getErsteller());
         values.put(KEY_PRICING3INSERTJSON_BRANCH, priceInsert.getBranch());
         values.put(KEY_PRICING3INSERTJSON_HGRP, priceInsert.gethGRP());
         values.put(KEY_PRICING3INSERTJSON_DEVICE_TYPE, priceInsert.getDeviceType());
@@ -4907,7 +5227,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_PRICING3INSERTJSON_HB, priceInsert.getHb());
         values.put(KEY_PRICING3INSERTJSON_BEST, priceInsert.getBest());
         values.put(KEY_PRICING3INSERTJSON_CUSTOMER_KUNDEN_NR, priceInsert.getKundenNr());
-
         values.put(IS_KANN, priceInsert.isKann());
         values.put(IS_LIEFERUNG, priceInsert.isLieferung());
         values.put(IS_VORANMELDUNG, priceInsert.isVoranmeldung());
@@ -4928,7 +5247,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         long id = db.insert(TABLE_PRICING3INSERTJSON, null, values);
         Log.e(" @@@@@@@@@@@@@@@@@@@@"," inserte data in database on cache button click : "+id);
-        db.close();
+        db.close();*/
     }
 
     public Pricing3InsertData getPricing3InsertData(String KundenNr,int ids)
