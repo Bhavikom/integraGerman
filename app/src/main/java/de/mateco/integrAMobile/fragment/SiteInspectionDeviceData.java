@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -586,7 +587,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 labelOthers.setChecked(true);
             textOthers.setText(deviceData.getSonstigesText());
 
-            if (deviceData.getArbeitshoehe() != null)
+            if (!TextUtils.isEmpty(deviceData.getArbeitshoehe()))
             {
                 int workingHeight = Integer.parseInt(deviceData.getArbeitshoehe());
                 if (workingHeight > 0)
@@ -622,7 +623,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 int number = Integer.parseInt(numberString);
                 labelWorkinhHeight1.setText(number + " m");
             }
-            if (deviceData.getSeitlicheReichweite() != null)
+            if (!TextUtils.isEmpty(deviceData.getSeitlicheReichweite()))
             {
                 Double number = Double.parseDouble(deviceData.getSeitlicheReichweite());
                 int workingHeight = (int) (number * 100);
@@ -669,7 +670,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 Double numberDouble = Double.parseDouble(numberString);
                 labelLateralReach1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
             }
-            if (deviceData.getLaenge() != null)
+            if (!TextUtils.isEmpty(deviceData.getLaenge()))
             {
                 Log.e("max length at set", deviceData.getLaenge());
                 Double number = Double.parseDouble(deviceData.getLaenge());
@@ -722,7 +723,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 labelMaxLength1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
                 Log.e("max length at set", numberString);
             }
-            if (deviceData.getBreite() != null)
+            if (!TextUtils.isEmpty(deviceData.getBreite()))
             {
                 Double number = Double.parseDouble(deviceData.getBreite());
                 int workingHeight = (int) (number * 100);
@@ -769,7 +770,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 Double numberDouble = Double.parseDouble(numberString);
                 labelMaxBreadth1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
             }
-            if (deviceData.getHoehe() != null)
+            if (!TextUtils.isEmpty(deviceData.getHoehe()))
             {
                 int number = Integer.parseInt(deviceData.getHoehe());
                 nPMaxHeight.setValue(number);
@@ -822,7 +823,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 labelMaxWeight1.setText(number + " kg");
                 Log.e("set data gewicht", numberString);
             }
-            if (deviceData.getKorbbelastung() != null)
+            if (!TextUtils.isEmpty(deviceData.getKorbbelastung()))
             {
                 int workingHeight = Integer.parseInt(deviceData.getKorbbelastung());
                 if (workingHeight > 0)
@@ -868,7 +869,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 int number = Integer.parseInt(numberString);
                 labelBasketLoad1.setText(number + " kg");
             }
-            if (deviceData.getKorbarmlaenge() != null)
+            if (!TextUtils.isEmpty(deviceData.getKorbarmlaenge()))
             {
                 Double number = Double.parseDouble(deviceData.getKorbarmlaenge());
                 int workingHeight = (int) (number * 100);
@@ -941,7 +942,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
             gerateType = deviceData.getGeraetetyp();
             if(gerateType == null)
                 gerateType = "";
-            if (deviceData.getGeraetegruppe() != null)
+            if (!TextUtils.isEmpty(deviceData.getGeraetegruppe()))
             {
                 for (int i = 0; i < lablesDevice.size(); i++)
                 {

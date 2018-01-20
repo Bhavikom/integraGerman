@@ -197,7 +197,7 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
             }
         }
 
-        if(model.getEndzeit() != null) {
+        if(!TextUtils.isEmpty(model.getEndzeit())) {
             if (model.getEndzeit().equals("") || model.getEndzeit().equals("00:00") || model.getStartzeit().equals("00:00:00")) {
                 textAgendaActivityEndTime.setText("");
             } else {

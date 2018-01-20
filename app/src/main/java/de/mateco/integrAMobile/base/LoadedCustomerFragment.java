@@ -2,6 +2,7 @@ package de.mateco.integrAMobile.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,35 +129,35 @@ public class LoadedCustomerFragment extends BaseFragment
             labelLoadedCustomerName1.setText(customer.getName1());
             labelLoadedCustomerKanr.setText(customer.getKaNr());
             labelLoadedCustomerBonusIndex.setText(DataHelper.getGermanCurrencyFormat(customer.getBoni_Index()));
-            if(customer.getBoni_Datum()!=null && !customer.getBoni_Datum().equals(""))
+            if(!TextUtils.isEmpty(customer.getBoni_Datum()) && !customer.getBoni_Datum().equals(""))
             {
                 labelLoadedCustomerBonusDate.setText
                         (DataHelper.getDateFormatFromString(customer.getBoni_Datum(), outputFormat, inputFormat));
             }
-            if(customer.getGesamt_OP()!=null && !customer.getGesamt_OP().equals(""))
+            if(!TextUtils.isEmpty(customer.getGesamt_OP()) && !customer.getGesamt_OP().equals(""))
                 labelLoadedCustomerTotalOP.setText(DataHelper.round(Math.round(Float.parseFloat
                         (customer.getGesamt_OP()))+""));
-            if(customer.getUmsatz_LFD()!=null && !customer.getUmsatz_LFD().equals(""))
+            if(!TextUtils.isEmpty(customer.getUmsatz_LFD()) && !customer.getUmsatz_LFD().equals(""))
                 labelLoadedCustomerSalesRunning.setText
                         (DataHelper.round(Math.round(Float.parseFloat(customer.getUmsatz_LFD()))+""));
-            if(customer.getUmsatz_Vorjahr()!=null && !customer.getUmsatz_Vorjahr().equalsIgnoreCase(""))
+            if(!TextUtils.isEmpty(customer.getUmsatz_Vorjahr()) && !customer.getUmsatz_Vorjahr().equalsIgnoreCase(""))
                 labelLoadedCustomerSalesPreviousYear.setText
                         (DataHelper.round(Math.round(Float.parseFloat(customer.getUmsatz_Vorjahr()))+""));
-            if(customer.getUmsatz_12_Monate()!=null && !customer.getUmsatz_12_Monate().equals(""))
+            if(!TextUtils.isEmpty(customer.getUmsatz_12_Monate()) && !customer.getUmsatz_12_Monate().equals(""))
                 labelLoadedCustomerSales12Months.setText
                         (DataHelper.round(Math.round(Float.parseFloat(customer.getUmsatz_12_Monate()))+""));
-            if(customer.getKA_Umsatz_LFD()!=null && !customer.getKA_Umsatz_LFD().equals(""))
+            if(!TextUtils.isEmpty(customer.getKA_Umsatz_LFD()) && !customer.getKA_Umsatz_LFD().equals(""))
                 labelLoadedCustomerKASalesRunning.setText
                         (DataHelper.round(Math.round(Float.parseFloat(customer.getKA_Umsatz_LFD()))+""));
 
             labelNameLoadedCustomerKASalesPreviousYear.setText("KA "+language.getLabelSales() + " " +
                     (Calendar.getInstance().get(Calendar.YEAR) - 1));
-            if(customer.getKA_Umsatz_Vorjahr()!=null && !customer.getKA_Umsatz_Vorjahr().equals(""))
+            if(!TextUtils.isEmpty(customer.getKA_Umsatz_Vorjahr()) && !customer.getKA_Umsatz_Vorjahr().equals(""))
                 labelLoadedCustomerKASalesPreviousYear.setText
                         (DataHelper.round(Math.round(Float.parseFloat(customer.getKA_Umsatz_Vorjahr())) + ""));
 
             labelNameLoadedCustomerKASales12Months.setText(language.getLabelKASalesLast12Month());
-            if(customer.getKA_Umsatz_12_Monate()!=null && !customer.getKA_Umsatz_12_Monate().equals(""))
+            if(!TextUtils.isEmpty(customer.getKA_Umsatz_12_Monate()) && !customer.getKA_Umsatz_12_Monate().equals(""))
                 labelLoadedCustomerKASales12Months.setText
                         (DataHelper.round(Math.round(Float.parseFloat(customer.getKA_Umsatz_12_Monate())) + ""));
         }

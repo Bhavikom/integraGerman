@@ -448,15 +448,15 @@ package de.mateco.integrAMobile.fragment;
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try
         {
-            if(projectGenerallyDetail.getBaubeginn() != null){
+            if(!TextUtils.isEmpty(projectGenerallyDetail.getBaubeginn())){
                 if(!projectGenerallyDetail.getBaubeginn().equals("") && !projectGenerallyDetail.getBaubeginn().equals("01-01-1900"))
                     textProjectDetailGeneralStartOfConstruction.setText(DataHelper.formatDate(format.parse(projectGenerallyDetail.getBaubeginn())));
             }
-            if(projectGenerallyDetail.getBauende() != null){
+            if(!TextUtils.isEmpty(projectGenerallyDetail.getBauende())){
                 if(!projectGenerallyDetail.getBauende().equals("") && !projectGenerallyDetail.getBauende().equals("01-01-1900"))
                     textProjectDetailGeneralEndOfConstruction.setText(DataHelper.formatDate(format.parse(projectGenerallyDetail.getBauende())));
             }
-            if(projectGenerallyDetail.getDatum_Aktuell() != null){
+            if(!TextUtils.isEmpty(projectGenerallyDetail.getDatum_Aktuell())){
                 if(!projectGenerallyDetail.getDatum_Aktuell().equals("") && !projectGenerallyDetail.getDatum_Aktuell().equals("01-01-1900"))
                     textProjectDetailGeneralDateOfUpdate.setText(DataHelper.formatDate(format.parse(projectGenerallyDetail.getDatum_Aktuell())));
             }
@@ -852,7 +852,7 @@ package de.mateco.integrAMobile.fragment;
 
 
             ProjectDetailGenerallyUpdateModel model = new ProjectDetailGenerallyUpdateModel();
-                if(projectGenerallyDetail.getProjekt() != null){
+                if(!TextUtils.isEmpty(projectGenerallyDetail.getProjekt())){
                 if(projectGenerallyDetail.getProjekt().equalsIgnoreCase("null") ||
                         projectGenerallyDetail.getProjekt().equalsIgnoreCase("") ||
                         projectGenerallyDetail.getProjekt() == null){
