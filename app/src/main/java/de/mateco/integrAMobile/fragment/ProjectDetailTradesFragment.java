@@ -339,9 +339,9 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             textProjectTradePhone.setText(object.getTelefon());
             textProjectTradeFax.setText(object.getTelefax());
             textProjectDetailTradeFaxBuildingSite.setText(object.getFax_Baustelle());
-            if(object.getMontageende()!=null && !object.getMontageende().equals(""))
+            if(!TextUtils.isEmpty(object.getMontageende()) && !object.getMontageende().equals(""))
                 textProjectDetailTradeMountingEnd.setText(object.getMontageende().substring(0,10));
-            if(object.getMontagebeginn() != null && !object.getMontagebeginn().equalsIgnoreCase(""))
+            if(!TextUtils.isEmpty(object.getMontagebeginn()) && !object.getMontagebeginn().equalsIgnoreCase(""))
                 labelTradeStartDate.setText(object.getMontagebeginn().substring(0, 10));
             textProjectDetailTelephoneConstruction.setText(object.getTel_Baustelle());
 

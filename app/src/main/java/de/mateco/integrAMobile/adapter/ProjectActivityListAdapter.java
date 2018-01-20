@@ -1,6 +1,7 @@
 package de.mateco.integrAMobile.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class ProjectActivityListAdapter extends BaseAdapter
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try
         {
-            if(listOfProjectActivity.get(position).getStartdatum() != null){
+            if(!TextUtils.isEmpty(listOfProjectActivity.get(position).getStartdatum())){
                 if(!listOfProjectActivity.get(position).getStartdatum().equals(""))
                 {
                     labelListItemCustomerActivityDate.setText(DataHelper.formatDate
@@ -88,7 +89,7 @@ public class ProjectActivityListAdapter extends BaseAdapter
 
         CheckBox checkBoxCustomerActivityRealized =
                 (CheckBox)convertView.findViewById(R.id.checkBoxCustomerActivityRealized);
-        if(listOfProjectActivity.get(position).getRealisiert() != null) {
+        if(!TextUtils.isEmpty(listOfProjectActivity.get(position).getRealisiert())) {
             if (listOfProjectActivity.get(position).getRealisiert().equals("True")) {
                 checkBoxCustomerActivityRealized.setChecked(true);
             }

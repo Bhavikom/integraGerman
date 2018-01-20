@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -177,7 +178,7 @@ public class UploadService extends IntentService
     private void moveFile() {
         String root = Environment.getExternalStorageDirectory().toString();
         File dir = null;
-        if(model.getSiteInspectionNewModel().getEinsatzstrasse() != null){
+        if(!TextUtils.isEmpty(model.getSiteInspectionNewModel().getEinsatzstrasse())){
             if(model.getSiteInspectionNewModel().getEinsatzstrasse().contains("/"))
             {
                 dir = new File(root + "/Bvo/" + model.getSiteInspectionNewModel().getEinsatzPLZ() + "_" + model.getSiteInspectionNewModel().getEinsatzort() + "_" +

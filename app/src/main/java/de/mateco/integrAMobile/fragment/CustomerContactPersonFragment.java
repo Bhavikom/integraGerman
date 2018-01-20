@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -216,7 +217,7 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             if(listOfContactPerson.size() > 0)
             {
                 for (int i=0;i<listOfContactPerson.size();i++){
-                    if(listOfContactPerson.get(i).getAnspartner() !=null &&
+                    if(!TextUtils.isEmpty(listOfContactPerson.get(i).getAnspartner()) &&
                             listOfContactPerson.get(i).getAnspartner().equalsIgnoreCase(AnsPartenrId)){
                         listViewCustomerContactPersonList.setSelection(i);
                         selectedContactPerson = listOfContactPerson.get(i);

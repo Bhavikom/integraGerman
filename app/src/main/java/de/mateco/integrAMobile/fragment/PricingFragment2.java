@@ -1871,7 +1871,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         String Projekt = "";
         PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
                 new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-        if (model.getProjectId() != null && !model.getProjectId().trim().equals("")) {
+        if (!TextUtils.isEmpty(model.getProjectId()) && !model.getProjectId().trim().equals("")) {
             Projekt = model.getProjectId();
         } else {
             Projekt = "";
@@ -2081,7 +2081,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         startDate = model.getStartDate();
         endDate = model.getEndDate();
         String plz = textUseZipCode.getText().toString().trim();
-        if(plz != null && !plz.trim().equals(""))
+        if(!TextUtils.isEmpty(plz) && !plz.trim().equals(""))
             getEntfernung(String.valueOf(branchId), plz);
 
         try{
@@ -2270,7 +2270,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     textUserStreet.setText(address.getAddressLine(0));
                 }
 
-                if(address.getPostalCode() != null && !address.getPostalCode().trim().equals(""))
+                if(!TextUtils.isEmpty(address.getPostalCode()) && !address.getPostalCode().trim().equals(""))
                     getEntfernung(String.valueOf(branchId), address.getPostalCode());
             }
         }

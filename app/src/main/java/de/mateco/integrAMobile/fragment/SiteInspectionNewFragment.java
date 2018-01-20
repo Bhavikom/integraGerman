@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1217,11 +1218,11 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
             textOther.setText(model.getNotiz());
             labelValueLocationLongitude.setText(model.getGeoLaenge());
             labelValueLocationLatitude.setText(model.getGeoBreite());
-            if(model.getGeoBreite() != null && model.getGeoBreite().trim().length() > 0)
+            if(!TextUtils.isEmpty(model.getGeoBreite()) && model.getGeoBreite().trim().length() > 0)
             {
                 latitude = Double.parseDouble(model.getGeoBreite());
             }
-            if(model.getGeoLaenge() != null && model.getGeoLaenge().trim().length() > 0)
+            if(!TextUtils.isEmpty(model.getGeoLaenge()) && model.getGeoLaenge().trim().length() > 0)
             {
                 longitude = Double.parseDouble(model.getGeoLaenge());
             }
@@ -1247,7 +1248,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
 
             for(int i=0;i<listOfAccess.size();i++)
             {
-                if(model.getZugang() != null && model.getZugang().equals(listOfAccess.get(i).getZugang()))
+                if(!TextUtils.isEmpty(model.getZugang())  && model.getZugang().equals(listOfAccess.get(i).getZugang()))
                     SpnAccess.setSelection(i);
             }
         }
@@ -1262,7 +1263,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
         if(model != null)
         {
             Log.e("get model not null", "model not null");
-            if(model.getEinsatzstrasse() != null)
+            if(!TextUtils.isEmpty(model.getEinsatzstrasse()))
             {
                 Log.e("get knotakt not null", "getEinsatzstrasse not null " + model.getEinsatzstrasse());
                 String splite[] = model.getEinsatzstrasse().split(",");
@@ -1274,7 +1275,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
             {
                 textRoad.setText("");
             }
-            if(model.getEinsatzPLZ() != null)
+            if(!TextUtils.isEmpty(model.getEinsatzPLZ()))
             {
                 Log.e("get knotakt not null", "getEinsatzPLZ not null " + model.getEinsatzPLZ());
                 textZipCode.setText(model.getEinsatzPLZ());
@@ -1283,7 +1284,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
             {
                 textZipCode.setText("");
             }
-            if(model.getEinsatzort() != null)
+            if(!TextUtils.isEmpty(model.getEinsatzort()))
             {
                 Log.e("get knotakt not null", "getEinsatzort not null " + model.getEinsatzort());
                 textPlace.setText(model.getEinsatzort());

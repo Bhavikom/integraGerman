@@ -501,8 +501,9 @@ public class SiteInspectionAdditionalMobileWindPowerFragment extends BaseFragmen
             textAntennen_1.setText(model.getAntennen_1());
             textAntennen_2.setText(model.getAntennen_2());
             textAntennen_3.setText(model.getAntennen_3());
-            if(model.getGewichtStahlbau()!=null)
+            if(!TextUtils.isEmpty(model.getGewichtStahlbau())) {
                 textGewichtStahlbau.setText(DataHelper.getGermanFromEnglishBvo(model.getGewichtStahlbau()));
+            }
             GlobalMethods.setBlankValueForZero(textGewichtStahlbau);
             textArbeit.setText(model.getArbeit());
             textWKANr.setText(model.getWKANr());

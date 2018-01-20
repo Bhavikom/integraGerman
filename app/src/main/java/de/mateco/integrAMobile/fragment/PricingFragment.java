@@ -1466,7 +1466,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
             if(lablesContactPerson.size() > 0)
             {
                 for (int i=0;i<lablesContactPerson.size();i++){
-                    if(lablesContactPerson.get(i).getAnspartner() !=null &&
+                    if(!TextUtils.isEmpty(lablesContactPerson.get(i).getAnspartner()) &&
                             lablesContactPerson.get(i).getAnspartner().equalsIgnoreCase(AnsPartenrId)){
                         spPricing1ContactPerson.setSelection(i+1);
                         break;

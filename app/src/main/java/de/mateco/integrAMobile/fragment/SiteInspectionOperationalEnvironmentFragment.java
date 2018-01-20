@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -433,7 +434,7 @@ public class SiteInspectionOperationalEnvironmentFragment extends BaseFragment
             else
                 buttonAdditionalSupportingMaterial.setChecked(true);
 
-            if (model.getSchaltafeln() != null) {
+            if (!TextUtils.isEmpty(model.getSchaltafeln())) {
                 if (model.getSchaltafeln().equals("0"))
                     labelperformWorkLabels.setChecked(false);
                 else
@@ -443,42 +444,42 @@ public class SiteInspectionOperationalEnvironmentFragment extends BaseFragment
                 }
             }
 
-            if (model.getFahrbleche() != null) {
+            if (!TextUtils.isEmpty(model.getFahrbleche())) {
                 if (model.getFahrbleche().equals("0"))
                     LabelDrivingPlates.setChecked(false);
                 else
                     LabelDrivingPlates.setChecked(true);
             }
 
-            if (model.getBongossiPlatten() != null) {
+            if (!TextUtils.isEmpty(model.getBongossiPlatten())) {
                 if (model.getBongossiPlatten().equals("0"))
                     labelBongossiPlates.setChecked(false);
                 else
                     labelBongossiPlates.setChecked(true);
             }
 
-            if (model.getPublicRoadCountry() != null) {
+            if (!TextUtils.isEmpty(model.getPublicRoadCountry())) {
                 if (model.getPublicRoadCountry().equals("0"))
                     labelPublicRoadCountry.setChecked(false);
                 else
                     labelPublicRoadCountry.setChecked(true);
             }
 
-            if (model.getPrivateProperty() != null) {
+            if (!TextUtils.isEmpty(model.getPrivateProperty())) {
                 if (model.getPrivateProperty().equals("0"))
                     labelPrivateProperty.setChecked(false);
                 else
                     labelPrivateProperty.setChecked(true);
             }
 
-            if (model.getInterior() != null) {
+            if (!TextUtils.isEmpty(model.getInterior())) {
                 if (model.getInterior().equals("0"))
                     labelInterior.setChecked(false);
                 else
                     labelInterior.setChecked(true);
             }
 
-            if (model.getOutdoor() != null) {
+            if (!TextUtils.isEmpty(model.getOutdoor())) {
                 if (model.getOutdoor().equals("0"))
                     labelOutdoor.setChecked(false);
                 else
@@ -488,11 +489,11 @@ public class SiteInspectionOperationalEnvironmentFragment extends BaseFragment
             textWhich.setText(model.getHindernisText());
             textFor.setText(model.getHaftungsausschlussText());
             textAccessLying.setText(model.getZufahrtAuslegen());
-            if(model.getTragslastZufahrt()!=null) {
+            if(!TextUtils.isEmpty(model.getTragslastZufahrt())) {
                 textLoadAccess.setText(DataHelper.getGermanFromEnglishBvo(model.getTragslastZufahrt()));
             }
             GlobalMethods.setBlankValueForZero(textLoadAccess);
-            if(model.getTraglastStandplatz()!=null) {
+            if(!TextUtils.isEmpty(model.getTraglastStandplatz())) {
                 textLoadText.setText(DataHelper.getGermanFromEnglishBvo(model.getTraglastStandplatz()));
             }
             GlobalMethods.setBlankValueForZero(textLoadText);
@@ -500,7 +501,7 @@ public class SiteInspectionOperationalEnvironmentFragment extends BaseFragment
             textLoadStand.setText(model.getStuetzmaterialText());
             textUndergroundStand.setText(model.getUntergrund());
 
-            if(model.getStassengefaelle()!=null) {
+            if(!TextUtils.isEmpty(model.getStassengefaelle())) {
                 textRoadGrade.setText(DataHelper.getGermanFromEnglishBvo(model.getStassengefaelle()));
             }
             GlobalMethods.setBlankValueForZero(textRoadGrade);

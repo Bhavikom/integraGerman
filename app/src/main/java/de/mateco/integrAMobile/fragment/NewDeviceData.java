@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -254,7 +255,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                 labelOthers.setChecked(true);
             textOthers.setText(model.getSonstigesText());
 
-            if(model.getArbeitshoehe()!=null)
+            if(!TextUtils.isEmpty(model.getArbeitshoehe()))
             {
                 Log.e("getArbeitshoehe", model.getArbeitshoehe());
 
@@ -290,7 +291,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                 }
                 //npWorkingHeight.setValue(Integer.parseInt(model.getArbeitshoehe()));
             }
-            if(model.getSeitlicheReichweite()!=null)
+            if(!TextUtils.isEmpty(model.getSeitlicheReichweite()))
             {
                 Log.e("getSeitlicheReichweite", model.getSeitlicheReichweite());
                 //npLateralReach.setValue(Integer.parseInt(model.getSeitlicheReichweite()));
@@ -338,7 +339,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                 }
 
             }
-            if(model.getLaenge()!=null)
+            if(!TextUtils.isEmpty(model.getLaenge()))
             {
                 Log.e("getArbeitshoehe", model.getLaenge());
                 //npMaxLength.setValue(Integer.parseInt(model.getLaenge()));
@@ -384,7 +385,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                     nPMaxLength4.setValue(0);
                 }
             }
-            if(model.getBreite()!=null)
+            if(!TextUtils.isEmpty(model.getBreite()))
             {
                 Log.e("getArbeitshoehe", model.getBreite());
                 //npMaxBreadth.setValue(Integer.parseInt(model.getBreite()));
@@ -431,7 +432,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                     nPMaxBredth4.setValue(0);
                 }
             }
-            if(model.getHoehe()!=null)
+            if(!TextUtils.isEmpty(model.getHoehe()))
             {
                 Log.e("getArbeitshoehe", model.getHoehe());
                 //npMaxHeight.setValue(Integer.parseInt(model.getHoehe()));
@@ -484,7 +485,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                     nPMaxWeight4.setValue(0);
                 }
             }
-            if(model.getKorbbelastung()!=null)
+            if(!TextUtils.isEmpty(model.getKorbbelastung()))
             {
                 Log.e("getArbeitshoehe", model.getKorbbelastung()+"");
                 //npBasketLoad.setValue(Integer.parseInt(model.getGewicht()));
@@ -530,7 +531,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                     nPBasketLoad4.setValue(0);
                 }
             }
-            if(model.getKorbarmlaenge()!=null)
+            if(!TextUtils.isEmpty(model.getKorbarmlaenge()))
             {
                 Log.e("getArbeitshoehe", model.getKorbarmlaenge());
                 //npBoomLength.setValue(Integer.parseInt(model.getKorbarmlaenge()));
@@ -578,7 +579,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                 }
             }
 
-            if(model.getGeraetegruppe()!=null)
+            if(!TextUtils.isEmpty(model.getGeraetegruppe()))
             {
                 for(int i=0;i<lablesDevice.size();i++)
                 {
@@ -607,7 +608,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                 spnHeightScale.setAdapter(heightScaleAdapter);
                 heightScaleAdapter.notifyDataSetChanged();
 
-                if(model.getHoehengruppe()!=null)
+                if(!TextUtils.isEmpty(model.getHoehengruppe()))
                 {
                     for(int i=0;i<rowLevelGroupItems.size();i++)
                     {
@@ -636,7 +637,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                 spnDeviceType.setAdapter(deviceTypeAdapter);
                 deviceTypeAdapter.notifyDataSetChanged();
 
-                if(model.getGeraetetyp()!=null)
+                if(!TextUtils.isEmpty(model.getGeraetetyp()))
                 {
                     for(int i=0;i<listDeviceType.size();i++)
                     {

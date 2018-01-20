@@ -764,17 +764,17 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
         {
             StringBuilder sb = new StringBuilder();
             String text = "";
-            if(model.getEinsatzstrasse()!=null)
+            if(!TextUtils.isEmpty(model.getEinsatzstrasse()))
             {
                 sb.append(model.getEinsatzstrasse());
                 text = text + model.getEinsatzstrasse();
             }
-            if(model.getEinsatzort()!=null)
+            if(!TextUtils.isEmpty(model.getEinsatzort()))
             {
                 sb.append(", "+model.getEinsatzort());
                 text = text + ", "  + model.getEinsatzort();
             }
-            if(model.getEinsatzPLZ()!=null)
+            if(!TextUtils.isEmpty(model.getEinsatzPLZ()))
             {
                 sb.append(", "+model.getEinsatzPLZ());
                 text = text + ", " + model.getEinsatzPLZ();
