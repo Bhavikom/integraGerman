@@ -128,7 +128,6 @@ public class BaseFragment extends Fragment
         }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        Log.e("total height",totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1)+""));
         listView.setLayoutParams(params);
         listView.requestLayout();
     }

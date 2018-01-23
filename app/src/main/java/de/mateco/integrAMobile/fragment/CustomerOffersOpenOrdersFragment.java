@@ -53,15 +53,11 @@ public class CustomerOffersOpenOrdersFragment extends BaseFragment
         listOfOpenOrders = new ArrayList<>();
 
         listOfOpenOrders = matecoPriceApplication.getLoadedCustomerOpenOrders(DataHelper.LoadedCustomerOpenOrders, new ArrayList<CustomerOpenOrderModel>().toString());
-
-        Log.e("size", listOfOpenOrders.size()+"");
-
         customerOpenOrderAdapter = new CustomerOpenOrderAdapter(getActivity(), listOfOpenOrders);
         listViewCustomerOpenOrder.setAdapter(customerOpenOrderAdapter);
 
         getActivity().invalidateOptionsMenu();
 //        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelOpenOrders());
-//        Log.e("here at", language.getLabelOpenOrders());
         setHasOptionsMenu(true);
         setUpLanguage();
         super.initializeComponents(rootView);

@@ -89,8 +89,6 @@ public class Pricing2KaNrListViewLessThenDataAdapter extends BaseAdapter {
                 ("" + listKaNrListViewLessThen.get(position).getGerätetyp());
         txtPricing2KaNrLessThenListenpreisDataRow.setText
                 ("" +  DataHelper.getGermanCurrencyFormat(listKaNrListViewLessThen.get(position).getListenpreis()+""));
-        Log.e("list of key adapter", listKaNrListViewLessThen.get(position).getKey().size() + "");
-
         LinearLayout linearTags = (LinearLayout)convertView.findViewById(R.id.linearLessThenTags);
         LinearLayout.LayoutParams layoutParams =
                 new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);

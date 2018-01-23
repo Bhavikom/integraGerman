@@ -66,6 +66,7 @@ import de.mateco.integrAMobile.Helper.GlobalMethods;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.InputFilterMinMax;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.Manifest;
 import de.mateco.integrAMobile.R;
@@ -136,7 +137,6 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
     {
         if(rootView == null)
         {
-            Log.e("rootview", "null");
             rootView = inflater.inflate(R.layout.fragment_site_inspection, container, false);
             super.initializeFragment(rootView);
             if(getArguments() != null && getArguments().containsKey("Resume"))
@@ -158,10 +158,8 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
         }
         else
         {
-            Log.e("rootview", "else");
             if(rootView.getParent() != null)
             {
-                Log.e("rootView.getParent()", "not null");
                 ((ViewGroup)rootView.getParent()).removeView(rootView);
             }
             super.initializeFragment(rootView);
@@ -188,7 +186,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
 
         if(application.isCustomerLoaded(DataHelper.isCustomerLoaded,false))
         {
-            Log.e("enter",preferences.getBoolean(DataHelper.SiteInspectionWithoutCustomer,false)+"");
+            LogApp.showLog("enter",preferences.getBoolean(DataHelper.SiteInspectionWithoutCustomer,false)+"");
             if(!preferences.getBoolean(DataHelper.SiteInspectionWithoutCustomer,false))
             {
                 customer = application.getLoadedCustomer(DataHelper.LoadedCustomer,"");
@@ -508,7 +506,6 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     /**************20161108**************/
                     siteInspectionModel = db.getSiteInspection(preferences.getInt(DataHelper.SiteInspectionId, 0));
                     final String json = new Gson().toJson(siteInspectionModel);
-                    Log.e(" call service : ", " BVOInsertList in json string : "+json);
                     String url = null;
                     if(DataHelper.isNetworkAvailable(getActivity()))
                     {
@@ -521,7 +518,6 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                                 showShortToast(language.getMessageNetworkNotAvailable());
                                 }else {
                                     try {
-                                        Log.e(" respnose &*&*&*&*& ", "response from service for mail fragmetn : " + result);
                                         ResponseFormat responseFormat = new Gson().fromJson(result, ResponseFormat.class);
                                         if (responseFormat.getResponseCode() == 10) {
                                             FragmentTransaction transaction2 = getActivity().getSupportFragmentManager().beginTransaction();
@@ -649,7 +645,6 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     latitude = Double.parseDouble(latLong.get(0).getValue());
                     longitude = Double.parseDouble(latLong.get(1).getValue());
                     LatLng latLng = new LatLng(latitude, longitude);
-                    Log.e("update button ", latitude + "longi" + longitude);
                     labelValueLocationLatitude.setText(latitude+"");
                     labelValueLocationLongitude.setText(longitude + "");
                     BasicNameValuePair nameValuePair = DataHelper.getFormattedLocationInDegree(getActivity(), latitude, longitude);
@@ -826,13 +821,11 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
     @Override
     public void onLocationChanged(Location location)
     {
-        Log.e("on location changd", "location changed");
         if(location!=null)
         {
             //Geocoder geocoder = new Geocoder(getActivity(), Locale.ENGLISH);
             try
             {
-                Log.e("enter","location changes");
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 onLocationChanged2(location);
@@ -862,13 +855,11 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
     }
     public void onLocationChanged2(Location location)
     {
-        Log.e("on location changd", "location changed");
         if(location!=null)
         {
             //Geocoder geocoder = new Geocoder(getActivity(), Locale.ENGLISH);
             try
             {
-                Log.e("enter","location changes");
                 latitude = Double.parseDouble(String.valueOf(location.getLatitude()));
                 longitude = Double.parseDouble(String.valueOf(location.getLongitude()));
                 //latitude = location.getLatitude();
@@ -878,7 +869,6 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                 BasicNameValuePair nameValuePair = DataHelper.getFormattedLocationInDegree(getActivity(), latitude, longitude);
                 labelValueLocationLatitudeFormat.setText(nameValuePair.getName());
                 labelValueLocationLongitudeFormat.setText(nameValuePair.getValue());
-                Log.e("lat", latitude + "longi" + longitude);
                 Geocoder geoCoder = new Geocoder(getActivity());
                 List<Address> addressList = geoCoder.getFromLocation(latitude,longitude, 1);
 
@@ -1140,13 +1130,11 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
         siteInspectionNewModel.setEinsatzstrasse(textRoad.getText().toString());
         siteInspectionNewModel.setEinsatzPLZ(textZipCode.getText().toString());
         siteInspectionNewModel.setEinsatzort(textPlace.getText().toString());
-        Log.e("date",DataHelper.formatDateToOriginal(textInsertDate.getText().toString()));
+        LogApp.showLog("date",DataHelper.formatDateToOriginal(textInsertDate.getText().toString()));
         String strdatetosend = DataHelper.formatDateToOriginal(textInsertDate.getText().toString());
         if(strdatetosend.equalsIgnoreCase("")){
             strdatetosend="";
         }
-        Log.e(" fffff nulll "," null varialbe checking : "+strdatetosend);
-
         siteInspectionNewModel.setEinsatzdatum(strdatetosend);
         siteInspectionNewModel.setEinsatzdauer(textOperationalLite.getText().toString());
         if(buttonYes.isChecked())
@@ -1259,13 +1247,11 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
     {
         super.onStart();
         model = db.getSiteInspection(preferences.getInt(DataHelper.SiteInspectionId,0)).getSiteInspectionNewModel();
-        Log.e("onStart callled", "onStart");
         if(model != null)
         {
-            Log.e("get model not null", "model not null");
             if(!TextUtils.isEmpty(model.getEinsatzstrasse()))
             {
-                Log.e("get knotakt not null", "getEinsatzstrasse not null " + model.getEinsatzstrasse());
+                LogApp.showLog("get knotakt not null", "getEinsatzstrasse not null " + model.getEinsatzstrasse());
                 String splite[] = model.getEinsatzstrasse().split(",");
                 if(splite.length > 0) {
                     textRoad.setText(splite[0]);
@@ -1277,7 +1263,6 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
             }
             if(!TextUtils.isEmpty(model.getEinsatzPLZ()))
             {
-                Log.e("get knotakt not null", "getEinsatzPLZ not null " + model.getEinsatzPLZ());
                 textZipCode.setText(model.getEinsatzPLZ());
             }
             else
@@ -1286,7 +1271,6 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
             }
             if(!TextUtils.isEmpty(model.getEinsatzort()))
             {
-                Log.e("get knotakt not null", "getEinsatzort not null " + model.getEinsatzort());
                 textPlace.setText(model.getEinsatzort());
             }
             else

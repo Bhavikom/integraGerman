@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import de.mateco.integrAMobile.Helper.CustomNumberPicker;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalMethods;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.SiteInspectionDeviceGroupAdapter;
@@ -116,7 +117,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
         }
         else
         {
-            Log.e("enter","else");
+            LogApp.showLog("enter","else");
         }
 
         ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelDeviceData() + " 1");
@@ -489,7 +490,6 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
 
         numberString = (nPMaxLength1.getValue() + "") + (nPMaxLength2.getValue() + "") + "." + (nPMaxLength3.getValue() + "") + (nPMaxLength4.getValue() + "");
         numberDouble = Double.parseDouble(numberString);
-        Log.e("max length at save", numberString);
         deviceData.setLaenge(numberDouble + "");
 
         numberString = (nPMaxBredth1.getValue() + "") + (nPMaxBredth2.getValue() + "") + "." + (nPMaxBredth3.getValue() + "") + (nPMaxBredth4.getValue() + "");
@@ -503,7 +503,6 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
         numberString = (nPMaxWeight1.getValue() + "") + (nPMaxWeight2.getValue() + "") + (nPMaxWeight3.getValue() + "") + (nPMaxWeight4.getValue() + "");
         number = Integer.parseInt(numberString);
         deviceData.setGewicht(number);
-        Log.e("save data gewicht", numberString);
         numberString = (nPBasketLoad1.getValue() + "") + (nPBasketLoad2.getValue() + "") + (nPBasketLoad3.getValue() + "") + (nPBasketLoad4.getValue() + "");
         number = Integer.parseInt(numberString);
         deviceData.setKorbbelastung(number + "");
@@ -561,7 +560,6 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
         {
             if (listOfDeviceData.get(i).getHauptgeraet().equals("1") && listOfDeviceData.get(i).getParentId() == 0)
             {
-                Log.e("enter",deviceData.getGeraetetyp()+"");
                 deviceData = listOfDeviceData.get(i);
             }
         }
@@ -672,11 +670,8 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
             }
             if (!TextUtils.isEmpty(deviceData.getLaenge()))
             {
-                Log.e("max length at set", deviceData.getLaenge());
                 Double number = Double.parseDouble(deviceData.getLaenge());
-                Log.e("max length at set", number + "");
                 int workingHeight = (int) (number * 100);
-                Log.e("max length at set", workingHeight + "");
                 if (workingHeight > 0)
                 {
                     int lastDigit = workingHeight % 10;
@@ -718,10 +713,9 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 }
 
                 String numberString = (nPMaxLength1.getValue() + "") + (nPMaxLength2.getValue() + "") + "." + (nPMaxLength3.getValue() + "") + (nPMaxLength4.getValue() + "");
-                Log.e("max length at set", numberString);
                 Double numberDouble = Double.parseDouble(numberString);
                 labelMaxLength1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
-                Log.e("max length at set", numberString);
+                LogApp.showLog("max length at set", numberString);
             }
             if (!TextUtils.isEmpty(deviceData.getBreite()))
             {
@@ -821,7 +815,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 String numberString = (nPMaxWeight1.getValue() + "") + (nPMaxWeight2.getValue() + "") + (nPMaxWeight3.getValue() + "") + (nPMaxWeight4.getValue() + "");
                 int number = Integer.parseInt(numberString);
                 labelMaxWeight1.setText(number + " kg");
-                Log.e("set data gewicht", numberString);
+                LogApp.showLog("set data gewicht", numberString);
             }
             if (!TextUtils.isEmpty(deviceData.getKorbbelastung()))
             {
@@ -990,7 +984,7 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                     if(listOfDeviceData.get(i).getPosition()==1 && listOfDeviceData.get(i).getParentId()==deviceData.getId())
                     {
                         heightGroup1 = listOfDeviceData.get(i).getHoehengruppe();
-                        Log.e("heightgroup1",heightGroup1);
+                        LogApp.showLog("heightgroup1",heightGroup1);
                     }
             }
             for (int i = 0; i < rowLevelGroupItems.size(); i++)
@@ -1071,25 +1065,25 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 numberString = (nPMaxLength1.getValue() + "") + (nPMaxLength2.getValue() + "") + "." + (nPMaxLength3.getValue() + "") + (nPMaxLength4.getValue() + "");
                 numberDouble = Double.parseDouble(numberString);
                 labelMaxLength1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
-                Log.e("max length", numberString);
+                LogApp.showLog("max length", numberString);
                 break;
             case R.id.nPMaxLength2:
                 numberString = (nPMaxLength1.getValue() + "") + (nPMaxLength2.getValue() + "") + "." + (nPMaxLength3.getValue() + "") + (nPMaxLength4.getValue() + "");
                 numberDouble = Double.parseDouble(numberString);
                 labelMaxLength1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
-                Log.e("max length", numberString);
+                LogApp.showLog("max length", numberString);
                 break;
             case R.id.nPMaxLength3:
                 numberString = (nPMaxLength1.getValue() + "") + (nPMaxLength2.getValue() + "") + "." + (nPMaxLength3.getValue() + "") + (nPMaxLength4.getValue() + "");
                 numberDouble = Double.parseDouble(numberString);
                 labelMaxLength1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
-                Log.e("max length", numberString);
+                LogApp.showLog("max length", numberString);
                 break;
             case R.id.nPMaxLength4:
                 numberString = (nPMaxLength1.getValue() + "") + (nPMaxLength2.getValue() + "") + "." + (nPMaxLength3.getValue() + "") + (nPMaxLength4.getValue() + "");
                 numberDouble = Double.parseDouble(numberString);
                 labelMaxLength1.setText(DataHelper.getGermanFromEnglish(numberDouble + "") + " m");
-                Log.e("max length", numberString);
+                LogApp.showLog("max length", numberString);
                 break;
 
             case R.id.nPMaxBredth1:
@@ -1117,25 +1111,25 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 numberString = (nPMaxWeight1.getValue() + "") + (nPMaxWeight2.getValue() + "") + (nPMaxWeight3.getValue() + "") + (nPMaxWeight4.getValue() + "");
                 number = Integer.parseInt(numberString);
                 labelMaxWeight1.setText(number + " kg");
-                Log.e("nPMaxWeight1 gewicht", numberString);
+                LogApp.showLog("nPMaxWeight1 gewicht", numberString);
                 break;
             case R.id.nPMaxWeight2:
                 numberString = (nPMaxWeight1.getValue() + "") + (nPMaxWeight2.getValue() + "") + (nPMaxWeight3.getValue() + "") + (nPMaxWeight4.getValue() + "");
                 number = Integer.parseInt(numberString);
                 labelMaxWeight1.setText(number + " kg");
-                Log.e("nPMaxWeight2 gewicht", numberString);
+                LogApp.showLog("nPMaxWeight2 gewicht", numberString);
                 break;
             case R.id.nPMaxWeight3:
                 numberString = (nPMaxWeight1.getValue() + "") + (nPMaxWeight2.getValue() + "") + (nPMaxWeight3.getValue() + "") + (nPMaxWeight4.getValue() + "");
                 number = Integer.parseInt(numberString);
                 labelMaxWeight1.setText(number + " kg");
-                Log.e("nPMaxWeight3 gewicht", numberString);
+                LogApp.showLog("nPMaxWeight3 gewicht", numberString);
                 break;
             case R.id.nPMaxWeight4:
                 numberString = (nPMaxWeight1.getValue() + "") + (nPMaxWeight2.getValue() + "") + (nPMaxWeight3.getValue() + "") + (nPMaxWeight4.getValue() + "");
                 number = Integer.parseInt(numberString);
                 labelMaxWeight1.setText(number + " kg");
-                Log.e("nPMaxWeight4 gewicht", numberString);
+                LogApp.showLog("nPMaxWeight4 gewicht", numberString);
                 break;
 
             case R.id.nPMaxHeight:
@@ -1222,7 +1216,6 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
 
         remainingDevices.addAll(removeAlternativeDevice(db.getDeviceType(heightGroup1),selectedDevices));
 
-        Log.e("remaing", remainingDevices.size() + "");
         final ListView listViewRemainingAlterNativeDevice = (ListView)dialog.findViewById(R.id.listViewRemainingAlterNativeDevice);
         listViewRemainingAlterNativeDevice.setAdapter(remainingDeviceTypeListViewAdapter);
         remainingDeviceTypeListViewAdapter.notifyDataSetChanged();
@@ -1334,7 +1327,6 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                 selectedDeviceTypeListViewAdapter.notifyDataSetChanged();
                 break;
             case R.id.spnHeightScale:
-                Log.e("enter","enter height scale");
                 listDeviceType.clear();
                 listDeviceType.addAll(db.getDeviceType(rowLevelGroupItems.get(position).getHeightGroup()));
                 deviceTypeAdapter.notifyDataSetChanged();
@@ -1343,7 +1335,6 @@ public class SiteInspectionDeviceData extends BaseFragment implements NumberPick
                     spnDeviceType.setSelection(0);
                 break;
             case R.id.spnHeightScale1:
-                Log.e("enter","enter height scale1");
                 heightGroup1 = rowLevelGroupItems.get(position).getHeightGroup();
                 selectedDevices.clear();
                 selectedDeviceTypeListViewAdapter.notifyDataSetChanged();

@@ -24,6 +24,7 @@ import java.net.UnknownHostException;
 import de.mateco.integrAMobile.Helper.CustomSSLFactory;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.model.Language;
 
@@ -76,7 +77,6 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
             //HttpClient httpclient = new DefaultHttpClient();
             httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
             httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
-            Log.e(" ur l url "," ulr while calling project detail fragment : "+url);
             HttpGet httpGet = new HttpGet(url);
             httpGet.addHeader("Accept-Encoding", "gzip");
             HttpResponse response = httpclient.execute(httpGet);
@@ -122,49 +122,41 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
         catch (UnknownHostException ex)
         {
             ex.printStackTrace();
-            Log.e(" unknownhost ","in catch while calling get service : "+ex.toString());
             return DataHelper.NetworkError;
         }
         catch (SocketException ex)
         {
             ex.printStackTrace();
-            Log.e(" socketexception ","in catch while calling get service : "+ex.toString());
             return DataHelper.NetworkError;
         }
         catch (ConnectTimeoutException ex)
         {
             ex.printStackTrace();
-            Log.e(" connection timeout","in catch while calling get service : "+ex.toString());
             return DataHelper.NetworkError;
         }
         catch (ConnectionClosedException ex)
         {
             ex.printStackTrace();
-            Log.e(" connection closed ","in catch while calling get service : "+ex.toString());
             return DataHelper.NetworkError;
         }
         catch (ClientProtocolException e)
         {
             e.printStackTrace();
-            Log.e(" clientprotocolexception","in catch while calling get service : "+e.toString());
             return "error";
         }
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
-            Log.e(" unsupportedencodingexception","in catch while calling get service : "+e.toString());
             return "error";
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            Log.e(" ioexception","in catch while calling get service : "+e.toString());
             return DataHelper.NetworkError;
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            Log.e(" exception","in catch while calling get service : "+e.toString());
             return "error";
         }
 	}
@@ -178,7 +170,7 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
 	{
         elapsedTime = System.currentTimeMillis() - startTime;
         int seconds = (int) (elapsedTime / 1000) % 60 ;
-        Log.e(""," total time that service has elapsed : "+seconds);
+        LogApp.showLog(""," total time that service has elapsed : "+seconds);
         try {
             if(isProgressEnabled)
             {
@@ -196,7 +188,6 @@ public class BasicAsyncTaskGetRequest extends AsyncTask<NameValuePair, Void, Str
         catch (Exception e){
 
         }
-        Log.e(" %%%%%%%%%%%%%%%%%%%%%%%%%% "," on post exceucte of price: "+result);
 
 	}
 }

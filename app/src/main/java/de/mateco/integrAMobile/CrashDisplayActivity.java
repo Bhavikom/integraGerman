@@ -46,7 +46,6 @@ public class CrashDisplayActivity extends Activity
                 //finish();
                 MatecoPriceApplication.getInstance().clearApplicationData();
                 Fabric.with(CrashDisplayActivity.this, new Crashlytics());
-                Log.e("enter", "application");
                 MultiDex.install(CrashDisplayActivity.this);
                 defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
                 finishApplication();
@@ -60,7 +59,6 @@ public class CrashDisplayActivity extends Activity
             public void onClick(View v)
             {
                 Fabric.with(CrashDisplayActivity.this, new Crashlytics());
-                Log.e("enter", "application");
                 MultiDex.install(CrashDisplayActivity.this);
                 defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
 

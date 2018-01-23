@@ -63,7 +63,6 @@ public class UploadService extends IntentService
     @Override
     protected void onHandleIntent(final Intent intent)
     {
-        Log.e("enter","service");
         preferences = getSharedPreferences("SiteInspection", Context.MODE_PRIVATE);
         db = new DataBaseHandler(this);
         application = (MatecoPriceApplication)this.getApplication();
@@ -99,7 +98,6 @@ public class UploadService extends IntentService
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("result at image upload", result);
                     if(result.equals("true"))
                     {
                         if(uploadedImageNumber > 1)
@@ -158,7 +156,6 @@ public class UploadService extends IntentService
             {
                 e.printStackTrace();
             }
-            Log.e("url", url);
             AsyncTaskWithAuthorizationHeaderPost asyncTask = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult,this,multipartEntity ,false, language);
             asyncTask.execute();
         }

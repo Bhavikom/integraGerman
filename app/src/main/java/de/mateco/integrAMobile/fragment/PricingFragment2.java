@@ -63,6 +63,7 @@ import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.GlobalMethods;
 import de.mateco.integrAMobile.Helper.InputFilterMinMax;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
@@ -172,7 +173,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             rootView = inflater.inflate(R.layout.fragment_pricing_2, container, false);
             super.initializeFragment(rootView);
         } else {
-            Log.e("at error", "not null rootview");
             ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelPrice());
             if (rootView.getParent() != null)
                 ((ViewGroup) rootView.getParent()).removeView(rootView);
@@ -191,7 +191,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("enter", "enter");
     }
 
     @Override
@@ -313,7 +312,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 
     private void loadArguments() {
         if (getArguments() != null) {
-            Log.e("here at load", "arguments not null");
             if (getArguments().containsKey("kanr"))
                 kanr = getArguments().getString("kanr");
             if (getArguments().containsKey("branchId"))
@@ -417,7 +415,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     GeratetypeId = getArguments().getString("gerateNo");
             }
         } else {
-            Log.e("arguments null", "arguments null");
         }
         loadPricingCustomerOrderInfoFromPreference();
     }
@@ -542,7 +539,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
     }
 
     private void setUpLanguage() {
-        Log.e("set up language", "set up language");
         TextView txtContactNo, txtTransport, txtGeraetetype;
         Button btnApplicationInformation, btnOk, btnAbort;
         txtContactNo = (TextView) rootView.findViewById(R.id.txtContactNo);
@@ -604,7 +600,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult() {
                 @Override
                 public void OnAsynResult(String result) {
-                    Log.e("KanR", result);
                     if(result.equals(DataHelper.NetworkError)){
                         showShortToast(language.getMessageNetworkNotAvailable());
                     }else {
@@ -627,7 +622,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.pricing2PriceKaNrCombo + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8") + "&Kontakt=" + KontaktId;
                 String url = DataHelper.URL_PRICE_HELPER + "pricekanrcombo/token=" +
                         URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8") + "/Kontakt=" + KontaktId;
-                Log.e("Url KontaktId", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             } catch (Exception e) {
@@ -653,11 +647,10 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         }
        /* else if(lablesKaNr.size() > 1)
         {
-            Log.e("lablesKaNr",""+lablesKaNr.size());
+
             spKaNr.setSelection(1);
 
         }*/
-        Log.e("on spinner data", "on spinner data");
         Pricing2KaNrDataAdapter kaNrAdapter = new Pricing2KaNrDataAdapter(getActivity(), lablesKaNr);
         spKaNr.setAdapter(kaNrAdapter);
         if(lablesKaNr.size() > 2){
@@ -667,7 +660,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 
         }
         else if (lablesKaNr.size() > 1) {
-            Log.e("lablesKaNr", "" + lablesKaNr.size());
             spKaNr.setSelection(1);
             linearKanrNo.setBackgroundResource(R.drawable.white_border);
         }
@@ -691,7 +683,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     }else {
                         try {
                             String entfernungId = result.replace("\"", "").trim();
-                            Log.e("result of getEntfernung", result);
                             //textEntferunung.setText(""+entfernungId.trim());
                             PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
                                     new Gson().toJson(new PricingCustomerOrderBasicInfo()));
@@ -716,7 +707,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 String url = DataHelper.URL_PRICE_HELPER + "getEntfernung/token=" +
                         URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8") + "/mandant=" +
                         mandant+ "/plz=" + plz;
-                Log.e("Url getEntfernung", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             } catch (Exception e) {
@@ -760,17 +750,13 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     price = 0.0;
                     gesAminitiesPrice = 0.0;
                     gesAm = 0.0;
-                    Log.e("KanR", result);
                     rowKaNrListViewItems.clear();
                     try {
                         JSONArray jsonArray = new JSONArray(result);
-                        Log.e("array size standard pri", jsonArray.length() + "");
                         if(jsonArray.length() > 0 ){
                             spKaNr.setSelection(0);
                         }
                         for (int i = 0; i < jsonArray.length(); i = i + 2) {
-                            Log.e(" 1111111 "," in for loooop check i value : "+i);
-                            Log.e("i", i + "");
                             Pricing2KaNrListViewData kaNrListView = new Pricing2KaNrListViewData();
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             kaNrListView.setHoehengruppe(jsonObject.getString("Hoehengruppe"));
@@ -782,7 +768,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                             listOfRealTag = new ArrayList<>();
                             listOfRValue = new ArrayList<>();
                             listOfMValue = new ArrayList<>();
-                            Log.e(" 2222222 "," in for loooop check i value : "+itemsDetails.length());
                             for (int j = 0; j < itemsDetails.length(); j++) {
                                 JSONObject object = itemsDetails.getJSONObject(j);
                                 listOfTagName.add(object.getString("Key"));
@@ -790,28 +775,13 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                 listOfRValue.add(Double.parseDouble(object.getString("Value")));
                                 listOfMValue.add(Double.parseDouble(jsonArray.getJSONObject(i + 1).getJSONArray("tageslist").getJSONObject(j).getString("Value")));
 
-                                Log.e(" check for ^^^^ "," in for loop of itemDetails : "+" key object : "+object.getString("Key")+" list of real tag size : "+listOfRealTag.size());
-                            }
-                            for (int k =0;k<listOfTagName.size();k++){
-                                Log.e(" ######## "," list of tagname value : "+listOfTagName.get(k));
-                            }
-                            for (int k =0;k<listOfRealTag.size();k++){
-                                Log.e(" ######## "," list of listOfRealTag value bezeichnung: "+listOfRealTag.get(k).getBezeichnung()+" abeinheit: "+
-                                        listOfRealTag.get(k).getAbEinheit()+" aktiv: "+
-                                        listOfRealTag.get(k).getAktiv()+ " angebo: "+
-                                        listOfRealTag.get(k).getAngebotstext()+" einheit: "+
-                                        listOfRealTag.get(k).getEinheit()+" sprache: "+
-                                        listOfRealTag.get(k).getSprache()+" staffel: "+
-                                        listOfRealTag.get(k).getStaffel()+" standardstaffel: "+
-                                        listOfRealTag.get(k).getStandardStaffel()+" : "
-                                        );
+                                LogApp.showLog(" check for ^^^^ "," in for loop of itemDetails : "+" key object : "+object.getString("Key")+" list of real tag size : "+listOfRealTag.size());
                             }
                             kaNrListView.setListOfMPrice(listOfMValue);
                             kaNrListView.setListOfRPrice(listOfRValue);
                             //kaNrListView.setKey(listOfTagName);
                             kaNrListView.setKey(listOfRealTag);
                             rowKaNrListViewItems.add(kaNrListView);
-                            Log.e(" size arraylist "," in for loooop check i value : "+rowKaNrListViewItems.size());
                             kaNrListViewItemsAdapter.notifyDataSetChanged();
                         }
                         //setListViewHeightBasedOnChildren(lvKaNrListView);
@@ -832,12 +802,10 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                         //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
                         //layoutParams.setMargins(0,0,5,0);
                         LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        Log.e("jsonarray 0 standard", jsonArray.length() + "");
                         if (jsonArray.length() > 0) {
                             //for (int i = 0; i < jsonArray.getJSONObject(0).getJSONArray("tages").length(); i++)
                             for (int i = 0; i < listOfRealTag.size(); i++)
                             {
-                                Log.e(""," list of real tag value : "+listOfRealTag.get(i).getBezeichnung());
                                 LinearLayout llWholeTag = new LinearLayout(getActivity());
                                 llWholeTag.setLayoutParams(layoutParams);
                                 llWholeTag.setOrientation(LinearLayout.VERTICAL);
@@ -887,8 +855,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 
 
                             for(int i = 0; i < listOfRealTag.size(); i++)
-                            { Log.e(" in for loop "," list of real tag value for selection : "+listOfRealTag.get(i).getAbEinheit() + " : "+
-                                    listOfRealTag.get(i).getBisEinheit());
+                            {
                                 if(GlobalMethods.checkForNotNull(listOfRealTag.get(i).getAbEinheit())
                                         && GlobalMethods.checkForNotNull(listOfRealTag.get(i).getBisEinheit()))
                                 {
@@ -910,7 +877,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                 /// 11 = pauschal
                                 else if(rental==11)
                                 {
-                                    Log.e(" in else if "," in rental conctioin : "+rental);
                                     column = i;
                                     break;
                                 }
@@ -942,10 +908,9 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                         gesAminitiesPrice = (gesAminitiesPrice + gesAmt);
                                     }
                                 } else {
-                                    Log.e("column", column + " " + rowKaNrListViewItems.get(i).getSatzart());
+                                    LogApp.showLog("column", column + " " + rowKaNrListViewItems.get(i).getSatzart());
                                 }
                             }
-                            //Log.e("column", column + " " + TagName.get(column).toString() + " price: " + price);
                         }
                         kaNrListViewItemsAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
@@ -970,7 +935,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                         + "/Einheit=" + Einheit
                         + "/Assesories=" + Assesories
                         + "/GeratetypID=" + GeratetypeId;
-                Log.e("Url KontaktId", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             } catch (Exception e) {
@@ -979,9 +943,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         } else {
 
             showLongToast(language.getMessageNetworkNotAvailable());
-            Log.e(" all variable "," standard offline called : "+" branch : "+Branch + " device type " + DeviceType + " Einheit : " + Einheit + " assesories : " + Assesories);
             rowOfflineStandardPriceListViewItems.addAll(db.getPricing2StandardPriceData(Branch, DeviceType, Einheit, Assesories));
-            Log.e(" arraylist size : ", " standard offline called : "+rowOfflineStandardPriceListViewItems.size() + "");
             offlineStandardPriceListViewItemsAdapter = new Pricing2OfflineKaNrStandardPriceListViewDataAdapter(getActivity(), rowOfflineStandardPriceListViewItems);
             lvKaNrListView.setAdapter(offlineStandardPriceListViewItemsAdapter);
 
@@ -1003,11 +965,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             listOfRealTag = new ArrayList<>();
             listOfRValue = new ArrayList<>();
             listOfMValue = new ArrayList<>();
-            //Log.e(" 2222222 "," in for loooop check i value : "+itemsDetails.length());
             for (int j = 0; j < rowOfflineStandardPriceListViewItems.size(); j++) {
-
-
-                Log.e(" in for loop : "," get id from offline standard price :" +rowOfflineStandardPriceListViewItems.get(j).getHoehenhauptgruppeID());
                 listOfRealTag.add(db.getStaffelObjectFromStaffel(rowOfflineStandardPriceListViewItems.get(j).getHoehenhauptgruppeID()));
                 //listOfRValue.add(Double.parseDouble(object.getString("Value")));
                 //listOfMValue.add(Double.parseDouble(jsonArray.getJSONObject(i + 1).getJSONArray("tages").getJSONObject(j).getString("Value")));
@@ -1076,7 +1034,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     rowKaNrListViewLessThenItems.clear();
                     try {
                         JSONArray jsonArray = new JSONArray(result);
-                        Log.e("json array length", jsonArray.length() + "");
                         //for (int i = 0; i < jsonArray.length(); i = i + 2)
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Pricing2KaNrListViewLessThen1800Data kaNrListViewLessThen = new Pricing2KaNrListViewLessThen1800Data();
@@ -1145,7 +1102,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                 TagName.add(listOfTagName.get(i).replace("Tage", "").replace("Tag", ""));
                             }
                             int column = -1;
-                            Log.e("Tage name.size.. <1800", TagName.size() + "");
                             for(int i = 0; i < listOfRealTag.size(); i++)
                             {
                                 if((Integer.parseInt(listOfRealTag.get(i).getAbEinheit()) == rentalDays) || (Integer.parseInt(listOfRealTag.get(i).getBisEinheit()) == rentalDays))
@@ -1228,7 +1184,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 //                                        if(tag13.contains("Std"))
 //                                        {
 //                                            tagfinal13 = tag13.replace("Std", "");
-//                                            Log.e("tag contain bis std standard 0", "" + tagfinal13);
 //                                        }
 //                                        else
 //                                        {
@@ -1253,7 +1208,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 //                                        if(tag13.contains("Std"))
 //                                        {
 //                                            tagfinal13 = tag13.replace("Std", "");
-//                                            Log.e("tag contain  1800> über", "" + tagfinal13);
 //                                        }
 //                                        else
 //                                        {
@@ -1262,7 +1216,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 //                                        }
 //
 //
-//                                        Log.e("tagfinal13 1800> über", "" + tagfinal13);
+
 //                                        String bis1 = tagfinal13;
 //                                        //String bis1 = bis.replace("über", "").trim();
 //                                        int day = Integer.parseInt(bis1.trim());
@@ -1292,11 +1246,10 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 //                                        {
 //                                            test = TagName.get(i).toString().trim().replace("ab", "");
 //                                            test1 = test;
-//                                            Log.e("Standard price 0 test ab ", "" + test1);
+
 //                                        } else {
 //                                            test = TagName.get(i).toString().trim().replace("über", "");
 //                                            test1 = test.replace("Std", "");
-//                                            Log.e("Standard price 0 test1 ab über", "" + test1);
 //                                        }
 //                                        int tes = Integer.parseInt(test1.trim());
 //                                        Log.e("tes name", tes + " " + rentalDays);
@@ -1326,10 +1279,9 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                         gesAminitiesPrice = (gesAminitiesPrice + gesAmt);
                                     }
                                 } else {
-                                    Log.e("column", column + " " + rowKaNrListViewLessThenItems.get(i).getGerätetyp());
+                                    LogApp.showLog("column", column + " " + rowKaNrListViewLessThenItems.get(i).getGerätetyp());
                                 }
                             }
-//                            Log.e("column", column + " " + TagName.get(column).toString() + " price: " + price);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1348,7 +1300,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                         + "/Kanr=" + Branch
                         + "/DeviceType=" + DeviceType.trim()
                         + "/Einheit=" + Einheit;
-                Log.e("Url KontaktId", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             } catch (Exception e) {
@@ -1608,11 +1559,10 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 
                                     }
                                 } else {
-                                    Log.e("column", column + " " + rowKaNrListViewMoreThenItems.get(i).getSort() + "... " + "" + rowKaNrListViewMoreThenItems.get(i).getListPrice().get(column));
+                                    LogApp.showLog("column", column + " " + rowKaNrListViewMoreThenItems.get(i).getSort() + "... " + "" + rowKaNrListViewMoreThenItems.get(i).getListPrice().get(column));
                                 }
 
                             }
-                            // Log.e("column", column + " " + TagName.get(column).toString() + " price: " + price);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1635,7 +1585,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                         + "/Einheit=" + Einheit
                         + "/Assesories=" + Assesories
                         + "/GeratetypID=" + GerateType;
-                Log.e("Url KontaktId", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             } catch (Exception e) {
@@ -1735,7 +1684,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 args.putString("Besteller_Anrede", Besteller_Anrede);
                 args.putString("Besteller_Mobil", Besteller_Mobil);
 
-                Log.e(" ****** "," all varialbe before sending to in fragment 222 kanr : "+kanr + " kaNrofLOadedcustomer : "+kaNrOfLoadedCustomer +" branchId : "+branchId+" deviceType : "+
+                LogApp.showLog(" ****** "," all varialbe before sending to in fragment 222 kanr : "+kanr + " kaNrofLOadedcustomer : "+kaNrOfLoadedCustomer +" branchId : "+branchId+" deviceType : "+
                         deviceType+" branchName : "+branchName+" contactPersonNo : "+
                         contactPersonNo+" contactPerson : "+contactPerson+" equipmentIds : "+equipmentIds+" equipmentJson : "+equipmentJson+" rental : "+rental+" rentalDays : "+rentalDays+" price : "+price);
 
@@ -1901,8 +1850,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         userInfo.setUserID(UserId);
 
         infojson = new Gson().toJson(userInfo);
-        Log.e("infojson..", infojson);
-
         return infojson;
     }
 
@@ -1969,7 +1916,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult() {
             @Override
             public void OnAsynResult(String result) {
-                Log.e("result", result);
                 if(result.equals(DataHelper.NetworkError)){
                     showShortToast(language.getMessageNetworkNotAvailable());
                 }else {
@@ -2000,7 +1946,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             }
         };
         String json = new Gson().toJson(model);
-        Log.e("json at price", json);
         String url = "";
         try {
             /*url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PRICE_DEVICE_TYPE_COMBO_SERVICE
@@ -2009,7 +1954,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             url = DataHelper.URL_PRICE_HELPER
                     + "pricegeraetetypecombo/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                     + "/pricedeviceparam=" + URLEncoder.encode(json, "UTF-8");
-            Log.e("url at gerat", url);
             BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(),                true);
             asyncTask.execute();
         } catch (UnsupportedEncodingException e) {
@@ -2364,27 +2308,21 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         if (spinner.getId() == R.id.spGeraetetype)
         {
             if (rowKaNrListViewLessThenItems != null) {
-                Log.e("rowKaNrListViewLessThenItems", "not null");
                 rowKaNrListViewLessThenItems.clear();
             }
             if (rowKaNrListViewMoreThenItems != null) {
-                Log.e("rowKaNrListViewMoreThenItems", "not null");
                 rowKaNrListViewMoreThenItems.clear();
             }
             if (rowKaNrListViewItems != null) {
-                Log.e("rowKaNrListViewItems", "not null");
                 rowKaNrListViewItems.clear();
             }
             if (offlineStandardPriceListViewItemsAdapter != null) {
-                Log.e("offlineStandardPriceListViewItemsAdapter", "not null");
                 offlineStandardPriceListViewItemsAdapter.notifyDataSetChanged();
             }
             if (kaNrListViewLessThenDataItemsAdapter != null) {
-                Log.e("kaNrListViewLessThenDataItemsAdapter", "not null");
                 kaNrListViewLessThenDataItemsAdapter.notifyDataSetChanged();
             }
             if (kaNrListViewMoreThenDataItemsAdapter != null) {
-                Log.e("kaNrListViewMoreThenDataItemsAdapter", "not null");
                 kaNrListViewMoreThenDataItemsAdapter.notifyDataSetChanged();
             }
             if (rowKaNrListViewItems != null) {
@@ -2410,11 +2348,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 }
             } else {
                 GeratetypeId = listDeviceType.get(position - 1).getGeraeettypID();
-                Log.e("GeratetypeId Id", "" + GeratetypeId);
                 if (KaNrNo <= 1800 && KaNrNo != 0) {
-                    Log.e("KaNrNo Less", "" + KaNrNo);
-                    Log.e("deviceType Less", "" + deviceType);
-                    Log.e("GeratetypeId Id", "" + GeratetypeId);
                     if(GeratetypeId.equalsIgnoreCase("")){
                         GeratetypeId="0";
                     }
@@ -2425,26 +2359,20 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 }
             }
             if (KaNrNo == 0) {
-                Log.e("kan", "0");
-                if (position == 0)
+                if (position == 0) {
                     GeratetypeId = "0";
-                Log.e("deviceType standard", "" + deviceType);
+                }
                 // when click on standard price call this method
                 loadKontaktListViewDataStandardPrice(branchId, deviceType, GeratetypeId, rental, equipmentIds);
             } else if (KaNrNo > 1800) {
-                Log.e("KaNrNo", "1800");
-                if (position == 0)
+                if (position == 0) {
                     GeratetypeId = "0";
-                Log.e("deviceType more", "" + deviceType);
-                Log.e("param more", "" + KaNrNo + "-" + deviceType + "-" + GeratetypeId + "-" + rental + "-" + equipmentIds);
+                }
                 loadKontaktListViewDataMoreThen1800(KaNrNo, deviceType, GeratetypeId, rental, equipmentIds);
             }
             /// mymy
             else if (KaNrNo <= 1800 && KaNrNo != 0)
             {
-                Log.e("KaNrNo Less", "" + KaNrNo);
-                Log.e("deviceType Less", "" + deviceType);
-                Log.e("GeratetypeId Id", "" + GeratetypeId);
                 if(GeratetypeId.equalsIgnoreCase("")){
                     GeratetypeId="0";
                 }
@@ -2456,9 +2384,6 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         {
             KaNrNo = lablesKaNr.get(position).getKaNr();
             kaNrOfLoadedCustomer = KaNrNo;
-            Log.e("KaNrNo Id", "" + KaNrNo);
-
-
             spGeraetetype.setSelection(0);
             if(listDeviceType.size() > 0)
             {
@@ -2472,31 +2397,25 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             }
             deviceTypeAdapter.notifyDataSetChanged();
             if (rowKaNrListViewLessThenItems != null) {
-                Log.e("rowKaNrListViewLessThenItems", "not null");
                 rowKaNrListViewLessThenItems.clear();
             }
             if (rowKaNrListViewMoreThenItems != null) {
-                Log.e("rowKaNrListViewMoreThenItems", "not null");
                 rowKaNrListViewMoreThenItems.clear();
             }
             if (rowKaNrListViewItems != null) {
-                Log.e("rowKaNrListViewItems", "not null");
                 rowKaNrListViewItems.clear();
             }
             if (offlineStandardPriceListViewItemsAdapter != null) {
-                Log.e("offlineStandardPriceListViewItemsAdapter", "not null");
                 offlineStandardPriceListViewItemsAdapter.notifyDataSetChanged();
             }
-            Log.e(" before adapter "," rowKaNrListViewLessThenItems  size befor notify : "+
+            LogApp.showLog(" before adapter "," rowKaNrListViewLessThenItems  size befor notify : "+
                 rowKaNrListViewLessThenItems.size()+ " offline : "+rowOfflineStandardPriceListViewItems.size()+" more  then : "+
                 rowKaNrListViewMoreThenItems.size() + " main list : "+rowKaNrListViewItems.size());
             // this is firing
             if (kaNrListViewLessThenDataItemsAdapter != null) {
-                Log.e("kaNrListViewLessThenDataItemsAdapter", "not null");
                 kaNrListViewLessThenDataItemsAdapter.notifyDataSetChanged();
             }
             if (kaNrListViewMoreThenDataItemsAdapter != null) {
-                Log.e("kaNrListViewMoreThenDataItemsAdapter", "not null");
                 kaNrListViewMoreThenDataItemsAdapter.notifyDataSetChanged();
             }
             if (rowKaNrListViewItems != null) {

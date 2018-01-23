@@ -54,7 +54,6 @@ public class GeocoderTask extends AsyncTask<Location, Void, HashMap<String, Stri
                     locations[0].getLatitude() + "," + locations[0].getLongitude()+ "&sensor=true"
                     + "&client=gme-matecogmbh";
             url = DataHelper.generateSignedUrl(url);
-            Log.e("url", url);
             if(!url.equals("error"))
             {
                 HttpPost httpPost = new HttpPost(url);
@@ -82,7 +81,6 @@ public class GeocoderTask extends AsyncTask<Location, Void, HashMap<String, Stri
                             properString.append(utf8[i]);
                         }
                     }
-                    Log.e("result",properString.toString());
                     JSONObject jsonObject = new JSONObject(properString.toString());
 
                     if (jsonObject.getString("status").equals("OK"))
@@ -95,32 +93,27 @@ public class GeocoderTask extends AsyncTask<Location, Void, HashMap<String, Stri
                             if (addressComponents.getJSONObject(i).
                                     getJSONArray("types").toString().contains("street_number"))
                             {
-                                Log.e("street",addressComponents.getJSONObject(i).getString("short_name"));
                                 results.put("StreetNumber", addressComponents.
                                         getJSONObject(i).getString("short_name"));
                             }
                             if (addressComponents.getJSONObject(i).
                                     getJSONArray("types").toString().contains("route"))
                             {
-                                Log.e("route",addressComponents.getJSONObject(i).getString("short_name"));
                                 results.put("Route", addressComponents.getJSONObject(i).getString("short_name"));
                             }
                             if (addressComponents.getJSONObject(i).
                                     getJSONArray("types").toString().contains("postal_code"))
                             {
-                                Log.e("code",addressComponents.getJSONObject(i).getString("short_name"));
                                 results.put("PostalCode", addressComponents.
                                         getJSONObject(i).getString("short_name"));
                             }
                             if (addressComponents.getJSONObject(i).
                                     getJSONArray("types").toString().contains("locality"))
                             {
-                                Log.e("locality",addressComponents.getJSONObject(i).getString("long_name"));
                                 results.put("Locality", addressComponents.getJSONObject(i).getString("long_name"));
                             }
                             if (addressComponents.getJSONObject(i).
                                     getJSONArray("types").toString().contains("administrative_area_level_1")) {
-                                Log.e("area", addressComponents.getJSONObject(i).getString("long_name"));
                                 results.put("Area", addressComponents.getJSONObject(i).getString("long_name"));
                             }
                         }

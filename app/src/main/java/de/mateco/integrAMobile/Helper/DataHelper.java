@@ -319,16 +319,13 @@ public class DataHelper
             NumberFormat nf_in = NumberFormat.getNumberInstance(Locale.ENGLISH);
             nf_in.setMinimumFractionDigits(0);
             nf_in.setGroupingUsed(true);
-            // Log.e("at english from german", stringNumber);
             NumberFormat nf_de = NumberFormat.getInstance(Locale.GERMAN);
             nf_de.setMinimumFractionDigits(0);
             nf_de.setGroupingUsed(true);
             try
             {
                 double val = nf_in.parse(stringNumber).doubleValue();
-                //Log.e("double return", val+"");
                 String string = nf_de.format(val);
-                //Log.e("string return", string);
                 return string;
             }
             catch (ParseException e)
@@ -585,16 +582,13 @@ public class DataHelper
             NumberFormat nf_in = NumberFormat.getNumberInstance(Locale.ENGLISH);
             nf_in.setMinimumFractionDigits(2);
             nf_in.setGroupingUsed(true);
-            // Log.e("at english from german", stringNumber);
             NumberFormat nf_de = NumberFormat.getInstance(Locale.GERMAN);
             nf_de.setMinimumFractionDigits(2);
             nf_de.setGroupingUsed(true);
             try
             {
                 double val = nf_in.parse(stringNumber).doubleValue();
-                //Log.e("double return", val+"");
                 String string = nf_de.format(val);
-                //Log.e("string return", string);
                 return string;
             }
             catch (ParseException e)
@@ -616,16 +610,13 @@ public class DataHelper
             NumberFormat nf_in = NumberFormat.getNumberInstance(Locale.ENGLISH);
             nf_in.setMinimumFractionDigits(2);
             nf_in.setGroupingUsed(true);
-            // Log.e("at english from german", stringNumber);
             NumberFormat nf_de = NumberFormat.getInstance(Locale.GERMAN);
             nf_de.setMinimumFractionDigits(2);
             nf_de.setGroupingUsed(true);
             try
             {
                 double val = nf_in.parse(stringNumber).doubleValue();
-                //Log.e("double return", val+"");
                 String string = nf_de.format(val);
-                //Log.e("string return", string);
                 return string;
             }
             catch (ParseException e)
@@ -897,7 +888,7 @@ public class DataHelper
             URL url = new URL(basicUrl);
             signer = new UrlSigner(keyString);
             String request = signer.signRequest(url.getPath(), url.getQuery());
-            Log.e("url geenerated", "Signed URL :" + url.getProtocol() + "://" + url.getHost() + request);
+            LogApp.showLog("url geenerated", "Signed URL :" + url.getProtocol() + "://" + url.getHost() + request);
             return url.getProtocol() + "://" + url.getHost() + request;
         }
         catch (IOException e)

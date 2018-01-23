@@ -43,6 +43,7 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.Helper.GlobalMethods;
 import de.mateco.integrAMobile.Helper.DataHelper;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.CountryAdapter;
@@ -120,7 +121,6 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
     @Override
     public void initializeComponents(View rootView)
     {
-        Log.e("initializing ", "customer data fragment");
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
         language = matecoPriceApplication.getLanguage();
         getActivity().invalidateOptionsMenu();
@@ -245,7 +245,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                 else
                 {
                     selectedBranch = listOfCustomerBranch.get(position - 1);
-                    Log.e(" combo box ite selected "," selected Branchd : "+selectedBranch.getName());
+                    LogApp.showLog(" combo box ite selected "," selected Branchd : "+selectedBranch.getName());
                 }
             }
 
@@ -420,7 +420,6 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                 textCustomerDataVatNo.setText(customerStored.getUSTIDNR());
                 textCustomerDataOrderNo.setText(customerStored.getJahresbestellNr());
                 //textCustomerDataCreditLimit.setText(String.format("%.2f", Float.parseFloat(customerStored.getKreditlimit())));
-                Log.e("set at default", customerStored.getKreditlimit());
                 textCustomerDataCreditLimit.setText(DataHelper.getGermanFromEnglish(customerStored.getKreditlimit()));
                 textCustomerDataPaymentDeadline.setText(customerStored.getZahlungsziel());
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -429,12 +428,9 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                Log.e("getAuftragsbestand", customerStored.getAuftragsbestand());
                 textCustomerDataOrderBackLog.setText(DataHelper.getGermanFromEnglish(customerStored.getAuftragsbestand()));
-                Log.e("getUmsatzpotenzial", customerStored.getUmsatzpotenzial());
                 //textCustomerDataSalesPotential.setText(DataHelper.getGermanFromEnglish(customerStored.getUmsatzpotenzial()));
                 textCustomerDataSalesPotential.setText(customerStored.getUmsatzpotenzial());
-                Log.e("", " get cusotemr potential  : " + textCustomerDataSalesPotential.getText().toString());
                 textCustomerDataKaNr.setText(customerStored.getKaNr());
             }
         }
@@ -634,11 +630,9 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
     {
         if(editable)
         {
-            Log.e("at true", "at true");
         }
         else
         {
-            Log.e("at false", "at false " + editable);
         }
         spinnerCustomerDataLegalForm.setEnabled(editable);
         spinnerCustomerDataCountry.setEnabled(editable);
@@ -847,7 +841,6 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result", result);
                         if(result.trim().equals("false") && result.trim().equals("error"))
                         {
 
@@ -879,7 +872,6 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                                 customer.setKundenNr(customerStored.getKundenNr());
                                 customer.setMatchCode(matchCode);
                                 //selectedBranch = new CustomerBranchModel();
-                                //Log.e(" second time "," selected Branchd : "+selectedBranch.getName());
                                 if(selectedBranch != null){
                                     customer.setBranche(selectedBranch.getName());
                                 }
@@ -937,9 +929,8 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                             }
                             catch (Exception ex)
                             {
-                                Log.e(" 111111"," eroro while editing datae : " +ex.toString());
                                ex.printStackTrace();
-                                showShortToast(language.getMessageErrorAtParsing());
+                               showShortToast(language.getMessageErrorAtParsing());
                             }
                         }
                     }
@@ -954,8 +945,6 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                     //CustomerModel customer = new CustomerModel();
 
                     String json = new Gson().toJson(customerUpdateModel);
-                    Log.e("json", json);
-                    Log.e("url"," ulr while calling second service : "+ url);
                     /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();*/
 
@@ -1081,28 +1070,6 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
         final String salesPotential = DataHelper.getEnglishCurrencyFromGerman(textCustomerDataSalesPotential.getText().toString().trim());
 
         String kaNr = textCustomerDataKaNr.getText().toString().trim();
-
-        Log.e("matchcode", matchCode + " " + defaultMatchCode);
-        Log.e("name1", name1 + " " + defaultName1);
-        Log.e("name2", name2 + " " + defaultName2);
-        Log.e("name3", name3 + " " + defaultName3);
-        Log.e("road", road + " " + defaultRoad);
-        Log.e("zipCode", zipCode + " " + defaultZipCode);
-        Log.e("place", place + " " + defaultPlace);
-        Log.e("country", country + " " + defaultCountry);
-        Log.e("phone", phone + " " + defaultTelephone);
-        Log.e("fax", fax + " " + defaultTelefax);
-        Log.e("email", email + " " + defaultEmail);
-        Log.e("website", website + " " + defaultWebsite);
-        Log.e("legalForm", legalForm + " " + defaultRechtsForm);
-        Log.e("vatNo", vatNo + " " + defaultVatno);
-        Log.e("orderNo", orderNo + " " + defaultOrderNo);
-        Log.e("creditLimit", creditLimit + " " + defaultCreditLimit);
-        Log.e("defaultKanr", defaultKanr + " " + kaNr);
-        Log.e("salesPotential", salesPotential + " " + defaultSalesPotential);
-        Log.e("paymentDeadline", paymentDeadline + " " + defaultPaymentDeadline);
-        Log.e("orderBacklog", orderBacklog + " " + defaultOrderBacklog);
-
         if((matchCode.equals(defaultMatchCode)) && (name1.equals(defaultName1)) && (name2.equals(defaultName2)) &&
                 (name3.equals(defaultName3)) && (road.equals(defaultRoad)) && (zipCode.equals(defaultZipCode)) &&
                 (place.equals(defaultPlace)) && (country.equals(defaultCountry)) && (phone.equals(defaultTelephone)) &&

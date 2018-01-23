@@ -333,7 +333,7 @@ public class SettingOfflineFragment extends BaseFragment implements View.OnClick
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("main service update ", result);
+
                     if(result.equals("error"))
                     {
                         prd.dismiss();

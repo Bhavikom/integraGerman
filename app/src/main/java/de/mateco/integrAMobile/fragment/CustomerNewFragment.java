@@ -450,10 +450,8 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                 {
                     @Override
                     public void OnAsynResult(String result) {
-                        Log.e("result  first time *** "," result from service in customer : "+result);
                         if(result.equals("error"))
                         {
-                            Log.e("second tiem  time *** "," result from service in customer : "+result);
                             showShortToast(language.getMessageErrorCustomerInsert());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
@@ -520,11 +518,8 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                     customerNew.setAenderungMitarbeiter(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
                     json = new Gson().toJson(customerNew);
                     //url += "/customerinsert=" + URLEncoder.encode(json, "UTF-8");
-                    Log.e("json of customer insert", json);
-
 
                 try {
-                    Log.e("url"," ulr while calling second service : "+ url);
                     /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();*/
 
@@ -563,7 +558,6 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -578,7 +572,6 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                                 CustomerFullDetailModel customerFullDetail = new Gson().fromJson(result, CustomerFullDetailModel.class);
                                 String json = new Gson().toJson(customerFullDetail.getCustomerSearchList());
                                 matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
-                                Log.e("customer detail", customerFullDetail.getCustomerSearchList().toString());
                                 String listOfContactPerson = new Gson().toJson(customerFullDetail.getCustomerContactPersonList());
                                 matecoPriceApplication.saveData(DataHelper.LoadedCustomerContactPerson, listOfContactPerson);
 
@@ -647,8 +640,6 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + customerModel.getKontakt();
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }

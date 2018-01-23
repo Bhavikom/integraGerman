@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.fragment.PricingFragment;
 import de.mateco.integrAMobile.timesquare.CalendarCellDecorator;
@@ -612,7 +613,7 @@ public class CalendarPickerView extends ListView {
       case MULTIPLE:
 
         date = applyMultiSelect(date, newlySelectedCal);
-        Log.e(" returning date "," mulitple selection date checking : "+date);
+        LogApp.showLog(" returning date "," mulitple selection date checking : "+date);
         break;
 
       case SINGLE:
@@ -648,7 +649,7 @@ public class CalendarPickerView extends ListView {
 
         }
         catch (Exception e){
-            Log.e(" $$$$$$ "," exception while interfae : "+e.toString());
+            LogApp.showLog(" $$$$$$ "," exception while interfae : "+e.toString());
         }
 
       }
@@ -656,7 +657,6 @@ public class CalendarPickerView extends ListView {
 
       if (selectionMode == SelectionMode.RANGE && selectedCells.size() > 1)
       {
-        Log.e(" 1111111 "," on range clicke to select multiple dates : "+selectedCells.size());
         // Select all days in between start and end.
         Date start = selectedCells.get(0).getDate();
         Date end = selectedCells.get(1).getDate();
@@ -665,16 +665,12 @@ public class CalendarPickerView extends ListView {
 
         for (List<List<MonthCellDescriptor>> month : cells)
         {
-          Log.e(" 22222222 "," on range clicke to select multiple dates : "+selectedCells.size());
           for (List<MonthCellDescriptor> week : month)
           {
-            Log.e(" 333333333 "," on range clicke to select multiple dates : "+selectedCells.size());
             for (MonthCellDescriptor singleCell : week)
             {
-              Log.e(" 44444444 "," on range clicke to select multiple dates : "+selectedCells.size());
               if (singleCell.getDate().after(start) && singleCell.getDate().before(end)  && singleCell.isSelectable())
               {
-                Log.e(" 555555555 "," on range clicke to select multiple dates : "+selectedCells.size());
                 singleCell.setSelected(true);
                 singleCell.setRangeState(MonthCellDescriptor.RangeState.MIDDLE);
                 selectedCells.add(singleCell);

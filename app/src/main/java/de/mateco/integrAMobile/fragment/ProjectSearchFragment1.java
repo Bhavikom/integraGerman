@@ -45,6 +45,7 @@ import java.util.List;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.ProjectSearchAdapter;
@@ -87,7 +88,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
     {
         if(rootView == null)
         {
-            Log.e("rootview", "null");
             rootView = inflater.inflate(R.layout.fragment_project_search, container, false);
             matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
             language = matecoPriceApplication.getLanguage();
@@ -98,7 +98,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
         {
             if(rootView.getParent() != null)
                 ((ViewGroup)rootView.getParent()).removeView(rootView);
-            Log.e("rootview", " not null");
             ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelProject());
         }
 
@@ -412,14 +411,8 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
 
                         String jsonString = new Gson().toJson(model);
                         matecoPriceApplication.saveData(DataHelper.PricingCustomerBasicOrderInfo, jsonString);
-                        for(int i = 0; i < getActivity().getSupportFragmentManager().getBackStackEntryCount(); i++)
-                        {
-                            Log.e("back stack there " + i, getActivity().getSupportFragmentManager().getBackStackEntryAt(i).getName());
-                        }
-
                         //boolean fragmentPopped = getActivity().getSupportFragmentManager().popBackStackImmediate("Pricing 2", 0);
                         boolean fragmentPopped = getActivity().getSupportFragmentManager().popBackStackImmediate();
-                        Log.e("fragment pooped", fragmentPopped + "");
                         if(!fragmentPopped)
                         {
                             Fragment fragment = new PricingFragment2();
@@ -505,7 +498,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
             pageNuber = 1;
             projectSearchPagingRequestModel.setPageNumber(pageNuber+"");
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -513,7 +505,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result project search", result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -562,7 +553,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                     url = DataHelper.URL_PROJECT_HELPER+"projectsearchpaging"
                             + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");
-                    Log.e("url", url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();
                 }
@@ -632,7 +622,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
 //                String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_LIST_SHOW
 //                        + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
 //                        + "&objekt=" + listofProject.get(selectedIndex).getProjekt();
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -649,7 +638,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
 
     private void searchForNewPage()
     {
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -681,7 +669,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
             projectSearchPagingRequestModel.setPageSize(pageSize + "");
 
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             String url = "";
             try
             {
@@ -691,13 +678,11 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                 url = DataHelper.URL_PROJECT_HELPER+"projectsearchpaging"
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");
-                Log.e("url", url);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -705,7 +690,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
@@ -729,7 +713,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                                 }
 
                                 JSONArray resultsOfProjects = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfProjects.length()+"");
                                 if(resultsOfProjects.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -805,7 +788,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -817,13 +799,10 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -890,7 +869,6 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                     pageNuber = 1;
                     projectSearchPagingRequestModel.setPageNumber(GlobalClass.pageNuber+"");
                     jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-                    Log.e("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,
@@ -905,7 +883,7 @@ public class ProjectSearchFragment1 extends LoadedCustomerFragment implements Te
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                    LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

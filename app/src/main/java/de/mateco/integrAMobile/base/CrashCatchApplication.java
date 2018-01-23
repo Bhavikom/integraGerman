@@ -11,6 +11,7 @@ import java.io.File;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import de.mateco.integrAMobile.CrashDisplayActivity;
+import de.mateco.integrAMobile.Helper.LogApp;
 
 public class CrashCatchApplication extends Application
 {
@@ -59,16 +60,12 @@ public class CrashCatchApplication extends Application
 
         while (true) {
             try {
-                Log.v(LOG_TAG, "Starting crash catch Looper");
                 Looper.loop();
                 Thread.setDefaultUncaughtExceptionHandler(systemUncaughtHandler);
                 throw new RuntimeException("Main thread loop unexpectedly exited");
             } catch (BackgroundException e) {
-                Log.e(LOG_TAG, "Caught the exception in the background thread "
-                        + e.threadName + ", TID: " + e.tid, e.getCause());
                 showCrashDisplayActivity(e.getCause());
             } catch (Throwable e) {
-                Log.e(LOG_TAG, "Caught the exception in the UI thread, e:", e);
                 showCrashDisplayActivity(e);
             }
         }
@@ -96,8 +93,6 @@ public class CrashCatchApplication extends Application
         }
 
         public void uncaughtException(Thread thread, final Throwable e) {
-            Log.v(LOG_TAG, "Caught the exception in the background "
-                    + thread + " propagating it to the UI thread, e:", e);
             final int tid = Process.myTid();
             final String threadName = thread.getName();
             mHandler.post(new Runnable() {

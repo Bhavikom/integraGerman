@@ -62,6 +62,7 @@ import de.mateco.integrAMobile.Helper.AddPriceParsableClass;
 import de.mateco.integrAMobile.Helper.CustomSSLFactory;
 import de.mateco.integrAMobile.Helper.EinzatzInformationDataSet;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.Helper.PreferencesData;
 import de.mateco.integrAMobile.HomeActivity;
@@ -168,7 +169,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("enter", "enter");
     }
 
     @Override
@@ -302,9 +302,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                 Gson gson = new Gson();
                 Pricing2InsertPriceUseInformationListData myJson = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
 
-                Log.e("before before  ", " get Einsatzort value on forward button : " + myJson.getEinsatzort());
-
-               // Log.e(" $$$$$$$$$$$$$ "," get string from j sont string : "+myJson.getAVO()+" : "+myJson.getEinsatzort());&&&&&
                 /*if(checkBoxSelbstfahrer.isChecked()){
                     ArrayList<Pricing1BranchData> branches = new ArrayList<>();
                     branches=db.getBranchList(preferences.getBranchId());
@@ -328,9 +325,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
 
                 Gson gson2 = new Gson();
                 Pricing2InsertPriceUseInformationListData myJson2 = gson2.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
-                Log.e(" after after ", " get Einsatzort value on forward button : "+myJson2.getEinsatzort());
-
-
                 args.putString("PriceUseInformationList", PriceUseInformationList);
                 args.putString("GeratetypeId", GeratetypeId);
 
@@ -345,7 +339,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                 if(!TextUtils.isEmpty(textviewDate2.getText().toString()) && !TextUtils.isEmpty(textviewDate1.getText().toString())){
                     String selecteddate=textviewDate1.getText().toString().replace(".","-");
                     String seconddate = textviewDate2.getText().toString().replace(".","-");
-                    Log.e(" in method 3333"," in populate date set mothod : "+selecteddate+" : "+seconddate);
                     if(compareDate1WithDate2(selecteddate,seconddate))
                     {
                         storedataInParsableClass();
@@ -484,7 +477,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
 
                 preferences.saveComboboxPos(position);
                 intLadefahrzeug = arraylistLadefahrzeug.get(position).getId();
-                Log.e(" spinnner value ^^^^^"," selected value of combo box : "+intLadefahrzeug);
             }
 
             @Override
@@ -500,7 +492,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
         Resources res = getResources();
 
         // Create custom adapter object
-        Log.e(" in outside "," arraylist ladefahrzeu size before spineer adapter : "+arraylistLadefahrzeug.size());
         adapter = new SpinnerAdapterClass(getActivity(), R.layout.spinner_rows, arraylistLadefahrzeug,res);
 
         // Set adapter to spinner
@@ -930,14 +921,11 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
 
 
         public void populateSetDate(int day, int month, int year) {
-            Log.e(" in method"," in populate date set mothod : "+day+" : "+month+" : "+year+" : "+clickedTextbox);
             if(!TextUtils.isEmpty(clickedTextbox)){
                 if(clickedTextbox.equalsIgnoreCase("first")){
-                    Log.e(" in method 22222"," in populate date set mothod : "+day+" : "+month+" : "+year+" : "+clickedTextbox);
                     if(!TextUtils.isEmpty(textviewDate2.getText().toString())){
                         String selecteddate=day+"-"+month+"-"+year;
                         String seconddate = textviewDate2.getText().toString().replace(".","-");
-                        Log.e(" in method 3333"," in populate date set mothod : "+selecteddate+" : "+seconddate);
                         //if(compareDate1WithDate2(selecteddate,seconddate))
                         //{
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -977,7 +965,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                     if(!TextUtils.isEmpty(textviewDate1.getText().toString())){
                         String selecteddate=day+"-"+month+"-"+year;
                         String seconddate = textviewDate1.getText().toString().replace(".","-");
-                        Log.e(" in method 44444"," in populate date set mothod : "+selecteddate+" : "+seconddate);
                         //if(compareDate2WithDate1(seconddate,selecteddate))
                         //{
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -1020,7 +1007,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
         {
-            Log.e(" on date set"," populatesetdate clicked : "+dayOfMonth+" : "+monthOfYear+" : "+year);
             populateSetDate(dayOfMonth, monthOfYear+1, year);
         }
     }
@@ -1162,7 +1148,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(date);
                         calendar.add(Calendar.HOUR_OF_DAY, 1);
-                        Log.e(" $$$$$$$$$ "," get calendar time : "+calendar.getTime());
 
                         Date newdate = calendar.getTime();
                         Calendar calTemp = Calendar.getInstance();
@@ -1187,7 +1172,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                     calendar.set(Calendar.HOUR,Hour);
                     calendar.set(Calendar.MINUTE,Minute);
                     calendar.add(Calendar.HOUR, -1);
-                    Log.e(" $$$$$$$$$ "," get calendar time : "+calendar.getTime());
 
                     if(textviewHourStart.getText().toString().equalsIgnoreCase("")){
                         int hours;
@@ -1267,7 +1251,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             return "0" + String.valueOf(c);
     }
     public void loadDataFromParsable(){
-        Log.e("","all varialbe before set data from parsable  kann : "+parsableClass.strKann +" voranme: "+strVoranmeldung);
         if(!TextUtils.isEmpty(parsableClass.flagKann)){
             checkBoxKann.setChecked(Boolean.parseBoolean(parsableClass.flagKann));
         }
@@ -1376,7 +1359,7 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
 
         }
         catch (Exception e){
-            Log.e(" exeexe"," exception while date operation "+e.toString());
+            LogApp.showLog(" exeexe"," exception while date operation "+e.toString());
         }
 
     }
@@ -1432,7 +1415,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-                Log.e("@@@@@"," in catch while multipart : "+e.toString());
             }
 
 
@@ -1441,12 +1423,10 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                 httppost.setEntity(multipartEntity);
                 HttpResponse response = httpclient.execute(httppost);
                 String responseText=EntityUtils.toString(response.getEntity());
-                Log.e("##########"," response while service calling :"+responseText);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
-                Log.e("$$$$", " in catch while multipart : " + e.toString());
             }
             return null;
 
@@ -1504,7 +1484,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
         {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            Log.v(""," in catch while multipart : "+e.toString());
         }
 
         reqEntity = multipartEntity;

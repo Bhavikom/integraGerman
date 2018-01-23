@@ -278,16 +278,12 @@ public class ProjectDetailNotesFragment extends BaseFragment
             try
             {
                 String json = new Gson().toJson(model);
-                Log.e("json", json);
                 String url = DataHelper.URL_PROJECT_HELPER+"projectgenerallyupdate";
 //                String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_GENERALLY_UPDATE
 //                        + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
 //                        + "&projectgenerally=" + URLEncoder.encode(json, "UTF-8");
-//                Log.e("url", url);
 //                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
 //                asyncTask.execute();
-
-                Log.e("url", url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("projectgenerally", new StringBody(json, Charset.forName("UTF-8")));

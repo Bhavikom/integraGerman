@@ -539,7 +539,6 @@ public class SiteInspectionPermitsFragment extends BaseFragment implements View.
     }
 
     public String checkValue(EditText edt,String value) {
-        Log.e("value", value);
         if (value.contains(".")) {
             int maxLength = 5;
             InputFilter[] fArray = new InputFilter[1];

@@ -116,14 +116,12 @@ public class SettingAppFragment extends BaseFragment implements View.OnClickList
             xr.setContentHandler(myXmlHandler);
             xr.parse(new InputSource(getActivity().getAssets().open("LanguageXml.txt")));
             languageList = myXmlHandler.getItemsList();
-            Log.e("language size", "language size " + languageList.size());
             for(int i = 0; i < languageList.size(); i++)
             {
                 language = languageList.get(i);
                 languagesFlag.add(language.getLangFlag());
                 languages.add(language.getLangName());
             }
-            Log.e("language size", "language size " + languageList.size());
         }
         catch (SAXException ex)
         {

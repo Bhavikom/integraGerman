@@ -54,6 +54,7 @@ import de.mateco.integrAMobile.CalendarPickerView;
 import de.mateco.integrAMobile.Helper.Constants;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.Helper.PreferencesData;
 import de.mateco.integrAMobile.HomeActivity;
@@ -226,7 +227,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
             if (matecoPriceApplication.isCustomerLoaded(DataHelper.isCustomerLoaded, false))
             {
                 kanr = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
-                Log.e("kanr ...", kanr);
+                LogApp.showLog("kanr ...", kanr);
             }
             else
             {
@@ -274,7 +275,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                     prefereces.saveBranchId(branchId);
 
 //                LevelGroupDesignation = lablesDevice.get(position).getDesignation();
-                    Log.e(" in first fragment : "," branchId Id value : "+ branchId);
+                    LogApp.showLog(" in first fragment : "," branchId Id value : "+ branchId);
                     //loadLevelGroupListViewData(deviceId);
                 }
             }
@@ -302,14 +303,14 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                     {
                         contactPersonNo = lablesContactPerson.get(position - 1).getAnspartner();
                         contactPerson = lablesContactPerson.get(position - 1).getAnrede()+" "+lablesContactPerson.get(position - 1).getNachname();
-                        Log.e("contactPersonNo", "" + contactPersonNo);
+                        LogApp.showLog("contactPersonNo", "" + contactPersonNo);
                     }
                 }
                 else
                 {
                     contactPersonNo = "";
                     contactPerson = "";
-                    Log.e("contactPersonNo", "" + contactPersonNo);
+                    LogApp.showLog("contactPersonNo", "" + contactPersonNo);
                 }
             }
 
@@ -335,7 +336,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
 
                     //  LevelGroupDesignation = lablesDevice.get(position).getDesignation();
                 }
-                Log.e("Device Id", "" + deviceId);
+                LogApp.showLog("Device Id", "" + deviceId);
                 levelGroupAdapter.setSelectedIndex(-1);
                 loadLevelGroupListViewData(deviceId);
 
@@ -353,7 +354,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 unitId = lablesPriceRental.get(position).getUnit();
-                Log.e("unitId Id", "" + unitId);
                 //loadLevelGroupListViewData(deviceId);
             }
 
@@ -371,7 +371,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                 equipmentAdapter.setSelectedIndex(-1);
 //                LevelGroupDesignation = rowLevelGroupItems.get(position).getHeightGroup();
                 LevelGroupDesignation = rowLevelGroupItems.get(position).getHeightGroup();
-                Log.e("LevelGroup Designation", LevelGroupDesignation);
+                LogApp.showLog("LevelGroup Designation", LevelGroupDesignation);
 
 
                 loadEquipmentListViewData(LevelGroupDesignation);
@@ -404,11 +404,9 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                     monthOfYear += 1;
                     String date = dayOfMonth + "." + monthOfYear + "." + year;
                     String finaldate = DataHelper.formatDate(formatter.parse(date));
-                    Log.e("startDate", finaldate);
                     txtFromDate.setText(finaldate);
 
                     int totalDays = daysCalculate();
-                    Log.e("totalDays", "" + totalDays);
                     if((txtFromDate.getText().toString().length()>0) && (txtToDate.getText().toString().length()>0))
                     {
                         etRetalPriceDays.setText(String.valueOf(totalDays));
@@ -452,10 +450,8 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                     monthOfYear += 1;
                     String date = dayOfMonth + "." + monthOfYear + "." + year;
                     String finaldate = DataHelper.formatDate(formatter.parse(date));
-                    Log.e("endDate", finaldate);
                     txtToDate.setText(finaldate);
                     int totalDays = daysCalculate();
-                    Log.e("totalDays", "" + totalDays);
                     etRetalPriceDays.setText(String.valueOf(totalDays));
                     for(int i = 0; i < lablesPriceRental.size(); i++)
                     {
@@ -491,7 +487,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                  * Set Call back to capture selected date
                  */
                 /* newFragment.setCallBack(onFromDate);
-                Log.e("tag", "startDate");
+
                 newFragment.show(getActivity().getSupportFragmentManager(), "startDate"); */
             }
         });
@@ -520,7 +516,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                      */
                     /* newFragment.setCallBack(onToDate);
                     newFragment.setMinDate(date1);
-                    Log.e("tag", "endDate");
+
                     newFragment.show(getActivity().getSupportFragmentManager(), "endDate");
                     // newFragment.setMinimumDate(cal1);
                 } catch (ParseException e) {
@@ -548,7 +544,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                  * Set Call back to capture selected date
                  */
                 /*newFragment.setCallBack(onFromDate);
-                Log.e("tag", "startDate");
+
                 newFragment.show(getActivity().getSupportFragmentManager(), "startDate");*/
             }
         });
@@ -577,7 +573,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                      * Set Call back to capture selected date
                      */
                     /*newFragment.setCallBack(onToDate);
-                    Log.e("tag", "endDate");
+
                     newFragment.show(getActivity().getSupportFragmentManager(), "endDate");
                     // newFragment.setMinimumDate(cal1);
                 } catch (ParseException e) {
@@ -977,7 +973,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                             arrayStartEndDate = new ArrayList<Date>();
                             arrayStartEndDate.add(arrayListDates.get(0));
                             arrayStartEndDate.add(arrayListDates.get(arrayListDates.size()-1));
-                            Log.e(" start end date :  "," arraylist dates : "+arrayStartEndDate.get(0)+ " : "+arrayStartEndDate.get(1));
 
                             txtFromDate.setText(DateToString(arrayListDates.get(0)));
                             txtToDate.setText(DateToString(arrayListDates.get(arrayListDates.size()-1)));
@@ -1291,12 +1286,10 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
             {
                 dates.add(cal1.getTime());
                 cal1.add(Calendar.DATE, 1);
-                //Log.e(" yes "," days betweend date withou sat sunday : "+dates);
             }
             else
             {
                 cal1.add(Calendar.DATE, 1);
-                //Log.e(" No "," days betweend date withou sat sunday : "+da);
             }
 
             dates.add(cal1.getTime());
@@ -1333,12 +1326,10 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                     dates.add(cal1.getTime());
                     numberOfDays++;
                     cal1.add(Calendar.DATE, 1);
-                    Log.e(" yes "," days betweend date withou sat sunday : "+Calendar.DATE);
                 }
                 else
                 {
                     cal1.add(Calendar.DATE, 1);
-                    Log.e(" No "," days betweend date withou sat sunday : "+Calendar.DATE);
                 }
             }
             return dates;
@@ -1534,7 +1525,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("LevelGroup", result);
                     if(result.equals(DataHelper.NetworkError)){
                         showShortToast(language.getMessageNetworkNotAvailable());
                     }else {
@@ -1543,8 +1533,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                             JSONArray jsonArray = new JSONArray(result);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                Log.e("Bezeichnung", jsonObject.getString("Bezeichnung"));
-                                Log.e("Hoehengruppe", "" + jsonObject.getString("Hoehengruppe"));
                                 Pricing1LevelGroupData levelGroup = new Pricing1LevelGroupData();
                                 levelGroup.setDesignation(jsonObject.getString("Bezeichnung"));
                                 levelGroup.setHeightGroup(jsonObject.getString("Hoehengruppe"));
@@ -1565,8 +1553,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                         + "&hoehenhauptgruppe=" + DeviceId;*/
                 String url = DataHelper.URL_PRICE_HELPER +"pricelevelgroup/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/hoehenhauptgruppe=" + DeviceId;
-
-                Log.e("Url LevelGroup", url);
                 asyncTaskLevelGroup = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 if(DeviceId == -1)
                 {
@@ -1615,7 +1601,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("EquipmentItems", result);
                     if(result.equals(DataHelper.NetworkError)){
                         showShortToast(language.getMessageNetworkNotAvailable());
                     }else {
@@ -1626,8 +1611,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                             JSONArray jsonArrayPriceRentalList = jsonObjectMain.getJSONArray("PriceRentalList");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                Log.e("Ausstattung", jsonObject.getString("Ausstattung"));
-                                Log.e("Bezeichnung", "" + jsonObject.getString("bezeichnung"));
                                 Pricing1EquipmentData equipment = new Pricing1EquipmentData();
                                 equipment.setEquipment(jsonObject.getInt("Ausstattung"));
                                 equipment.setDesignation(jsonObject.getString("Bezeichnung"));
@@ -1675,7 +1658,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                 //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.pricing1Equipment + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8") + "&hoehengruppe=" + designation;
                 String url = DataHelper.URL_PRICE_HELPER+"priceequipmentheight/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/hoehengruppe=" + designation+ "/mandant="+branchId;
-                Log.e("Url Equi", url);
                 asyncTaskEquipment = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTaskEquipment.execute();
             }
@@ -1755,16 +1737,13 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                     {
                         if (equipmentAdapter.mCheckStates.get(i) == true)
                         {
-                            Log.e("Checked position...", "" + equipmentAdapter.getItemId(i));
                             selectedEquipments.add(rowEquipmentItems.get(i).getEquipment());
-                            Log.e("selectedEquipments ...", "" + selectedEquipments);
                         }
                     }
                     Bundle args = new Bundle();
 
                     if (kanr.equals(""))
                     {
-                        Log.e("kanr ...", kanr);
                         //Toast.makeText(getActivity(), "Please select Customer first", Toast.LENGTH_SHORT).show();
                         showShortToast(language.getMessageNoContactPersons());
                     }
@@ -1774,16 +1753,13 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                         if (selectedEquipments.isEmpty())
                         {
                             Euq = "null";
-                            Log.e("selectedEquipments", "here...0 " + Euq);
                             json = "null";
-                            Log.e("selectedEquipments json", "here...0 " + json);
                         }
                         else
                         {
                             if(selectedEquipments.isEmpty())
                             {
                                 json = "null";
-                                Log.e("Equipment Json",json+"..null");
                             }
                             else
                             {
@@ -1808,13 +1784,10 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                                 {
                                     if (equipmentAdapter.mCheckStates.get(i) == true)
                                     {
-                                        Log.e("Checked ", "" + equipmentAdapter.getItemId(i));
 
                                         Pricing1EquipmentInsertData priceing1Equ = new Pricing1EquipmentInsertData();
 
                                         priceing1Equ.setWarenkorb("");
-                                        Log.e("setAusstattung",rowEquipmentItems.get(i).getEquipment()+"");
-                                        Log.e("setPreis",rowEquipmentItems.get(i).getHeightMainGroup()+"");
                                         priceing1Equ.setAusstattung(rowEquipmentItems.get(i).getEquipment());
                                         priceing1Equ.setPreis(rowEquipmentItems.get(i).getHeightMainGroup());
 
@@ -1824,18 +1797,16 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                                 }
 
                                 json = new Gson().toJson(listOfPriceingEquInsert);
-                                Log.e("Equipment Json..",json);
+                                LogApp.showLog("Equipment Json..",json);
                             }
                             // database handler
                             String s = "[";
                             String q = "]";
                             String w = "";
                             String Ass1 = selectedEquipments.toString().replace(s, w).replace(q, w);
-                            Log.e("Ass1 Ass1", Ass1.trim());
                             String Ass = Ass1.replace(", ", ",");
-                            Log.e("Ass Ass", Ass.trim());
                             Euq = Ass;
-                            Log.e("selectedEquipments", "here " + Euq);
+                            LogApp.showLog("selectedEquipments", "here " + Euq);
                         }
 
                         if(LevelGroupDesignation.equals(""))
@@ -1864,13 +1835,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                             args.putString("contactPersonNo", contactPersonNo);
                             args.putString("contactPersonName", contactPerson);
                             args.putInt("rental", unitId);
-                            Log.e("EquipmentJson on forward",json);
                             args.putString("EquipmentJson", json);
-
-
-
-
-
                             if(etRetalPriceDays.getText().toString().trim().equals(""))
                             {
                                 args.putInt("rentalDays", 1);
@@ -1908,8 +1873,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                             args.putString("dates_comma", DatesComma);
                             args.putString("fromDate",txtFromDate.getText().toString());
                             args.putString("toDate",txtToDate.getText().toString());
-
-                            Log.e("here", "here " + contactPersonNo);
                             PricingFragment2 ft = new PricingFragment2();
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                             ft.setArguments(args);
@@ -2015,8 +1978,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
             arrayStartEndDate = new ArrayList<Date>();
             arrayStartEndDate.add(arrayListDates.get(0));
             arrayStartEndDate.add(arrayListDates.get(arrayListDates.size()-1));
-            Log.e(" start end date :  "," arraylist dates : "+arrayStartEndDate.get(0)+ " : "+arrayStartEndDate.get(1));
-
             editStart.setText(DateToString(arrayListDates.get(0)));
             editEnd.setText(DateToString(arrayListDates.get(arrayListDates.size()-1)));
 
@@ -2045,7 +2006,6 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                 arrayStartEndDate = new ArrayList<Date>();
                 arrayStartEndDate.add(arrayListDates.get(0));
                 arrayStartEndDate.add(arrayListDates.get(arrayListDates.size()-1));
-                Log.e(" start end date :  "," arraylist dates : "+arrayStartEndDate.get(0)+ " : "+arrayStartEndDate.get(1));
 
                 editStart.setText(DateToString(arrayListDates.get(0)));
                 editEnd.setText(DateToString(arrayListDates.get(arrayListDates.size()-1)));

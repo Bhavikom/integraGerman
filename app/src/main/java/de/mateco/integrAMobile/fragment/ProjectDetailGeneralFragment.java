@@ -235,13 +235,6 @@ package de.mateco.integrAMobile.fragment;
         listOfProjectType.addAll(db.getProjectType());
         listOfProjectStage1.addAll(db.getBuheneart());
         spinnerProjectDetailGeneralStages1.setSelection(0);
-
-//        Log.e("listofproject ara size", listOfProjectArea.size()+"");
-//        Log.e("listOfProjectArt ara size", listOfProjectArt.size()+"");
-//        Log.e("listOfProjectPhase ara size", listOfProjectPhase.size()+"");
-//        Log.e("listOfProjectStage ara size", listOfProjectStage.size()+"");
-//        Log.e("listOfProjectType ara size", listOfProjectType.size() + "");
-
         adapterProjectArea.notifyDataSetChanged();
         adapterProjectArt.notifyDataSetChanged();
         adapterProjectPhase.notifyDataSetChanged();
@@ -775,9 +768,9 @@ package de.mateco.integrAMobile.fragment;
                 projectStage = selectedProjectStage.getProjectStageId();
             }
             String justAdm = "";
-            if(employeeModel!=null)
-                justAdm = employeeModel.getNachname() + ", " +employeeModel.getVorname();
-            Log.e("just",justAdm);
+            if(employeeModel!=null) {
+                justAdm = employeeModel.getNachname() + ", " + employeeModel.getVorname();
+            }
 
             String projectArt = "";
             if(selectedProjectArt != null)
@@ -836,7 +829,6 @@ package de.mateco.integrAMobile.fragment;
             {
                 matureWhite = "0";
             }
-            Log.e(" update ###### "," stat and end date on update : "+startOfConstruction+" : "+endOfConstruction);
             if(startOfConstruction.equalsIgnoreCase("")){
                 //startOfConstruction="null";
                 startOfConstruction="";
@@ -900,10 +892,8 @@ package de.mateco.integrAMobile.fragment;
             AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                 @Override
                 public void OnAsynResult(String result) {
-                    Log.e(" first time : "," eror while calling general fragment  : "+result);
                     if(result.equals("error"))
                     {
-                        Log.e(" resulte erro : "," eror while calling general fragment  : "+result);
                         showShortToast(language.getMessageError());
                     }
                     else if(result.equals(DataHelper.NetworkError)){
@@ -927,7 +917,6 @@ package de.mateco.integrAMobile.fragment;
                         }
                         catch (Exception ex)
                         {
-                            Log.e(" parsing erorro: "," eror while calling general fragment  : "+ex.toString());
                             ex.printStackTrace();
                             showShortToast(language.getMessageErrorAtParsing());
                         }
@@ -938,14 +927,12 @@ package de.mateco.integrAMobile.fragment;
             try
             {
                 String json = new Gson().toJson(model);
-                Log.e("json", json);
                 /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_GENERALLY_UPDATE
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&projectgenerally=" + URLEncoder.encode(json, "UTF-8");*/
                 String url = DataHelper.URL_PROJECT_HELPER+"projectgenerallyupdate";
                         //+ "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         //+ "&projectgenerally=" + URLEncoder.encode(json, "UTF-8");
-                Log.e("url", url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("projectgenerally", new StringBody(json, Charset.forName("UTF-8")));
@@ -994,7 +981,6 @@ package de.mateco.integrAMobile.fragment;
                 monthOfYear += 1;
                 String date = dayOfMonth + " " + monthOfYear + " " + year;
                 String finaldate = DataHelper.formatDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 textProjectDetailGeneralStartOfConstruction.setText(finaldate);
             }
             catch (ParseException e)
@@ -1015,7 +1001,6 @@ package de.mateco.integrAMobile.fragment;
                 monthOfYear += 1;
                 String date = dayOfMonth + " " + monthOfYear + " " + year;
                 String finaldate = DataHelper.formatDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 textProjectDetailGeneralEndOfConstruction.setText(finaldate);
             }
             catch (ParseException e)
@@ -1043,7 +1028,6 @@ package de.mateco.integrAMobile.fragment;
             newFragment.setCallBack(onFromDate);
         else
             newFragment.setCallBack(onEndDate);
-        Log.e("tag", "startDate");
         //newFragment.setMinDate(today);
         newFragment.show(getActivity().getSupportFragmentManager(), "startDate");
     }
@@ -1060,15 +1044,11 @@ package de.mateco.integrAMobile.fragment;
 
 
         public void populateSetDate(int day, int month, int year) {
-            Log.e(" in method"," in populate date set mothod : "+day+" : "+month+" : "+year+" : "+clickedTextbox);
             if(!TextUtils.isEmpty(clickedTextbox)){
                 if(clickedTextbox.equalsIgnoreCase("first")){
-
-                    Log.e(" in method 22222"," in populate date set mothod : "+day+" : "+month+" : "+year+" : "+clickedTextbox);
                     if(!TextUtils.isEmpty(textProjectDetailGeneralEndOfConstruction.getText().toString())){
                         String selecteddate=day+"-"+month+"-"+year;
                         String seconddate = textProjectDetailGeneralEndOfConstruction.getText().toString().replace(".","-");
-                        Log.e(" in method 3333"," in populate date set mothod : "+selecteddate+" : "+seconddate);
                         if(compareDate1WithDate2(selecteddate,seconddate))
                         {
                             textProjectDetailGeneralStartOfConstruction.setText(new StringBuilder().append(day).append(".")
@@ -1089,7 +1069,6 @@ package de.mateco.integrAMobile.fragment;
                     if(!TextUtils.isEmpty(textProjectDetailGeneralStartOfConstruction.getText().toString())){
                         String selecteddate=day+"-"+month+"-"+year;
                         String seconddate = textProjectDetailGeneralStartOfConstruction.getText().toString().replace(".","-");
-                        Log.e(" in method 44444"," in populate date set mothod : "+selecteddate+" : "+seconddate);
                         if(compareDate2WithDate1(seconddate,selecteddate))
                         {
                             textProjectDetailGeneralEndOfConstruction.setText(new StringBuilder().append(day).append(".")
@@ -1113,7 +1092,6 @@ package de.mateco.integrAMobile.fragment;
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
         {
-            Log.e(" on date set"," populatesetdate clicked : "+dayOfMonth+" : "+monthOfYear+" : "+year);
             populateSetDate(dayOfMonth, monthOfYear+1, year);
         }
     }

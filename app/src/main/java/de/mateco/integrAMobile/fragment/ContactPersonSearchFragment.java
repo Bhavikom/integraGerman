@@ -45,6 +45,7 @@ import de.mateco.integrAMobile.Helper.Constants;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.ContactPersonSearchAdapter;
@@ -646,7 +647,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
             contactperson.setPageSize(pageSize + "");
             contactperson.setPageNumber(pageNuber+"");
             String jsonToSend = DataHelper.getGson().toJson(contactperson);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -658,7 +658,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -666,7 +665,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
@@ -689,8 +687,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                                 {
                                     listViewContctPersonSearchResult.removeFooterView(footerView);
                                 }
-
-                                Log.e("size add page" + pageNuber, resultsOfCustomers.length()+"");
                                 if(result.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -778,7 +774,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
             pageNuber = 1;
             //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             String jsonToSend = DataHelper.getGson().toJson(contactperson);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -792,7 +787,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -800,7 +794,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
@@ -908,7 +901,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -920,13 +912,10 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -1021,7 +1010,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                     customerSearch.setPageNumber(GlobalClass.pageNuber + "");
                     customerSearch.setMitarbeiter(loginUserNumber);
                     jsonToSend = DataHelper.getGson().toJson(customerSearch);
-                    Log.e("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, DataHelper.URL_CUSTOMER_HELPER+"anspartnersearchpaginghint/token=" + URLEncoder.encode(base64Data.trim(), "UTF-8")
@@ -1034,7 +1022,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                    LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -1044,7 +1032,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(""," errro r : "+error);
+                        LogApp.showLog(""," errro r : "+error);
                         // Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -1057,7 +1045,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                 Volley.newRequestQueue(this.mContext).add(req);
             }
             catch (Exception e){
-                Log.e(""," errro r : "+e.toString());
+                LogApp.showLog(""," errro r : "+e.toString());
                 //Toast.makeText(context,"", Toast.LENGTH_SHORT).show();
             }
 
@@ -1076,7 +1064,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -1092,7 +1079,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                                 String json = new Gson().toJson(customerFullDetail.getCustomerSearchList());
                                 matecoPriceApplication.clearPricingData();
                                 matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
-                                Log.e("customer detail", customerFullDetail.getCustomerSearchList().toString());
                                 String listOfContactPerson = new Gson().toJson(customerFullDetail.getCustomerContactPersonList());
                                 matecoPriceApplication.saveData(DataHelper.LoadedCustomerContactPerson, listOfContactPerson);
 
@@ -1153,8 +1139,6 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + arrayListContactPersonSearchResult.get(selectedIndex).getKontakt();
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }

@@ -155,7 +155,6 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                         @TargetApi(Build.VERSION_CODES.KITKAT)
                         @Override
                         public void OnAsynResult(String result) {
-                            Log.e("result",result);
                             try {
                                 JSONObject json = new JSONObject(result);
                                 gender = json.getString("Anrede");
@@ -205,10 +204,8 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                                             out.write("BEGIN:VCARD\r\n");
                                             out.write("VERSION:3.0\r\n");
                                             out.write("FN:" + listOfEmployee.get(pos).getVorname() + " " + listOfEmployee.get(pos).getNachname() + "\r\n");
-                                            Log.e("FN", listOfEmployee.get(pos).getVorname() + " " + listOfEmployee.get(pos).getNachname());
                                             out.write("ORG:" + company + "\r\n");
                                             out.write("TITLE;CHARSET=UTF-8:" + title + "\r\n");
-                                            Log.e("title", title);
                                             //out.write("ADR;TYPE=WORK:" + street + ";" + city + "\r\n");
                                             out.write("ADR;WORK:;;" + street + ";" + city + "\r\n");
                                             out.write("TEL;TYPE=CELL,VOICE:" + listOfEmployee.get(pos).getMobil() + "\r\n");
@@ -233,10 +230,8 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                                         out.write("BEGIN:VCARD\r\n");
                                         out.write("VERSION:3.0\r\n");
                                         out.write("FN:" + listOfEmployee.get(pos).getVorname() + " " + listOfEmployee.get(pos).getNachname() + "\r\n");
-                                        Log.e("FN", listOfEmployee.get(pos).getVorname() + " " + listOfEmployee.get(pos).getNachname());
                                         out.write("ORG:" + company + "\r\n");
                                         out.write("TITLE;CHARSET=UTF-8:" + title + "\r\n");
-                                        Log.e("title", title);
                                         //out.write("ADR;TYPE=WORK:" + street + ";" + city + "\r\n");
                                         out.write("ADR;WORK:;;" + street + ";" + city + "\r\n");
                                         out.write("TEL;TYPE=CELL,VOICE:" + listOfEmployee.get(pos).getMobil() + "\r\n");
@@ -268,7 +263,6 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                     catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    Log.e("url",url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();
 
@@ -412,7 +406,6 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                     startActivity(sendIntent);
                 }
             }else {
-                Log.e(" on request result ","Permission: "+permissions[0]+ "was "+grantResults[0]);
                 //resume tasks needing this permission
                 try {
                     FileOutputStream fos = new FileOutputStream(vcfFile);
@@ -421,10 +414,8 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                     out.write("BEGIN:VCARD\r\n");
                     out.write("VERSION:3.0\r\n");
                     out.write("FN:" + listOfEmployee.get(pos).getVorname() + " " + listOfEmployee.get(pos).getNachname() + "\r\n");
-                    Log.e("FN", listOfEmployee.get(pos).getVorname() + " " + listOfEmployee.get(pos).getNachname());
                     out.write("ORG:" + company + "\r\n");
                     out.write("TITLE;CHARSET=UTF-8:" + title + "\r\n");
-                    Log.e("title", title);
                     //out.write("ADR;TYPE=WORK:" + street + ";" + city + "\r\n");
                     out.write("ADR;WORK:;;" + street + ";" + city + "\r\n");
                     out.write("TEL;TYPE=CELL,VOICE:" + listOfEmployee.get(pos).getMobil() + "\r\n");

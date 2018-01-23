@@ -344,7 +344,6 @@ public class SiteInspectionPhotoFragment extends BaseFragment implements View.On
     {
         imageList.clear();
         imageList = db.getPhotos(preferences.getInt(DataHelper.SiteInspectionId,0));
-        Log.e("image size",imageList.size()+"");
         adapter = new GridImageAdapter(getActivity(),imageList,application);
         gridView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

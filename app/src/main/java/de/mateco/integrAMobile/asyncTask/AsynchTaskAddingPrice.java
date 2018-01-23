@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.Helper.CustomSSLFactory;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.model.Language;
 
 /**
@@ -63,7 +64,6 @@ public class AsynchTaskAddingPrice extends AsyncTask<BasicNameValuePair, Void, S
         startTime = System.currentTimeMillis();
         HttpClient httpclient = CustomSSLFactory.getNewHttpClient();
         HttpPost httppost = new HttpPost(url);
-        Log.e("url at execute", url);
 //        httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
 //        httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
         ArrayList<BasicNameValuePair> reqArguments = new ArrayList<BasicNameValuePair>();
@@ -95,7 +95,7 @@ public class AsynchTaskAddingPrice extends AsyncTask<BasicNameValuePair, Void, S
     {
         elapsedTime = System.currentTimeMillis() - startTime;
         int seconds = (int) (elapsedTime / 1000) % 60 ;
-        Log.e(""," total time that service has elapsed : "+seconds);
+        LogApp.showLog(""," total time that service has elapsed : "+seconds);
         if(isProcessDialogEnabled)
         {
             prd.dismiss();

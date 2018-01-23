@@ -21,7 +21,7 @@ public class CustomListView extends ListView {
         try {
             super.dispatchDraw(canvas);
         } catch (IndexOutOfBoundsException e) {
-            Log.e("luna", "Ignore list view error ->" + e.toString());
+            LogApp.showLog("luna", "Ignore list view error ->" + e.toString());
         }
     }
 }

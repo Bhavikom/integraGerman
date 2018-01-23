@@ -74,6 +74,7 @@ import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.GlobalMethods;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.ProjectTradeComparable;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
@@ -264,7 +265,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
         adapterSpinnerProjectTrade = new ProjectTradeSpinnerAdapter(getActivity(), listOfTrades);
         spinnerProjectDetailTradeTrade.setAdapter(adapterSpinnerProjectTrade);
         if (listOfProjectTrade.size() > 0) {
-            Log.e("enter", "trade");
             adapterProjectDetailTrade.setSelectedIndex(0);
             loadTrade(listOfProjectTrade.get(0));
             selectedDetailTrade = listOfProjectTrade.get(0);
@@ -298,7 +298,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     selectedContactPerson = null;
                 } else {
                     selectedContactPerson = listOfAllContactPerson.get(position - 1);
-                    Log.e("ansd", selectedContactPerson.getAnspartner());
                 }
             }
 
@@ -354,7 +353,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult() {
                     @Override
                     public void OnAsynResult(String result) {
-                        Log.e(" partenrer not get "," error while getting asn partenre from servcie : "+result);
                         if (result.equals("error")) {
                             showShortToast(language.getMessageError());
                         }
@@ -391,7 +389,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                             + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/fieldname=" + "KundenNr"
                             + "/value=" + object.getKundenNr();
-                    Log.e("url", url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();
                 } catch (IOException ex) {
@@ -597,7 +594,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                 @Override
                 public void OnAsynResult(String result) {
-                    Log.e("result", result);
                     if (result.equals(DataHelper.NetworkError)) {
                         showShortToast(language.getMessageNetworkNotAvailable());
                     }
@@ -616,8 +612,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 //+ "&Kontakt=" + kontakt
                 //+ "&Anspartner=" + contactPerson
                 //+ "&Gewerk=" + trade;
-                Log.e("url", url);
-
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("projectId", new StringBody(selectedDetailTrade.getProjekt()));
@@ -629,7 +623,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            Log.e("url", url);
         }else {
             showLongToast(language.getMessageNetworkNotAvailable());
         }
@@ -653,7 +646,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
 
         projectTradeDetailUpdateModel = new ProjectTradeDetailUpdateModel();
         if (selectedContactPerson != null) {
-            Log.e("anspa", selectedContactPerson.getAnspartner());
             projectTradeDetailUpdateModel.setAnspartner(selectedContactPerson.getAnspartner());
         } else
             projectTradeDetailUpdateModel.setAnspartner("");
@@ -702,7 +694,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                     @Override
                     public void OnAsynResult(String result) {
-                        Log.e("result", result);
                         if (result.equals(DataHelper.NetworkError)) {
                             showShortToast(language.getMessageNetworkNotAvailable());
                         }
@@ -733,7 +724,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                         }
                     }
                 };
-                Log.e("json", new Gson().toJson(projectTradeDetailUpdateModel));
                 String json = new Gson().toJson(projectTradeDetailUpdateModel);
                 try {
                 /*url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.ProjectTradeUpdate
@@ -742,8 +732,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     url = DataHelper.URL_PROJECT_HELPER + "projecttradeupdate";// + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.ProjectTradeUpdate
                     //+ "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                     //+ "&projectTradeUpdate=" + URLEncoder.encode(new Gson().toJson(projectTradeDetailUpdateModel), "UTF-8");
-
-                    Log.e("url", url);
                     MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                     multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                     multipartEntity.addPart("projectTradeUpdate", new StringBody(new Gson().toJson(projectTradeDetailUpdateModel), Charset.forName("UTF-8")));
@@ -753,7 +741,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                Log.e("url", url);
             }else {
                 showLongToast(language.getMessageNetworkNotAvailable());
             }
@@ -881,7 +868,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 monthOfYear += 1;
                 String date = dayOfMonth + " " + monthOfYear + " " + year;
                 String finaldate = DataHelper.formatDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 labelTradeStartDate.setText(finaldate);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -897,7 +883,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 monthOfYear += 1;
                 String date = dayOfMonth + " " + monthOfYear + " " + year;
                 String finaldate = DataHelper.formatDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 textProjectDetailTradeMountingEnd.setText(finaldate);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -922,7 +907,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             newFragment.setCallBack(onFromDate);
         else
             newFragment.setCallBack(onEndDate);
-        Log.e("tag", "startDate");
         //newFragment.setMinDate(today);
         newFragment.show(getActivity().getSupportFragmentManager(), "startDate");
     }
@@ -931,7 +915,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
     {
         for(int i = 0; i < listOfProjectTrade.size(); i++)
         {
-            Log.e("trade ", listOfProjectTrade.size() +  " " + listOfProjectTrade.get(i).getGewerkID());
             if(listOfProjectTrade.get(i).getGewerkID().trim().equalsIgnoreCase(object.getProjectTradeId().trim())
                     && listOfProjectTrade.get(i).getName1().trim().equalsIgnoreCase(kontact))
             {
@@ -975,15 +958,12 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
 
         ProjectTradeSpinnerAdapter adapterSpinnerProjectAddTrade = new ProjectTradeSpinnerAdapter(getActivity(), listOfTrades);
         spinnerProjectTradeTrade.setAdapter(adapterSpinnerProjectAddTrade);
-
-        Log.e(" in trades "," list iof all contact person size before adapter : "+listOfAllContactPerson.size());
         CustomerContactPersonSpinnerAdapter adapterContactPerson = new CustomerContactPersonSpinnerAdapter(getActivity(), listOfAllContactPerson, R.layout.list_item_spinner_customer_contact_person, language);
         spinnerProjectTradeAnsp.setAdapter(adapterContactPerson);
 
         if (args.equals("Trade")) {
             textViewProjectTradeKunde.setText(name1);
             //textViewProjectTradeKunde.setText(matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, "").getName1() + "");
-            Log.e("contactperson", projectTradeInsert.getAnspartner() + " " + projectTradeInsert.getGewerk());
             if (!projectTradeInsert.getAnspartner().equals("")) {
                 for (int i = 0; i < listOfAllContactPerson.size(); i++) {
                     if (projectTradeInsert.getAnspartner().equals(listOfAllContactPerson.get(i).getAnspartner()))
@@ -1027,7 +1007,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     textViewProjectTradeKunde.setError(language.getMessageEnter() + " " + language.getLabelCustomer());
                 else if(selectedTrade1 != null && isTradeAlreadyInsert(selectedTrade1,kontactTOsend))
                 {
-                    Log.e(" else if  "," gewerkeAlready exists : ");
                     showShortToast(language.getMessageGewerkeAlreadyExists());
                 }
                 else
@@ -1055,12 +1034,10 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     /* commented and addeed below line  on 8th July*/
                     ///projectTradeInsert.setKontakt(matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, "").getKontakt());
                     projectTradeInsert.setKontakt(kontact);
-                    Log.e(" trades "," json string on add clicke : "+new Gson().toJson(projectTradeInsert));
                     if(DataHelper.isNetworkAvailable(getActivity())) {
                         AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                             @Override
                             public void OnAsynResult(String result) {
-                                Log.e("result", result);
                                 if (result.equals(DataHelper.NetworkError)) {
                                     showShortToast(language.getMessageNetworkNotAvailable());
                                 } else if (result != null && !result.equals("")) {
@@ -1095,7 +1072,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
-                        Log.e("url", url);
                     }else {
                         showLongToast(language.getMessageNetworkNotAvailable());
                     }
@@ -1436,7 +1412,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             customerSearch.setPageNumber(pageNuber+"");
             listCustomerSearchResult.removeFooterView(footerView);
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -1451,7 +1426,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -1459,14 +1433,12 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -1521,7 +1493,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -1561,7 +1532,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -1624,20 +1594,15 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                         }
                     }
                 };
-                Log.e(" before url "," selected kontact before calling url : "+selectedKontact);
-
                 String url = DataHelper.URL_AGENDA_HELPER + "agendacustomershow" //+ DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.AGENDA_CUSTOMER_SHOW
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + selectedKontact;
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
             catch (IOException ex)
             {
-                Log.e(" in catch "," exception while service calling  :"+ex.toString());
                 ex.printStackTrace();
             }
         }
@@ -1696,7 +1661,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
     private void searchForNewPage()
     {
         isCallservice=true;
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -1728,7 +1692,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             customerSearch.setPageSize(pageSize + "");
 
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -1743,7 +1706,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -1751,14 +1713,12 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -1789,7 +1749,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                                 }
 
                                 JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfCustomers.length()+"");
                                 if(result.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -1817,7 +1776,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -1874,7 +1832,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -1886,13 +1843,11 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
+
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -1960,7 +1915,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     customerSearch.setPageNumber(GlobalClass.pageNuber + "");
                     //customerSearch.setMitarbeiter(loginUserNumber);
                     jsonToSend = DataHelper.getGson().toJson(customerSearch);
-                    Log.e("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, DataHelper.URL_CUSTOMER_HELPER+"customersearchhint/token=" + URLEncoder.encode(base64Data.trim(), "UTF-8")
@@ -1973,7 +1927,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                    LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

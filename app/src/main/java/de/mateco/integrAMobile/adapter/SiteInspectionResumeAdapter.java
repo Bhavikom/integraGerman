@@ -62,7 +62,6 @@ public class SiteInspectionResumeAdapter extends BaseAdapter {
                     date = DataHelper.formatDateToGerman(date);
                 }
             }
-            Log.e(" in dapter : "," date varialbe before settext : "+date);
             if(date.equalsIgnoreCase("null") || date.equalsIgnoreCase("") || date == null)
             {
                 txtDate.setText("");

@@ -448,7 +448,6 @@ public class SiteInspectionAdditionalMobileWindPowerFragment extends BaseFragmen
     public void setData()
     {
         SiteInspectionAdditionalMobileWindPowerModel model = db.getSiteInspection(preferences.getInt(DataHelper.SiteInspectionId,0)).getSiteInspectionAdditionalMobileWindPowerModel();
-        Log.e("string",new Gson().toJson(model));
         if(model != null)
         {
             if(model.getStomerdung()==0)

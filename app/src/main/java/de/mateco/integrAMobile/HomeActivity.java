@@ -31,6 +31,7 @@ import java.util.List;
 import de.mateco.integrAMobile.Helper.AddPriceParsableClass;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.NavigationChild;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.Helper.PreferencesData;
@@ -263,7 +264,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
                 tag = "Home";
                 PreferencesClass pref = new PreferencesClass(this);
                 AddPriceParsableClass parsableClass = pref.getPriceData(this);
-                Log.e(" stasrty date : "," get start date : "+parsableClass.strStartDate+" : "+parsableClass.strEndDate);
+                LogApp.showLog(" stasrty date : "," get start date : "+parsableClass.strStartDate+" : "+parsableClass.strEndDate);
             }
             else {
                 if(!preferences2.getisPrice().equalsIgnoreCase(""))
@@ -286,7 +287,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
                     tag = "Home";
                     PreferencesClass pref = new PreferencesClass(this);
                     AddPriceParsableClass parsableClass = pref.getPriceData(this);
-                    Log.e(" stasrty date : "," get start date : "+parsableClass.strStartDate+" : "+parsableClass.strEndDate);
+                    LogApp.showLog(" stasrty date : "," get start date : "+parsableClass.strStartDate+" : "+parsableClass.strEndDate);
 
                 }
             }
@@ -836,7 +837,6 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
     @Override
     public void onLanguageUpdated()
     {
-        Log.e("here at","language updated");
         language = matecoPriceApplication.getLanguage();
         groupItem.get(0).setName(language.getLabelHome());
         groupItem.get(1).setName(language.getLabelCustomer());
@@ -912,7 +912,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
                 }
             }
             catch (Exception e){
-                Log.e(""," exception whie permission grant : ");
+                LogApp.showLog(""," exception whie permission grant : "+e.toString());
             }
 
         }
@@ -926,7 +926,6 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
 ////        {
 ////            // If article frag is available, we're in two-pane layout...
 ////            // Call a method in the ArticleFragment to update its content
-////            Log.e("in update", "in update");
 ////            customerDataFragment.updateView(data);
 ////        }
 ////        else

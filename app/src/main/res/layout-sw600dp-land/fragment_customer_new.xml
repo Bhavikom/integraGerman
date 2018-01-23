@@ -432,6 +432,7 @@
                             android:gravity="right">
 
                             <TextView
+                                android:drawablePadding="16dp"
                                 android:id="@+id/labelCustomerNewFax"
                                 style="@style/TextView_Comman_Black_Right_Field"
                                 android:layout_width="wrap_content"

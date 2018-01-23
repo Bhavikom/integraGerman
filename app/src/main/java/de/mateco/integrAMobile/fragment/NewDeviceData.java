@@ -214,7 +214,6 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             for(int i=0;i<listOfDeviceData.size();i++)
             {
                 if((listOfDeviceData.get(i).getPosition()==1 && listOfDeviceData.get(i).getHauptgeraet()=="0")) {
-                    Log.e("value", listOfDeviceData.get(i).getHauptgeraet() + "");
                     model = listOfDeviceData.get(i);
                 }
             }
@@ -257,8 +256,6 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
 
             if(!TextUtils.isEmpty(model.getArbeitshoehe()))
             {
-                Log.e("getArbeitshoehe", model.getArbeitshoehe());
-
                 int workingHeight = Integer.parseInt(model.getArbeitshoehe());
                 if (workingHeight > 0)
                 {
@@ -293,7 +290,6 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             }
             if(!TextUtils.isEmpty(model.getSeitlicheReichweite()))
             {
-                Log.e("getSeitlicheReichweite", model.getSeitlicheReichweite());
                 //npLateralReach.setValue(Integer.parseInt(model.getSeitlicheReichweite()));
 
                 Double number = Double.parseDouble(model.getSeitlicheReichweite());
@@ -341,7 +337,6 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             }
             if(!TextUtils.isEmpty(model.getLaenge()))
             {
-                Log.e("getArbeitshoehe", model.getLaenge());
                 //npMaxLength.setValue(Integer.parseInt(model.getLaenge()));
                 Double number = Double.parseDouble(model.getLaenge());
                 int workingHeight = (int)(number * 100);
@@ -387,7 +382,6 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             }
             if(!TextUtils.isEmpty(model.getBreite()))
             {
-                Log.e("getArbeitshoehe", model.getBreite());
                 //npMaxBreadth.setValue(Integer.parseInt(model.getBreite()));
 
                 Double number = Double.parseDouble(model.getBreite());
@@ -434,14 +428,12 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             }
             if(!TextUtils.isEmpty(model.getHoehe()))
             {
-                Log.e("getArbeitshoehe", model.getHoehe());
                 //npMaxHeight.setValue(Integer.parseInt(model.getHoehe()));
                 int number = Integer.parseInt(model.getHoehe());
                 nPMaxHeight.setValue(number);
             }
             if(model.getGewicht()!=0)
             {
-                Log.e("getArbeitshoehe", model.getGewicht()+"");
                 //npMaxWeight.setValue(model.getGewicht());
 
                 int workingHeight = model.getGewicht();
@@ -487,7 +479,6 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             }
             if(!TextUtils.isEmpty(model.getKorbbelastung()))
             {
-                Log.e("getArbeitshoehe", model.getKorbbelastung()+"");
                 //npBasketLoad.setValue(Integer.parseInt(model.getGewicht()));
 
                 int workingHeight = Integer.parseInt(model.getKorbbelastung());
@@ -533,7 +524,6 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             }
             if(!TextUtils.isEmpty(model.getKorbarmlaenge()))
             {
-                Log.e("getArbeitshoehe", model.getKorbarmlaenge());
                 //npBoomLength.setValue(Integer.parseInt(model.getKorbarmlaenge()));
 
                 Double number = Double.parseDouble(model.getKorbarmlaenge());

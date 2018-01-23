@@ -146,7 +146,6 @@ public class SiteInspectionResumeOutboxFragment extends BaseFragment
         switch (item.getItemId()) {
             case R.id.actionRefresh:
                 listOfSiteInspection = db.getSiteInspectionListOutbox();
-                Log.e("list",listOfSiteInspection.size()+"");
                 adapter = new SiteInspectionResumeAdapter(getActivity(),listOfSiteInspection);
                 listResume.setAdapter(adapter);
                 return true;

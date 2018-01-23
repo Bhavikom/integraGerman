@@ -73,6 +73,7 @@ import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.TimePickerDialogFragment;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
@@ -228,7 +229,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         {
             listOfLoadedCustomerActivity = matecoPriceApplication.getLoadedCustomerActivities(DataHelper.LoadedCustomerActivity, new ArrayList<CustomerActivityModel>().toString());
         }
-        Log.e("size of list activity", listOfLoadedCustomerActivity.size() + "");
         customerActivityListAdapter = new CustomerActivityListAdapter(getActivity(), listOfLoadedCustomerActivity, R.layout.list_item_customer_activity);
         listViewCustomerActivityList.setAdapter(customerActivityListAdapter);
 //        textCustomerActivityContactPersonPhone = (EditText)rootView.findViewById(R.id.textCustomerActivityContactPersonPhone);
@@ -264,7 +264,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         listOfActivityType = new ArrayList<>();
 
         listOfAllContactPerson = matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ArrayList<ContactPersonModel>().toString());
-        Log.e("listofallcoantcetperon", listOfAllContactPerson.size() + " size");
         DataBaseHandler db = new DataBaseHandler(getActivity());
 
         listOfActivityType = db.getActivityTypes();
@@ -369,7 +368,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Log.e("selected", position + "");
                 customerActivityListAdapter.setSelectedIndex(position);
                 selectedActivity = listOfLoadedCustomerActivity.get(position);
                 setCustomerActivity(selectedActivity);
@@ -439,7 +437,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                Log.e("selected at", position + "selected " + listOfAllProject.size());
+
                 if(position == 0)
                 {
                     //selectedLegalForm = listOfLegalForm.get(i);
@@ -792,7 +790,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
     private void searchForNewPageProjectSearch()
     {
         isCallservice=true;
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -824,7 +821,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             projectSearchPagingRequestModel.setPageSize(pageSize + "");
 
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             String url = "";
             try
             {
@@ -834,13 +830,13 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 url = DataHelper.URL_PROJECT_HELPER+"projectsearchpaging"
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");
-                Log.e("url", url);
+                LogApp.showLog("url", url);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
+            LogApp.showLog("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -848,14 +844,12 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -895,7 +889,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
 
 
                                 JSONArray resultsOfProjects = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfProjects.length()+"");
                                 if(resultsOfProjects.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -964,7 +957,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             pageNuber2 = 1;
             projectSearchPagingRequestModel.setPageNumber(pageNuber2+"");
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -972,14 +964,12 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result project search", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -1036,7 +1026,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                     url = DataHelper.URL_PROJECT_HELPER+"projectsearchpaging"
                             + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");
-                    Log.e("url", url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();
                 }
@@ -1072,7 +1061,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -1119,7 +1107,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
 //                String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_LIST_SHOW
 //                        + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
 //                        + "&objekt=" + listofProject.get(selectedIndex).getProjekt();
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }
@@ -1335,11 +1322,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 spinnerCustomerActivityActivityTopic.setSelection(0);
             }
             boolean isActivityProjectSelected = false;
-         /*   for(int i = 0; i < listOfAllProject.size(); i++)
-            {*/
-              //  Log.e("project", activity.getProjektID() + " " + listOfAllProject.get(i).getProjectId());
-//                Log.e("project name", activity.getProjekt() + listOfAllProject.get(i).getProjectName());
-                //if(activity.getProjektID().equals(listOfAllProject.get(i).getProjectId()))
             if(!activity.getProjektID().equals("") || !activity.getProjektID().equals("0"))
                 {
                     //spinnerCustomerActivityProjects.setSelection(i + 1);
@@ -1399,7 +1381,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             {
                 for(int j = 0; j < listOfAllEmployee.size(); j++)
                 {
-                    //Log.e("employee", listOfAllEmployee.get(j).getEmployeeId() + " " +activity.getListOfEmployeeId().get(i).getMitarbeiter());
                     if(activity.getListOfEmployeeId().get(i).getMitarbeiter().equals(listOfAllEmployee.get(j).getMitarbeiter()))
                     {
                         listOfSelectedEmployee.add(listOfAllEmployee.get(j));
@@ -1866,7 +1847,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("result", result);
                     if(result.equals("error"))
                     {
                         showLongToast(language.getMessageError());
@@ -1884,15 +1864,11 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                             CustomerActivityGetModel customerActivityGetModel = new CustomerActivityGetModel();
                             //CustomerActivityGetModel.extractFromJson(result, listOfCustomerActivityDetails);
                             customerActivityGetModel = new Gson().fromJson(result, CustomerActivityGetModel.class);
-                            Log.e("customerActivityGetMod", customerActivityGetModel.getListOfActivities().toString());
                             String listOfActivity = new Gson().toJson(customerActivityGetModel.getListOfActivities());
-                            Log.e("listOfActivity", listOfActivity);
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerActivity, listOfActivity);
                             String listOfProjects = new Gson().toJson(customerActivityGetModel.getListOfProject());
-                            Log.e("listOfProjects", listOfProjects);
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerProject, listOfProjects);
                             String listOfOffer = new Gson().toJson(customerActivityGetModel.getListOfOffers());
-                            Log.e("listOfOffer", listOfOffer);
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerOffer, listOfOffer);
 
                             String kontakt = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
@@ -1910,7 +1886,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                             addNewActivityFormRedesign(false);
                             makeEditable(false);
                             listOfLoadedCustomerActivity.addAll(matecoPriceApplication.getLoadedCustomerActivities(DataHelper.LoadedCustomerActivity, new ArrayList<CustomerActivityModel>().toString()));
-                            Log.e("size",listOfLoadedCustomerActivity.size() +"");
                             customerActivityListAdapter.notifyDataSetChanged();
                             if(listOfLoadedCustomerActivity.size() > 0)
                             {
@@ -1942,10 +1917,8 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             };
             try
             {
-                Log.e("json", json);
                 String url = DataHelper.URL_CUSTOMER_HELPER+"customeractivityinsert";// + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.INSERT_CUSTOMER_ACTIVITY + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 //url += "&customeractivityinsert=" + URLEncoder.encode(json, "UTF-8");
-                Log.e("url", url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("customeractivityinsert", new StringBody(json, Charset.forName("UTF-8")));
@@ -2021,7 +1994,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         customerActivityUpdateModel.setAkttyp(activityType);
         customerActivityUpdateModel.setAktthema(activityTopic);
         customerActivityUpdateModel.setNotiz(note);
-        Log.e("project", project + "");
         customerActivityUpdateModel.setObjekt(project + "");
         customerActivityUpdateModel.setAngebot(offer);
         customerActivityUpdateModel.setStartdatum(date);
@@ -2089,7 +2061,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("result", result);
                     if(result.equals("error"))
                     {
                         showShortToast(language.getMessageError());
@@ -2106,15 +2077,11 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                             CustomerActivityGetModel customerActivityGetModel = new CustomerActivityGetModel();
                             //CustomerActivityGetModel.extractFromJson(result, listOfCustomerActivityDetails);
                             customerActivityGetModel = new Gson().fromJson(result, CustomerActivityGetModel.class);
-                            Log.e("customerActivityGetMod", customerActivityGetModel.getListOfActivities().toString());
                             String listOfActivity = new Gson().toJson(customerActivityGetModel.getListOfActivities());
-                            Log.e("listOfActivity", listOfActivity);
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerActivity, listOfActivity);
                             String listOfProjects = new Gson().toJson(customerActivityGetModel.getListOfProject());
-                            Log.e("listOfProjects", listOfProjects);
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerProject, listOfProjects);
                             String listOfOffer = new Gson().toJson(customerActivityGetModel.getListOfOffers());
-                            Log.e("listOfOffer", listOfOffer);
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerOffer, listOfOffer);
                             String kontakt = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
                             if(db.isCustomerAvailable(kontakt))
@@ -2163,11 +2130,9 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             };
             try
             {
-                Log.e("json", json);
                 String url = DataHelper.URL_CUSTOMER_HELPER+"customeractivityupdate"; //+ DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.UPDATE_CUSTOMER_ACTIVITY
                         /*+ "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&customeractivityupdate=" + URLEncoder.encode(json, "UTF-8");*/
-                Log.e("url", url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("customeractivityupdate", new StringBody(json, Charset.forName("UTF-8")));
@@ -2417,7 +2382,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
          * Set Call back to capture selected date
          */
         newFragment.setCallBack(onFromDate);
-        Log.e("tag", "startDate");
         //newFragment.setMinDate(today);
         newFragment.show(getActivity().getSupportFragmentManager(), "startDate");
     }
@@ -2474,7 +2438,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 monthOfYear += 1;
                 String date = dayOfMonth + " " + monthOfYear + " " + year;
                 String finaldate = DataHelper.formatDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 labelCustomerActivityStartDate.setText(finaldate);
             }
             catch (ParseException e)
@@ -2502,13 +2465,11 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
             String endTime = String.format("%02d:%02d", hourOfDay, minute);
-            Log.e("end time",endTime);
             Date inTime = null;
             try
             {
                 inTime = sdf.parse(labelCustomerActivityStartTime.getText().toString());
                 Date outTime = sdf.parse(endTime);
-                Log.e("diff",inTime.compareTo(outTime)+"");
                 if(inTime.compareTo(outTime) >= 0)
                 {
                     showShortToast(language.getMessageEndTimeGreaterThenStartTime());
@@ -2658,9 +2619,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
     {
         final Dialog dialog = showCustomDialog(R.layout.dialog_add_contact_person, language.getMessageSelectContactPerson());
         listOfRemainingContactPerson.clear();
-        Log.e("listofallcoantcetperon", listOfAllContactPerson.size() + " size");
         listOfRemainingContactPerson.addAll(removeSelectedContactPerson(listOfAllContactPerson, listOfSelectedContactPerson));
-        Log.e("size of remaining", listOfRemainingContactPerson.size() + " contact person");
         ListView listViewAlertSelectContactPerson = (ListView)dialog.findViewById(R.id.listViewAlertSelectContactPerson);
         listViewAlertSelectContactPerson.setAdapter(remainingContactPersonAdapter);
         remainingEmployeeAdapter.notifyDataSetChanged();
@@ -2807,9 +2766,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
     {
         ArrayList<ContactPersonModel> tempList = new ArrayList<>();
         //listOfRemainingContactPerson.clear();
-        Log.e("listofallcoantcetperon", listOfAllContactPerson.size() + " size");
         tempList.addAll(listOfContactPerson);
-        Log.e("listofallcoantcetperon", listOfAllContactPerson.size() + " size");
         for(int i = 0; i < selectedContactPerson.size(); i++)
         {
             for(int j = 0; j < tempList.size(); j++)
@@ -2820,7 +2777,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 }
             }
         }
-        Log.e("tempList", tempList.size() + " size");
         return tempList;
     }
 
@@ -2910,24 +2866,12 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
 //            String mobile = textCustomerActivityContactPersonMobile.getText().toString();
 //            String phone = textCustomerActivityContactPersonPhone.getText().toString();
             String note = textCustomerActivityNotes.getText().toString();
-
-            Log.e("match code", defaultActivityType + " " + activityType);
-            Log.e("defaultName1", defaultActivityTopic + " " + activityTopic);
-            Log.e("match code", defaultProject + " test " + project);
-            Log.e("match code", defaultOffer + " test " + offer);
-            Log.e("match code", defaultDate + " " + date);
-            Log.e("match code", defaultStartTime + " " + startTime);
-            Log.e("match code", defaultEndTime + " " + endTime);
-            Log.e("match code", defaultNotes + " " + note);
-            Log.e("match code", defaultRealized + " " + realized);
-            Log.e("match code", defaultFest + " " + fest);
             //offer.equalsIgnoreCase(defaultOffer) && project.equalsIgnoreCase(defaultProject) &&
             if(activityType != null && activityType.equalsIgnoreCase(defaultActivityType) && activityTopic.equalsIgnoreCase(defaultActivityTopic) &&
                     date.equalsIgnoreCase(defaultDate)
                     && startTime.equalsIgnoreCase(defaultStartTime) && endTime.equalsIgnoreCase(defaultEndTime) && note.equalsIgnoreCase(defaultNotes) &&
                     realized.equalsIgnoreCase(defaultRealized))
             {
-                Log.e("size", defaultContactPerson.size() + ""+ listOfSelectedContactPerson.size() +""+ defaultEmployee.size() +""+ listOfSelectedEmployee.size());
                 if(defaultContactPerson.size() == listOfSelectedContactPerson.size() && defaultEmployee.size() == listOfSelectedEmployee.size())
                 {
                     for(int i = 0; i < defaultEmployee.size(); i++)
@@ -2935,7 +2879,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                         boolean isEqual = false;
                         for(int j = 0; j < listOfSelectedEmployee.size(); j++)
                         {
-                            //Log.e("employee"+ defaultEmployee.get(i).getMitarbeiter(), " " + listOfSelectedEmployee.get(j).getEmployeeId());
                             if(defaultEmployee.get(i).getMitarbeiter().equals(listOfSelectedEmployee.get(j).getMitarbeiter()))
                             {
                                 isEqual = true;
@@ -2953,7 +2896,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                         boolean isEqual = false;
                         for(int j = 0; j < listOfSelectedContactPerson.size(); j++)
                         {
-                            //Log.e("contact perosn"+ defaultContactPerson.get(i).getAnsPartner(), " " + listOfSelectedContactPerson.get(j).getAnspartner());
                             if(defaultContactPerson.get(i).getAnsPartner().equals(listOfSelectedContactPerson.get(j).getAnspartner()))
                             {
                                 isEqual = true;
@@ -3032,7 +2974,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -3044,13 +2985,10 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -3117,7 +3055,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                     pageNuber = 1;
                     projectSearchPagingRequestModel.setPageNumber(GlobalClass.pageNuber+"");
                     jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-                    Log.e("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,
@@ -3132,7 +3069,6 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

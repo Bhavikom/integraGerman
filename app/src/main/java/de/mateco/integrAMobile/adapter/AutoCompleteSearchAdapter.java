@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.CustomerSearchPagingRequestModel;
 import de.mateco.integrAMobile.model.HintModel;
@@ -79,7 +80,6 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
                 if (constraint != null) {
-                    //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                     findHintsFromApi(mContext, constraint.toString());
 
                     // Assign the data to the FilterResults
@@ -91,13 +91,10 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-               // Log.v(MainActivity.TAG, "publishResults");
                 if (results != null && results.count > 0) {
-                    //Log.v(MainActivity.TAG, "publishResult OK.");
                     arraylistHint = (List<HintModel>) results.values;
                     notifyDataSetChanged();
                 } else {
-                    //Log.v(MainActivity.TAG, "publishResult Invalid.");
                     notifyDataSetInvalidated();
                 }
             }};
@@ -163,19 +160,17 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
                                 TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                 //String jsonStringArray = "[\"JSON\",\"To\",\"Java\"]";
                                 arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 //mDepartmentArrayAdapter = new DepartmentArrayAdapter(getActivity(), R.layout.list_item_spinner_activity_topic, hintList);
                                 //textCustomerSearchMatchCode.setAdapter(mDepartmentArrayAdapter);
                                 //mDepartmentArrayAdapter = new DepartmentArrayAdapter(getActivity(), R.layout.list_item_spinner_activity_topic, hintList);
                                 //textCustomerSearchMatchCode.setAdapter(mDepartmentArrayAdapter);
 
-
-                                //Log.v(MainActivity.TAG, "Product search array respond length: " + jsonProducts.length());
                             /*for (int i = 0; i < jsonProducts.length(); i++) {
                                 JSONObject p = (JSONObject) jsonProducts.get(i);
                                 String name = p.getString("name");
                                 String barcode = p.getString("barcode");
-                                //Log.v(MainActivity.TAG, "Product after search name: " + name + " barcode: " + barcode);
+
 
                                 //arraylistHint.add(new HintModel(name, barcode));
                             }*/

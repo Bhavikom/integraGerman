@@ -114,7 +114,6 @@ public class GooglePlacesAutocompleteAdapter extends BaseAdapter implements Filt
             sb.append("?key=" + DataHelper.API_KEY);
             sb.append("&language=" + language.getLangCode());
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
-            Log.e("url", sb.toString());
             URL url = new URL(sb.toString());
             conn = (HttpURLConnection) url.openConnection();
             InputStreamReader in = new InputStreamReader(conn.getInputStream());
@@ -150,10 +149,9 @@ public class GooglePlacesAutocompleteAdapter extends BaseAdapter implements Filt
             JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
             // Extract the Place descriptions from the results
             resultList = new ArrayList(predsJsonArray.length());
-            Log.e("results", resultList.size()+"");
             for (int i = 0; i < predsJsonArray.length(); i++)
             {
-                Log.e("json array", predsJsonArray.getJSONObject(i).getString("description"));
+                LogApp.showLog("json array", predsJsonArray.getJSONObject(i).getString("description"));
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
             }
         }

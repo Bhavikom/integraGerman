@@ -544,7 +544,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                         + "&mitarbeiter=" + loginPersonId
                         //+ "&datum=" + "13-11-2003";
                         + "&datum=" + finaldate;
-                Log.e("url", url);
+
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -662,7 +662,6 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                                     CustomerFullDetailModel customerFullDetail = new Gson().fromJson(result, CustomerFullDetailModel.class);
                                     String json = new Gson().toJson(customerFullDetail.getCustomerSearchList());
                                     matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
-                                    Log.e("customer detail", customerFullDetail.getCustomerSearchList().toString());
                                     String listOfContactPerson = new Gson().toJson(customerFullDetail.getCustomerContactPersonList());
                                     matecoPriceApplication.saveData(DataHelper.LoadedCustomerContactPerson, listOfContactPerson);
 
@@ -711,8 +710,6 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                             + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/fieldname=" + "Kontakt"
                             + "/value=" + model.getKontakt();
-                    Log.e("url", url);
-
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                     asyncTask.execute(); // get customer detail
                 }
@@ -790,7 +787,6 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                             + "/fieldname=" + "Projekt"
                             + "/value=" + model.getProjekt();
                     //Projekt
-                    Log.e("url", url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                     asyncTask.execute(); // get Project detail
 
@@ -881,7 +877,6 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("todayresult", result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -896,7 +891,6 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                                 @Override
                                 public void OnAsynResult(String result)
                                 {
-                                    Log.e("otherresult", result);
                                     if(result.equals("error"))
                                     {
                                         showShortToast(language.getMessageError());
@@ -916,11 +910,9 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                                         + "/mitarbeiter=" + loginPersonId
                                         + "/datum=" + dateString;
-                                Log.e("otherurl",url);
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
-                            Log.e("otherurl", url);
                             BasicAsyncTaskGetRequest asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), true);
                             asyncTask1.execute(); // load adapter
                         }
@@ -931,7 +923,6 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + dateString;
-                Log.e("todayurl", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }

@@ -66,15 +66,10 @@ public class PreferencesClass
             editor.putString("endDate", "");
             editor.putString("endTime", "");
             editor.commit();
-
             editor.clear().commit();
-
-            Log.e(" in try  "," exception while clearing dates : "+sharedPreferences.getString("startDate",""));
-
-
         }
         catch (Exception e){
-            Log.e(" @@@@@@@@ "," exception while clearing dates : "+e.toString());
+            LogApp.showLog(" @@@@@@@@ "," exception while clearing dates : "+e.toString());
         }
 
     }

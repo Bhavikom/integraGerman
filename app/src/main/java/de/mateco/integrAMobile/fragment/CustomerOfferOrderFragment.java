@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.SamplePagerItem;
 import de.mateco.integrAMobile.Helper.SlidingTabLayout;
 import de.mateco.integrAMobile.HomeActivity;
@@ -208,6 +209,6 @@ public class CustomerOfferOrderFragment extends LoadedCustomerFragment implement
     private void setTitle(String title)
     {
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle(title);
-        Log.e("here at man tiel", title);
+        LogApp.showLog("here at man tiel", title);
     }
 }

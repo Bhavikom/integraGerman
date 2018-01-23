@@ -44,6 +44,7 @@ import java.util.zip.Inflater;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseActivity;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
@@ -179,7 +180,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 }
                 else if(DataHelper.isNetworkAvailable(LoginActivity.this))
                 {
-
                     prd = new ProgressDialog(LoginActivity.this);
                     prd.setTitle(language.getMessageWaitWhileLoading());
                     prd.setMessage(language.getMessageWaitWhileLoading());
@@ -194,7 +194,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                         @Override
                         public void OnAsynResult(final String result)
                         {
-                            Log.e("result", result);
                             if(result.equals("error"))
                             {
                                 showShortToast(language.getMessageError());
@@ -427,187 +426,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
                                     String url = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                     // for volley
-                                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url,
-                                            new Response.Listener<JSONObject>() {
-                                                @Override
-                                                public void onResponse(final JSONObject response) {
-                                                    Log.e(" ###### "," response of volley : "+response);
-                                                    try
-                                                    {
-                                                        new Thread(new Runnable()
-                                                        {
-                                                            @Override
-                                                            public void run()
-                                                            {
-                                                                try
-                                                                {
-
-                                                                    prd.setProgress(0);
-                                                                    prd.setMax(100);
-                                                                    prd.setProgress(20);
-                                                                    MainServiceCallModel mainServiceCallModel = new Gson().fromJson(response.toString(), MainServiceCallModel.class);
-                                                                    db.deleteTableAtLogin();
-
-                                                                    ArrayList<PricingOfflineStandardPriceData> listOfOfflineStandardPrice = mainServiceCallModel.getListOfStandardPrice();
-                                                                    db.addPricingOfflineStandardPrice(listOfOfflineStandardPrice); // 1
-
-                                                                    ArrayList<LadefahrzeugComboBoxItemModel> arraylistLadefahrzeug = mainServiceCallModel.getArraylsitLadefahrzeug();
-                                                                    db.addLadefahzeg(arraylistLadefahrzeug); // 2
-
-                                                                    prd.setProgress(0);
-                                                                    prd.setMax(100);
-                                                                    //prd.setMessage();
-                                                                    prd.setProgress(25);
-                                                                    Log.e("list of standard price", listOfOfflineStandardPrice.size() + "");
-                                                                    ArrayList<Pricing1PriceRentalData> rentalData = mainServiceCallModel.getListOfPriceRental();
-                                                                    db.addPriceRental(rentalData); // 3
-                                                                    prd.setProgress(0);
-                                                                    prd.setMax(100);
-                                                                    prd.setProgress(35);
-                                                                    ArrayList<PricingOfflineEquipmentData> listOfOfflineEquipment = mainServiceCallModel.getListOfEquipmentHeight();
-                                                                    db.addPricingOfflineEquipmentData(listOfOfflineEquipment); // 4
-                                                                    ArrayList<Pricing1DeviceData> deviceGroups = mainServiceCallModel.getListOfDeviceGroup();
-                                                                    db.addDevice(deviceGroups); // 5
-                                                                    prd.setProgress(0);
-                                                                    prd.setMax(100);
-                                                                    prd.setProgress(40);
-                                                                    ArrayList<Pricing1BranchData> branches = mainServiceCallModel.getListOfBranch();
-                                                                    db.addBranch(branches); // 6
-                                                                    ArrayList<LegalFormModel> legalForms = mainServiceCallModel.getListOfLegalForm();
-                                                                    db.addLegalForms(legalForms); // 7
-                                                                    prd.setProgress(0);
-                                                                    prd.setMax(100);
-                                                                    prd.setProgress(45);
-                                                                    ArrayList<CountryModel> countries = mainServiceCallModel.getListOfCountry();
-                                                                    db.addCountries(countries); // 8
-                                                                    ArrayList<SalutationModel> salutations = mainServiceCallModel.getListOfSalutations();
-                                                                    db.addSalutation(salutations); // 9
-                                                                    prd.setProgress(0);
-                                                                    prd.setMax(100);
-                                                                    prd.setProgress(50);
-                                                                    ArrayList<FunctionModel> functions = mainServiceCallModel.getListOfFunctions();
-                                                                    db.addFunction(functions); // 10
-                                                                    ArrayList<FeatureModel> listOfFeatures = mainServiceCallModel.getListOfFeatures();
-                                                                    db.addFeatures(listOfFeatures); // 11
-                                                                    prd.setProgress(55);
-                                                                    ArrayList<DocumentLanguageModel> languages = mainServiceCallModel.getListOfDocumentLanguage();
-                                                                    db.addDocumentLanguage(languages); // 12
-                                                                    ArrayList<DecisionMakerModel> listOfDecisionMaker = mainServiceCallModel.getListOfDecisionMaker();
-                                                                    db.addDecisionMakers(listOfDecisionMaker); // 13
-                                                                    prd.setProgress(60);
-                                                                    ArrayList<ActivityTypeModel> listOfActivityType = mainServiceCallModel.getListOfActivityType();
-                                                                    db.addActivityTypes(listOfActivityType); // 14
-                                                                    prd.setProgress(65);
-                                                                    ArrayList<ActivityTopicModel> listOfTopic = mainServiceCallModel.getListOfActivityTopic();
-                                                                    db.addActivityTopics(listOfTopic); // 15
-                                                                    ArrayList<EmployeeModel> listOfEmployee = mainServiceCallModel.getListOfEmployee();
-                                                                    db.addEmployees(listOfEmployee); // 16
-                                                                    prd.setProgress(70);
-                                                                    ArrayList<SiteInspectionDeviceTypeModel> listOfDeviceTypes = mainServiceCallModel.getListOfDeviceType();
-                                                                    db.addSiteInspectionDeviceType(listOfDeviceTypes);// 17
-                                                                    prd.setProgress(75);
-                                                                    ArrayList<SiteInspectionBuildingProjectModel> listOfBUildingProject = mainServiceCallModel.getListOfBuildingProject();
-                                                                    db.addBuildingProject(listOfBUildingProject); // 18
-                                                                    ArrayList<SiteInspectionAccessModel> listOfAccess = mainServiceCallModel.getListOfAccess();
-                                                                    db.addAccess(listOfAccess); // 19
-
-                                                                    ArrayList<PriceStaffelModel> listOfPriceStaffel = mainServiceCallModel.getListOfPriceStaffel();
-                                                                    db.addPriceStaffel(listOfPriceStaffel); // 20
-                                                                    prd.setProgress(80);
-                                                                    ArrayList<CustomerBranchModel> listOfCustomerBranch = mainServiceCallModel.getListOfCustomerBranch();
-                                                                    if(listOfCustomerBranch != null)
-                                                                        db.addCustomerBranch(listOfCustomerBranch); // 21
-                                                                    ArrayList<ProjectArtModel> listOfProjectArt = mainServiceCallModel.getListOfProjectArt();
-                                                                    if(listOfProjectArt != null)
-                                                                        db.addProjectArt(listOfProjectArt); // 22
-                                                                    ArrayList<ProjectTypeModel> listOfProjectType = mainServiceCallModel.getListOfProjectType();
-                                                                    if(listOfProjectType != null)
-                                                                        db.addProjectType(listOfProjectType); // 23
-                                                                    prd.setProgress(85);
-                                                                    ArrayList<ProjectPhaseModel> listOfProjectPhase = mainServiceCallModel.getListOfProjectPhase();
-                                                                    if(listOfProjectPhase != null)
-                                                                        db.addProjectPhase(listOfProjectPhase); // 24
-                                                                    ArrayList<ProjectStagesModel> listOfProjectStage = mainServiceCallModel.getListOfProjectStage();
-                                                                    if(listOfProjectStage != null)
-                                                                        db.addProjectStage(listOfProjectStage); // 25
-                                                                    ArrayList<ProjectTradeModel> listOfProjectTrade = mainServiceCallModel.getListOfProjectTrade();
-                                                                    prd.setProgress(90);
-                                                                    if(listOfProjectTrade != null)
-                                                                        db.addProjectTrade(listOfProjectTrade); // 26
-                                                                    prd.setProgress(95);
-                                                                    ArrayList<ProjectAreaModel> listOfArea = mainServiceCallModel.getListOfArea();
-                                                                    if(listOfArea != null)
-                                                                        db.addProjectArea(listOfArea); // 27
-                                                                    ArrayList<BuheneartModel> listOfBuheneart = mainServiceCallModel.getListOfBuheneart();
-                                                                    if(listOfBuheneart != null)
-                                                                        db.addBuheneart(listOfBuheneart); // 28
-                                                                    prd.setProgress(100);
-                                                                    prd.dismiss();
-                                                                    String json = new Gson().toJson(listOfUser);
-                                                                    matecoPriceApplication.saveLoginUser(DataHelper.LoginPerson, json);
-                                                                    Intent intentHome = new Intent(LoginActivity.this, HomeActivity.class);
-                                                                    startActivity(intentHome);
-                                                                    finish();
-                                                                }
-                                                                catch (Exception ex)
-                                                                {
-                                                                    //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-                                                                    ex.printStackTrace();
-                                                                    prd.dismiss();
-                                                                    LoginActivity.this.runOnUiThread(new Runnable()
-                                                                    {
-                                                                        @Override
-                                                                        public void run()
-                                                                        {
-                                                                            showShortToast(language.getMessageErrorAtParsing());
-                                                                        }
-                                                                    });
-                                                                }
-                                                            }
-                                                        }).start();
-
-                                                    }
-                                                    catch (Exception ex)
-                                                    {
-                                                        ex.printStackTrace();
-                                                        prd.dismiss();
-                                                        showShortToast(language.getMessageErrorAtParsing());
-                                                    }
-                                                }
-                                            }, new Response.ErrorListener() {
-
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            Log.e(" ###### "," network problem : "+result);
-                                            prd.dismiss();
-                                            //showLongToast("Network problem while service calling before");
-                                            if(isCallservice) {
-                                                // showLongToast("service call start now");
-                                                isCallservice=false;
-                                                showProgressDialog();
-                                                Handler handler = new Handler();
-                                                handler.postDelayed(new Runnable() {
-                                                    public void run() {
-                                                        // Actions to do after 10 seconds
-                                                        String url = null;
-                                                        try {
-                                                            url = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
-                                                        } catch (UnsupportedEncodingException e) {e.printStackTrace();}
-                                                        if(DataHelper.isNetworkAvailable(LoginActivity.this)) {
-                                                            BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, LoginActivity.this, false);
-                                                            asyncTask.execute();
-                                                        }else {
-                                                            prd.dismiss();
-                                                            showShortToast(language.getMessageNetworkNotAvailable());
-                                                        }
-                                                    }
-                                                }, DataHelper.NETWORK_CALL_DURATION);
-                                            }
-                                        }
-                                    });
-
-                                    Volley.newRequestQueue(LoginActivity.this).add(req);
-
+                                    callMainServiceUsingVolley(url,listOfUser);
                                 }
                                 catch (Exception e)
                                 {
@@ -625,7 +444,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                         String url = DataHelper.URL_USER_HELPER +"logindetails/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                         url = url + "/name=" + userName;
                         url = url + "/password=" + password;
-                        Log.e("url", url);
                         BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultLogin, LoginActivity.this, false);
                         asyncTask.execute();
                     }
@@ -657,7 +475,182 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
         }
     }
+    private void callMainServiceUsingVolley(final String url, final ArrayList<LoginPersonModel> listOfUser){
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(final JSONObject response) {
+                        LogApp.showLog(" ###### "," response of volley : "+response);
+                        try
+                        {
+                            new Thread(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    try
+                                    {
 
+                                        prd.setProgress(0);
+                                        prd.setMax(100);
+                                        prd.setProgress(20);
+                                        MainServiceCallModel mainServiceCallModel = new Gson().fromJson(response.toString(), MainServiceCallModel.class);
+                                        db.deleteTableAtLogin();
+
+                                        ArrayList<PricingOfflineStandardPriceData> listOfOfflineStandardPrice = mainServiceCallModel.getListOfStandardPrice();
+                                        db.addPricingOfflineStandardPrice(listOfOfflineStandardPrice); // 1
+
+                                        ArrayList<LadefahrzeugComboBoxItemModel> arraylistLadefahrzeug = mainServiceCallModel.getArraylsitLadefahrzeug();
+                                        db.addLadefahzeg(arraylistLadefahrzeug); // 2
+
+                                        prd.setProgress(0);
+                                        prd.setMax(100);
+                                        //prd.setMessage();
+                                        prd.setProgress(25);
+                                        ArrayList<Pricing1PriceRentalData> rentalData = mainServiceCallModel.getListOfPriceRental();
+                                        db.addPriceRental(rentalData); // 3
+                                        prd.setProgress(0);
+                                        prd.setMax(100);
+                                        prd.setProgress(35);
+                                        ArrayList<PricingOfflineEquipmentData> listOfOfflineEquipment = mainServiceCallModel.getListOfEquipmentHeight();
+                                        db.addPricingOfflineEquipmentData(listOfOfflineEquipment); // 4
+                                        ArrayList<Pricing1DeviceData> deviceGroups = mainServiceCallModel.getListOfDeviceGroup();
+                                        db.addDevice(deviceGroups); // 5
+                                        prd.setProgress(0);
+                                        prd.setMax(100);
+                                        prd.setProgress(40);
+                                        ArrayList<Pricing1BranchData> branches = mainServiceCallModel.getListOfBranch();
+                                        db.addBranch(branches); // 6
+                                        ArrayList<LegalFormModel> legalForms = mainServiceCallModel.getListOfLegalForm();
+                                        db.addLegalForms(legalForms); // 7
+                                        prd.setProgress(0);
+                                        prd.setMax(100);
+                                        prd.setProgress(45);
+                                        ArrayList<CountryModel> countries = mainServiceCallModel.getListOfCountry();
+                                        db.addCountries(countries); // 8
+                                        ArrayList<SalutationModel> salutations = mainServiceCallModel.getListOfSalutations();
+                                        db.addSalutation(salutations); // 9
+                                        prd.setProgress(0);
+                                        prd.setMax(100);
+                                        prd.setProgress(50);
+                                        ArrayList<FunctionModel> functions = mainServiceCallModel.getListOfFunctions();
+                                        db.addFunction(functions); // 10
+                                        ArrayList<FeatureModel> listOfFeatures = mainServiceCallModel.getListOfFeatures();
+                                        db.addFeatures(listOfFeatures); // 11
+                                        prd.setProgress(55);
+                                        ArrayList<DocumentLanguageModel> languages = mainServiceCallModel.getListOfDocumentLanguage();
+                                        db.addDocumentLanguage(languages); // 12
+                                        ArrayList<DecisionMakerModel> listOfDecisionMaker = mainServiceCallModel.getListOfDecisionMaker();
+                                        db.addDecisionMakers(listOfDecisionMaker); // 13
+                                        prd.setProgress(60);
+                                        ArrayList<ActivityTypeModel> listOfActivityType = mainServiceCallModel.getListOfActivityType();
+                                        db.addActivityTypes(listOfActivityType); // 14
+                                        prd.setProgress(65);
+                                        ArrayList<ActivityTopicModel> listOfTopic = mainServiceCallModel.getListOfActivityTopic();
+                                        db.addActivityTopics(listOfTopic); // 15
+                                        ArrayList<EmployeeModel> listOfEmployee = mainServiceCallModel.getListOfEmployee();
+                                        db.addEmployees(listOfEmployee); // 16
+                                        prd.setProgress(70);
+                                        ArrayList<SiteInspectionDeviceTypeModel> listOfDeviceTypes = mainServiceCallModel.getListOfDeviceType();
+                                        db.addSiteInspectionDeviceType(listOfDeviceTypes);// 17
+                                        prd.setProgress(75);
+                                        ArrayList<SiteInspectionBuildingProjectModel> listOfBUildingProject = mainServiceCallModel.getListOfBuildingProject();
+                                        db.addBuildingProject(listOfBUildingProject); // 18
+                                        ArrayList<SiteInspectionAccessModel> listOfAccess = mainServiceCallModel.getListOfAccess();
+                                        db.addAccess(listOfAccess); // 19
+
+                                        ArrayList<PriceStaffelModel> listOfPriceStaffel = mainServiceCallModel.getListOfPriceStaffel();
+                                        db.addPriceStaffel(listOfPriceStaffel); // 20
+                                        prd.setProgress(80);
+                                        ArrayList<CustomerBranchModel> listOfCustomerBranch = mainServiceCallModel.getListOfCustomerBranch();
+                                        if(listOfCustomerBranch != null)
+                                            db.addCustomerBranch(listOfCustomerBranch); // 21
+                                        ArrayList<ProjectArtModel> listOfProjectArt = mainServiceCallModel.getListOfProjectArt();
+                                        if(listOfProjectArt != null)
+                                            db.addProjectArt(listOfProjectArt); // 22
+                                        ArrayList<ProjectTypeModel> listOfProjectType = mainServiceCallModel.getListOfProjectType();
+                                        if(listOfProjectType != null)
+                                            db.addProjectType(listOfProjectType); // 23
+                                        prd.setProgress(85);
+                                        ArrayList<ProjectPhaseModel> listOfProjectPhase = mainServiceCallModel.getListOfProjectPhase();
+                                        if(listOfProjectPhase != null)
+                                            db.addProjectPhase(listOfProjectPhase); // 24
+                                        ArrayList<ProjectStagesModel> listOfProjectStage = mainServiceCallModel.getListOfProjectStage();
+                                        if(listOfProjectStage != null)
+                                            db.addProjectStage(listOfProjectStage); // 25
+                                        ArrayList<ProjectTradeModel> listOfProjectTrade = mainServiceCallModel.getListOfProjectTrade();
+                                        prd.setProgress(90);
+                                        if(listOfProjectTrade != null)
+                                            db.addProjectTrade(listOfProjectTrade); // 26
+                                        prd.setProgress(95);
+                                        ArrayList<ProjectAreaModel> listOfArea = mainServiceCallModel.getListOfArea();
+                                        if(listOfArea != null)
+                                            db.addProjectArea(listOfArea); // 27
+                                        ArrayList<BuheneartModel> listOfBuheneart = mainServiceCallModel.getListOfBuheneart();
+                                        if(listOfBuheneart != null)
+                                            db.addBuheneart(listOfBuheneart); // 28
+                                        prd.setProgress(100);
+                                        prd.dismiss();
+                                        String json = new Gson().toJson(listOfUser);
+                                        matecoPriceApplication.saveLoginUser(DataHelper.LoginPerson, json);
+                                        Intent intentHome = new Intent(LoginActivity.this, HomeActivity.class);
+                                        startActivity(intentHome);
+                                        finish();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                                        ex.printStackTrace();
+                                        prd.dismiss();
+                                        LoginActivity.this.runOnUiThread(new Runnable()
+                                        {
+                                            @Override
+                                            public void run()
+                                            {
+                                                showShortToast(language.getMessageErrorAtParsing());
+                                            }
+                                        });
+                                    }
+                                }
+                            }).start();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                            prd.dismiss();
+                            showShortToast(language.getMessageErrorAtParsing());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                prd.dismiss();
+                //showLongToast("Network problem while service calling before");
+                if(isCallservice) {
+                    // showLongToast("service call start now");
+                    isCallservice=false;
+                    showProgressDialog();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            // Actions to do after 10 seconds
+                            String urlNew = null;
+                            try {
+                                urlNew = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                            callMainServiceUsingVolley(urlNew,listOfUser);
+                        }
+                    }, DataHelper.NETWORK_CALL_DURATION);
+                }
+            }
+        });
+
+        Volley.newRequestQueue(LoginActivity.this).add(req);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

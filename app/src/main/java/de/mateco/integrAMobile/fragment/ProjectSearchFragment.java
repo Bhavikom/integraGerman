@@ -45,6 +45,7 @@ import java.util.List;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.ProjectSearchAdapter;
@@ -99,7 +100,7 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
         {
             if(rootView.getParent() != null)
                 ((ViewGroup)rootView.getParent()).removeView(rootView);
-            Log.e("rootview", " not null");
+
         }*/
         rootView = inflater.inflate(R.layout.fragment_project_search, container, false);
         super.initializeFragment(rootView);
@@ -461,7 +462,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
             projectSearchPagingRequestModel.setPageNumber(pageNuber+"");
             //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -469,14 +469,12 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result project search", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -533,9 +531,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                     url = DataHelper.URL_PROJECT_HELPER+"projectsearchpaging" + "/token="
                             + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");
-
-
-                    Log.e("url", url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();
                 }
@@ -571,7 +566,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -615,7 +609,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
 //                String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_LIST_SHOW
 //                        + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
 //                        + "&objekt=" + listofProject.get(selectedIndex).getProjekt();
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }
@@ -634,7 +627,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
     private void searchForNewPage()
     {
         isCallservice=true;
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -666,7 +658,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
             projectSearchPagingRequestModel.setPageSize(pageSize + "");
 
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             String url = "";
             try
             {
@@ -676,13 +667,12 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                 url = DataHelper.URL_PROJECT_HELPER+"projectsearchpaging"
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");
-                Log.e("url", url);
+                LogApp.showLog("url", url);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -690,14 +680,12 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -729,7 +717,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                                 }
 
                                 JSONArray resultsOfProjects = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfProjects.length()+"");
                                 if(resultsOfProjects.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -806,7 +793,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -818,13 +804,10 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -889,7 +872,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                     pageNuber = 1;
                     projectSearchPagingRequestModel.setPageNumber(GlobalClass.pageNuber+"");
                     jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-                    Log.e("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,
@@ -904,7 +886,6 @@ public class ProjectSearchFragment extends LoadedCustomerFragment implements Tex
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

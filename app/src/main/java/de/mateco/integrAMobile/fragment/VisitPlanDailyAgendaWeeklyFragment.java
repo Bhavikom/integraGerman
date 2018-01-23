@@ -86,6 +86,7 @@ import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.TimePickerDialogFragment;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
@@ -385,7 +386,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult() {
                     @Override
                     public void OnAsynResult(String result) {
-                        Log.e("result", result);
                         if (result.equals("error")) {
                             showShortToast(language.getMessageError());
                         }
@@ -415,7 +415,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + finaldate;
 
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             } else {
@@ -445,7 +444,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
              * Set Call back to capture selected date
              */
             newFragment.setCallBack(onFromDate);
-            Log.e("tag", "startDate");
             newFragment.show(getActivity().getSupportFragmentManager(), "dateSelected");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -459,7 +457,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 monthOfYear += 1;
                 String date = dayOfMonth + "." + monthOfYear + "." + year;
                 String finaldate = DataHelper.formatDisplayDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 labelAgendaDailyDateSelected.setText(finaldate);
                 adapterLoad();
             } catch (ParseException e) {
@@ -544,7 +541,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     }
 
     public String manageTime(String hour, String min) {
-        Log.e("hour", hour);
         if(hour.length()==1)
             hour = "0" + hour;
         if(min.length()==1)
@@ -608,7 +604,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         });
         if(listOfWeeklyAgenda1.size() > 0)
         {
-            Log.e("show dialog",listOfWeeklyAgenda1.size()+"");
             ad.show();
         }
     }
@@ -616,7 +611,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-        Log.e("on ", "month changed " + newMonth);
         events.clear();
         SimpleDateFormat formatterWithTime = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         SimpleDateFormat formatterWithDateOnly = new SimpleDateFormat("dd-MM-yyyy");
@@ -690,7 +684,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                             event.setColor(getResources().getColor(R.color.ripple_material_dark));
                         }
                         events.add(event);
-                        Log.e("size",events.size()+"");
+                        LogApp.showLog("size",events.size()+"");
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -848,7 +842,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         try {
             String dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(calendar.getTime())));
             if (!dateString.equals("")) {
-                Log.e("enter",dateString);
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 Date date = formatter.parse(dateString);
                 Date date1 = readFormat.parse(firstDate);
@@ -856,7 +849,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 long diff = calendar.getTimeInMillis() - cal.getTimeInMillis();
                 long days = diff / (24 * 60 * 60 * 1000);
                 labelAgendaDailyDateSelected.setText(DataHelper.formatDisplayDate(date));
-                Log.e("days", days + " days");
                 if(days >= 6 || days <= -6)
                 {
                     if(flag)
@@ -904,7 +896,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                                 CustomerFullDetailModel customerFullDetail = new Gson().fromJson(result, CustomerFullDetailModel.class);
                                 String json = new Gson().toJson(customerFullDetail.getCustomerSearchList());
                                 matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
-                                Log.e("customer detail", customerFullDetail.getCustomerSearchList().toString());
                                 String listOfContactPerson = new Gson().toJson(customerFullDetail.getCustomerContactPersonList());
                                 matecoPriceApplication.saveData(DataHelper.LoadedCustomerContactPerson, listOfContactPerson);
 
@@ -953,8 +944,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + listOfWeeklyAgenda1.get(selectedIndex).getKontakt();
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -1031,7 +1020,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -1046,7 +1034,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                                 CustomerFullDetailModel customerFullDetail = new Gson().fromJson(result, CustomerFullDetailModel.class);
                                 String json = new Gson().toJson(customerFullDetail.getCustomerSearchList());
                                 matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
-                                Log.e("customer detail", customerFullDetail.getCustomerSearchList().toString());
                                 String listOfContactPerson = new Gson().toJson(customerFullDetail.getCustomerContactPersonList());
                                 matecoPriceApplication.saveData(DataHelper.LoadedCustomerContactPerson, listOfContactPerson);
 
@@ -1097,8 +1084,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + listOfCustomerSearchResult.get(selectedIndex).getKontakt();
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -1173,7 +1158,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error")) {
                             dialog.dismiss();
                             //showShortToast(language.getMessageError());
@@ -1226,7 +1210,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Projekt"
                         + "/value=" + projectId ;
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
 
@@ -1400,7 +1383,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             {
                 for(int j = 0; j < listOfAllEmployee.size(); j++)
                 {
-                    //Log.e("employee", listOfAllEmployee.get(j).getEmployeeId() + " " +activity.getListOfEmployeeId().get(i).getMitarbeiter());
                     if(weekModel.getMitarbeiterName().get(i).equals(listOfAllEmployee.get(j).getMitarbeiter()))
                     {
                         listOfSelectedEmployee.add(listOfAllEmployee.get(j));
@@ -1655,7 +1637,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             {
                 for(int j = 0; j < listOfAllEmployee.size(); j++)
                 {
-                    //Log.e("employee", listOfAllEmployee.get(j).getEmployeeId() + " " +activity.getListOfEmployeeId().get(i).getMitarbeiter());
                     if(activity.getListOfEmployeeId().get(i).getMitarbeiter().equals(listOfAllEmployee.get(j).getMitarbeiter()))
                     {
                         listOfSelectedEmployee.add(listOfAllEmployee.get(j));
@@ -1897,15 +1878,15 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                             CustomerActivityGetModel customerActivityGetModel = new CustomerActivityGetModel();
                             //CustomerActivityGetModel.extractFromJson(result, listOfCustomerActivityDetails);
                             customerActivityGetModel = new Gson().fromJson(result, CustomerActivityGetModel.class);
-                            Log.e("customerActivityGetMod", customerActivityGetModel.getListOfActivities().toString());
+
                             String listOfActivity = new Gson().toJson(customerActivityGetModel.getListOfActivities());
                             Log.e("listOfActivity", listOfActivity);
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerActivity, listOfActivity);
                             String listOfProjects = new Gson().toJson(customerActivityGetModel.getListOfProject());
-                            Log.e("listOfProjects", listOfProjects);
+
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerProject, listOfProjects);
                             String listOfOffer = new Gson().toJson(customerActivityGetModel.getListOfOffers());
-                            Log.e("listOfOffer", listOfOffer);
+
                             matecoPriceApplication.saveData(DataHelper.LoadedCustomerOffer, listOfOffer);
                             String kontakt = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
                             if(db.isCustomerAvailable(kontakt))
@@ -1952,7 +1933,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.UPDATE_CUSTOMER_ACTIVITY
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&customeractivityupdate=" + URLEncoder.encode(json, "UTF-8");
-                Log.e("url", url);
+
                 asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
                 asyncTask.execute();
             }
@@ -2094,7 +2075,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                 @Override
                 public void OnAsynResult(String result) {
-                    Log.e("result", result);
                     if(result.equals("error"))
                     {
                         showShortToast(language.getMessageError());
@@ -2166,16 +2146,14 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             };
             try
             {
-                Log.e("json", json);
                 //String url = DataHelper.URL_PROJECT_HELPER+"ProjectActivityUpdate";
                 /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_ACTIVITY_UPDATE
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&projectactivityupdate=" + URLEncoder.encode(json, "UTF-8");
-                Log.e("url", url);
+
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
                 asyncTask.execute();*/
                 String url = DataHelper.URL_PROJECT_HELPER+"projectactivityupdate";
-                Log.e("url", url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("projectactivityupdate", new StringBody(json, Charset.forName("UTF-8")));
@@ -2849,7 +2827,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     private void searchForNewPage()
     {
         isCallservice=true;
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -2881,7 +2858,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             customerSearch.setPageSize(pageSize + "");
 
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -2896,7 +2872,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -2904,14 +2879,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -2942,7 +2915,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                                 }
 
                                 JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfCustomers.length()+"");
+                                LogApp.showLog("size add page" + pageNuber, resultsOfCustomers.length()+"");
                                 if(result.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -2970,7 +2943,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapterSearch.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -3017,7 +2989,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             listCustomerSearchResult.removeFooterView(footerView);
 
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -3032,7 +3003,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -3040,14 +3010,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -3102,7 +3070,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapterSearch.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -3182,7 +3149,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             lianearMain.removeView(footerView2);
             projectSearchPagingRequestModel.setPageNumber(pageNuber2+"");
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -3190,14 +3156,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result project search", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                            // showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -3254,7 +3218,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     url = DataHelper.URL_PROJECT_HELPER+"projectsearchpaging"
                             + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");
-                    Log.e("url", url);
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();
                 }
@@ -3289,7 +3252,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -3332,7 +3294,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 //                String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_LIST_SHOW
 //                        + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
 //                        + "&objekt=" + listofProject.get(selectedIndex).getProjekt();
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }
@@ -3351,7 +3312,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     private void searchForNewPageProjectSearch()
     {
         isCallservice=true;
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -3383,7 +3343,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             projectSearchPagingRequestModel.setPageSize(pageSize + "");
 
             String jsonToSend = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-            Log.e("customer to json", jsonToSend);
             String url = "";
             try
             {
@@ -3394,13 +3353,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 /*url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.Project_Search_Paging
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&projectsearchparam=" + URLEncoder.encode(jsonToSend, "UTF-8");*/
-                Log.e("url", url);
+                LogApp.showLog("url", url);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -3408,14 +3366,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -3447,7 +3403,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                                 }
 
                                 JSONArray resultsOfProjects = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfProjects.length()+"");
                                 if(resultsOfProjects.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -3603,7 +3558,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
          * Set Call back to capture selected date
          */
         newFragment.setCallBack(onFromDate2);
-        Log.e("tag", "startDate");
         //newFragment.setMinDate(today);
         newFragment.show(getActivity().getSupportFragmentManager(), "startDate");
     }
@@ -3659,7 +3613,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 monthOfYear += 1;
                 String date = dayOfMonth + "." + monthOfYear + "." + year;
                 String finaldate = DataHelper.formatDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 labelProjectActivityStartDate.setText(finaldate);
             }
             catch (ParseException e)
@@ -3687,13 +3640,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
             String endTime = String.format("%02d:%02d", hourOfDay, minute);
-            Log.e("end time",endTime);
             Date inTime = null;
             try
             {
                 inTime = sdf.parse(labelProjectActivityStartTime.getText().toString());
                 Date outTime = sdf.parse(endTime);
-                Log.e("diff",inTime.compareTo(outTime)+"");
+                LogApp.showLog("diff",inTime.compareTo(outTime)+"");
                 if(inTime.compareTo(outTime) >= 0)
                 {
                     showShortToast(language.getMessageEndTimeGreaterThenStartTime());
@@ -3778,7 +3730,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -3790,13 +3741,10 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -3863,7 +3811,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     customerSearch.setPageNumber(GlobalClass.pageNuber + "");
                     //customerSearch.setMitarbeiter(loginUserNumber);
                     jsonToSend = DataHelper.getGson().toJson(customerSearch);
-                    Log.e("customer to json", jsonToSend);
+                    LogApp.showLog("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, DataHelper.URL_CUSTOMER_HELPER+"customersearchhint/token=" + URLEncoder.encode(base64Data.trim(), "UTF-8")
@@ -3876,7 +3824,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                    LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -3942,7 +3890,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -3954,13 +3901,10 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -4025,7 +3969,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     pageNuber = 1;
                     projectSearchPagingRequestModel.setPageNumber(GlobalClass.pageNuber+"");
                     jsonToSendProject = DataHelper.getGson().toJson(projectSearchPagingRequestModel);
-                    Log.e("customer to json", jsonToSendProject);
+                    LogApp.showLog("customer to json", jsonToSendProject);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,
@@ -4040,7 +3984,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                    LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

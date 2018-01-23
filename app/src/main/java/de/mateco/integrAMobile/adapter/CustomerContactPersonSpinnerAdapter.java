@@ -76,7 +76,6 @@ public class CustomerContactPersonSpinnerAdapter extends BaseAdapter
             {
                 name += ", " + listOfContactPerson.get(position - 1).getVorname();
             }
-            Log.e(" in adpater class "," name value before settext : "+name);
             labelListItemCustomerContactPersonName.setText(name);
         }
         //imgvBackground.setImageResource(R.drawable.english);

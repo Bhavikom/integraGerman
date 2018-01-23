@@ -62,6 +62,7 @@ import java.util.Locale;
 import de.mateco.integrAMobile.Helper.AddPriceParsableClass;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalMethods;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.NestedListView;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.HomeActivity;
@@ -173,14 +174,13 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
             if(savedInstanceState!=null)
             {
                 String app=savedInstanceState.getString("approach");
-                Log.e(" sdfsdfsd"," approach string "+app);
+
             }
         }*/
 
         @Override
         public void onPause() {
             super.onPause();
-            Log.e(" pause "," on pause called ");
         }
 
         @Override
@@ -205,7 +205,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 kanr = getArguments().getString("kanr");
                 kaNrOfLoadedCustomer = getArguments().getInt("kaNrOfLoadedCustomer");
                 branchId = getArguments().getInt("branchId");
-                Log.e(" in last fragment : "," branchId Id value : "+ branchId);
                 branchName = getArguments().getString("branchName");
                 contactPersonNo = getArguments().getString("contactPersonNo");
                 contactPerson = getArguments().getString("contactPersonName", contactPerson);
@@ -220,7 +219,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 gesAminities = getArguments().getDouble("gesAminities");
                 PriceUseInformationList = getArguments().getString("PriceUseInformationList");
                 GeratetypeId = getArguments().getString("GeratetypeId");
-                Log.e(" initiiallly "," geratetypeId value in fragment 3 : "+GeratetypeId);
                 plz = getArguments().getString("plz");
                 besteller_Telefon = getArguments().getString("Besteller_Telefon");
                 besteller_Email = getArguments().getString("Besteller_Email");
@@ -232,11 +230,8 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
             }
             preferences = new PreferencesClass(getActivity());
             parsableClass=preferences.getPriceData(getActivity());
-            Log.e(" 3 ###"," get value from parsable class : "+parsableClass.flagEinweisung+" : "+parsableClass.strKann+" : ");
             Gson gson = new Gson();
             Pricing2InsertPriceUseInformationListData myJson = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
-
-            Log.e(" $$$$$$$$$$$$$ "," get string from j sont string : "+myJson.getAVO()+" : "+myJson.getEinsatzort());
 
             db = new DataBaseHandler(getActivity());
             lablesLostSale = new ArrayList<Pricing3LostSaleData>();
@@ -560,13 +555,11 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 }
                 else if (tranportTotal > 0)
                 {
-                    Log.e("tranportTotal", tranportTotal + "");
                     etTranspotP2.setText(DataHelper.getGermanFromEnglish(tranportTotal + ""));
                     //410
                 }
                 else if(tranportTotal <= 0)
                 {
-                    Log.e("tranportTotal", tranportTotal + "");
                     etTranspotP2.setText(DataHelper.getGermanFromEnglish(tranportTotal + ""));
                 }
 
@@ -656,10 +649,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
             else {
                 rentalDaysWithSatSun=rentalDaysWithoutSatSun;
             }
-
-
-
-            Log.e(" ###### "," days betweenn two date date : "+rentalDaysWithSatSun);
             double newValue1;
             double newValue2;
             double totalofNewvalue;
@@ -672,8 +661,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 newValue2=rentalDaysWithoutSatSun*haftbFinal;
             }
             totalofNewvalue=newValue1+newValue2;
-            Log.e(" $$$$ "," total  of new vlaue : "+totalofNewvalue);
-
             //double finalTotal = equipmentRentTotal + haftbFinal + transportFinal + tollFinal + hf + sp;
             double finalTotal = totalofNewvalue + transportFinal + tollFinal + hf + sp;
             if (finalTotal > 0)
@@ -1148,8 +1135,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
             btnCache.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Log.e(" $$$$$$$$ "," click on chache button : ");
                     if(DataHelper.isNetworkAvailable(context))
                     {
                         if (chkHandllingFeeP2.isEnabled() == true) {
@@ -1862,7 +1847,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e(" errror  ","result on getting radio button functionality : "+result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -1874,7 +1858,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                         {
                             try
                             {
-                                Log.e("******%%%%%","result on getting radio button functionality : "+result);
                                 pricingScreen = new Gson().fromJson(result, PricingScreen3ObjectList.class);
                                 if(pricingScreen.getPriceHaftungsbegrenzungBoxStatus().equals("True"))
                                 {
@@ -1958,7 +1941,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                                     if(pricingScreen.getListOfPriceHaftb().get(i).getSelected().equals("1"))
                                     {
                                         selected=true;
-                                        Log.e(" in ifff "," i value in for loop fragemtn 3 : "+i);
                                         if(i == 0)
                                         {
                                             rbSB1000.setChecked(true);
@@ -2032,7 +2014,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                     object.setGeratetypeId(GeratetypeId);
                     String json = new Gson().toJson(object);
                     //+ "&kontakt=" + kontakt+ "&hoehengruppe=" + hoehengruppe+ "&mandant=" + mandant+ "&plz=" + plz;
-                    Log.e(" $%$%$%$% ", " json of screen 3"+json);
                     /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.Pricing_Screen_3_Obj
                             + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "&pricing3ScreenJson=" + URLEncoder.encode(json, "UTF-8");*/
@@ -2042,7 +2023,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
     //                        + "&Kontakt=" + kontakt
     //                        + "&KaNr=" + kanr
     //                        + "&Hoehengruppe=" + deviceType;
-                    Log.e("url", url);
                     asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();
                 }
@@ -2247,7 +2227,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 //pricingInsert.setStrendDate(pricingInser.get(i).getStrendDate() + " " + (pricingInser.get(i).getStrendTime()));
 
                 pricingInsert.setStrendTime(pricingInser.get(i).getStrendTime());
-                Log.e("#######", " str kann value before service calling : " + pricingInser.get(i).getStrKann());
                 if (fromWhichBtn == 1)
                 {
                     pricingInsert.setAngebotSuffix(i);
@@ -2273,7 +2252,7 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 pricingInsert.setStrAVOMobile(myJson.getAVOTelefon());
                 listOfPricingSend.add(pricingInsert);
                 String json = new Gson().toJson(listOfPricingSend);
-                Log.e(" fragment 333"," json string while calling service" + json);
+                LogApp.showLog(" fragment 333"," json string while calling service" + json);
             }
 
             if(DataHelper.isNetworkAvailable(context))
@@ -2284,7 +2263,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                     public void OnAsynResult(String result)
                     {
                         //Toast.makeText(getActivity(),"result variable in price :  "+result, Toast.LENGTH_LONG).show();
-                        Log.e(" &&&&&"," result varaible after successfully service call :  "+result);
                         if(result.equals(DataHelper.NetworkError)){
                         showShortToast(language.getMessageNetworkNotAvailable());
                         }else {
@@ -2478,7 +2456,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 try
                 {
                     String json = new Gson().toJson(listOfPricingSend);
-                    Log.e(" %^%^%%^%^%^%^%^ "," json string final before calling service : "+json);
                     /*String url = DataHelper.ACCESS_PROTOCOL +
                             DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PriceInsert;*/
                     String url = DataHelper.URL_PRICE_HELPER+"priceinsert";
@@ -2489,9 +2466,7 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                     asyncTaskPost.execute();
                 }
                 catch (Exception e)
-
                 {
-                    Log.e(" $$$$$$$ "," exception while calling ser vie : "+e.toString());
                     e.printStackTrace();
                 }
             }
@@ -2506,7 +2481,7 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
             ArrayList<Pricing1EquipmentInsertData> listOfPriceingEquInsert = new ArrayList<Pricing1EquipmentInsertData>();
             if (json.equals("null"))
             {
-                Log.e("Equipment Json is null", json);
+                LogApp.showLog("Equipment Json is null", json);
             }
             else
             {
@@ -2528,12 +2503,11 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                         @Override
                         public void OnAsynResult(String result)
                         {
-                            Log.e("result of eqp.", result);
+                            LogApp.showLog("result of eqp.", result);
                         }
                     };
                     try
                     {
-                        Log.e("json of final eqp....", jsonFinal);
                         //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PricePriceEquipmentInsert;
                         String url = DataHelper.URL_PRICE_HELPER+"priceequipmentinsert";
                         MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -2723,7 +2697,7 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 pricingInser.setStrendDate(preferences.getendDate());
                 pricingInser.setStrendTime(preferences.getendTime());
 
-                Log.e(""," start date end ate and time infor in 3 fragment : "+parsableClass.strStartDate+" : "+parsableClass.strStartTime+" : "+
+                LogApp.showLog(""," start date end ate and time infor in 3 fragment : "+parsableClass.strStartDate+" : "+parsableClass.strStartTime+" : "+
                         parsableClass.strEndDate+" : "+parsableClass.strEndtime);
 
                 //String json = new Gson().toJson(pricingInser);
@@ -2740,7 +2714,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
 
         private void lostSaleRejectionReason(String LostsaleUId)
         {
-            Log.e("LostsaleUId", LostsaleUId);
             double GeratermietePrice;
             String GeratermieteCompi;
             double TransportPrice;
@@ -2950,13 +2923,12 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                     lablesLostSale = db.getPricing3LostsaleData(customer_KundenNr);
                 }
                 String json = new Gson().toJson(listOfLoastsaleinsert);
-                Log.e(" LostSale.json...", json);
                 AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
                 {
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("lostsale rejection result", result);
+                        LogApp.showLog("lostsale rejection result", result);
                     }
                 };
 
@@ -2964,7 +2936,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 {
                     //url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PriceReasonRejectionInsert;
                     url = DataHelper.URL_PRICE_HELPER+"pricereasonrejectioninsert";
-                    Log.e("url", url);
                 }
                 catch (Exception e)
                 {
@@ -3007,7 +2978,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
         {
             if(DataHelper.isNetworkAvailable(context))
             {
-                Log.e("PriceUseInfo ..", PriceUseInformationList);
                 AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
                 {
                     @Override
@@ -3017,8 +2987,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                         if (result.matches("[0-9]+") && result.length() > 0) {
                             EinsatzinformationId = result.replace("\"", "");
                             insertDataIntoDB(0);
-                            Log.e("EinsatzinformationId result", EinsatzinformationId);
-
                         }else {
                             EinsatzinformationId="";
                             insertDataIntoDB(0);
@@ -3034,7 +3002,6 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
 
                     /*String url = DataHelper.URL_PRICE_HELPER + "priceuseinformationinsert/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                     url += "/priceuseinformation=" + URLEncoder.encode(PriceUseInformationList, "UTF-8"); //&&&&*/
-                    Log.e("url", url);
 
                     MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                     multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));

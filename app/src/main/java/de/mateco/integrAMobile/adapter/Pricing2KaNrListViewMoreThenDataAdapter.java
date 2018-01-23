@@ -84,8 +84,6 @@ public class Pricing2KaNrListViewMoreThenDataAdapter extends BaseAdapter {
 
         txtPricing2KaNrMoreThenSortDataRow.setText
                 ("" + listKaNrListViewMoreThen.get(position).getSort());
-        Log.e("list of key adapter", listKaNrListViewMoreThen.get(position).getKey().size() + "");
-
         LinearLayout linearTags = (LinearLayout) convertView.findViewById(R.id.linearMoreThenTags);
 
         LinearLayout.LayoutParams layoutParams =

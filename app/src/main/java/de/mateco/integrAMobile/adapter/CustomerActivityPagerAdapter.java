@@ -33,7 +33,6 @@ public class CustomerActivityPagerAdapter extends FragmentPagerAdapter
     @Override
     public Fragment getItem(int position)
     {
-        Log.e("position customer offer", position + "");
         switch (position)
         {
             case 0:

@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.MailListAdapter;
@@ -170,7 +171,6 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
         listViewSiteInspectionbranchMailAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("clicked at", position + "");
                 if (adapter.mCheckStates.get(position))
                     adapter.mCheckStates.put(position, false);
                 else
@@ -211,7 +211,6 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("result", result);
                     if(result.equals("error"))
                     {
                         showShortToast(language.getMessageError());
@@ -241,7 +240,6 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
                 String url = DataHelper.URL_BVO_HELPER+"bvoinfoemails";// + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.SITEINSPECTION_GET_EMAIL_FROM_BRANCH;
                 url += "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 url += "/branch=" + branchObject.getClientId();
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -302,7 +300,6 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
                                 //showShortToast(DataHelper.getFileSize(getActivity())+"");
                                 if(!DataHelper.isFileSizeGreaterThan10MB(getActivity()))
                                 {
-                                    Log.e("enter","if");
                                     uploadData();
                                 }
                                 else
@@ -449,11 +446,6 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
                 if(siteInspectionOperationalEnvironmentModel != null){
                     practicabilityList = new Gson().toJson(siteInspectionOperationalEnvironmentModel.getListOfPracticability());
                 }
-
-                Log.e("GeraetListDetail",deviceList);
-                Log.e("BefahrbarkeitList",practicabilityList);
-                Log.e(" call service : ", " BVOInsertList in json string : "+json);
-                Log.e("id",preferences.getInt(DataHelper.SiteInspectionId, 0)+"");
                 if(DataHelper.isNetworkAvailable(getActivity()))
                 {
                     AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
@@ -465,7 +457,6 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
                             showShortToast(language.getMessageNetworkNotAvailable());
                             }else {
                                 try {
-                                    Log.e(" respnose &*&*&*&*& ", "response from service for mail fragmetn : " + result);
                                     ResponseFormat responseFormat = new Gson().fromJson(result, ResponseFormat.class);
                                     if (responseFormat.getResponseCode() == 10) {
                                         db.updateSelectEmail(listOfSelectedMail, preferences.getInt(DataHelper.SiteInspectionId, 0));
@@ -525,7 +516,7 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
                                 }*/
                                     }
                                 } catch (Exception e) {
-                                    Log.e("", " exception : " + e.toString());
+                                    LogApp.showLog("", " exception : " + e.toString());
                                 }
                             }
 

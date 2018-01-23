@@ -43,6 +43,7 @@ import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.NonSwipeableViewPager;
 import de.mateco.integrAMobile.Helper.SamplePagerItem;
 import de.mateco.integrAMobile.Helper.SlidingTabLayout;
@@ -184,7 +185,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try {
             dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
-            Log.e("date1",dateString + " date2 " + matecoPriceApplication.getAgendaSelectedDate(DataHelper.AgendaDate, ""));
+            LogApp.showLog("date1",dateString + " date2 " + matecoPriceApplication.getAgendaSelectedDate(DataHelper.AgendaDate, ""));
             //if(!matecoPriceApplication.getAgendaSelectedDate(DataHelper.AgendaDate, "").equals(dateString))
                 adapterLoad();
         } catch (ParseException e) {
@@ -192,7 +193,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
         }
 
         /*if(!dateString.equals("")) {
-            Log.e("enter","if "+ dateString);
+
             setDate(dateString);
         }
         else {
@@ -233,7 +234,6 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("todayresult", result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -248,7 +248,6 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                                 @Override
                                 public void OnAsynResult(String result)
                                 {
-                                    Log.e("otherresult", result);
                                     if(result.equals("error"))
                                     {
                                         showShortToast(language.getMessageError());
@@ -274,11 +273,9 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                                         + "/mitarbeiter=" + loginPersonId
                                         + "/datum=" + dateString;
-                                Log.e("otherurl",url);
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
-                            Log.e("otherurl", url);
                             asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), false);
                             asyncTask1.execute();
                         }
@@ -293,7 +290,6 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + dateString;
-                Log.e("todayurl", url);
                 asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute(); // load adapter
             }

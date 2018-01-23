@@ -154,8 +154,6 @@ public class GlobalMethods
     {
         File backupDbFilePath = exportDatabase(context);
         File backupPrefrenceFilePath = saveSharedPreferencesToFile(context);
-        //Log.e("backupdb path", backupDbFilePath.getAbsolutePath());
-        //Log.e("backupPrefrenceFilePath", backupPrefrenceFilePath.getAbsolutePath());
         ArrayList<Uri> items = new ArrayList<Uri>();
         if(backupDbFilePath != null){
             Uri uri = Uri.fromFile(backupDbFilePath);

@@ -83,7 +83,6 @@ public class SiteInspectionResumeSentFragment extends BaseFragment {
                         db.addDevice(listOfdeviceData.get(i));
                         if(listOfdeviceData.get(i).getParentId()!=0) {
                             int parentId = db.getDeviceDataId(db.getSiteInspectionId(),listOfdeviceData.get(i).getPosition());
-                            Log.e("parentId",parentId+" heightgroup"+listOfdeviceData.get(i).getHoehengruppe());
                             db.updateDeviceByParentId(db.getDeviceDataId(),parentId);
                         }
                     }

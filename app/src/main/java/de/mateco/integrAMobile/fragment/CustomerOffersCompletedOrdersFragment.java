@@ -61,7 +61,6 @@ public class CustomerOffersCompletedOrdersFragment extends BaseFragment
 
         getActivity().invalidateOptionsMenu();
 //        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelCompletedOffers());
-//        Log.e("here at", language.getLabelCompletedOffers());
         setHasOptionsMenu(true);
         setUpLanguage();
         super.initializeComponents(rootView);

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Pricing2KaNrListViewData;
 
@@ -26,12 +27,12 @@ public class Pricing2KaNrListViewDataAdapter extends BaseAdapter {
 
     public void setSelection(int selection) {
         selectionOfTag = selection;
-        Log.e(""," selection of tag in adapter : "+selectionOfTag);
+        LogApp.showLog(""," selection of tag in adapter : "+selectionOfTag);
     }
 
     public void setSelectionOfRow(int selection) {
         selectionOfRow = selection;
-        Log.e(""," selection of row in adapter : "+selectionOfRow);
+        LogApp.showLog(""," selection of row in adapter : "+selectionOfRow);
     }
 
     public Pricing2KaNrListViewDataAdapter(Activity context, List<Pricing2KaNrListViewData> listKaNrListView) {
@@ -94,9 +95,7 @@ public class Pricing2KaNrListViewDataAdapter extends BaseAdapter {
         txtPricing2KaNrSortDataRow.setText("" + listKaNrListView.get(position).getSort());
         //txtPricing2KaNrTagesDataRow.setText("" + listKaNrListView.get(position).getKey());
 
-        Log.e("list of array size", listKaNrListView.size() + "");
         LinearLayout linearTags = (LinearLayout) convertView.findViewById(R.id.linearTags);
-        Log.e("list of key adapter", listKaNrListView.get(position).getKey().size() + "");
         LinearLayout.LayoutParams layoutParams =
                 new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f);
         //LinearLayout.LayoutParams layoutParams =

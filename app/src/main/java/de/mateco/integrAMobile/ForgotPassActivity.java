@@ -110,7 +110,6 @@ public class ForgotPassActivity extends BaseActivity implements View.OnClickList
                             @Override
                             public void OnAsynResult(String result)
                             {
-                                Log.e("result",result);
                                 showLongToast(language.getMessagePasswordChangedSuccessfully());
                                 finish();
                             }
@@ -120,7 +119,6 @@ public class ForgotPassActivity extends BaseActivity implements View.OnClickList
                         //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.ForgotPassword + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
 
                         url = url + "/email=" + textForgotPasswordUserName.getText().toString();
-                        Log.e("url",url);
                         BasicAsyncTaskGetRequest asyncTaskGetRequest = new BasicAsyncTaskGetRequest(url,onAsyncResult,ForgotPassActivity.this,true);
                         asyncTaskGetRequest.execute();
                     }

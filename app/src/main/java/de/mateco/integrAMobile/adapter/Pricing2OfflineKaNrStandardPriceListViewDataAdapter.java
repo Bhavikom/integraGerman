@@ -134,11 +134,7 @@ public class Pricing2OfflineKaNrStandardPriceListViewDataAdapter extends BaseAda
         txtPricing2OfflineStandard_Ab_21_M_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
                 (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getAb21TageM())));
 
-
-        Log.e("list of array size", listKaNrOfflineStandardPriceListView.size() + "");
         LinearLayout linearTags = (LinearLayout) convertView.findViewById(R.id.linearOfflineStandardPriceTags);
-        Log.e("list of key adapter", listKaNrOfflineStandardPriceListView.get(position)
-                .getHoehengruppe().length() + "");
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
        /* for (int i = 0; i < listKaNrListView.get(position).getKey().size(); i++) {

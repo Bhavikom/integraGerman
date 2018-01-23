@@ -60,9 +60,7 @@ public class SalutationAdapter extends BaseAdapter
         if(position == 0)
         {
             convertView = mInflater.inflate(R.layout.list_item_spinner_blank, null);
-            Log.e("position", position + " " + listOfSalutations.size());
             TextView labelSpinnerDefaultBlank = (TextView)convertView.findViewById(R.id.labelSpinnerDefaultBlank);
-            Log.e("position", position + " " + language.getLabelSelect());
             labelSpinnerDefaultBlank.setText(language.getLabelSelect());
         }
         else

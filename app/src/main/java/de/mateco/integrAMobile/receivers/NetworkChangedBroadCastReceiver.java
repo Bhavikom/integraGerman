@@ -59,20 +59,14 @@ public class NetworkChangedBroadCastReceiver extends BroadcastReceiver {
                 //String deviceList = new Gson().toJson(db.getDeviceByID(preferences.getInt(DataHelper.SiteInspectionId, 0)));
                 String deviceList = new Gson().toJson(db.getDeviceByID(model.getId()));
                 String practicabilityList = new Gson().toJson(siteInspectionOperationalEnvironmentModel.getListOfPracticability());
-                Log.e("deviceList", deviceList);
-                Log.e("pracList", practicabilityList);
-                Log.e("siteInspectionModel", json);
                 AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
                 {
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e(" error ","result on networkchange : "+result);
                         if(result.equalsIgnoreCase("error")){
-
                         }
                         else {
-                            Log.e(" no no error ","result on networkchange : "+result);
                             //if(result != null && !result.equals("error") && result.length()<=38 && !result.trim().equals("false"))
                             ResponseFormat responseFormat = new Gson().fromJson(result, ResponseFormat.class);
                             if(responseFormat.getResponseCode() == 10)

@@ -357,10 +357,6 @@ public class SiteInspectionOperationalEnvironmentFragment extends BaseFragment
         siteInspectionOperationalEnvironmentModel.setHaftungsausschlussText(textFor.getText().toString());
         siteInspectionOperationalEnvironmentModel.setZufahrtAuslegen(textAccessLying.getText().toString());
 
-        Log.e("TragslastZufahrt", DataHelper.getEnglishCurrencyFromGermanBvo(textLoadAccess.getText().toString()));
-        Log.e("TraglastStandplatz", DataHelper.getEnglishCurrencyFromGermanBvo(textLoadText.getText().toString()));
-        Log.e("Stassengefaelle",DataHelper.getEnglishCurrencyFromGermanBvo(textRoadGrade.getText().toString()));
-        Log.e("Verkehrslastmax", DataHelper.getEnglishCurrencyFromGermanBvo(textMaxTrafficLoad.getText().toString()));
         String outputValue = GlobalMethods.getBlankValueForZero(DataHelper.getEnglishCurrencyFromGermanBvo(textLoadAccess.getText().toString()));
         siteInspectionOperationalEnvironmentModel.setTragslastZufahrt(outputValue);
         outputValue = GlobalMethods.getBlankValueForZero(DataHelper.getEnglishCurrencyFromGermanBvo(textLoadText.getText().toString()));

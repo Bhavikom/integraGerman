@@ -64,7 +64,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
     {
         if(rootView == null)
         {
-            Log.e("rootview", "null");
             rootView = inflater.inflate(R.layout.fragment_customer_offline_search, container, false);
             super.initializeFragment(rootView);
         }
@@ -72,7 +71,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
         {
             if(rootView.getParent() != null)
                 ((ViewGroup)rootView.getParent()).removeView(rootView);
-            Log.e("rootview", " not null");
         }
 
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelSearch());
@@ -82,7 +80,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
     @Override
     public void initializeComponents(View rootView)
     {
-        Log.e("initializeComponents", "initializeComponents");
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
         language = matecoPriceApplication.getLanguage();
         db = new DataBaseHandler(getActivity());
@@ -252,7 +249,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
 
             //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -266,10 +262,8 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             listOfCustomerSearchResult.clear();
             listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-            Log.e("clear", listOfCustomerSearchResult.size()+"");
             adapter.notifyDataSetChanged();
         }
         else
@@ -344,8 +338,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + listOfCustomerSearchResult.get(selectedIndex).getKontakt();
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -364,7 +356,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
     {
         Gson gson = new Gson();
         String json = gson.toJson(listOfCustomerSearchResult.get(selectedIndex));
-        Log.e("json of selected", json);
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
             //matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
@@ -380,7 +371,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("result of ", result);
                     if(result.equals("error"))
                     {
                         prd.dismiss();
@@ -400,7 +390,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
                                 @Override
                                 public void OnAsynResult(String result)
                                 {
-                                    Log.e("result", result);
                                     if(result.equals("error"))
                                     {
                                         prd.dismiss();
@@ -412,17 +401,13 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
                                         CustomerActivityGetModel customerActivityGetModel = new Gson().fromJson(result, CustomerActivityGetModel.class);
                                         //CustomerActivityGetModel.extractFromJson(result, listOfCustomerActivityDetails);
                                         //customerActivityGetModel =
-                                        //Log.e("customerActivityGetMod", customerActivityGetModel.getListOfActivities().toString());
                                         String listOfActivity = new Gson().toJson(customerActivityGetModel.getListOfActivities());
-                                        Log.e("listOfActivity", listOfActivity);
                                         //matecoPriceApplication.saveData(DataHelper.LoadedCustomerActivity, listOfActivity);
                                         customerDatabaseModel.setListOfActivity(customerActivityGetModel.getListOfActivities());
                                         String listOfProjects = new Gson().toJson(customerActivityGetModel.getListOfProject());
-                                        Log.e("listOfProjects", listOfProjects);
                                         //matecoPriceApplication.saveData(DataHelper.LoadedCustomerProject, listOfProjects);
                                         customerDatabaseModel.setListOfProject(customerActivityGetModel.getListOfProject());
                                         String listOfOffer = new Gson().toJson(customerActivityGetModel.getListOfOffers());
-                                        Log.e("listOfOffer", listOfOffer);
                                         //matecoPriceApplication.saveData(DataHelper.LoadedCustomerOffer, listOfOffer);
                                         customerDatabaseModel.setListOfOffer(customerActivityGetModel.getListOfOffers());
                                         //showShortToast("Customer Loaded");
@@ -432,7 +417,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
                                             @Override
                                             public void OnAsynResult(String result)
                                             {
-                                                Log.e("result", result);
                                                 if(result.equals("error"))
                                                 {
                                                     prd.dismiss();
@@ -486,7 +470,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
                                                                         @Override
                                                                         public void OnAsynResult(String result)
                                                                         {
-                                                                            Log.e("result of offer", result);
                                                                             if(result.equals("error"))
                                                                             {
                                                                                 prd.dismiss();
@@ -528,7 +511,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
                                                                                     url += "&Kundennr=" + matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKundenNr();*/
                                                                                     String url = DataHelper.URL_CUSTOMER_HELPER+"customercompletedorders/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                                                                     url += "/Kundennr=" + matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKundenNr();
-                                                                                    Log.e("url", url);
                                                                                     BasicAsyncTaskGetRequest asyncTaskLoadCustomerCompleteOrder = new BasicAsyncTaskGetRequest(url, onAsyncResultCompleteOrder, getActivity(), false);
                                                                                     asyncTaskLoadCustomerCompleteOrder.execute();
                                                                                 }
@@ -547,7 +529,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
 
                                                                         String url = DataHelper.URL_CUSTOMER_HELPER+"customeropenorder/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                                                         url += "/Kundennr=" + matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKundenNr();
-                                                                        Log.e("url", url);
                                                                         BasicAsyncTaskGetRequest asyncTaskLoadCustomerOpenOrder = new BasicAsyncTaskGetRequest(url, onAsyncResultOpenOrder, getActivity(), false);
                                                                         asyncTaskLoadCustomerOpenOrder.execute();
                                                                     }
@@ -567,8 +548,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
 
                                                         String url = DataHelper.URL_CUSTOMER_HELPER+"customeropenspecials/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                                         url += "/Kundennr=" + matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKundenNr();
-
-                                                        Log.e("url", url);
                                                         BasicAsyncTaskGetRequest asyncTaskLoadOpenSales = new BasicAsyncTaskGetRequest(url, onAsyncResultOpenSales, getActivity(), false);
                                                         asyncTaskLoadOpenSales.execute();
                                                     }
@@ -587,7 +566,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
 
                                             String url = DataHelper.URL_CUSTOMER_HELPER+"customerlostsale/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                             url += "/Kundennr=" + matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKundenNr();
-                                            Log.e("url", url);
                                             BasicAsyncTaskGetRequest asyncTaskLoadCustomerLostSales = new BasicAsyncTaskGetRequest(url, onAsyncResultLostSales, getActivity(), false);
                                             asyncTaskLoadCustomerLostSales.execute();
                                         }
@@ -606,7 +584,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
 
                                 String url = DataHelper.URL_CUSTOMER_HELPER+"customeractivitylistshow/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                 url += "/Kontakt=" + matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
-                                Log.e("url", url);
                                 BasicAsyncTaskGetRequest asyncTaskLoadContactPersons = new BasicAsyncTaskGetRequest(url, onAsyncResultActivity, getActivity(), false);
                                 asyncTaskLoadContactPersons.execute();
                             }
@@ -630,7 +607,6 @@ public class CustomerSearchOfflineFragment extends BaseFragment implements TextV
 
                 String url = DataHelper.URL_CUSTOMER_HELPER+"customercontactpersonlist/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 url += "/Kontakt=" + matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
-                Log.e("url", url);
                 BasicAsyncTaskGetRequest asyncTaskLoadContactPersons = new BasicAsyncTaskGetRequest(url, onAsyncResultContactPersons, getActivity(), false);
                 asyncTaskLoadContactPersons.execute();
             }

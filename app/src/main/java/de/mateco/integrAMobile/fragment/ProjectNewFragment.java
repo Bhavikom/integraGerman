@@ -305,7 +305,6 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
             model.setMitarbeiter(employee);
             model.setOrt(place);
             model.setProjektart(typeOfProject);
-            Log.e("type of project", typeOfProject);
             model.setStrasse(road);
             model.setUserID(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
 
@@ -315,7 +314,6 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
                 AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                     @Override
                     public void OnAsynResult(String result) {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -351,15 +349,12 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
                 try
                 {
                     String jsonString = new Gson().toJson(model);
-                    Log.e("jsonString", jsonString);
                     /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.Project_Insert
                             + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "&projectinsert=" + URLEncoder.encode(jsonString, "UTF-8");*/
                     String url = DataHelper.URL_PROJECT_HELPER+"projectinsert"; //+ DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.Project_Insert
                             //+ "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             //+ "&projectinsert=" + URLEncoder.encode(jsonString, "UTF-8");
-                    Log.e("url", url);
-
                     MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                     multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                     multipartEntity.addPart("projectinsert", new StringBody(jsonString, Charset.forName("UTF-8")));

@@ -275,9 +275,9 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                             listOfContactPerson.add(customerContactPersonModel.get(i));
                         }
                     }
-                    Log.e("if part", listOfContactPerson.size()+"");
-                    if(listOfContactPerson.size() > 0)
+                    if(listOfContactPerson.size() > 0) {
                         customerContactPersonListDetailAdapter.setSelectedIndex(0);
+                    }
                     customerContactPersonListDetailAdapter.notifyDataSetChanged();
                 }
                 else
@@ -285,7 +285,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                     preferences.setisCustomerSelected("");
                     listOfContactPerson.clear();
                     listOfContactPerson.addAll(matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ContactPersonModel().toString()));
-                    Log.e("else part", listOfContactPerson.size()+"");
                     if(listOfContactPerson.size() > 0)
                         customerContactPersonListDetailAdapter.setSelectedIndex(0);
                     customerContactPersonListDetailAdapter.notifyDataSetChanged();
@@ -298,7 +297,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Log.e("contacts selected", position + "");
                 //view.setSelected(true);
                 selectedContactPerson = listOfContactPerson.get(position);
                 setCustomerContactPerson(selectedContactPerson);
@@ -439,7 +437,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             boolean isDecisionMakerSelected = false;
             for(int i = 0; i < listOfDecisionMaker.size(); i++)
             {
-                Log.e("entscheidr id", contactPerson.getEntscheiderID() + " test " +listOfDecisionMaker.get(i).getDecisionMakerId());
                 if(contactPerson.getEntscheiderID().equals(listOfDecisionMaker.get(i).getDecisionMakerId()))
                 {
                     spinnerCustomerContactPersonDecisionMaker.setSelection(i + 1);
@@ -451,14 +448,12 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             }
             if(!isDecisionMakerSelected)
             {
-                Log.e("test", isDecisionMakerSelected+"");
                 spinnerCustomerContactPersonDecisionMaker.setSelection(0);
             }
 
             boolean isDocumentLanguageSelected = false;
             for(int i = 0; i < listOfDocumentLanguage.size(); i++)
             {
-                Log.e("entscheidr id", contactPerson.getEntscheiderID());
                 if(contactPerson.getBelegsprache().equals(listOfDocumentLanguage.get(i).getDocumentLanguageId()))
                 {
                     spinnerCustomerContactPersonDocumentLanguage.setSelection(i + 1);
@@ -563,7 +558,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                     listOfContactPerson.add(customerContactPersonModel.get(i));
                 }
             }
-            Log.e("if part", listOfContactPerson.size()+"");
             if(listOfContactPerson.size() > 0)
                 customerContactPersonListDetailAdapter.setSelectedIndex(0);
             customerContactPersonListDetailAdapter.notifyDataSetChanged();
@@ -573,7 +567,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             preferences.setisCustomerSelected("");
             listOfContactPerson.clear();
             listOfContactPerson.addAll(matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ContactPersonModel().toString()));
-            Log.e("else part", listOfContactPerson.size()+"");
             if(listOfContactPerson.size() > 0)
                 customerContactPersonListDetailAdapter.setSelectedIndex(0);
             customerContactPersonListDetailAdapter.notifyDataSetChanged();
@@ -865,7 +858,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
         final ListView listViewAlertSelectFeature = (ListView)dialog.findViewById(R.id.listViewAlertSelectFeature);
         listViewAlertSelectFeature.setAdapter(listOfFeatureAdapter);
         listOfRemainingFeature.addAll(removeSelectedFeatures(listOfFeatures, listOfSelectedFeatures));
-        Log.e("list remaining feature", listOfRemainingFeature.size()+"");
         listOfFeatureAdapter.notifyDataSetChanged();
         Button buttonDialogAddFeature, buttonDialogAddFeatureCancel;
 
@@ -1019,8 +1011,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
         customerContactPersonAndFeatureAddModel.setMerkmal(listOfSelectedFeaturesId);
 
         String json = new Gson().toJson(customerContactPersonAndFeatureAddModel);
-
-        Log.e("json", json);
 //        if(selectedSalutation == 0)
 //        {
 //
@@ -1068,7 +1058,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("result", result);
                     if(result.trim().equals("error"))
                     {
                         showShortToast(language.getMessageError());
@@ -1119,7 +1108,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                                         listOfContactPerson.add(customerContactPersonModel.get(i));
                                     }
                                 }
-                                Log.e("if part", listOfContactPerson.size()+"");
                                 if(listOfContactPerson.size() > 0)
                                     customerContactPersonListDetailAdapter.setSelectedIndex(0);
                                 customerContactPersonListDetailAdapter.notifyDataSetChanged();
@@ -1129,7 +1117,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                                 preferences.setisCustomerSelected("");
                                 listOfContactPerson.clear();
                                 listOfContactPerson.addAll(matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ContactPersonModel().toString()));
-                                Log.e("else part", listOfContactPerson.size()+"");
                                 if(listOfContactPerson.size() > 0)
                                     customerContactPersonListDetailAdapter.setSelectedIndex(0);
                                 customerContactPersonListDetailAdapter.notifyDataSetChanged();
@@ -1149,7 +1136,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                 //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.INSERT_CUSTOMER_CONTACT_PERSON + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 String url = DataHelper.URL_CUSTOMER_HELPER+"customercontactinsert";///token=" + URLEncoder.encode(DataHelper.getToken().trim(),"UTF-8");
                 //url += "/customercontactinsert=" + URLEncoder.encode(json, "UTF-8");
-                Log.e("url",url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("customercontactinsert", new StringBody(json, Charset.forName("UTF-8")));
@@ -1234,7 +1220,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e("result", result);
                     if(result.trim().equals("error"))
                     {
                         showShortToast(language.getMessageError());
@@ -1285,7 +1270,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                                         listOfContactPerson.add(customerContactPersonModel.get(i));
                                     }
                                 }
-                                Log.e("if part", listOfContactPerson.size()+"");
                                 if(listOfContactPerson.size() > 0)
                                     customerContactPersonListDetailAdapter.setSelectedIndex(0);
                                 customerContactPersonListDetailAdapter.notifyDataSetChanged();
@@ -1295,7 +1279,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                                 preferences.setisCustomerSelected("");
                                 listOfContactPerson.clear();
                                 listOfContactPerson.addAll(matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ContactPersonModel().toString()));
-                                Log.e("else part", listOfContactPerson.size()+"");
                                 if(listOfContactPerson.size() > 0)
                                     customerContactPersonListDetailAdapter.setSelectedIndex(0);
                                 customerContactPersonListDetailAdapter.notifyDataSetChanged();
@@ -1313,12 +1296,10 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             //CustomerContactPersonAndFeatureAddModel customerContactPersonAndFeatureAddModel = new CustomerContactPersonAndFeatureAddModel();
 
             CustomerContactPersonAndFeatureUpdateModel customerContactPersonAndFeatureUpdateModel = new CustomerContactPersonAndFeatureUpdateModel();
-            Log.e("salutation", salutation);
             customerContactPersonAndFeatureUpdateModel.setAnrede(salutation);
             customerContactPersonAndFeatureUpdateModel.setTitel(title);
             customerContactPersonAndFeatureUpdateModel.setVorname(firstName);
             customerContactPersonAndFeatureUpdateModel.setNachname(lastName);
-            Log.e("function", function);
             customerContactPersonAndFeatureUpdateModel.setFunktion(function);
             customerContactPersonAndFeatureUpdateModel.setTelefon(telephone);
             customerContactPersonAndFeatureUpdateModel.setTelefax(fax);
@@ -1340,16 +1321,12 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             //customerContactPersonAndFeatureAddModel.setCustomerContactPersonAddModel(customerContactPersonAddModel);
 
             String json = new Gson().toJson(customerContactPersonAndFeatureUpdateModel);
-
-            Log.e("json", json);
-
             //customerContactPersonAndFeatureAddModel.get
             try
             {
                 //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.UPDATE_CUSTOMER_CONTACT_PERSON + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 String url = DataHelper.URL_CUSTOMER_HELPER+"customercontactupdate";///token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 //url += "/customercontactupdate=" + URLEncoder.encode(json, "UTF-8");
-                Log.e("url",url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("customercontactupdate", new StringBody(json, Charset.forName("UTF-8")));
@@ -1433,21 +1410,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
             String defaultEmail = contactPerson.getEmail();
             ArrayList<FeatureModel> defaultSelectedFeatures = contactPerson.getFeatureList();
 
-            Log.e("salutation" + salutation, defaultSalutation);
-            Log.e("title" + title, defaultTitle);
-            Log.e("firstName"+ firstName, defaultFirstName);
-            Log.e("lastName"+ lastName, defaultLastName);
-            Log.e("function"+ function, defaultFunction);
-            Log.e("decisionMaker"+ decisionMaker, defaultDecisionMaker);
-            Log.e("additionalInfo"+ additionalInfo, defaultAdditionalInfo);
-            Log.e("documentLanguage"+ documentLanguage, defaultDocumentLanguage);
-            Log.e("telephone"+ telephone, defaultTelephone);
-            Log.e("mobile"+ mobile, defaultMobile);
-            Log.e("fax"+ fax, defaultFax);
-            Log.e("email"+ email, defaultEmail);
-            Log.e("selectedFeatures"+ defaultSelectedFeatures.size(), listOfSelectedFeatures.size()+"");
-
-
             if((salutation.equals(defaultSalutation)) && (title.equals(defaultTitle)) && (firstName.equals(defaultFirstName)) &&
                 (lastName.equals(defaultLastName)) && (function.equals(defaultFunction)) && (decisionMaker.equals(defaultDecisionMaker)) &&
                 (additionalInfo.equals(defaultAdditionalInfo)) && (documentLanguage.equals(defaultDocumentLanguage)) &&
@@ -1459,7 +1421,6 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                     boolean isEqual = false;
                     for(int j = 0; j < listOfSelectedFeatures.size(); j++)
                     {
-                        Log.e("salutation"+ defaultSelectedFeatures.get(i).getMerkmal(), " " + listOfSelectedFeatures.get(j).getMerkmal());
                         if(defaultSelectedFeatures.get(i).getMerkmal().equals(listOfSelectedFeatures.get(j).getMerkmal()))
                         {
                             isEqual = true;

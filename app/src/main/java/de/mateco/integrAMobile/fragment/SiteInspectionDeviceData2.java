@@ -399,7 +399,6 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
                 }
                 else
                 {
-                    //Log.e("enter","else");
                 }
                 return true;
             case R.id.actionSave:
@@ -486,7 +485,6 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
         numberString = (nPLateralReach1.getValue() + "") + (nPLateralReach2.getValue() + "") + "." + (nPLateralReach3.getValue() + "") + (nPLateralReach4.getValue() + "");
         double numberDouble = Double.parseDouble(numberString);
         deviceData.setSeitlicheReichweite(numberDouble + "");
-        Log.e("save data seitliche", numberString + " " + deviceData.getSeitlicheReichweite());
         numberString = (nPMaxLength1.getValue() + "") + (nPMaxLength2.getValue() + "") + "." + (nPMaxLength3.getValue() + "") + (nPMaxLength4.getValue() + "");
         numberDouble = Double.parseDouble(numberString);
 
@@ -555,7 +553,6 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
             newData.setGeraetetyp(selectedDevices.get(i).getGeraeettypID());
             newData.setHoehengruppe(heightGroup1);
             db.addDevice(newData);
-            Log.e("enter","loop");
         }
     }
 
@@ -630,7 +627,6 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
             }
             if (!TextUtils.isEmpty(deviceData.getSeitlicheReichweite()))
             {
-                Log.e("set data seitliche", deviceData.getSeitlicheReichweite());
                 Double number = Double.parseDouble(deviceData.getSeitlicheReichweite());
                 int workingHeight = (int) (number * 100);
                 if (workingHeight > 0)
@@ -1201,7 +1197,6 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
         //remainingDevices.addAll(removeAlternativeDevice(allDevices, selectedDevices));
 
         remainingDevices.addAll(removeAlternativeDevice(db.getDeviceType(heightGroup1), selectedDevices));
-        Log.e("remaing", remainingDevices.size() + "");
         final ListView listViewRemainingAlterNativeDevice = (ListView)dialog.findViewById(R.id.listViewRemainingAlterNativeDevice);
         listViewRemainingAlterNativeDevice.setAdapter(remainingDeviceTypeListViewAdapter);
         remainingDeviceTypeListViewAdapter.notifyDataSetChanged();
@@ -1326,7 +1321,6 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
                     spnDeviceType.setSelection(0);
                 break;
             case R.id.spnHeightScale1:
-                Log.e("enter2","enter2");
                 heightGroup1 = rowLevelGroupItems.get(position).getHeightGroup();
                 selectedDevices.clear();
                 selectedDeviceTypeListViewAdapter.notifyDataSetChanged();

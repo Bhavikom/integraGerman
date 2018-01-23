@@ -32,6 +32,7 @@ import java.util.Random;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.NetworkUtil;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.Pricing3LostSaleDataAdapter;
@@ -108,7 +109,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
 
             //if(databaseHandler.getCursorCount() > 0){
               //  GlobalClass.arraylistTransportDetail=databaseHandler.getTransportDetail();
-              //  Log.v(""," arraylist size in broadcast receiver class : "+GlobalClass.arraylistTransportDetail.size());
                // if(GlobalClass.arraylistTransportDetail.size() > 0){
                  //   for (int i=0;i<GlobalClass.arraylistTransportDetail.size();i++){
                     //    callWebservice(i);
@@ -132,7 +132,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                 @Override
                 public void OnAsynResult(String result)
                 {
-                    Log.e(" &&&&&"," result varaible after successfully service call :  "+result);
+                    LogApp.showLog(" &&&&&"," result varaible after successfully service call :  "+result);
                     /*Random random = new Random();
                     int n = 100;
                     File file = new File(Environment.getExternalStorageDirectory() + "/Result : " + random.nextInt(n) + ".txt");
@@ -157,7 +157,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                     try
                     {
                         if(result.equalsIgnoreCase("error")){
-                            Log.e(" error "," errror string from server ");
                             /* new code*/
                             //databaseHandler.addPriceInfo(arrylistJson.get(0));
 
@@ -183,7 +182,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                         }
                         else if(result.equalsIgnoreCase(""))
                         {
-                            Log.e(" null null null null "," errror string from server ");
                             /*if(arrylistJson.size() > 0){
                                 for (int i =0;i<arrylistJson.size();i++){
                                     databaseHandler.addPriceInfo(arrylistJson.get(i));
@@ -204,12 +202,10 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                         }
 //                      success goes here
                         else {
-                            Log.e(" $#$#$#$#$#$# "," successfully before $$$ real response : ");
                             JSONObject jsonObject = new JSONObject(result);
                             JSONArray jsonArray = jsonObject.getJSONArray("Warenkorb");
                             if(jsonArray.length()> 0)
                             {
-                                Log.e(" $#$#$#$#$#$# "," successfully added to servier in network change : "+arrylistJson.get(0).getId());
                                 databaseHandler.deletePriceInfo(arrylistJson.get(0).getId());
                                 arrylistJson.remove(0);
                                 if(arrylistJson.size() > 0){
@@ -234,7 +230,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                 }*/
 
                 //Toast.makeText(con," calling service in receiver : "+arrylistJson.size(),Toast.LENGTH_LONG).show();
-                Log.e(" %^%^%%^%^%^%^%^ "," json string final before calling service : "+arrylistJson.get(0));
                 String url = DataHelper.URL_PRICE_HELPER+"priceinsert";
                 //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PriceInsert;
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -245,7 +240,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
             }
             catch (Exception e) {
                 //Toast.makeText(con," exception calling service : ",Toast.LENGTH_LONG).show();
-                Log.e(" $$$$$$$ "," exception while calling ser vie : "+e.toString());
                 e.printStackTrace();
             }
         }

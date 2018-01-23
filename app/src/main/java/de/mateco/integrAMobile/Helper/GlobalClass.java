@@ -82,13 +82,12 @@ public class GlobalClass
     }
     public static void dismissProgressDialog()
     {
-        Log.v("11111","dismiss progress dialog :"+progressDialog);
         try {
             if(progressDialog != null){
                 progressDialog.dismiss();
             }
         } catch (Exception e) {
-            Log.v(""," in catch in global method for progress: : "+e.toString());
+            LogApp.showLog(""," in catch in global method for progress: : "+e.toString());
         }
 
 

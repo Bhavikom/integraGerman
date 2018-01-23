@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.model.ActivityTopicModel;
 import de.mateco.integrAMobile.model.ActivityTypeModel;
 import de.mateco.integrAMobile.model.BuheneartModel;
@@ -427,8 +428,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         db.execSQL(CREATE_PRICE_TABLE);
 
-
-        Log.e("onCreate ", "All Table Are created");
         String CREATE_LADEFAHRZEUG_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_LADEFAHRZEUG + " ("
 
                 + BEZEICHNUNG + " TEXT, "
@@ -1034,7 +1033,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
 
         long add = db.insert(TABLE_BRANCH, null, values);
-        //Log.e(" in db to add in branch tabled "," database opearation done : "+add);
         db.close();
     }
     public void addPriceInfo(String json)
@@ -1050,13 +1048,11 @@ public class DataBaseHandler extends SQLiteOpenHelper
             stmt.bindString(1,json);
             stmt.execute();
             stmt.clearBindings();
-                // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             db.setTransactionSuccessful();
             db.endTransaction();
             db.close();
         }catch (Exception e){
-            Log.e("addPriceInfo"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addPriceInfo"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1065,7 +1061,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 ContentValues values = new ContentValues();
                 values.put(JSON_STRING,json);
                 db.insert(TABLE_PRICE_JSON, null, values);
-                //Log.e("standard price", id+"");
+
 
             db.close();
         }
@@ -1144,8 +1140,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(3, String.valueOf(model.getSprache()));
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1153,7 +1147,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addLadefahzeg"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addLadefahzeg"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1169,7 +1163,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(SPRACHE, ladefahrzeugModel.getSprache());
 
                 db.insert(TABLE_LADEFAHRZEUG, null, values);
-                //Log.e("standard price", id+"");
+
             }
             db.setTransactionSuccessful();
             //db.close();
@@ -1254,8 +1248,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(5, branchData.getStrasse());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1263,7 +1255,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addBranch"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addBranch"," excepiton while insert : "+e.toString());
         }
 
        /* SQLiteDatabase db = this.getWritableDatabase();
@@ -1281,7 +1273,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PLZ, branch.getPlz());
                 values.put(KEY_STRASSES, branch.getStrasse());
                 long id = db.replace(TABLE_BRANCH, null, values);
-                Log.e(" in db to add in branch tabled "," database opearation done : "+id);
+
             }
             db.setTransactionSuccessful();
         }
@@ -1340,8 +1332,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1349,7 +1339,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addCustomerBranch"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addCustomerBranch"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1397,8 +1387,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, deviceDataModel.getDesignation());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1406,7 +1394,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addDevice"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addDevice"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1455,8 +1443,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1464,7 +1450,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addPriceRental"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addPriceRental"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1513,8 +1499,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, countryModel.getCountryName());
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1522,7 +1506,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addCountries"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addCountries"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1570,8 +1554,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1579,7 +1561,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addActivityTypes"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addActivityTypes"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1625,8 +1607,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, activityTopicModel.getActivityTopicName());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1634,7 +1614,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addActivityTopics"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addActivityTopics"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1681,8 +1661,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, legalFormModel.getRechtsFormDesignation());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1690,7 +1668,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addLegalForms"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addLegalForms"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1736,8 +1714,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, salutationModel.getSalutationDesignation());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1745,7 +1721,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addSalutation"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addSalutation"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1791,8 +1767,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2,json);
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1800,7 +1774,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addEmployees"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addEmployees"," excepiton while insert : "+e.toString());
         }
         /*SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -1850,8 +1824,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, functionModel.getFunctionDesignation());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1859,7 +1831,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addFunction"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addFunction"," excepiton while insert : "+e.toString());
         }
         /*if(functions != null && functions.size() > 0){
             SQLiteDatabase db = this.getWritableDatabase();
@@ -1875,7 +1847,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 db.setTransactionSuccessful();
             }
             catch (Exception e){
-                Log.e(" "," exception a; "+e.toString());
+
                 db.endTransaction();
                 db.close();
             }
@@ -1908,8 +1880,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(4, deviceTypeModel.getArbeitshoehe());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1917,7 +1887,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addSiteInspectionDeviceType"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addSiteInspectionDeviceType"," excepiton while insert : "+e.toString());
         }
 
         //SQLiteDatabase db = this.getWritableDatabase();
@@ -1941,7 +1911,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 //db.close();
             }
             catch (Exception e){
-                Log.e(" "," exception a; "+e.toString());
+
                 db.endTransaction();
                 db.close();
             }
@@ -1972,8 +1942,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-               // Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -1981,7 +1949,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addDocumentLanguage"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addDocumentLanguage"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2027,8 +1995,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, decisionMakerModel.getDecisionMakerDesignation());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
+
             }
 
             db.setTransactionSuccessful();
@@ -2036,7 +2003,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addDecisionMakers"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addDecisionMakers"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2081,8 +2048,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, featureModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -2090,7 +2055,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addFeatures"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addFeatures"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2147,8 +2112,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-               // Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -2156,7 +2119,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addProjectStage"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addProjectStage"," excepiton while insert : "+e.toString());
         }
         /*SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -2202,8 +2165,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -2211,7 +2172,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addProjectArea"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addProjectArea"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2258,8 +2219,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -2267,7 +2226,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addProjectArt"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addProjectArt"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2314,8 +2273,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
+
             }
 
             db.setTransactionSuccessful();
@@ -2323,7 +2281,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addProjectType"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addProjectType"," excepiton while insert : "+e.toString());
         }
 
        /* SQLiteDatabase db = this.getWritableDatabase();
@@ -2371,8 +2329,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-               // Log.e(" prepare statment "," count variable for device type :  "+count);
+
             }
 
             db.setTransactionSuccessful();
@@ -2380,7 +2337,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addProjectPhase"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addProjectPhase"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2428,8 +2385,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
+
             }
 
             db.setTransactionSuccessful();
@@ -2437,7 +2393,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addProjectTrade"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addProjectTrade"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2486,8 +2442,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -2495,7 +2449,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addPriceStaffel"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addPriceStaffel"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2566,9 +2520,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             stmt.execute();
             stmt.clearBindings();
-                // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
-
 
             db.setTransactionSuccessful();
             db.endTransaction();
@@ -2576,7 +2527,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         }catch (Exception e){
             db.endTransaction();
             db.close();
-            Log.e("addCustomer"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addCustomer"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2728,7 +2679,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             } while (cursor.moveToNext());
         }
-        Log.e("list of customer", listOfCustomer.size() + " " + new Gson().toJson(listOfCustomer).toString());
+        LogApp.showLog("list of customer", listOfCustomer.size() + " " + new Gson().toJson(listOfCustomer).toString());
         db.close();
         return listOfCustomer;
     }
@@ -2864,7 +2815,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        String query = "select * from " + TABLE_CUSTOMER + " WHERE " +
 //                KEY_CUSTOMER_CUSTOMER_NO + " = '" + kundenNr +"'";
-//        Log.e("select query", query);
 //        Cursor cursor = db.rawQuery(query, null);
 //        if (cursor.moveToFirst())
 //        {
@@ -3364,7 +3314,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
             }
             catch (ParseException e)
             {
-                Log.e("datetime dataabse", "Parsing ISO8601 datetime failed", e);
+                LogApp.showLog("datetime dataabse", "Parsing ISO8601 datetime failed"+e);
             }
         }
         db.close();
@@ -3591,15 +3541,12 @@ public class DataBaseHandler extends SQLiteOpenHelper
             stmt.bindString(13,lostSale.getCustomerNo());
             stmt.execute();
             stmt.clearBindings();
-            // long count =stmt.executeInsert();
-            //Log.e(" prepare statment "," count variable for device type :  "+count);
-
 
             db.setTransactionSuccessful();
             db.endTransaction();
             db.close();
         }catch (Exception e){
-            Log.e("addLostSale"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addLostSale"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -3617,7 +3564,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_LOST_SALE_HB, lostSale.getHb());
         values.put(KEY_LOST_SALE_BEST, lostSale.getBest());
         values.put(KEY_LOST_CUSTOMER_KUNDEN_NR, lostSale.getCustomerNo());
-        Log.e("Insert Lost Sale",values+"");
+
         db.insert(TABLE_LOST_SALE, null, values);
         db.close();*/
     }
@@ -3677,7 +3624,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 values.put(KEY_PRICING_OFFLINE_STANDARD_PRICE_UBER_8_STUNDEN_R,
                         priceOfflineStandardPrice.getUber8StundenR());
                 db.replace(TABLE_PRICING_OFFLINE_STANDARD_PRICE, null, values);
-                //Log.e("standard price", id+"");
+
             }
             db.setTransactionSuccessful();
         }
@@ -3740,10 +3687,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.execute();
                 stmt.clearBindings();
 
-                //long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable :  "+count);
-
-
             }
 
             db.setTransactionSuccessful();
@@ -3751,7 +3694,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addPricingOfflineStandardPrice"," excepiton while insert: "+e.toString());
+            LogApp.showLog("addPricingOfflineStandardPrice"," excepiton while insert: "+e.toString());
         }
 
 
@@ -3784,8 +3727,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.execute();
                 stmt.clearBindings();
 
-               // long count =stmt.executeInsert();
-               // Log.e(" prepare statment "," count variable for equipment :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -3793,7 +3734,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addPricingOfflineEquipmentData"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addPricingOfflineEquipmentData"," excepiton while insert : "+e.toString());
         }
         /*SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -3900,7 +3841,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 lostSale.setBranch(cursor.getString(1));
                 lostSale.sethGRP(cursor.getString(2));
                 lostSale.setMd(cursor.getInt(3));
-                Log.e("MD......"," " + cursor.getInt(3));
                 lostSale.setRentalPrice(cursor.getDouble(4));
                 lostSale.setSb(cursor.getDouble(5));
                 lostSale.setHfStatus(cursor.getString(6));
@@ -3969,10 +3909,9 @@ public class DataBaseHandler extends SQLiteOpenHelper
         String query = "SELECT * FROM "+ TABLE_PRICING_OFFLINE_STANDARD_PRICE + " WHERE " +
                 KEY_PRICING_OFFLINE_STANDARD_PRICE_HOEHENGRUPPE + " = ? AND " + KEY_PRICING_OFFLINE_STANDARD_PRICE_MANDANT + " = ?";
         //KEY_PRICING_OFFLINE_STANDARD_PRICE_HOEHENHAUPTGRPPE_ID + " = ? AND " +
-                Log.e("query", query);
+                LogApp.showLog("query", query);
         //Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(Branch),DeviceType,String.valueOf(Einheit)});
         Cursor cursor = db.rawQuery(query, new String[]{DeviceType,String.valueOf(Branch)});
-        Log.e("cursor count", cursor.getCount() + "");
         if (cursor.moveToFirst())
         {
             do
@@ -4060,8 +3999,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             stmt.execute();
             stmt.clearBindings();
-            // long count =stmt.executeInsert();
-            //Log.e(" prepare statment "," count variable for device type :  "+count);
 
 
             db.setTransactionSuccessful();
@@ -4070,7 +4007,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         }catch (Exception e){
             db.endTransaction();
             db.close();
-            Log.e("addPhoto"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addPhoto"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -4212,7 +4149,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_DEVICE_DATA + " WHERE " + KEY_PARENT_ID + "=? AND " +
                 KEY_BVO_ID + "=?", new String[]{"0",String.valueOf(id)});
-        Log.e("count", c.getCount() + "");
         int count = c.getCount();
         db.close();
         return count;
@@ -4308,15 +4244,12 @@ public class DataBaseHandler extends SQLiteOpenHelper
             }
             stmt.execute();
             stmt.clearBindings();
-                // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
             db.setTransactionSuccessful();
             db.endTransaction();
             db.close();
         }catch (Exception e){
             db.endTransaction();
             db.close();
-            Log.e("addDevice"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -4348,7 +4281,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(KEY_KORBARMLAENGE,deviceDataModel.getKorbarmlaenge());
         values.put(KEY_HAUPTGERAT, deviceDataModel.getHauptgeraet());
         long id = db.insert(TABLE_DEVICE_DATA, null, values);
-        Log.e("databser id", id + " parent id" + deviceDataModel.getParentId());
+
         db.close();*/
     }
 
@@ -4495,8 +4428,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-               // Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -4504,7 +4435,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addBuildingProject"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addBuildingProject"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -4556,8 +4487,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(2, siteInspectionAccessModel.getZugang());
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-               // Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -4565,7 +4494,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e("addAccess"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addAccess"," excepiton while insert : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -4621,18 +4550,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             stmt.execute();
             stmt.clearBindings();
-                // long count =stmt.executeInsert();
-                //Log.e(" prepare statment "," count variable for device type :  "+count);
 
             db.setTransactionSuccessful();
             db.endTransaction();
 
             db.close();
         }catch (Exception e){
-            Log.e("addSiteInspection"," excepiton while insert : "+e.toString());
+            LogApp.showLog("addSiteInspection"," excepiton while insert : "+e.toString());
         }
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        /*SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_UPLOAD_ID,0);
         values.put(KEY_FLAG,0);
@@ -4646,7 +4573,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 new Gson().toJson(siteInspectionModel.getSiteInspectionAdditionalMobileWindPowerModel()));
         values.put(KEY_SELECT_MAIL,new Gson().toJson(siteInspectionModel.getListOfEmailAddress()));
         db.insert(TABLE_SITE_INSPECTION, null, values);
-        db.close();
+        db.close();*/
     }
 
     public int getSiteInspectionId()
@@ -4767,7 +4694,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 siteInspectionModel.setId(cursor.getInt(0));
                 siteInspectionModel.setUploadId(cursor.getString(1));
                 siteInspectionModel.setFlag(cursor.getInt(2));
-                Log.e("flag", cursor.getInt(2) + "");
                 siteInspectionModel.setDate(cursor.getString(3));
                 String siteInspectionDetail = cursor.getString(4);
                 siteInspectionModel.setSiteInspectionNewModel
@@ -4914,7 +4840,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "SELECT * from " + TABLE_STAFFEL + " where " + KEY_STAFFEL + "=" + staffel;
 
-        //Log.e(" @@@@@@ ", " queary variable in staffel : "+query);
+
         Cursor cursor = db.rawQuery("SELECT * from " + TABLE_STAFFEL + " where " + KEY_STAFFEL + "=?",
                 new String[]{String.valueOf(staffel)});
 
@@ -5217,13 +5143,12 @@ public class DataBaseHandler extends SQLiteOpenHelper
             stmt.execute();
             stmt.clearBindings();
             // long count =stmt.executeInsert();
-            //Log.e(" prepare statment "," count variable for device type :  "+count);
             db.setTransactionSuccessful();
             db.endTransaction();
 
             db.close();
         }catch (Exception e){
-            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+            LogApp.showLog(" prepare statment for device type"," excepiton while inser : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -5297,7 +5222,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         values.put(END_TIME, priceInsert.getStrendTime());
 
         long id = db.insert(TABLE_PRICING3INSERTJSON, null, values);
-        Log.e(" @@@@@@@@@@@@@@@@@@@@"," inserte data in database on cache button click : "+id);
+
         db.close();*/
     }
 
@@ -5316,7 +5241,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                     "AND id = ?", new String[]{KundenNr, String.valueOf(ids)});
 //        Cursor cursor = db.rawQuery("select Kontakt,kunndenNr,CustomerNr,Mandant,Warenkorbart,Hoehengruppe,Einheit_Mietdauer,Mietdauer,Mietpreis,Standtag,Selbstbehalt,HandlingFee,ServicePauschale,Versicherung,WochenendeMitversichert,TransportAnfahrt,TransportPauschal,TransportAbfahrt,Beiladungspauschale,Einsatzinformation,Besteller,Besteller_Telefon,Besteller_Email,Notiz,KaNr,AnsPartner,Besteller_Anrede,Besteller_Mobil,Mautkilometer,Winterreifenpauschale,Bearbeitet,Kalendertage,Referenz,Geraetetyp,loginUserNumberrange,branch,hgrp,deviceType,manufacturer,type,md,rentalPrice,sb,hf,sp,hb,best,kundenNr,Ersteller,json from " + TABLE_PRICING3INSERTJSON + " where kunndenNr = ?  AND id = ?", new String[]{KundenNr,String.valueOf(ids)});
             // ORDER BY id LIMIT 1
-            Log.e("cursor", cursor.getCount() + "");
             if (cursor.moveToFirst()) {
 
                 pricing3InsertDatas.setKontakt(cursor.getString(cursor.getColumnIndex("Kontakt")));
@@ -5394,7 +5318,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
             db.close();
             return pricing3InsertDatas;
         }catch (Exception e){
-            Log.e(" in catch "," exception while fetch data : "+e.toString());
+            LogApp.showLog(" in catch "," exception while fetch data : "+e.toString());
             db.close();
             return pricing3InsertDatas;
         }
@@ -5424,8 +5348,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(4, buheneartModel.getSprache());
                 stmt.execute();
                 stmt.clearBindings();
-               // long count =stmt.executeInsert();
-              //  Log.e(" prepare statment "," count variable for device type :  "+count);
             }
 
             db.setTransactionSuccessful();
@@ -5433,7 +5355,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            Log.e(" prepare statment for device type"," excepiton while inser : "+e.toString());
+            LogApp.showLog(" prepare statment for device type"," excepiton while inser : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();

@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.Helper.CustomSSLFactory;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.model.Language;
 
 /**
@@ -66,7 +67,6 @@ public class AsynchTaskWithAuthorizationHeaderPost2 extends AsyncTask<BasicNameV
         HttpPost httppost = new HttpPost(url);
         httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 40000);
         httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 40000);
-        Log.e("submit button : ","url at execute on submit  : " +url);
 //        httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
 //        httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
         ArrayList<BasicNameValuePair> reqArguments = new ArrayList<BasicNameValuePair>();
@@ -85,7 +85,6 @@ public class AsynchTaskWithAuthorizationHeaderPost2 extends AsyncTask<BasicNameV
         }
         catch (Exception e)
         {
-            Log.e(" AAAAAAAAAAAAAAAAAA"," exception while callinge service : "+e.toString());
             e.printStackTrace();
         }
         return "error";
@@ -100,8 +99,7 @@ public class AsynchTaskWithAuthorizationHeaderPost2 extends AsyncTask<BasicNameV
     {
         elapsedTime = System.currentTimeMillis() - startTime;
         int seconds = (int) (elapsedTime / 1000) % 60 ;
-        Log.e(""," total time that service has elapsed : "+seconds);
-        Log.e("*&*&*&*&*&*&*&*&","on post execute result varialbe : "+result);
+        LogApp.showLog(""," total time that service has elapsed : "+seconds);
         if(isProcessDialogEnabled)
         {
            // prd.dismiss();

@@ -55,6 +55,7 @@ import java.util.stream.Stream;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
@@ -140,7 +141,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
     @Override
     public void initializeComponents(View rootView)
     {
-        Log.e("initializeComponents", "initializeComponents");
         preferences2 = new PreferencesClass(getActivity());
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
 
@@ -602,7 +602,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
             pageNuber = 1;
             //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -618,7 +617,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -626,14 +624,12 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ","result on get service call "+result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -689,7 +685,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -738,7 +733,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -754,7 +748,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                                 String json = new Gson().toJson(customerFullDetail.getCustomerSearchList());
                                 matecoPriceApplication.clearPricingData();
                                 matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
-                                Log.e("customer detail", customerFullDetail.getCustomerSearchList().toString());
                                 String listOfContactPerson = new Gson().toJson(customerFullDetail.getCustomerContactPersonList());
                                 matecoPriceApplication.saveData(DataHelper.LoadedCustomerContactPerson, listOfContactPerson);
 
@@ -819,8 +812,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + listOfCustomerSearchResult.get(selectedIndex).getKontakt();
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -1348,7 +1339,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
     private void searchForNewPage()
     {
         isCallservice=true;
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -1381,7 +1371,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
             customerSearch.setPageSize(pageSize + "");
 
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -1396,7 +1385,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -1404,14 +1392,12 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -1442,7 +1428,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                                 }
 
                                 JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfCustomers.length()+"");
+                                LogApp.showLog("size add page" + pageNuber, resultsOfCustomers.length()+"");
                                 if(result.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -1471,7 +1457,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -1528,7 +1513,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -1540,13 +1524,10 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -1608,7 +1589,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                     customerSearch.setPageNumber(GlobalClass.pageNuber + "");
                     customerSearch.setMitarbeiter(loginUserNumber);
                     jsonToSend = DataHelper.getGson().toJson(customerSearch);
-                    Log.e("customer to json", jsonToSend);
+                    LogApp.showLog("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, DataHelper.URL_CUSTOMER_HELPER+"customersearchhint/token=" + URLEncoder.encode(base64Data.trim(), "UTF-8")
@@ -1621,7 +1602,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                    LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

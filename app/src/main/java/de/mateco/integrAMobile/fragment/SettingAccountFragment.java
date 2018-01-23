@@ -227,7 +227,6 @@ public class SettingAccountFragment extends BaseFragment implements View.OnClick
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result change passowrd", result);
                         if(result.trim().replace("\"", "").equals("Password Changed Successfully...."))
                         {
                             showShortToast(language.getMessagePasswordChangedSuccessfully());
@@ -256,13 +255,11 @@ public class SettingAccountFragment extends BaseFragment implements View.OnClick
                     model.setEmail(emailAddress);
                     model.setNewpassword(password);
                     String jsonString = new Gson().toJson(model);
-                    Log.e("change password", jsonString);
                     /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.CHANGE_CURRENT_PASSWORD
                             + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "&changepasswordparam=" + URLEncoder.encode(jsonString, "UTF-8");*/
                     String url = DataHelper.URL_USER_HELPER +"changecurrentpassword/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/changepasswordparam=" + URLEncoder.encode(jsonString, "UTF-8");
-                    Log.e("url", url);
 
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                     asyncTask.execute();

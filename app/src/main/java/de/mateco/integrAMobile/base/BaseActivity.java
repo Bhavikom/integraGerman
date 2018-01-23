@@ -32,14 +32,12 @@ public class BaseActivity extends ActionBarActivity
 
     public void                                                                                                                                                                                                                                                                 initializeActivity()
     {
-        Log.e("initializeing ", "base fragment fragment");
         initializeComponents();
         bindEvents();
     }
 
     public void initializeComponents()
     {
-        Log.e("initializeing ", "base fragment componenets");
     }
 
     public void bindEvents()

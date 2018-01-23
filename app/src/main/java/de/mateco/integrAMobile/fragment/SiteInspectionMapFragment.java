@@ -58,6 +58,7 @@ import java.util.Random;
 import de.mateco.integrAMobile.Helper.Constants;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GooglePlacesAutocompleteAdapter;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.asyncTask.GeocoderTask;
@@ -198,7 +199,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                                 }
                                 if(latitude !=null &&  longitude!=null)
                                 {
-                                    Log.e("mapFragment", " latitude longitude not null");
                                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
                                     currentLocationMarker = map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("").draggable(true));
                                     BasicNameValuePair nameValuePair = DataHelper.getFormattedLocationInDegree(getActivity(), latitude, longitude);
@@ -207,7 +207,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                                 }
                                 else
                                 {
-                                    Log.e("mapFragment", " latitude longitude null");
                                     map.setMyLocationEnabled(true);
                                     if(map != null)
                                     {
@@ -270,7 +269,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                             }
                             if(latitude !=null &&  longitude!=null)
                             {
-                                Log.e("mapFragment", " latitude longitude not null");
                                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
                                 currentLocationMarker = map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("").draggable(true));
                                 BasicNameValuePair nameValuePair = DataHelper.getFormattedLocationInDegree(getActivity(), latitude, longitude);
@@ -279,7 +277,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                             }
                             else
                             {
-                                Log.e("mapFragment", " latitude longitude null");
                                 map.setMyLocationEnabled(true);
                                 if(map != null)
                                 {
@@ -406,7 +403,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                                         }
                                         if(latitude !=null &&  longitude!=null)
                                         {
-                                            Log.e("mapFragment", " latitude longitude not null");
                                             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
                                             currentLocationMarker = map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("").draggable(true));
                                             BasicNameValuePair nameValuePair = DataHelper.getFormattedLocationInDegree(getActivity(), latitude, longitude);
@@ -415,7 +411,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                                         }
                                         else
                                         {
-                                            Log.e("mapFragment", " latitude longitude null");
                                             map.setMyLocationEnabled(true);
                                             if(map != null)
                                             {
@@ -550,7 +545,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
             case R.id.actionRight:
                 PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
                         new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-                Log.e(""," all value before set : "+zipCode+" road : "+road+" street : "+street+" lat: "+latitude+" long : "+longitude);
                 if(zipCode != null && !TextUtils.isEmpty(zipCode)){
                     model.setZipCode(zipCode);
                 }
@@ -573,7 +567,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                 matecoPriceApplication.saveData(DataHelper.PricingCustomerBasicOrderInfo, jsonString);
                 boolean fragmentPopped = getActivity().getSupportFragmentManager().popBackStackImmediate();
 
-                Log.e("fragment popped ", fragmentPopped+"");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -780,9 +773,9 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                 text = text + ", " + model.getEinsatzPLZ();
             }
             autoCompleteTextPlace.setText(sb.toString());
-            Log.e("get knotakt not null", "getKontaktStrasse not null " + model.getEinsatzstrasse());
-            Log.e("get knotakt not null", "getEinsatzort not null " + model.getEinsatzort());
-            Log.e("get knotakt not null", "getEinsatzPLZ not null " + model.getEinsatzPLZ());
+            LogApp.showLog("get knotakt not null", "getKontaktStrasse not null " + model.getEinsatzstrasse());
+            LogApp.showLog("get knotakt not null", "getEinsatzort not null " + model.getEinsatzort());
+            LogApp.showLog("get knotakt not null", "getEinsatzPLZ not null " + model.getEinsatzPLZ());
         }
     }
 
@@ -802,7 +795,6 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
         {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            Log.e("update button ", latitude + "longi" + longitude);
             LatLng latLng = new LatLng(latitude, longitude);
             if(map != null){
                 map.clear();

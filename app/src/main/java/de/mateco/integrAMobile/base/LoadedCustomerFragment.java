@@ -36,7 +36,6 @@ public class LoadedCustomerFragment extends BaseFragment
     @Override
     public void initializeFragment(View rootView)
     {
-        Log.e("initializeing ", "loaded customer fragment");
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
         //initializeComponents(rootView);
         super.initializeFragment(rootView);
@@ -46,7 +45,6 @@ public class LoadedCustomerFragment extends BaseFragment
     @Override
     public void initializeComponents(View rootView)
     {
-        Log.e("initializeing ", "loaded customer components");
         if(matecoPriceApplication.isCustomerLoaded(DataHelper.isCustomerLoaded, false))
         {
             ViewStub stub = (ViewStub) rootView.findViewById(R.id.stub);

@@ -77,6 +77,7 @@ import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
+import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.ProjectActivityComparable;
 import de.mateco.integrAMobile.Helper.TimePickerDialogFragment;
 import de.mateco.integrAMobile.HomeActivity;
@@ -308,7 +309,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         {
             /*if(isViewShown)
             {*/
-                Log.e("enter","view shown");
                 adapterProjectActivityList.setSelectedIndex(0);
                 selectedActivity = listOfLoadedProjectActivity.get(0);
                 setProjectActivity(selectedActivity);
@@ -731,8 +731,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                                 + "&token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                                 + "&fieldname=" + "Kontakt"
                                 + "&value=" + activity.getKontakt();*/
-                        Log.e("url", url);
-
                         BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                         asyncTask.execute();
                     }
@@ -1050,7 +1048,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
          * Set Call back to capture selected date
          */
         newFragment.setCallBack(onFromDate);
-        Log.e("tag", "startDate");
         newFragment.setMinDate(today);
         newFragment.show(getActivity().getSupportFragmentManager(), "startDate");
     }
@@ -1065,7 +1062,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             Calendar c = Calendar.getInstance();
             c.setTime(today);
             args.putInt("hour", c.get(Calendar.HOUR_OF_DAY));
-            Log.e("minute", c.get(Calendar.MINUTE)+"");
             args.putInt("min", c.get(Calendar.MINUTE));
             timePicker.setArguments(args);
             timePicker.setCallBack(callback);
@@ -1086,7 +1082,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     c.setTime(date);
                     Bundle args = new Bundle();
                     args.putInt("hour", c.get(Calendar.HOUR_OF_DAY));
-                    Log.e("minute", c.get(Calendar.MINUTE)+"");
                     args.putInt("min", c.get(Calendar.MINUTE));
                     TimePickerDialogFragment timePicker = new TimePickerDialogFragment();
                     timePicker.setCallBack(callback);
@@ -1109,7 +1104,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 monthOfYear += 1;
                 String date = dayOfMonth + " " + monthOfYear + " " + year;
                 String finaldate = DataHelper.formatDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
                 labelProjectActivityStartDate.setText(finaldate);
             }
             catch (ParseException e)
@@ -1149,7 +1143,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 else{
                     showShortToast(language.getMessageEndTimeGreaterThenStartTime());
                 }*/
-                Log.e(" on end click "," start time and end time on activity : "+inTime.toString()+" : "+outTime.toString());
                 if(inTime.compareTo(outTime) > 0)
                 {
                     showShortToast(language.getMessageEndTimeGreaterThenStartTime());
@@ -1218,7 +1211,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    Log.e("  before compare : "," in time and end time : "+inTime.toString()+" : "+outTime.toString());
                     if(inTime.compareTo(outTime) > 0)
                     {
                         showShortToast(language.getMessageEndTimeGreaterThenStartTime());
@@ -1460,7 +1452,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     {
                         listOfSelectedEmployee.add(listOfAllEmployee.get(i));
                         selectedEmployeeAdapter.notifyDataSetChanged();
-                        Log.e("size",listOfSelectedEmployee.size()+"");
                     }
 
                 }
@@ -1672,7 +1663,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                 @Override
                 public void OnAsynResult(String result) {
-                    Log.e("result", result);
                     if(result.equals("error")) {
                         showShortToast(language.getMessageError());
                     }
@@ -1716,7 +1706,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             };
             try
             {
-                Log.e("json", json);
                 /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_ACTIVITY_INSERT
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&projectactivityinsert=" + URLEncoder.encode(json, "UTF-8");*/
@@ -1729,8 +1718,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 multipartEntity.addPart("projectactivityinsert", new StringBody(json, Charset.forName("UTF-8")));
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
-
-                Log.e("url", url);
                 /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultAddNewCustomerActivity, getActivity(), true);
                 asyncTask.execute();*/
             }
@@ -1797,8 +1784,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         projectActivityUpdateModel.setAktthema(activityTopic);
         projectActivityUpdateModel.setNotiz(note);
         ProjectDetailGenerallyModel projectGenerallyDetail = matecoPriceApplication.getProjectDetailGenerallyModel(DataHelper.LoadedProjectDetailGenerallyInfo, new ProjectDetailGenerallyModel().toString());
-
-        //Log.e("project", project + "");
         if(TextUtils.isEmpty(textViewProjectActivityKunde.getText().toString())){
             projectActivityUpdateModel.setWithoutKontactAndProject("true");
         }else {
@@ -1888,7 +1873,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
                 @Override
                 public void OnAsynResult(String result) {
-                    Log.e("result", result);
                     if(result.equals("error"))
                     {
                         showShortToast(language.getMessageError());
@@ -1933,14 +1917,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             };
             try
             {
-                Log.e("json", json);
                 /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_ACTIVITY_UPDATE
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&projectactivityupdate=" + URLEncoder.encode(json, "UTF-8");*/
                 String url = DataHelper.URL_PROJECT_HELPER+"projectactivityupdate";// + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PROJECT_ACTIVITY_UPDATE
                         //+ "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         //+ "&projectactivityupdate=" + URLEncoder.encode(json, "UTF-8");
-                Log.e("url", url);
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("projectactivityupdate", new StringBody(json, Charset.forName("UTF-8")));
@@ -2245,7 +2227,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             listCustomerSearchResult.removeFooterView(footerView);
 
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -2260,7 +2241,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -2268,14 +2248,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                             //showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -2330,7 +2308,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -2370,7 +2347,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result",result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -2453,8 +2429,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
                         + "/value=" + listOfCustomerSearchResult.get(selectedIndex).getKontakt();
-                Log.e("url", url);
-
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -2518,7 +2492,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private void searchForNewPage()
     {
         isCallservice=true;
-        Log.e("search for new page", "called");
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
@@ -2551,7 +2524,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
 
             //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             String jsonToSend = DataHelper.getGson().toJson(customerSearch);
-            Log.e("customer to json", jsonToSend);
             String base64Data = DataHelper.getToken();
             String url = "";
             try
@@ -2566,7 +2538,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             {
                 e.printStackTrace();
             }
-            Log.e("url at customer search", url);
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -2574,14 +2545,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("result ", result);
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
                             showLongToast(language.getMessageError());
                         }
                         else if(result.equals(DataHelper.NetworkError)){
-                            Log.e(" ###### "," network problem : "+result);
                            // showLongToast("Network problem while service calling before");
                             if(isCallservice) {
                                 //showLongToast("service call start now");
@@ -2612,7 +2581,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                                 }
 
                                 JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
-                                Log.e("size add page" + pageNuber, resultsOfCustomers.length()+"");
                                 if(result.length() == 0)
                                 {
                                     showLongToast(language.getMessageNoResultFound());
@@ -2640,7 +2608,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                Log.e("clear", listOfCustomerSearchResult.size()+"");
                 adapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
@@ -2718,7 +2685,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     if (constraint != null) {
-                        //Log.v(MainActivity.TAG, "Search string: " + constraint.toString());
                         findHintsFromApi(mContext, constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -2730,13 +2696,10 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    // Log.v(MainActivity.TAG, "publishResults");
                     if (results != null && results.count > 0) {
-                        //Log.v(MainActivity.TAG, "publishResult OK.");
                         arraylistHint = (List<HintModel>) results.values;
                         notifyDataSetChanged();
                     } else {
-                        //Log.v(MainActivity.TAG, "publishResult Invalid.");
                         notifyDataSetInvalidated();
                     }
                 }};
@@ -2803,7 +2766,6 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     customerSearch.setPageNumber(GlobalClass.pageNuber + "");
                     //customerSearch.setMitarbeiter(loginUserNumber);
                     jsonToSend = DataHelper.getGson().toJson(customerSearch);
-                    Log.e("customer to json", jsonToSend);
                 }
                 String base64Data = DataHelper.getToken();
                 JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, DataHelper.URL_CUSTOMER_HELPER+"customersearchhint/token=" + URLEncoder.encode(base64Data.trim(), "UTF-8")
@@ -2816,7 +2778,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                                     JSONArray resultsOfCustomers = jsonObject.getJSONArray("Result");
                                     TypeToken<List<HintModel>> token = new TypeToken<List<HintModel>>() {};
                                     arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
-                                    Log.e(" test "," hint list size : "+ arraylistHint.size());
+                                    LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

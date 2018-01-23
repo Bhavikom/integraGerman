@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -34,6 +35,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import de.mateco.integrAMobile.CrashDisplayActivity;
 import de.mateco.integrAMobile.Helper.Constants;
+import de.mateco.integrAMobile.Helper.LogApp;
 import io.fabric.sdk.android.Fabric;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -86,8 +88,13 @@ public class MatecoPriceApplication extends Application
         super.onCreate();
         instance = this;
         con = this;
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
+
         Fabric.with(this, new Crashlytics());
-        Log.e("enter", "application");
         MultiDex.install(this);
         //defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
         //Thread.setDefaultUncaughtExceptionHandler(handler);
@@ -266,7 +273,6 @@ public class MatecoPriceApplication extends Application
     {
         String data = prefs.getString(variable, defaultValue);
         CustomerModel customer = new CustomerModel();
-        Log.e("customer data", data);
         customer = new Gson().fromJson(data, CustomerModel.class);
         return customer;
     }
@@ -528,28 +534,21 @@ public class MatecoPriceApplication extends Application
 
          while (true) {
             try {
-                Log.v(LOG_TAG, "Starting crash catch Looper");
                 //Looper.prepare();
                 Looper.loop();
                 Thread.setDefaultUncaughtExceptionHandler(systemUncaughtHandler);
                 throw new RuntimeException("Main thread loop unexpectedly exited");
             } catch (BackgroundException e) {
                 //Fabric.with(this, new Crashlytics());
-                Log.e("enter", "application");
                 //MultiDex.install(this);
                 //defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
 
-                Log.e(LOG_TAG, "Caught the exception in the background thread " +
-                        e.threadName + ", TID: " + e.tid, e.getCause());
                 showCrashDisplayActivity(e.getCause());
             } catch (Throwable e) {
                 //Fabric.with(this, new Crashlytics());
-                Log.e("enter", "application");
                 //MultiDex.install(this);
 
                 //defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
-
-                Log.e(LOG_TAG, "Caught the exception in the UI thread, e:", e);
                 showCrashDisplayActivity(e);
             }
         }
@@ -579,8 +578,6 @@ public class MatecoPriceApplication extends Application
         }
 
         public void uncaughtException(Thread thread, final Throwable e) {
-            Log.v(LOG_TAG, "Caught the exception in the background " + thread +
-                    " propagating it to the UI thread, e:", e);
             final int tid = Process.myTid();
             final String threadName = thread.getName();
             mHandler.post(new Runnable() {

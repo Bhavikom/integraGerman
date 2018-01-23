@@ -369,7 +369,6 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                     @Override
                     public void OnAsynResult(String result)
                     {
-                        Log.e("todayresult", result);
                         if(result.equals("error"))
                         {
                             showShortToast(language.getMessageError());
@@ -385,7 +384,6 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                                 @Override
                                 public void OnAsynResult(String result)
                                 {
-                                    Log.e("otherresult", result);
                                     if(result.equals("error"))
                                     {
                                         showShortToast(language.getMessageError());
@@ -412,11 +410,9 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                                         + "/mitarbeiter=" + loginPersonId
                                         + "/datum=" + dateString;
-                                Log.e("otherurl",url);
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
-                            Log.e("otherurl", url);
                             asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), true);
                             asyncTask1.execute();
                         }
@@ -431,7 +427,6 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + dateString;
-                Log.e("todayurl", url);
                 asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }
@@ -479,7 +474,6 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
     {
         try
         {
-            Log.e("result", result + " test");
             listAgendaMeeting.clear();
             listAgendaTelephone.clear();
             if(!result.equals(""))
@@ -537,7 +531,6 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                                     CustomerFullDetailModel customerFullDetail = new Gson().fromJson(result, CustomerFullDetailModel.class);
                                     String json = new Gson().toJson(customerFullDetail.getCustomerSearchList());
                                     matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, json);
-                                    Log.e("customer detail", customerFullDetail.getCustomerSearchList().toString());
                                     String listOfContactPerson = new Gson().toJson(customerFullDetail.getCustomerContactPersonList());
                                     matecoPriceApplication.saveData(DataHelper.LoadedCustomerContactPerson, listOfContactPerson);
 
@@ -586,8 +579,6 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                             + "/value=" + model.getKontakt();
 //                            + "&fieldname=" + "MatchCode"
 //                            + "&value=" + model.getMatchcode();
-                    Log.e("url", url);
-
                     asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                     asyncTask.execute();
                 }
@@ -668,7 +659,6 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
 //                            + "&value=" + model.getMatchcode_Projekt();
                     //Projekt
                     //Projekt
-                    Log.e("url", url);
                     asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                     asyncTask.execute();
                 }
