@@ -880,9 +880,17 @@ package de.mateco.integrAMobile.fragment;
             model.setArtaussenID(projectStage);
             model.setArtInnen(projectBuheneart);
             model.setGroesse(size);
-            model.setNotiz(projectGenerallyDetail.getNotiz());
+            if(!TextUtils.isEmpty(projectGenerallyDetail.getNotiz())){
+                model.setNotiz(projectGenerallyDetail.getNotiz());
+            }else{
+                model.setNotiz("");
+            }
             //model.setNotiz("");
-            model.setArtaussenID(projectGenerallyDetail.getArtaussenID());
+            if(!TextUtils.isEmpty(projectGenerallyDetail.getArtaussenID())) {
+                model.setArtaussenID(projectGenerallyDetail.getArtaussenID());
+            }else{
+                model.setArtaussenID("0");
+            }
             model.setAenderungMitarbeiter(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
             model.setRampe(ramp);
             model.setWeisse_Reifen(matureWhite);

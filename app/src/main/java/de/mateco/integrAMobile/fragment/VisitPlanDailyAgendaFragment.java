@@ -258,10 +258,10 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                                     else
                                     {
                                         matecoPriceApplication.saveData(DataHelper.StoreOtherAgenda, result);
-                                        adapter = new VisitPlanDailyAdapter(getChildFragmentManager(), mTabs);
-                                        mViewPager.setAdapter(adapter);
-                                        if(getArguments()!=null)
-                                            mViewPager.setCurrentItem(2);
+                                        //adapter = new VisitPlanDailyAdapter(getChildFragmentManager(), mTabs);
+                                        //mViewPager.setAdapter(adapter);
+                                        /*if(getArguments()!=null)
+                                            mViewPager.setCurrentItem(2);*/
                                     }
 
                                 }

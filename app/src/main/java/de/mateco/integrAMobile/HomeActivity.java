@@ -66,6 +66,9 @@ import de.mateco.integrAMobile.model.Language;
 public class HomeActivity extends BaseActivity implements ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener, SettingAppFragment.OnLanguageSelected
 {
 
+    long startTime;
+    long elapsedTime;
+
     public boolean isFirsttime=true;
     PreferencesClass preferences2;
     PreferencesData prefObj;
@@ -244,6 +247,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
     private void selectItem(int groupPosition, int childPosition)
     {
         //selectedPosition = position;
+        startTime = System.currentTimeMillis();
 
         Fragment fragment = null;
         Bundle args = new Bundle();
@@ -307,6 +311,9 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
                 setTitle("Customer Search");
                 args.putString("Name", "Customer Search");
                 tag = "Customer Search";
+                elapsedTime = System.currentTimeMillis() - startTime;
+                int seconds = (int) (elapsedTime / 1000) % 60 ;
+                LogApp.showLog(""," total time that service has elapsed : "+seconds);
 
             }
 

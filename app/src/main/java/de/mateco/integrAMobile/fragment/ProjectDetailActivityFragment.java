@@ -1612,7 +1612,11 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         projectAddactivityModel.setAkttyp(activityType);
         projectAddactivityModel.setAktthema(activityTopic);
         projectAddactivityModel.setNotiz(note);
-        projectAddactivityModel.setObjekt(projectGenerallyDetail.getProjekt());
+        if(!TextUtils.isEmpty(projectGenerallyDetail.getProjekt())) {
+            projectAddactivityModel.setObjekt(projectGenerallyDetail.getProjekt());
+        }else {
+            projectAddactivityModel.setObjekt("");
+        }
         projectAddactivityModel.setAngebot(offer);
         projectAddactivityModel.setStartdatum(date);
         projectAddactivityModel.setStartzeit(startTime);
@@ -1790,7 +1794,11 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             projectActivityUpdateModel.setWithoutKontactAndProject("false");
         }
 
-        projectActivityUpdateModel.setObjekt(projectGenerallyDetail.getProjekt() + "");
+        if(!TextUtils.isEmpty(projectGenerallyDetail.getProjekt())) {
+            projectActivityUpdateModel.setObjekt(projectGenerallyDetail.getProjekt() + "");
+        }else {
+            projectActivityUpdateModel.setObjekt("");
+        }
         projectActivityUpdateModel.setAngebot(offer);
         projectActivityUpdateModel.setStartdatum(date);
         projectActivityUpdateModel.setStartzeit(startTime);
