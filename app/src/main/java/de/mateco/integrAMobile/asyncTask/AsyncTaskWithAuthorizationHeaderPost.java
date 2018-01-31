@@ -77,8 +77,8 @@ public class AsyncTaskWithAuthorizationHeaderPost extends AsyncTask<BasicNameVal
         HttpClient httpclient = CustomSSLFactory.getNewHttpClient();
 
 		HttpPost httppost = new HttpPost(url);
-        httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 40000);
-       	httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 40000);
+        httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 50000);
+       	httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 50000);
 		ArrayList<BasicNameValuePair> reqArguments = new ArrayList<BasicNameValuePair>();
 		try
 		{

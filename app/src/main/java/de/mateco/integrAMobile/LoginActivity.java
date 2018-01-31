@@ -84,6 +84,9 @@ import de.mateco.integrAMobile.model.SiteInspectionDeviceTypeModel;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener
 {
+    long startTime;
+    long elapsedTime;
+
     // change in login activity for git on 8th jan.
 
     // chage in working copy and alos commit on master branch
@@ -426,6 +429,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
                                     String url = DataHelper.URL_USER_HELPER +"salesservice/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                                     // for volley
+                                    startTime = System.currentTimeMillis();
                                     callMainServiceUsingVolley(url,listOfUser);
                                 }
                                 catch (Exception e)
@@ -499,6 +503,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
                                         ArrayList<PricingOfflineStandardPriceData> listOfOfflineStandardPrice = mainServiceCallModel.getListOfStandardPrice();
                                         db.addPricingOfflineStandardPrice(listOfOfflineStandardPrice); // 1
+
 
                                         ArrayList<LadefahrzeugComboBoxItemModel> arraylistLadefahrzeug = mainServiceCallModel.getArraylsitLadefahrzeug();
                                         db.addLadefahzeg(arraylistLadefahrzeug); // 2
@@ -593,6 +598,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                         prd.dismiss();
                                         String json = new Gson().toJson(listOfUser);
                                         matecoPriceApplication.saveLoginUser(DataHelper.LoginPerson, json);
+
+                                        elapsedTime = System.currentTimeMillis() - startTime;
+                                        Log.e(" gson "," arraylis size : "+listOfOfflineStandardPrice.size() + "time : "+elapsedTime);
                                         Intent intentHome = new Intent(LoginActivity.this, HomeActivity.class);
                                         startActivity(intentHome);
                                         finish();

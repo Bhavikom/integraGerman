@@ -86,8 +86,8 @@ public class BasicAsyncTaskGetRequest2 extends AsyncTask<NameValuePair, Void, St
 
             HttpClient httpclient = CustomSSLFactory.getNewHttpClient();
             //HttpClient httpclient = new DefaultHttpClient();
-            httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
-            httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
+            httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 50000);
+            httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 50000);
             HttpGet httpGet = new HttpGet(url);
             httpGet.addHeader("Accept-Encoding", "gzip");
             HttpResponse response = httpclient.execute(httpGet);

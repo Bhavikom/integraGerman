@@ -134,7 +134,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 
         rootView = inflater.inflate(R.layout.fragment_customer_search, container, false);
         super.initializeFragment(rootView);
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelCustomerSearch());
         return rootView;
     }
 
@@ -143,8 +142,8 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
     {
         preferences2 = new PreferencesClass(getActivity());
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
-
         language = matecoPriceApplication.getLanguage();
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelCustomerSearch());
         db = new DataBaseHandler(getActivity());
         getActivity().invalidateOptionsMenu();
 //        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelSearch());
