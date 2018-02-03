@@ -12,15 +12,15 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.Pricing1BranchData;
+import de.mateco.integrAMobile.model_logonsquare.PriceBranchListItem;
 
 public class Pricing1BranchDataAdapter extends BaseAdapter {
 
-    private ArrayList<Pricing1BranchData> listBranch;
+    private ArrayList<PriceBranchListItem> listBranch;
     private Context context;
     private Language language;
 
-    public Pricing1BranchDataAdapter(Activity context,ArrayList<Pricing1BranchData> listBranch,
+    public Pricing1BranchDataAdapter(Activity context,ArrayList<PriceBranchListItem > listBranch,
                                      Language language) {
         this.context = context;
         this.listBranch = listBranch;
@@ -66,7 +66,7 @@ public class Pricing1BranchDataAdapter extends BaseAdapter {
 
             TextView txtPricing1BranchData = (TextView)convertView.findViewById(R.id.txtPricing1BranchDataRow);
 
-            txtPricing1BranchData.setText(listBranch.get(position-1).getDesignation());
+            txtPricing1BranchData.setText(listBranch.get(position-1).getBezeichnung());
         }
 
 

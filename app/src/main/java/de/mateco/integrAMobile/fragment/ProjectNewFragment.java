@@ -3,7 +3,6 @@ package de.mateco.integrAMobile.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,15 +36,14 @@ import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.EmployeeAdapter;
 import de.mateco.integrAMobile.adapter.ProjectArtAdapter;
 import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
-import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.ProjectArtModel;
 import de.mateco.integrAMobile.model.ProjectInsertModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+import de.mateco.integrAMobile.model_logonsquare.ProjektartComboListItem;
 
 public class ProjectNewFragment extends BaseFragment implements View.OnClickListener
 {
@@ -56,12 +54,12 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
     private MatecoPriceApplication matecoPriceApplication;
     private Language language;
     private DataBaseHandler db;
-    private ArrayList<EmployeeModel> listOfEmployee;
+    private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
     private EmployeeAdapter adapterEmployee;
-    private ArrayList<ProjectArtModel> listOfProjectArt;
+    private ArrayList<ProjektartComboListItem> listOfProjectArt;
     private ProjectArtAdapter adapterProjectArt;
-    private ProjectArtModel selectedProjectArt;
-    private EmployeeModel selectedEmployee;
+    private ProjektartComboListItem selectedProjectArt;
+    private CustomerActivityEmployeeListItem selectedEmployee;
 
     @Nullable
     @Override
@@ -257,7 +255,7 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
         String description = textProjectNewDescription.getText().toString();
         String typeOfProject = "";
         if(selectedProjectArt != null)
-            typeOfProject = selectedProjectArt.getProjectArtId();
+            typeOfProject = selectedProjectArt.getObjektart();
         String road = textProjectNewRoad.getText().toString();
         String zipCode = textProjectNewZipCode.getText().toString();
         String place = textProjectNewPlace.getText().toString();

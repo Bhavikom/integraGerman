@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,7 +39,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -48,7 +46,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -57,7 +54,6 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -72,7 +68,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import de.mateco.integrAMobile.Helper.CustomerActivityComparable;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
@@ -94,8 +89,6 @@ import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.ActivityTopicModel;
-import de.mateco.integrAMobile.model.ActivityTypeModel;
 import de.mateco.integrAMobile.model.ContactPersonModel;
 import de.mateco.integrAMobile.model.CustomerActivityModel;
 import de.mateco.integrAMobile.model.CustomerCompletedOrderModel;
@@ -108,7 +101,6 @@ import de.mateco.integrAMobile.model.CustomerOpenOfferModel;
 import de.mateco.integrAMobile.model.CustomerOpenOrderModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
 import de.mateco.integrAMobile.model.CustomerSearchPagingRequestModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.HintModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
@@ -116,6 +108,9 @@ import de.mateco.integrAMobile.model.ProjectActivityUpdateModel;
 import de.mateco.integrAMobile.model.ProjectAddActivityModel;
 import de.mateco.integrAMobile.model.ProjectDetailActivityModel;
 import de.mateco.integrAMobile.model.ProjectDetailGenerallyModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTypeListItem;
 
 public class ProjectDetailActivityFragment extends BaseFragment implements TextView.OnEditorActionListener,View.OnClickListener,CheckBox.OnCheckedChangeListener
 {
@@ -142,17 +137,17 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private Spinner spinnerProjectActivityActivityType, spinnerProjectActivityActivityTopic, spinnerProjectActivityOffer;
     private boolean isEdited=false;
     private ArrayList<ContactPersonModel> listOfSelectedContactPerson, listOfRemainingContactPerson, listOfAllContactPerson,listOfRemainingContactPersontemp;
-    private ArrayList<EmployeeModel> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
+    private ArrayList<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
     private ArrayList<CustomerOfferModel> listOfAllOffer;
-    private ArrayList<ActivityTypeModel> listOfActivityType;
-    private ArrayList<ActivityTopicModel> listOfActivityTopic;
+    private ArrayList<CustomerActivityTypeListItem> listOfActivityType;
+    private ArrayList<CustomerActivityTopicListItem> listOfActivityTopic;
     private ImageButton imageButtonProjectActivityStartDate, imageButtonStartTime, imageButtonEndTime;
     private CheckBox checkBoxProjectActivityRealized, checkBoxProjectActivityFixedTimes;
     private EmployeeAdapter selectedEmployeeAdapter, remainingEmployeeAdapter;
     private CustomerContactPersonListAdapter selectedContactPersonAdapter, remainingContactPersonAdapter;
     private OfferAdapter offerAdapter;
-    private ActivityTypeModel selectedActivityTypeModel;
-    private ActivityTopicModel selectedActivityTopicModel;
+    private CustomerActivityTypeListItem selectedActivityTypeModel;
+    private CustomerActivityTopicListItem selectedActivityTopicModel;
     private CustomerOfferModel selectedCustomerOfferModel;
     private boolean isInEditMode = false, isInAddMode = false;
     private ActivityTypeAdapter adapterActivityType;
@@ -300,8 +295,8 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
 
         textProjectActivityNotes = (EditText)rootView.findViewById(R.id.textProjectActivityNotes);
 
-        selectedActivityTypeModel = new ActivityTypeModel();
-        selectedActivityTopicModel = new ActivityTopicModel();
+        selectedActivityTypeModel = new CustomerActivityTypeListItem();
+        selectedActivityTopicModel = new CustomerActivityTopicListItem();
         selectedCustomerOfferModel = new CustomerOfferModel();
         setLanguage();
 
@@ -560,7 +555,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 boolean isActivityTypeSelected = false;
                 for(int i = 0; i < listOfActivityType.size(); i++)
                 {
-                    if(activity.getAkttypID().equals(listOfActivityType.get(i).getActivityTypeId()))
+                    if(activity.getAkttypID().equals(listOfActivityType.get(i).getAkttyp()))
                     {
                         spinnerProjectActivityActivityType.setSelection(i + 1);
                         selectedActivityTypeModel = listOfActivityType.get(i);
@@ -576,7 +571,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 boolean isActivityTopicSelected = false;
                 for(int i = 0; i < listOfActivityTopic.size(); i++)
                 {
-                    if(activity.getAktthemaID().equals(listOfActivityTopic.get(i).getActivityTopicId()))
+                    if(activity.getAktthemaID().equals(listOfActivityTopic.get(i).getAktthema()))
                     {
                         spinnerProjectActivityActivityTopic.setSelection(i + 1);
                         selectedActivityTopicModel = listOfActivityTopic.get(i);
@@ -1292,9 +1287,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         final Dialog dialog = showCustomDialog(R.layout.dialog_add_employee, language.getMessageSelectEmployee());
         listOfRemainingEmployee.clear();
         listOfRemainingEmployee.addAll(removeSelectedEmployee(listOfAllEmployee, listOfSelectedEmployee));
-        Collections.sort(listOfRemainingEmployee, new Comparator<EmployeeModel>() {
+        Collections.sort(listOfRemainingEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
             @Override
-            public int compare(EmployeeModel s1, EmployeeModel s2) {
+            public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
                 return s1.getNachname().compareToIgnoreCase(s2.getNachname());
             }
         });
@@ -1358,9 +1353,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         }
     }
 
-    private ArrayList<EmployeeModel> removeSelectedEmployee(ArrayList<EmployeeModel> listOfEmployee, ArrayList<EmployeeModel> selectedEmployee)
+    private ArrayList<CustomerActivityEmployeeListItem> removeSelectedEmployee(ArrayList<CustomerActivityEmployeeListItem> listOfEmployee, ArrayList<CustomerActivityEmployeeListItem> selectedEmployee)
     {
-        ArrayList<EmployeeModel> tempList = new ArrayList<>();
+        ArrayList<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
         //listOfRemainingEmployee.clear();
         tempList.addAll(listOfEmployee);
         for(int i = 0; i < selectedEmployee.size(); i++)
@@ -1557,12 +1552,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         String activityType = null;
         if(selectedActivityTypeModel != null)
         {
-            activityType = selectedActivityTypeModel.getActivityTypeId();
+            activityType = selectedActivityTypeModel.getAkttyp();
         }
         String activityTopic = "";
         if(selectedActivityTopicModel != null)
         {
-            activityTopic = selectedActivityTopicModel.getActivityTopicId();
+            activityTopic = selectedActivityTopicModel.getAktthema();
         }
         String offer = "";
         if(selectedCustomerOfferModel != null)
@@ -1741,12 +1736,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         String activityType = null;
         if(selectedActivityTypeModel != null)
         {
-            activityType = selectedActivityTypeModel.getActivityTypeId();
+            activityType = selectedActivityTypeModel.getAkttyp();
         }
         String activityTopic = "";
         if(selectedActivityTopicModel != null)
         {
-            activityTopic = selectedActivityTopicModel.getActivityTopicId();
+            activityTopic = selectedActivityTopicModel.getAktthema();
         }
         String offer = "";
         if(selectedCustomerOfferModel != null)

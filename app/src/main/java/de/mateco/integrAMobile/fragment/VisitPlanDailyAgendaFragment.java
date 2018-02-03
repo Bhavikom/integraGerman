@@ -1,62 +1,39 @@
 package de.mateco.integrAMobile.fragment;
 
-import android.app.DatePickerDialog;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.AdapterView;
-import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
-import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.NonSwipeableViewPager;
 import de.mateco.integrAMobile.Helper.SamplePagerItem;
 import de.mateco.integrAMobile.Helper.SlidingTabLayout;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.adapter.EmployeeAdapter;
 import de.mateco.integrAMobile.adapter.VisitPlanDailyAdapter;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.DailyAgendaModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 

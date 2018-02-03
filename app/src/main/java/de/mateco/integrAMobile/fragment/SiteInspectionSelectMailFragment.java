@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import android.os.Environment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,11 +28,7 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -55,16 +49,16 @@ import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 import de.mateco.integrAMobile.model.MailAddressModel;
-import de.mateco.integrAMobile.model.Pricing1BranchData;
 import de.mateco.integrAMobile.model.ResponseFormat;
 import de.mateco.integrAMobile.model.SiteInspectionModel;
 import de.mateco.integrAMobile.model.SiteInspectionOperationalEnvironmentModel;
+import de.mateco.integrAMobile.model_logonsquare.PriceBranchListItem;
 
 public class SiteInspectionSelectMailFragment extends BaseFragment
 {
     private View rootView;
     private Spinner spinnerSiteInspectionMailBranch;
-    private ArrayList<Pricing1BranchData> listOfBranch;
+    private ArrayList<PriceBranchListItem> listOfBranch;
     private MatecoPriceApplication matecoPriceApplication;
     private Language language;
     private DataBaseHandler db;
@@ -113,7 +107,7 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
         boolean isbranchSeleted = false;
         for(int i = 0; i < listOfBranch.size(); i++)
         {
-            if(customerBranch.equals(listOfBranch.get(i).getDesignation()))
+            if(customerBranch.equals(listOfBranch.get(i).getBezeichnung()))
             {
                 spinnerSiteInspectionMailBranch.setSelection(i + 1);
                 //getEmailAddress(listOfBranch.get(i + 1));
@@ -121,7 +115,7 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
                 isbranchSeleted = true;
                 break;
             }
-            else if(customerBranch.contains(listOfBranch.get(i).getDesignation()))
+            else if(customerBranch.contains(listOfBranch.get(i).getBezeichnung()))
             {
                 spinnerSiteInspectionMailBranch.setSelection(i + 1);
                 //getEmailAddress(listOfBranch.get(i + 1));
@@ -202,7 +196,7 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
         checkBoxSentMailToEmployeeAdress.setText(language.getLabelSendEmailToMe());
     }
 
-    private void getEmailAddress(Pricing1BranchData branchObject)
+    private void getEmailAddress(PriceBranchListItem  branchObject)
     {
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
@@ -239,7 +233,7 @@ public class SiteInspectionSelectMailFragment extends BaseFragment
             {
                 String url = DataHelper.URL_BVO_HELPER+"bvoinfoemails";// + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.SITEINSPECTION_GET_EMAIL_FROM_BRANCH;
                 url += "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
-                url += "/branch=" + branchObject.getClientId();
+                url += "/branch=" + branchObject.getMandant();
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }

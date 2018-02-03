@@ -12,15 +12,15 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.Pricing1DeviceData;
+import de.mateco.integrAMobile.model_logonsquare.PriceDeviceGroupListItem;
 
 public class SiteInspectionDeviceGroupAdapter extends BaseAdapter {
-    private ArrayList<Pricing1DeviceData> listDevice;
+    private ArrayList<PriceDeviceGroupListItem> listDevice;
     private Context context;
     private Language language;
 
     public SiteInspectionDeviceGroupAdapter(Activity context,
-           ArrayList<Pricing1DeviceData> listDevice,Language language) {
+           ArrayList<PriceDeviceGroupListItem > listDevice,Language language) {
         this.context = context;
         this.listDevice = listDevice;
         this.language = language;
@@ -54,7 +54,7 @@ public class SiteInspectionDeviceGroupAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = mInflater.inflate(R.layout.site_inspection_spinner_item_row, null);
         TextView txtDeviceGroup = (TextView)convertView.findViewById(R.id.textSiteInspectionSpinner);
-        txtDeviceGroup.setText(listDevice.get(position).getDesignation());
+        txtDeviceGroup.setText(listDevice.get(position).getBezeichnung());
 
         return convertView;
     }

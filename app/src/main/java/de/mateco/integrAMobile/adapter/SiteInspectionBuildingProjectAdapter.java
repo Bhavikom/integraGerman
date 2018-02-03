@@ -12,15 +12,15 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.SiteInspectionBuildingProjectModel;
+import de.mateco.integrAMobile.model_logonsquare.BVOBauvorhabenComboListItem;
 
 public class SiteInspectionBuildingProjectAdapter extends BaseAdapter {
-    private ArrayList<SiteInspectionBuildingProjectModel> listOfBuildingProject;
+    private ArrayList<BVOBauvorhabenComboListItem> listOfBuildingProject;
     private Context context;
     private Language language;
 
     public SiteInspectionBuildingProjectAdapter(Activity context,
-           ArrayList<SiteInspectionBuildingProjectModel> listOfBuildingProject,Language language) {
+           ArrayList<BVOBauvorhabenComboListItem> listOfBuildingProject,Language language) {
         this.context = context;
         this.listOfBuildingProject = listOfBuildingProject;
         this.language = language;

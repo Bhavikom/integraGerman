@@ -15,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,7 +32,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -45,17 +43,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 
-import com.alamkanak.weekview.DateTimeInterpreter;
-
-import com.alamkanak.weekview.MonthLoader;
-import com.alamkanak.weekview.WeekView;
-import com.alamkanak.weekview.WeekViewEvent;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.vision.text.Text;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -67,7 +59,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
@@ -88,30 +79,23 @@ import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.TimePickerDialogFragment;
-import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 
 import de.mateco.integrAMobile.adapter.ActivityTopicAdapter;
 import de.mateco.integrAMobile.adapter.ActivityTypeAdapter;
 import de.mateco.integrAMobile.adapter.CustomerContactPersonListAdapter;
-import de.mateco.integrAMobile.adapter.CustomerContactPersonSpinnerAdapter;
 import de.mateco.integrAMobile.adapter.CustomerSearchResultAdapter;
 import de.mateco.integrAMobile.adapter.EmployeeAdapter;
 import de.mateco.integrAMobile.adapter.EventAdapter;
 import de.mateco.integrAMobile.adapter.OfferAdapter;
 import de.mateco.integrAMobile.adapter.ProjectSearchAdapter;
-import de.mateco.integrAMobile.adapter.ProjectTradeSpinnerAdapter;
 import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.ActivityTopicModel;
-import de.mateco.integrAMobile.model.ActivityTypeModel;
 import de.mateco.integrAMobile.model.ContactPersonModel;
-import de.mateco.integrAMobile.model.CustomerActivityGetModel;
 import de.mateco.integrAMobile.model.CustomerActivityModel;
-import de.mateco.integrAMobile.model.CustomerActivityUpdateModel;
 import de.mateco.integrAMobile.model.CustomerCompletedOrderModel;
 import de.mateco.integrAMobile.model.CustomerDatabaseModel;
 import de.mateco.integrAMobile.model.CustomerFullDetailModel;
@@ -123,7 +107,6 @@ import de.mateco.integrAMobile.model.CustomerOpenOrderModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
 
 import de.mateco.integrAMobile.model.CustomerSearchPagingRequestModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.HintModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
@@ -131,8 +114,14 @@ import de.mateco.integrAMobile.model.ProjectActivityUpdateModel;
 import de.mateco.integrAMobile.model.ProjectDetailGenerallyModel;
 import de.mateco.integrAMobile.model.ProjectModel;
 import de.mateco.integrAMobile.model.ProjectSearchPagingRequestModel;
-import de.mateco.integrAMobile.model.ProjectTradeInsert;
 import de.mateco.integrAMobile.model.WeeklyAgendaModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTypeListItem;
+import de.mateco.integrAMobile.weekview.DateTimeInterpreter;
+import de.mateco.integrAMobile.weekview.MonthLoader;
+import de.mateco.integrAMobile.weekview.WeekView;
+import de.mateco.integrAMobile.weekview.WeekViewEvent;
 
 public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements WeekView.EventClickListener,MonthLoader.MonthChangeListener,DateTimeInterpreter,WeekView.ScrollListener,CheckBox.OnCheckedChangeListener,View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -191,15 +180,15 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     private CustomerContactPersonListAdapter selectedContactPersonAdapter, remainingContactPersonAdapter;
     private ActivityTypeAdapter adapterActivityType;
     private ActivityTopicAdapter adapterActivityTopic;
-    private ArrayList<ActivityTypeModel> listOfActivityType;
-    private ArrayList<ActivityTopicModel> listOfActivityTopic;
+    private ArrayList<CustomerActivityTypeListItem> listOfActivityType;
+    private ArrayList<CustomerActivityTopicListItem> listOfActivityTopic;
     private ArrayList<CustomerOfferModel> listOfAllOffer;
     private OfferAdapter offerAdapter;
 
     ////////// end for customer search dailgo
     TextView textViewProjectSearch;
 
-    private ActivityTypeModel selectedActivityTypeModel;
+    private CustomerActivityTypeListItem selectedActivityTypeModel;
     private ArrayList<CustomerActivityModel> listOfLoadedCustomerActivity;
     private ArrayList<CustomerProjectModel> listOfAllProject;
     /////////
@@ -217,9 +206,9 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     CheckBox checkBoxProjectActivityRealized, checkBoxProjectActivityFixedTimes;
 
     private EmployeeAdapter selectedEmployeeAdapter, remainingEmployeeAdapter;
-    private ArrayList<EmployeeModel> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
+    private ArrayList<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
     private CustomerActivityModel selectedActivity;
-    private ActivityTopicModel selectedActivityTopicModel;
+    private CustomerActivityTopicListItem selectedActivityTopicModel;
     private CustomerOfferModel selectedCustomerOfferModel;
     private CustomerProjectModel selectedCustomerProjectModel;
     private BasicAsyncTaskGetRequest asyncTask;
@@ -1306,7 +1295,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         boolean isActivityTypeSelected = false;
         for(int i = 0; i < listOfActivityType.size(); i++)
         {
-            if(weekModel.getAktivitaetstytp().equals(listOfActivityType.get(i).getActivityTypeName()))
+            if(weekModel.getAktivitaetstytp().equals(listOfActivityType.get(i).getBezeichnung()))
             {
                 spinnerProjectActivityActivityType.setSelection(i + 1);
                 selectedActivityTypeModel = listOfActivityType.get(i);
@@ -1322,7 +1311,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         boolean isActivityTopicSelected = false;
         for(int i = 0; i < listOfActivityTopic.size(); i++)
         {
-            if(String.valueOf(weekModel.getAktThema()).equals(listOfActivityTopic.get(i).getActivityTopicId()))
+            if(String.valueOf(weekModel.getAktThema()).equals(listOfActivityTopic.get(i).getAktthema()))
             {
                 spinnerProjectActivityActivityTopic.setSelection(i + 1);
                 selectedActivityTopicModel = listOfActivityTopic.get(i);
@@ -1596,15 +1585,15 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     }
     private void setCustomerActivity(CustomerActivityModel activity)
     {
-        selectedActivityTypeModel = new ActivityTypeModel();
-        selectedActivityTopicModel = new ActivityTopicModel();
+        selectedActivityTypeModel = new CustomerActivityTypeListItem();
+        selectedActivityTopicModel = new CustomerActivityTopicListItem();
         //clearAllValues();
         if(activity != null)
         {
             boolean isActivityTypeSelected = false;
             for(int i = 0; i < listOfActivityType.size(); i++)
             {
-                if(activity.getAkttypID().equals(listOfActivityType.get(i).getActivityTypeId()))
+                if(activity.getAkttypID().equals(listOfActivityType.get(i).getAkttyp()))
                 {
                     spinnerProjectActivityActivityType.setSelection(i + 1);
                     selectedActivityTypeModel = listOfActivityType.get(i);
@@ -1620,7 +1609,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             boolean isActivityTopicSelected = false;
             for(int i = 0; i < listOfActivityTopic.size(); i++)
             {
-                if(activity.getAktthemaID().equals(listOfActivityTopic.get(i).getActivityTopicId()))
+                if(activity.getAktthemaID().equals(listOfActivityTopic.get(i).getAktthema()))
                 {
                     spinnerProjectActivityActivityTopic.setSelection(i + 1);
                     selectedActivityTopicModel = listOfActivityTopic.get(i);
@@ -1952,12 +1941,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         String activityType = null;
         if(selectedActivityTypeModel != null)
         {
-            activityType = selectedActivityTypeModel.getActivityTypeId();
+            activityType = selectedActivityTypeModel.getAkttyp();
         }
         String activityTopic = "";
         if(selectedActivityTopicModel != null)
         {
-            activityTopic = selectedActivityTopicModel.getActivityTopicId();
+            activityTopic = selectedActivityTopicModel.getAktthema();
         }
         String offer = "";
         if(selectedCustomerOfferModel != null)
@@ -3440,9 +3429,9 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         final Dialog dialog = showCustomDialog(R.layout.dialog_add_employee, language.getMessageSelectEmployee());
         listOfRemainingEmployee.clear();
         listOfRemainingEmployee.addAll(removeSelectedEmployee(listOfAllEmployee, listOfSelectedEmployee));
-        Collections.sort(listOfRemainingEmployee, new Comparator<EmployeeModel>() {
+        Collections.sort(listOfRemainingEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
             @Override
-            public int compare(EmployeeModel s1, EmployeeModel s2) {
+            public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
                 return s1.getNachname().compareToIgnoreCase(s2.getNachname());
             }
         });
@@ -3506,9 +3495,9 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         }
     }
 
-    private ArrayList<EmployeeModel> removeSelectedEmployee(ArrayList<EmployeeModel> listOfEmployee, ArrayList<EmployeeModel> selectedEmployee)
+    private ArrayList<CustomerActivityEmployeeListItem> removeSelectedEmployee(ArrayList<CustomerActivityEmployeeListItem> listOfEmployee, ArrayList<CustomerActivityEmployeeListItem> selectedEmployee)
     {
-        ArrayList<EmployeeModel> tempList = new ArrayList<>();
+        ArrayList<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
         //listOfRemainingEmployee.clear();
         tempList.addAll(listOfEmployee);
         for(int i = 0; i < selectedEmployee.size(); i++)

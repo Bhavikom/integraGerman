@@ -9,7 +9,6 @@ package de.mateco.integrAMobile.fragment;
     import android.support.annotation.Nullable;
     import android.support.v4.app.FragmentTransaction;
     import android.text.TextUtils;
-    import android.util.Log;
     import android.view.LayoutInflater;
     import android.view.Menu;
     import android.view.MenuInflater;
@@ -23,7 +22,6 @@ package de.mateco.integrAMobile.fragment;
     import android.widget.ImageButton;
     import android.widget.Spinner;
     import android.widget.TextView;
-    import android.widget.Toast;
 
     import com.google.gson.Gson;
 
@@ -47,7 +45,6 @@ package de.mateco.integrAMobile.fragment;
     import de.mateco.integrAMobile.Helper.GlobalClass;
     import de.mateco.integrAMobile.HomeActivity;
     import de.mateco.integrAMobile.R;
-    import de.mateco.integrAMobile.adapter.EmployeeAdapter;
     import de.mateco.integrAMobile.adapter.EmployeeAdapter2;
     import de.mateco.integrAMobile.adapter.ProjectAreaAdapter;
     import de.mateco.integrAMobile.adapter.ProjectArtAdapter;
@@ -56,23 +53,22 @@ package de.mateco.integrAMobile.fragment;
     import de.mateco.integrAMobile.adapter.ProjectStagesAdapter;
     import de.mateco.integrAMobile.adapter.ProjectTypeAdapter;
     import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
-    import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
     import de.mateco.integrAMobile.base.BaseFragment;
     import de.mateco.integrAMobile.base.MatecoPriceApplication;
     import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-    import de.mateco.integrAMobile.model.BuheneartModel;
-    import de.mateco.integrAMobile.model.EmployeeModel;
     import de.mateco.integrAMobile.model.Language;
     import de.mateco.integrAMobile.model.LoginPersonModel;
-    import de.mateco.integrAMobile.model.ProjectAreaModel;
-    import de.mateco.integrAMobile.model.ProjectArtModel;
     import de.mateco.integrAMobile.model.ProjectDetailGenerallyModel;
     import de.mateco.integrAMobile.model.ProjectDetailGenerallyUpdateModel;
-    import de.mateco.integrAMobile.model.ProjectPhaseModel;
-    import de.mateco.integrAMobile.model.ProjectStagesModel;
-    import de.mateco.integrAMobile.model.ProjectTypeModel;
+    import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+    import de.mateco.integrAMobile.model_logonsquare.ListOfBuheneartComboBoxItemItem;
+    import de.mateco.integrAMobile.model_logonsquare.ProjektBUhnenAubenInnenComboListItem;
+    import de.mateco.integrAMobile.model_logonsquare.ProjektGebietComboListItem;
+    import de.mateco.integrAMobile.model_logonsquare.ProjektartComboListItem;
+    import de.mateco.integrAMobile.model_logonsquare.ProjektphaseComboListItem;
+    import de.mateco.integrAMobile.model_logonsquare.ProjekttypComboListItem;
 
-    public class ProjectDetailGeneralFragment extends BaseFragment implements View.OnClickListener
+public class ProjectDetailGeneralFragment extends BaseFragment implements View.OnClickListener
     {
         boolean isFirstTIme=true,isFirstTime2=true;
         private static String clickedTextbox="";
@@ -83,12 +79,12 @@ package de.mateco.integrAMobile.fragment;
     private DataBaseHandler db;
     private Language language;
     private MatecoPriceApplication matecoPriceApplication;
-    private ArrayList<ProjectTypeModel> listOfProjectType;
-    private ArrayList<ProjectPhaseModel> listOfProjectPhase;
-    private ArrayList<ProjectArtModel> listOfProjectArt;
-    private ArrayList<ProjectStagesModel> listOfProjectStage;
-    private ArrayList<ProjectAreaModel> listOfProjectArea;
-    private ArrayList<BuheneartModel> listOfProjectStage1;
+    private ArrayList<ProjekttypComboListItem> listOfProjectType;
+    private ArrayList<ProjektphaseComboListItem> listOfProjectPhase;
+    private ArrayList<ProjektartComboListItem> listOfProjectArt;
+    private ArrayList<ProjektBUhnenAubenInnenComboListItem> listOfProjectStage;
+    private ArrayList<ProjektGebietComboListItem> listOfProjectArea;
+    private ArrayList<ListOfBuheneartComboBoxItemItem> listOfProjectStage1;
     private ProjectStagesAdapter adapterProjectStage;
     private ProjectAreaAdapter adapterProjectArea;
     private ProjectArtAdapter adapterProjectArt;
@@ -110,16 +106,16 @@ package de.mateco.integrAMobile.fragment;
     private EditText textProjectDetailGeneralHeightFrom;
     private EditText textProjectDetailGeneralDateOfUpdate;
     private CheckBox checkboxProjectDetailGeneralAbgeschlosse, checkboxProjectDetailGeneralRamp, checkboxProjectDetailGeneralMatureWhite;
-    private ProjectAreaModel selectedArea;
-    private ProjectStagesModel selectedProjectStage;
-    private ProjectArtModel selectedProjectArt;
-    private ProjectTypeModel selectedProjectType;
-    private ProjectPhaseModel selectedProjectPhase;
-    private BuheneartModel selectedBuheneart;
+    private ProjektGebietComboListItem selectedArea;
+    private ProjektBUhnenAubenInnenComboListItem selectedProjectStage;
+    private ProjektartComboListItem selectedProjectArt;
+    private ProjekttypComboListItem selectedProjectType;
+    private ProjektphaseComboListItem selectedProjectPhase;
+    private ListOfBuheneartComboBoxItemItem selectedBuheneart;
     private ProjectDetailGenerallyModel projectGenerallyDetail;
     private ImageButton imageButtonGenerallyStartDate,imageButtonGenerallyEndDate;
-    ArrayList<EmployeeModel> listOfEmployee = new ArrayList<>();
-    private EmployeeModel employeeModel = new EmployeeModel();
+    ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
+    private CustomerActivityEmployeeListItem employeeModel = new CustomerActivityEmployeeListItem();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -205,9 +201,9 @@ package de.mateco.integrAMobile.fragment;
         listOfProjectType = new ArrayList<>();
         listOfProjectStage1 = new ArrayList<>();
         listOfEmployee.addAll(db.getEmployees());
-        Collections.sort(listOfEmployee, new Comparator<EmployeeModel>() {
+        Collections.sort(listOfEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
             @Override
-            public int compare(EmployeeModel s1, EmployeeModel s2) {
+            public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
                 return s1.getNachname().compareToIgnoreCase(s2.getNachname());
             }
         });
@@ -509,7 +505,7 @@ package de.mateco.integrAMobile.fragment;
         }
         for(int i = 0; i < listOfProjectArea.size(); i++)
         {
-            if(listOfProjectArea.get(i).getProjectAreaDesignation().equals(projectGenerallyDetail.getGebiet()))
+            if(listOfProjectArea.get(i).getBezeichnung().equals(projectGenerallyDetail.getGebiet()))
             {
                 spinnerProjectDetailGeneralArea.setSelection(i + 1);
                 selectedArea = listOfProjectArea.get(i);
@@ -518,7 +514,7 @@ package de.mateco.integrAMobile.fragment;
 
         for(int i = 0; i < listOfProjectPhase.size(); i++)
         {
-            if(listOfProjectPhase.get(i).getProjectPhaseId().equals(projectGenerallyDetail.getPhaseID()))
+            if(listOfProjectPhase.get(i).getObjektphase().equals(projectGenerallyDetail.getPhaseID()))
             {
                 spinnerProjectDetailGeneralPhase.setSelection(i + 1);
                 selectedProjectPhase = listOfProjectPhase.get(i);
@@ -527,7 +523,7 @@ package de.mateco.integrAMobile.fragment;
 
         for(int i = 0; i < listOfProjectArt.size(); i++)
         {
-            if(listOfProjectArt.get(i).getProjectArtId().equals(projectGenerallyDetail.getProjektartID()))
+            if(listOfProjectArt.get(i).getObjektart().equals(projectGenerallyDetail.getProjektartID()))
             {
                 spinnerProjectDetailGeneralArt.setSelection(i + 1);
                 selectedProjectArt = listOfProjectArt.get(i);
@@ -536,7 +532,7 @@ package de.mateco.integrAMobile.fragment;
 
         for(int i = 0; i < listOfProjectType.size(); i++)
         {
-            if(listOfProjectType.get(i).getProjectTypeId().equals(projectGenerallyDetail.getProjekttypID()))
+            if(listOfProjectType.get(i).getObjekttyp().equals(projectGenerallyDetail.getProjekttypID()))
             {
                 spinnerProjectDetailGeneralType.setSelection(i + 1);
                 selectedProjectType = listOfProjectType.get(i);
@@ -545,7 +541,7 @@ package de.mateco.integrAMobile.fragment;
 
         for(int i = 0; i < listOfProjectStage.size(); i++)
         {
-            if(listOfProjectStage.get(i).getProjectStageId().equals(projectGenerallyDetail.getArtaussenID()))
+            if(listOfProjectStage.get(i).getBuehnenart().equals(projectGenerallyDetail.getArtaussenID()))
             {
                 spinnerProjectDetailGeneralStages.setSelection(i + 1);
                 selectedProjectStage = listOfProjectStage.get(i);
@@ -554,7 +550,7 @@ package de.mateco.integrAMobile.fragment;
 
         for(int i = 0; i < listOfProjectStage1.size(); i++)
         {
-            if(listOfProjectStage1.get(i).getBuehnenArt().equals(projectGenerallyDetail.getArtInnenID()))
+            if(String.valueOf(listOfProjectStage1.get(i).getBuehnenArt()).equals(projectGenerallyDetail.getArtInnenID()))
             {
                 spinnerProjectDetailGeneralStages1.setSelection(i + 1);
                 selectedBuheneart = listOfProjectStage1.get(i);
@@ -742,7 +738,7 @@ package de.mateco.integrAMobile.fragment;
             String area = "";
             if(selectedArea != null)
             {
-                area = selectedArea.getProjectAreaId();
+                area = selectedArea.getGebiet();
             }
             String startOfConstruction = textProjectDetailGeneralStartOfConstruction.getText().toString();
             if(!startOfConstruction.equals(""))
@@ -765,7 +761,7 @@ package de.mateco.integrAMobile.fragment;
             String projectStage = "";
             if(selectedProjectStage != null)
             {
-                projectStage = selectedProjectStage.getProjectStageId();
+                projectStage = selectedProjectStage.getBuehnenart();
             }
             String justAdm = "";
             if(employeeModel!=null) {
@@ -775,24 +771,24 @@ package de.mateco.integrAMobile.fragment;
             String projectArt = "";
             if(selectedProjectArt != null)
             {
-                projectArt = selectedProjectArt.getProjectArtId();
+                projectArt = selectedProjectArt.getObjektart();
             }
 
             String projectType = "";
             if(selectedProjectType != null)
             {
-                projectType = selectedProjectType.getProjectTypeId();
+                projectType = selectedProjectType.getObjekttyp();
             }
             String projectPhase = "";
             if(selectedProjectPhase != null)
             {
-                projectPhase = selectedProjectPhase.getProjectPhaseId();
+                projectPhase = selectedProjectPhase.getObjektphase();
             }
 
             String projectBuheneart = "";
             if(selectedBuheneart != null)
             {
-                projectBuheneart = selectedBuheneart.getBuehnenArt();
+                projectBuheneart = String.valueOf(selectedBuheneart.getBuehnenArt());
             }
             String projectDate = textProjectDetailGeneralDateOfUpdate.getText().toString();
             if(!projectDate.equals(""))

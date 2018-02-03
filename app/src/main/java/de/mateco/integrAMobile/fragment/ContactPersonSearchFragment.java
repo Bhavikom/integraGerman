@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,7 +48,6 @@ import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.ContactPersonSearchAdapter;
-import de.mateco.integrAMobile.adapter.CustomerSearchResultAdapter;
 import de.mateco.integrAMobile.adapter.SalutationAdapter;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
@@ -62,16 +60,14 @@ import de.mateco.integrAMobile.model.CustomerCompletedOrderModel;
 import de.mateco.integrAMobile.model.CustomerDatabaseModel;
 import de.mateco.integrAMobile.model.CustomerFullDetailModel;
 import de.mateco.integrAMobile.model.CustomerLostSaleDataModel;
-import de.mateco.integrAMobile.model.CustomerModel;
 import de.mateco.integrAMobile.model.CustomerOfferModel;
 import de.mateco.integrAMobile.model.CustomerOpenOfferModel;
 import de.mateco.integrAMobile.model.CustomerOpenOrderModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
-import de.mateco.integrAMobile.model.CustomerSearchPagingRequestModel;
 import de.mateco.integrAMobile.model.HintModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.SalutationModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonSalutationComboListItem;
 
 /**
  * Created by S Soft on 13-Sep-17.
@@ -90,8 +86,8 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
     String loginUserNumber="";
 
     private SalutationAdapter salutationAdapter;
-    private SalutationModel selectedSalutation;
-    private ArrayList<SalutationModel> listOfSalutation;
+    private CustomerContactPersonSalutationComboListItem selectedSalutation;
+    private ArrayList<CustomerContactPersonSalutationComboListItem> listOfSalutation;
 
     private MatecoPriceApplication matecoPriceApplication;
     private View rootView;
@@ -143,7 +139,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
 
         loginUserNumber = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
 
-        selectedSalutation = new SalutationModel();
+        selectedSalutation = new CustomerContactPersonSalutationComboListItem();
         listOfSalutation = new ArrayList<>();
         listOfSalutation = db.getSalutation();
 
@@ -618,7 +614,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
         String salutation = "";
         if(selectedSalutation != null)
         {
-            salutation = selectedSalutation.getSalutationDesignation();
+            salutation = selectedSalutation.getBezeichnung();
         }
 
 
@@ -742,7 +738,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
         String salutation = "";
         if(selectedSalutation != null)
         {
-            salutation = selectedSalutation.getSalutationDesignation();
+            salutation = selectedSalutation.getBezeichnung();
         }
 
 

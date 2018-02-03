@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.CountryModel;
 import de.mateco.integrAMobile.model.Language;
+import de.mateco.integrAMobile.model_logonsquare.CustomerLandListItem;
 
 public class CountryAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<CountryModel> listOfCountries;
+    private ArrayList<CustomerLandListItem> listOfCountries;
     private Context context;
     private Language language;
 
-    public CountryAdapter(Context context, ArrayList<CountryModel> listOfCountries, int resourceId, Language language)
+    public CountryAdapter(Context context, ArrayList<CustomerLandListItem > listOfCountries, int resourceId, Language language)
     {
         this.context = context;
         this.listOfCountries = listOfCountries;
@@ -66,7 +66,7 @@ public class CountryAdapter extends BaseAdapter
             convertView = mInflater.inflate(resourceId, null);
 
             TextView labelListItemCountryName = (TextView)convertView.findViewById(R.id.labelListItemCountryName);
-            labelListItemCountryName.setText(listOfCountries.get(position - 1).getCountryName());
+            labelListItemCountryName.setText(listOfCountries.get(position - 1).getBezeichnung());
         }
         //imgvBackground.setImageResource(R.drawable.english);
 

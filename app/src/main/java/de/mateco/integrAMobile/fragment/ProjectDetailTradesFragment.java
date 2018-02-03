@@ -16,7 +16,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -68,7 +67,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.ContactPersonComparable;
-import de.mateco.integrAMobile.Helper.CustomerActivityComparable;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.GlobalMethods;
@@ -106,9 +104,7 @@ import de.mateco.integrAMobile.model.ProjectDetailGenerallyModel;
 import de.mateco.integrAMobile.model.ProjectDetailTradeModel;
 import de.mateco.integrAMobile.model.ProjectTradeDetailUpdateModel;
 import de.mateco.integrAMobile.model.ProjectTradeInsert;
-import de.mateco.integrAMobile.model.ProjectTradeModel;
-
-import static android.R.attr.name;
+import de.mateco.integrAMobile.model_logonsquare.ProjektGewerkComboListItem;
 
 public class ProjectDetailTradesFragment extends BaseFragment implements View.OnClickListener,TextView.OnEditorActionListener {
     private boolean isCallservice=true;
@@ -134,7 +130,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             textProjectTradeZipCode, textProjectTradePlace, textProjectTradePhone, textProjectTradeFax, textProjectDetailTradeFaxBuildingSite,
             textProjectDetailTelephoneConstruction;
     private Spinner spinnerProjectDetailTradeTrade, spinnerProjectDetailTradeContactPerson;
-    private ArrayList<ProjectTradeModel> listOfTrades;
+    private ArrayList<ProjektGewerkComboListItem> listOfTrades;
     private ArrayList<ContactPersonModel> listOfAllContactPerson;
     private ProjectTradeSpinnerAdapter adapterSpinnerProjectTrade;
     private boolean isInEditMode = false, isInAddMode = false;
@@ -142,7 +138,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
     private CustomerContactPersonSpinnerAdapter adapterContactPerson;
     private ContactPersonModel selectedContactPerson, contactPerson1;
 
-    private ProjectTradeModel selectedTrade, selectedTrade1;
+    private ProjektGewerkComboListItem selectedTrade, selectedTrade1;
     private ImageButton imageButtonTradeStartDate, imageButtonTradeEndDate;
     private TextView labelTradeStartDate, textProjectDetailTradeMountingEnd;
     private String kontakt = "";
@@ -345,7 +341,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             textProjectDetailTelephoneConstruction.setText(object.getTel_Baustelle());
 
             for (int i = 0; i < listOfTrades.size(); i++) {
-                if (listOfTrades.get(i).getProjectTradeId().equals(object.getGewerkID())) {
+                if (listOfTrades.get(i).getGewerk().equals(object.getGewerkID())) {
                     spinnerProjectDetailTradeTrade.setSelection(i);
                 }
             }
@@ -588,7 +584,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
         }
         String trade = "";
         if (selectedTrade != null) {
-            trade = selectedTrade.getProjectTradeId();
+            trade = selectedTrade.getGewerk();
         }
         if(DataHelper.isNetworkAvailable(getActivity())) {
             AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult() {
@@ -806,7 +802,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {
@@ -825,7 +821,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {
@@ -911,11 +907,11 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
         newFragment.show(getActivity().getSupportFragmentManager(), "startDate");
     }
 
-    private boolean isTradeAlreadyInsert(ProjectTradeModel object,String kontact)
+    private boolean isTradeAlreadyInsert(ProjektGewerkComboListItem object,String kontact)
     {
         for(int i = 0; i < listOfProjectTrade.size(); i++)
         {
-            if(listOfProjectTrade.get(i).getGewerkID().trim().equalsIgnoreCase(object.getProjectTradeId().trim())
+            if(listOfProjectTrade.get(i).getGewerkID().trim().equalsIgnoreCase(object.getGewerk().trim())
                     && listOfProjectTrade.get(i).getName1().trim().equalsIgnoreCase(kontact))
             {
                 return true;
@@ -971,7 +967,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 }
             }
             for (int i = 0; i < listOfTrades.size(); i++) {
-                if (projectTradeInsert.getGewerk().equals(listOfTrades.get(i).getProjectTradeId()))
+                if (projectTradeInsert.getGewerk().equals(listOfTrades.get(i).getGewerk()))
                     spinnerProjectTradeTrade.setSelection(i);
             }
         }
@@ -986,10 +982,10 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 else
                     projectTradeInsert.setAnspartner("");
                 if (selectedTrade1 != null)
-                    projectTradeInsert.setGewerk(selectedTrade1.getProjectTradeId() + "");
+                    projectTradeInsert.setGewerk(selectedTrade1.getGewerk() + "");
                 else
                     if(listOfTrades != null && listOfTrades.size() > 0) {
-                        projectTradeInsert.setGewerk(listOfTrades.get(0).getProjectTradeId() + "");
+                        projectTradeInsert.setGewerk(listOfTrades.get(0).getGewerk() + "");
                     }
 
                 showCustomerDialog();
@@ -1018,7 +1014,7 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                         projectTradeInsert.setAnspartner("");
                     if (selectedTrade1 != null)
                     {
-                        projectTradeInsert.setGewerk(selectedTrade1.getProjectTradeId() + "");
+                        projectTradeInsert.setGewerk(selectedTrade1.getGewerk() + "");
                     }
                     else
                     {

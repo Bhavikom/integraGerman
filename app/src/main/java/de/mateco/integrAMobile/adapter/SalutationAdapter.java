@@ -1,7 +1,6 @@
 package de.mateco.integrAMobile.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,16 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.SalutationModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonSalutationComboListItem;
 
 public class SalutationAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<SalutationModel> listOfSalutations;
+    private ArrayList<CustomerContactPersonSalutationComboListItem> listOfSalutations;
     private Context context;
     private Language language;
 
-    public SalutationAdapter(Context context, ArrayList<SalutationModel> listOfSalutations,
+    public SalutationAdapter(Context context, ArrayList<CustomerContactPersonSalutationComboListItem> listOfSalutations,
                              int resourceId, Language language)
     {
         this.context = context;
@@ -69,7 +68,7 @@ public class SalutationAdapter extends BaseAdapter
 
             TextView labelListItemSalutationName =
                     (TextView)convertView.findViewById(R.id.labelListItemSalutationName);
-            labelListItemSalutationName.setText(listOfSalutations.get(position - 1).getSalutationDesignation());
+            labelListItemSalutationName.setText(listOfSalutations.get(position - 1).getBezeichnung());
             //imgvBackground.setImageResource(R.drawable.english);
         }
 

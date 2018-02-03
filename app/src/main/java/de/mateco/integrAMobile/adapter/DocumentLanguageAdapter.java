@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.DocumentLanguageModel;
 import de.mateco.integrAMobile.model.Language;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonDocumentlanguageListItem;
 
 public class DocumentLanguageAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<DocumentLanguageModel> listOfLanguage;
+    private ArrayList<CustomerContactPersonDocumentlanguageListItem> listOfLanguage;
     private Context context;
     private Language language;
 
-    public DocumentLanguageAdapter(Context context, ArrayList<DocumentLanguageModel> listOfLanguage,
+    public DocumentLanguageAdapter(Context context, ArrayList<CustomerContactPersonDocumentlanguageListItem > listOfLanguage,
                                    int resourceId, Language language)
     {
         this.context = context;
@@ -69,7 +69,7 @@ public class DocumentLanguageAdapter extends BaseAdapter
             TextView labelListItemCountryName =
                     (TextView)convertView.findViewById(R.id.labelListItemDocumentLanguageName);
             labelListItemCountryName.setText
-                    (listOfLanguage.get(position - 1).getDocumentLanguageDesignation());
+                    (listOfLanguage.get(position - 1).getBezeichnung());
         }
 
         return convertView;

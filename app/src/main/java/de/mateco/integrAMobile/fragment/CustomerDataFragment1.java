@@ -25,10 +25,10 @@ import de.mateco.integrAMobile.adapter.CountryAdapter;
 import de.mateco.integrAMobile.adapter.LegalFormAdapter;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.CountryModel;
 import de.mateco.integrAMobile.model.CustomerModel;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.LegalFormModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerLandListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerRechtsFormComboListItem;
 
 public class CustomerDataFragment1 extends Fragment
 {
@@ -42,10 +42,10 @@ public class CustomerDataFragment1 extends Fragment
             textCustomerDataPaymentDeadline, textCustomerDataCreditLimit, textCustomerDataResponsiblePerson,
             textCustomerDataArea;
     private Spinner spinnerCustomerDataLegalForm, spinnerCustomerDataCountry;
-    private ArrayList<CountryModel> listOfCountry;
-    private ArrayList<LegalFormModel> listOfLegalForm;
-    private CountryModel selectedCountry = null;
-    private LegalFormModel selectedLegalForm = null;
+    private ArrayList<CustomerLandListItem> listOfCountry;
+    private ArrayList<CustomerRechtsFormComboListItem> listOfLegalForm;
+    private CustomerLandListItem  selectedCountry = null;
+    private CustomerRechtsFormComboListItem  selectedLegalForm = null;
     private CountryAdapter countryAdapter;
     private LegalFormAdapter legalFormAdapter;
     private CustomerModel customerStored;
@@ -94,10 +94,10 @@ public class CustomerDataFragment1 extends Fragment
         textCustomerDataName2 = (EditText)rootView.findViewById(R.id.textCustomerDataName2);
         textCustomerDataName1 = (EditText)rootView.findViewById(R.id.textCustomerDataName1);
         textCustomerDataMatchCode = (EditText)rootView.findViewById(R.id.textCustomerDataMatchCode);
-        listOfCountry = new ArrayList<CountryModel>();
+        listOfCountry = new ArrayList<CustomerLandListItem >();
         DataBaseHandler db = new DataBaseHandler(getActivity());
         listOfCountry = db.getCountries();
-        listOfLegalForm = new ArrayList<LegalFormModel>();
+        listOfLegalForm = new ArrayList<CustomerRechtsFormComboListItem >();
         listOfLegalForm = db.getLegalForms();
         countryAdapter = new CountryAdapter(getActivity(), listOfCountry, R.layout.list_item_spinner_country, language);
         legalFormAdapter = new LegalFormAdapter(getActivity(), listOfLegalForm, R.layout.list_item_spinner_legal_form, language);
@@ -180,7 +180,7 @@ public class CustomerDataFragment1 extends Fragment
         textCustomerDataPlace.setText(customerStored.getOrt());
         boolean setCountry = false;
         for (int i = 0; i < listOfCountry.size(); i++) {
-            if (customerStored.getLand().equals(listOfCountry.get(i).getCountryName())) {
+            if (customerStored.getLand().equals(listOfCountry.get(i).getBezeichnung())) {
                 spinnerCustomerDataCountry.setSelection(i + 1);
                 selectedCountry = listOfCountry.get(i);
                 setCountry = true;
@@ -201,7 +201,7 @@ public class CustomerDataFragment1 extends Fragment
         textCustomerDataResponsiblePerson.setText(customerStored.getADM());
         boolean setLegalForm = false;
         for (int i = 0; i < listOfLegalForm.size(); i++) {
-            if (customerStored.getRechtsform().equals((listOfLegalForm.get(i)).getRechtsFormDesignation())) {
+            if (customerStored.getRechtsform().equals((listOfLegalForm.get(i)).getBezeichnung())) {
                 spinnerCustomerDataLegalForm.setSelection(i + 1);
                 selectedLegalForm = listOfLegalForm.get(i);
                 setLegalForm = true;

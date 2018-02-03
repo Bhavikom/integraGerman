@@ -3,18 +3,14 @@ package de.mateco.integrAMobile.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,14 +46,11 @@ import de.mateco.integrAMobile.adapter.CountryAdapter;
 import de.mateco.integrAMobile.adapter.CustomerBranchAdapter;
 import de.mateco.integrAMobile.adapter.LegalFormAdapter;
 import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
-import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.LoadedCustomerFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.ContactPersonModel;
-import de.mateco.integrAMobile.model.CountryModel;
 import de.mateco.integrAMobile.model.CustomerActivityModel;
-import de.mateco.integrAMobile.model.CustomerBranchModel;
 import de.mateco.integrAMobile.model.CustomerCompletedOrderModel;
 import de.mateco.integrAMobile.model.CustomerDatabaseModel;
 import de.mateco.integrAMobile.model.CustomerLostSaleDataModel;
@@ -68,8 +61,10 @@ import de.mateco.integrAMobile.model.CustomerOpenOrderModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
 import de.mateco.integrAMobile.model.CustomerUpdateModel;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.LegalFormModel;
 import de.mateco.integrAMobile.model.LoginPersonModel;
+import de.mateco.integrAMobile.model_logonsquare.BrancheListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerLandListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerRechtsFormComboListItem;
 
 public class CustomerDataFragment extends LoadedCustomerFragment implements TextView.OnEditorActionListener, View.OnClickListener
 {
@@ -87,17 +82,17 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
             textCustomerDataArea;
     private CustomerModel customerStored;
     private Spinner spinnerCustomerDataLegalForm, spinnerCustomerDataCountry, spinnerCustomerDataBranch;
-    private ArrayList<CountryModel> listOfCountry;
-    private ArrayList<LegalFormModel> listOfLegalForm;
-    private CountryModel selectedCountry = null;
-    private LegalFormModel selectedLegalForm = null;
+    private ArrayList<CustomerLandListItem> listOfCountry;
+    private ArrayList<CustomerRechtsFormComboListItem> listOfLegalForm;
+    private CustomerLandListItem  selectedCountry = null;
+    private CustomerRechtsFormComboListItem  selectedLegalForm = null;
     private CountryAdapter countryAdapter;
     private LegalFormAdapter legalFormAdapter;
     //private CustomerModel customerObject;
     private String country, legalForm;
     private String acquisitionDate;
-    private ArrayList<CustomerBranchModel> listOfCustomerBranch;
-    private CustomerBranchModel selectedBranch;
+    private ArrayList<BrancheListItem> listOfCustomerBranch;
+    private BrancheListItem selectedBranch;
     private CustomerBranchAdapter adapterCustomerBranch;
     private ImageView imageViewCall, imageViewEmail, imageViewWebsite;
 
@@ -152,10 +147,10 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
         textCustomerDataName2 = (EditText)rootView.findViewById(R.id.textCustomerDataName2);
         textCustomerDataName1 = (EditText)rootView.findViewById(R.id.textCustomerDataName1);
         textCustomerDataMatchCode = (EditText)rootView.findViewById(R.id.textCustomerDataMatchCode);
-        listOfCountry = new ArrayList<CountryModel>();
+        listOfCountry = new ArrayList<CustomerLandListItem >();
         DataBaseHandler db = new DataBaseHandler(getActivity());
         listOfCountry = db.getCountries();
-        listOfLegalForm = new ArrayList<LegalFormModel>();
+        listOfLegalForm = new ArrayList<CustomerRechtsFormComboListItem >();
         listOfLegalForm = db.getLegalForms();
         listOfCustomerBranch = new ArrayList<>();
         listOfCustomerBranch = db.getCustomerBranches();
@@ -245,7 +240,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                 else
                 {
                     selectedBranch = listOfCustomerBranch.get(position - 1);
-                    LogApp.showLog(" combo box ite selected "," selected Branchd : "+selectedBranch.getName());
+                    LogApp.showLog(" combo box ite selected "," selected Branchd : "+selectedBranch.getBrancheName());
                 }
             }
 
@@ -340,9 +335,9 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
             boolean setCountry = false;
 
             if(customerStored != null) {
-                for (CountryModel model : listOfCountry) {
-                    if(model != null && customerStored.getLand() != null && model.getCountryName() != null) {
-                        if (model.getCountryName().equals(customerStored.getLand())) {
+                for (CustomerLandListItem  model : listOfCountry) {
+                    if(model != null && customerStored.getLand() != null && model.getBezeichnung() != null) {
+                        if (model.getBezeichnung().equals(customerStored.getLand())) {
                             selectedCountry = listOfCountry.get(listOfCountry.indexOf(model));
                             spinnerCustomerDataCountry.setSelection(listOfCountry.indexOf(model) + 1);
                             setCountry = true;
@@ -372,7 +367,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
             for(int i = 0; i < listOfCustomerBranch.size(); i++)
             {
                 if(customerStored != null) {
-                    if (String.valueOf(customerStored.getBranche()).equalsIgnoreCase(String.valueOf(listOfCustomerBranch.get(i).getName()))) {
+                    if (String.valueOf(customerStored.getBranche()).equalsIgnoreCase(String.valueOf(listOfCustomerBranch.get(i).getBrancheName()))) {
                         spinnerCustomerDataBranch.setSelection(i + 1);
                         selectedBranch = listOfCustomerBranch.get(i);
                         setBranch = true;
@@ -401,7 +396,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
             for(int i = 0; i < listOfLegalForm.size(); i++)
             {
                 if(customerStored != null) {
-                    if (customerStored.getRechtsform().equals((listOfLegalForm.get(i)).getRechtsFormDesignation())) {
+                    if (customerStored.getRechtsform().equals((listOfLegalForm.get(i)).getBezeichnung())) {
                         spinnerCustomerDataLegalForm.setSelection(i + 1);
                         selectedLegalForm = listOfLegalForm.get(i);
                         setLegalForm = true;
@@ -717,7 +712,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
         country = "";
         if(selectedCountry != null)
         {
-            country = selectedCountry.getCountryId()+"";
+            country = selectedCountry.getLand()+"";
         }
         final String phone = textCustomerDataPhone.getText().toString().trim();
         final String fax = textCustomerDataFax.getText().toString().trim();
@@ -728,7 +723,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
         legalForm = "";
         if(selectedLegalForm != null)
         {
-            legalForm = selectedLegalForm.getRechtsFormId()+"";
+            legalForm = selectedLegalForm.getRECHTSFORM()+"";
         }
         final String owner = textCustomerDataOwner.getText().toString().trim();
         final String vatNo = textCustomerDataVatNo.getText().toString().trim();
@@ -750,7 +745,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
         String branch = "";
         if(selectedBranch != null)
         {
-            branch = selectedBranch.getId();
+            branch = selectedBranch.getBrancheID();
         }
         textCustomerDataName1.setError(null);
         textCustomerDataPhone.setError(null);
@@ -873,7 +868,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                                 customer.setMatchCode(matchCode);
                                 //selectedBranch = new CustomerBranchModel();
                                 if(selectedBranch != null){
-                                    customer.setBranche(selectedBranch.getName());
+                                    customer.setBranche(selectedBranch.getBrancheName());
                                 }
                                 else {
                                     customer.setBranche(null);
@@ -897,13 +892,13 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                                 customer.setKA_Umsatz_Vorjahr(customerStored.getKA_Umsatz_Vorjahr());
                                 customer.setKreditlimit(creditLimit);
                                 if(selectedCountry != null)
-                                    customer.setLand(selectedCountry.getCountryName());
+                                    customer.setLand(selectedCountry.getBezeichnung());
                                 else
                                     customer.setLand("");
                                 customer.setName2(name2);
                                 customer.setName3(name3);
                                 if(selectedLegalForm != null)
-                                    customer.setRechtsform(selectedLegalForm.getRechtsFormDesignation());
+                                    customer.setRechtsform(selectedLegalForm.getBezeichnung());
                                 else
                                     customer.setRechtsform("");
                                 customer.setTelefax(fax);
@@ -1036,7 +1031,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
         country = "";
         if(selectedCountry != null)
         {
-            country = selectedCountry.getCountryName()+"";
+            country = selectedCountry.getBezeichnung()+"";
         }
         String phone = textCustomerDataPhone.getText().toString().trim();
         String fax = textCustomerDataFax.getText().toString().trim();
@@ -1047,7 +1042,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
         legalForm = "";
         if(selectedLegalForm != null)
         {
-            legalForm = selectedLegalForm.getRechtsFormDesignation()+"";
+            legalForm = selectedLegalForm.getBezeichnung()+"";
         }
 
         String owner = textCustomerDataOwner.getText().toString().trim();
@@ -1116,7 +1111,7 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         android.Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {

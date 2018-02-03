@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.LadefahrzeugComboBoxItemModel;
+import de.mateco.integrAMobile.model_logonsquare.ListOfLadefahrzeugComboBoxItemItem;
 
 /***** Adapter class extends with ArrayAdapter ******/
 public class SpinnerAdapterClass extends ArrayAdapter<String>{
@@ -22,7 +22,7 @@ public class SpinnerAdapterClass extends ArrayAdapter<String>{
     private Context activity;
     private ArrayList data;
     public Resources res;
-    LadefahrzeugComboBoxItemModel tempValues=null;
+    ListOfLadefahrzeugComboBoxItemItem tempValues=null;
     LayoutInflater inflater;
 
     /*************  CustomAdapter Constructor *****************/
@@ -65,20 +65,20 @@ public class SpinnerAdapterClass extends ArrayAdapter<String>{
 
         /***** Get each Model object from Arraylist ********/
         tempValues = null;
-        tempValues = (LadefahrzeugComboBoxItemModel) data.get(position);
+        tempValues = (ListOfLadefahrzeugComboBoxItemItem) data.get(position);
 
         TextView label=(TextView)row.findViewById(R.id.textItem);
         label.setText(tempValues.getBezeichnung());
         /*if(position==0){
             // Default selected Spinner item
             //label.setText("");
-            label.setText(tempValues.getBezeichnung());
+            label.setText(tempValues.getBezeichnung2());
 
         }
         else
         {
             // Set values for spinner each row
-            label.setText(tempValues.getBezeichnung());
+            label.setText(tempValues.getBezeichnung2());
 
         }*/
         return row;

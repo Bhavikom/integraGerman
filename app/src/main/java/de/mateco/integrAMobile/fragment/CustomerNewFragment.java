@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,14 +50,14 @@ import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.CountryModel;
-import de.mateco.integrAMobile.model.CustomerBranchModel;
 import de.mateco.integrAMobile.model.CustomerFullDetailModel;
 import de.mateco.integrAMobile.model.CustomerModel;
 import de.mateco.integrAMobile.model.CustomerNewModel;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.LegalFormModel;
 import de.mateco.integrAMobile.model.LoginPersonModel;
+import de.mateco.integrAMobile.model_logonsquare.BrancheListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerLandListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerRechtsFormComboListItem;
 
 public class CustomerNewFragment extends BaseFragment implements TextView.OnEditorActionListener, View.OnClickListener
 {
@@ -71,15 +70,15 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                     textCustomerNewVatNo, textCustomerNewOrderNo, textCustomerNewSalesPotential;
     //textCustomerNewOrderBackLog,textCustomerNewKaNr
     private Spinner spinnerCustomerNewCountry, spinnerCustomerNewLegalForm, spinnerCustomerNewBranch;
-    private ArrayList<CountryModel> listOfCountry;
-    private CountryModel selectedCountry = null;
-    private LegalFormModel selectedLegalForm = null;
-    private ArrayList<LegalFormModel> listOfLegalForm;
+    private ArrayList<CustomerLandListItem> listOfCountry;
+    private CustomerLandListItem  selectedCountry = null;
+    private CustomerRechtsFormComboListItem selectedLegalForm = null;
+    private ArrayList<CustomerRechtsFormComboListItem > listOfLegalForm;
     private CountryAdapter countryAdapter;
     private LegalFormAdapter legalFormAdapter;
-    private ArrayList<CustomerBranchModel> listOfCustomerBranches;
+    private ArrayList<BrancheListItem> listOfCustomerBranches;
     private CustomerBranchAdapter adapterCustomerBranch;
-    private CustomerBranchModel selectedBranch;
+    private BrancheListItem selectedBranch;
     private ImageView imageViewCall;
     private RadioButton radioButtonIndustrie,radioButtonStrasse;
     RadioGroup rbGroup;
@@ -129,10 +128,10 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
 
 
         //textCustomerNewKaNr = (EditText)rootView.findViewById(R.id.textCustomerNewKaNr);
-        listOfCountry = new ArrayList<CountryModel>();
-        DataBaseHandler db = new DataBaseHandler(getActivity());
+        listOfCountry = new ArrayList<CustomerLandListItem >();
+        DataBaseHandler db = null; //= new DataBaseHandler(getActivity());
         listOfCountry = db.getCountries();
-        listOfLegalForm = new ArrayList<LegalFormModel>();
+        listOfLegalForm = new ArrayList<CustomerRechtsFormComboListItem >();
         listOfLegalForm = db.getLegalForms();
         listOfCustomerBranches = new ArrayList<>();
         listOfCustomerBranches = db.getCustomerBranches();
@@ -147,7 +146,7 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
         {
             for(int i = 0; i < listOfCountry.size(); i++)
             {
-                if(listOfCountry.get(i).getCountryId().equals("1"))
+                if(listOfCountry.get(i).getLand().equals("1"))
                 {
                     selectedCountry = listOfCountry.get(i);
                     spinnerCustomerNewCountry.setSelection(i + 1);
@@ -359,7 +358,7 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
         String place = textCustomerNewPlace.getText().toString().trim();
         String country="";
         if(selectedCountry != null){
-            country = selectedCountry.getCountryId();
+            country = selectedCountry.getLand();
         }
         else {
             country="";
@@ -368,7 +367,7 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
         String branch = "";
         if(selectedBranch != null)
         {
-            branch = selectedBranch.getId();
+            branch = selectedBranch.getBrancheID();
         }
         String phone = textCustomerNewPhone.getText().toString().trim();
         String fax = textCustomerNewFax.getText().toString().trim();
@@ -508,7 +507,7 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                     String legalForm = "";
                     if(selectedLegalForm != null)
                     {
-                        legalForm = selectedLegalForm.getRechtsFormId()+"";
+                        legalForm = selectedLegalForm.getRECHTSFORM()+"";
                     }
                     customerNew.setRechtsform(legalForm);
                     customerNew.setInhaber(owner);
@@ -681,7 +680,7 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {

@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -564,7 +563,7 @@ public class SiteInspectionPermitsFragment extends BaseFragment implements View.
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {

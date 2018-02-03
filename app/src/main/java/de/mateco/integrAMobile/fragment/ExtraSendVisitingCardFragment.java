@@ -3,7 +3,6 @@ package de.mateco.integrAMobile.fragment;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.os.Environment;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,9 +46,9 @@ import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 
 public class ExtraSendVisitingCardFragment extends BaseFragment implements View.OnClickListener
 {
@@ -60,7 +58,7 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
     private MatecoPriceApplication matecoPriceApplication;
     private Button buttonShareInformation;
 
-    ArrayList<EmployeeModel> listOfEmployee = new ArrayList<>();
+    ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
     private LinearLayout LayoutVisitingCard;
     private TextView labelName,labelFirm,labelPosition,labelInternet,labelEmail,labelWebsite,
             labelPhone,labelBusiness,labelMobile,labelAddress,labelBusinessAddress;
@@ -219,7 +217,7 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
 
                                         } else {
                                             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                    Manifest.permission.READ_EXTERNAL_STORAGE}, 2002);
+                                                    Manifest.permission.READ_EXTERNAL_STORAGE}, 22);
                                         }
                                     }
                                     else {
@@ -374,7 +372,7 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                         ActivityCompat.requestPermissions(getActivity(), new String[]{
                                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                         android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                                3003);
+                                33);
                     }
                 }
                 else {
@@ -390,12 +388,12 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
                 break;
         }
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            if(requestCode == 3003){
+            if(requestCode == 33){
                 if (vcfFile != null) {
                     Uri photoURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", vcfFile);
                     Intent sendIntent = new Intent();

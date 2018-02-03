@@ -2,7 +2,6 @@ package de.mateco.integrAMobile.fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +23,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,7 +37,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -59,8 +56,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 import de.mateco.integrAMobile.Helper.GlobalMethods;
 import de.mateco.integrAMobile.Helper.DataHelper;
@@ -68,7 +63,6 @@ import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.InputFilterMinMax;
 import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.HomeActivity;
-import de.mateco.integrAMobile.Manifest;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.SiteInspectionAccessAdapter;
 import de.mateco.integrAMobile.adapter.SiteInspectionBuildingProjectAdapter;
@@ -81,15 +75,15 @@ import de.mateco.integrAMobile.model.ContactPersonModel;
 import de.mateco.integrAMobile.model.CustomerModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.Pricing1BranchData;
 import de.mateco.integrAMobile.model.ResponseFormat;
-import de.mateco.integrAMobile.model.SiteInspectionAccessModel;
 import de.mateco.integrAMobile.model.SiteInspectionAdditionalMobileWindPowerModel;
-import de.mateco.integrAMobile.model.SiteInspectionBuildingProjectModel;
 import de.mateco.integrAMobile.model.SiteInspectionModel;
 import de.mateco.integrAMobile.model.SiteInspectionNewModel;
 import de.mateco.integrAMobile.model.SiteInspectionOperationalDataPermitsModel;
 import de.mateco.integrAMobile.model.SiteInspectionOperationalEnvironmentModel;
+import de.mateco.integrAMobile.model_logonsquare.BVOBauvorhabenComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.BVOZugangComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceBranchListItem;
 
 public class SiteInspectionNewFragment extends BaseFragment implements View.OnClickListener,LocationListener
 {
@@ -112,8 +106,8 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
     private Spinner SpnBuildingProject,SpnAccess;
     private ImageButton imgDate;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    private ArrayList<SiteInspectionBuildingProjectModel> listOfBuildingProject = new ArrayList<>();
-    private ArrayList<SiteInspectionAccessModel> listOfAccess = new ArrayList<>();
+    private ArrayList<BVOBauvorhabenComboListItem> listOfBuildingProject = new ArrayList<>();
+    private ArrayList<BVOZugangComboListItem> listOfAccess = new ArrayList<>();
     private DataBaseHandler db;
     private SiteInspectionModel siteInspectionModel = new SiteInspectionModel();
     private SiteInspectionNewModel siteInspectionNewModel = new SiteInspectionNewModel();
@@ -128,7 +122,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
     private Button buttonCustomer,buttonSiteInspectionWithoutCustomer,buttonSiteInspectionMap,buttonUpdate,buttonPurchaser,buttonAnsprechpartner;
     private TextView labelValueLocationLongitude,labelValueLocationLatitude, labelValueLocationLatitudeFormat, labelValueLocationLongitudeFormat;
     private ArrayList<LoginPersonModel> loginPerson = new ArrayList<>();
-    private ArrayList<Pricing1BranchData> listOfBranch = new ArrayList<>();
+    private ArrayList<PriceBranchListItem> listOfBranch = new ArrayList<>();
     private SiteInspectionNewModel model;
     private ImageView imageViewDialPurchaser, imageViewDialContactPerson;
     private String blockCharacterSet = "\"";
@@ -689,9 +683,9 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     if (application.isCustomerLoaded(DataHelper.isCustomerLoaded, false)) {
                         CustomerContactPersonFragment1 fragment3 = new CustomerContactPersonFragment1();
                         Bundle args2 = new Bundle();
-                        args2.putParcelable("AnsprechPartnerBack", AnsprechPartner);
+                        //args2.putParcelable("AnsprechPartnerBack", AnsprechPartner);
                         args2.putString("SiteInspectionContactPerson", "SiteInspectionContactPerson");
-                        args2.putParcelableArrayList("contact_person",siteInspectionNewModel.getCustomerContactPersonList());
+                        //args2.putParcelableArrayList("contact_person",siteInspectionNewModel.getCustomerContactPersonList());
                         fragment3.setArguments(args2);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                         transaction.replace(R.id.content_frame, fragment3);
@@ -706,7 +700,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     {
                         CustomerContactPersonFragment1 fragment4 = new CustomerContactPersonFragment1();
                         Bundle args3 = new Bundle();
-                        args3.putParcelable("ContactPersonBack",ContactPerson);
+                        //args3.putParcelable("ContactPersonBack",ContactPerson);
                         args3.putString("SiteInspectionAnsprechPartner", "SiteInspectionAnsprechPartner");
                         fragment4.setArguments(args3);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -741,7 +735,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         android.Manifest.permission.CALL_PHONE},
-                                3005);
+                                91);
                     }
                 }
                 else {
@@ -760,7 +754,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         android.Manifest.permission.CALL_PHONE},
-                                3005);
+                                91);
                     }
                 }
                 else {
@@ -985,7 +979,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                 ActivityCompat.requestPermissions(getActivity(), new String[] {
                                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                        3001);
+                        90);
             }
         }
         else {
@@ -1053,7 +1047,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == 3001 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == 90 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //setupContactsPicker();
             //Toast.makeText(getActivity(),"permission granted : ",Toast.LENGTH_SHORT).show();
             updateLocation();

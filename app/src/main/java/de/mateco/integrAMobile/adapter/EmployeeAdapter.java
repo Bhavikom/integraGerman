@@ -10,12 +10,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.EmployeeModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 
 public class EmployeeAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<EmployeeModel> listOfEmployee;
+    private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
     private Context context;
 
     public int selectedIndex = -1;
@@ -25,7 +25,7 @@ public class EmployeeAdapter extends BaseAdapter
         notifyDataSetChanged();
     }
 
-    public EmployeeAdapter(Context context, ArrayList<EmployeeModel> listOfEmployee, int resourceId)
+    public EmployeeAdapter(Context context, ArrayList<CustomerActivityEmployeeListItem> listOfEmployee, int resourceId)
     {
         this.context = context;
         this.listOfEmployee = listOfEmployee;

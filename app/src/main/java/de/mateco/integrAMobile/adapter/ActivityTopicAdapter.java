@@ -10,18 +10,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.ActivityTopicModel;
 import de.mateco.integrAMobile.model.Language;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
 
 public class ActivityTopicAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<ActivityTopicModel> listOfActivityTopic;
+    private ArrayList<CustomerActivityTopicListItem> listOfActivityTopic;
     private Context context;
     private Language language;
 
 
-    public ActivityTopicAdapter(Context context, ArrayList<ActivityTopicModel> listOfActivityTopic,
+    public ActivityTopicAdapter(Context context, ArrayList<CustomerActivityTopicListItem> listOfActivityTopic,
                                 int resourceId, Language language)
     {
         this.context = context;
@@ -68,7 +68,7 @@ public class ActivityTopicAdapter extends BaseAdapter
             convertView = mInflater.inflate(resourceId, null);
 
             TextView labelListItemCountryName = (TextView)convertView.findViewById(R.id.labelListItemActivityTopicName);
-            labelListItemCountryName.setText(listOfActivityTopic.get(position - 1).getActivityTopicName());
+            labelListItemCountryName.setText(listOfActivityTopic.get(position - 1).getBezeichnung());
         }
 
         //imgvBackground.setImageResource(R.drawable.english);

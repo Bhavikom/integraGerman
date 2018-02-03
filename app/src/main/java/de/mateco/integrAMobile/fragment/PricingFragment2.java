@@ -6,13 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,7 +18,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,16 +38,17 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.assist.MemoryCacheKeyUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -58,7 +56,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.Constants;
-import de.mateco.integrAMobile.Helper.CustomListView;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.GlobalMethods;
@@ -79,20 +76,20 @@ import de.mateco.integrAMobile.base.LoadedCustomerFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.ContactPersonModel;
-import de.mateco.integrAMobile.model.CountryModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 import de.mateco.integrAMobile.model.PriceGeraeteTypeParam;
-import de.mateco.integrAMobile.model.PriceStaffelModel;
-import de.mateco.integrAMobile.model.Pricing1BranchData;
 import de.mateco.integrAMobile.model.Pricing2InsertPriceUseInformationListData;
 import de.mateco.integrAMobile.model.Pricing2KaNrData;
 import de.mateco.integrAMobile.model.Pricing2KaNrListViewData;
 import de.mateco.integrAMobile.model.Pricing2KaNrListViewLessThen1800Data;
 import de.mateco.integrAMobile.model.Pricing2KaNrListViewMoreThen1800Data;
 import de.mateco.integrAMobile.model.PricingCustomerOrderBasicInfo;
-import de.mateco.integrAMobile.model.PricingOfflineStandardPriceData;
-import de.mateco.integrAMobile.model.SiteInspectionDeviceTypeModel;
+import de.mateco.integrAMobile.model_logonsquare.BVODeviceTypeListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerLandListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceBranchListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceStaffelListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceStandardListItem;
 
 public class PricingFragment2 extends LoadedCustomerFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -105,7 +102,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
     private String datesComma="",fromDate="",toDate="";
     private ArrayList<Pricing2KaNrData> rowKaNrItems;
     private ArrayList<Pricing2KaNrData> lablesKaNr;
-    private ArrayList<SiteInspectionDeviceTypeModel> listDeviceType;
+    private List<BVODeviceTypeListItem> listDeviceType;
     private SiteInspectionDeviceTypeAdapter deviceTypeAdapter = null;
 
     private Spinner spKaNr;
@@ -123,7 +120,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
     private ListView lvKaNrListView;
     private Spinner spLandUse;
     //private Spinner spinnerEinsatzland;
-    private ArrayList<CountryModel> rowLandUseItems;
+    private ArrayList<CustomerLandListItem> rowLandUseItems;
     //private ArrayList<CountryModel> lablesLandUse;
     private ArrayList<Pricing2KaNrListViewData> rowKaNrListViewItems;
     private Pricing2KaNrListViewDataAdapter kaNrListViewItemsAdapter = null;
@@ -131,8 +128,8 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
     private Pricing2KaNrListViewLessThenDataAdapter kaNrListViewLessThenDataItemsAdapter = null;
     private ArrayList<Pricing2KaNrListViewMoreThen1800Data> rowKaNrListViewMoreThenItems;
     private Pricing2KaNrListViewMoreThenDataAdapter kaNrListViewMoreThenDataItemsAdapter = null;
-    private ArrayList<CountryModel> arraylistCountry = null;
-    private ArrayList<PricingOfflineStandardPriceData> rowOfflineStandardPriceListViewItems;
+    private ArrayList<CustomerLandListItem > arraylistCountry = null;
+    private ArrayList<PriceStandardListItem> rowOfflineStandardPriceListViewItems;
     private Pricing2OfflineKaNrStandardPriceListViewDataAdapter offlineStandardPriceListViewItemsAdapter = null;
     private Menu menu;
     private LinearLayout linearHeaderTags,linearKanrNo;
@@ -145,7 +142,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
     private ArrayList<String> listOfTagName;
     private ArrayList<String> TagName;
     private ContactPersonModel ContactPerson;
-    private ArrayList<PriceStaffelModel> listOfRealTag;
+    private ArrayList<PriceStaffelListItem> listOfRealTag;
     private ImageButton imgBtnContractSpotHelp, imgBtnProjectHelp, imgBtnProjectRemove, imageButtonCurrentLocation, imageButtonMapLocation;
     private EditText textUseZipCode, textUserPlace, textUserStreet, textZusatz, textContactPersonName, textEntferunung, textContactPersonTelephone;
     private TextView labelProject;
@@ -240,11 +237,11 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         final PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
                 new Gson().toJson(new PricingCustomerOrderBasicInfo()));
         labelProject.setText(model.getProject());
-        ArrayList<Pricing1BranchData> branches = new ArrayList<>();
+        ArrayList<PriceBranchListItem> branches = new ArrayList<>();
         branches=db.getBranchList(preferences.getBranchId());
 
 
-        final ArrayList<Pricing1BranchData> finalBranches = branches;
+        final ArrayList<PriceBranchListItem > finalBranches = branches;
         checkBoxSelbstfahrer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -253,7 +250,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     textUseZipCode.setText(finalBranches.get(0).getPlz());
                     textUserPlace.setText(finalBranches.get(0).getOrt());
                     textUserStreet.setText(finalBranches.get(0).getStrasse());
-                    spLandUse.setPrompt(finalBranches.get(0).getDesignation());
+                    spLandUse.setPrompt(finalBranches.get(0).getBezeichnung());
 
                     textUseZipCode.setEnabled(false);
                     textUserPlace.setEnabled(false);
@@ -438,7 +435,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
 
         if (rowLandUseItems.size() > 0) {
             for (int i = 0; i < rowLandUseItems.size(); i++) {
-                if (rowLandUseItems.get(i).getCountryId().equals("1")) {
+                if (rowLandUseItems.get(i).getLand().equals("1")) {
                     spLandUse.setSelection(i + 1);
                 }
             }
@@ -449,8 +446,8 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(rowLandUseItems.size() > 0){
-                    countryNameId = Integer.parseInt(rowLandUseItems.get(position - 1).getCountryId());
-                    countryName = rowLandUseItems.get(position - 1).getCountryName();
+                    countryNameId = Integer.parseInt(rowLandUseItems.get(position - 1).getLand());
+                    countryName = rowLandUseItems.get(position - 1).getBezeichnung();
                 }
 
                 //  LevelGroupDesignation = lablesDevice.get(position).getDesignation();
@@ -966,13 +963,13 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             listOfRValue = new ArrayList<>();
             listOfMValue = new ArrayList<>();
             for (int j = 0; j < rowOfflineStandardPriceListViewItems.size(); j++) {
-                listOfRealTag.add(db.getStaffelObjectFromStaffel(rowOfflineStandardPriceListViewItems.get(j).getHoehenhauptgruppeID()));
+                listOfRealTag.add(db.getStaffelObjectFromStaffel(Integer.parseInt(rowOfflineStandardPriceListViewItems.get(j).getHoehenhauptgruppeID())));
                 //listOfRValue.add(Double.parseDouble(object.getString("Value")));
                 //listOfMValue.add(Double.parseDouble(jsonArray.getJSONObject(i + 1).getJSONArray("tages").getJSONObject(j).getString("Value")));
             }
             /*for (int i = 0; i < listOfRealTag.size(); i++)
             {
-                Log.e(""," list of real tag value : "+listOfRealTag.get(i).getBezeichnung());
+                Log.e(""," list of real tag value : "+listOfRealTag.get(i).getBezeichnung2());
                 LinearLayout llWholeTag = new LinearLayout(getActivity());
                 llWholeTag.setLayoutParams(layoutParams);
                 llWholeTag.setOrientation(LinearLayout.VERTICAL);
@@ -987,7 +984,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 textViewTag.setGravity(Gravity.CENTER);
                 TagName = new ArrayList<>();
                 //textViewTag.setText(jsonArray.getJSONObject(0).getJSONArray("tages").getJSONObject(i).getString("Key"));
-                textViewTag.setText(listOfRealTag.get(i).getBezeichnung());
+                textViewTag.setText(listOfRealTag.get(i).getBezeichnung2());
                 llTag.addView(textViewTag);
                 llWholeTag.addView(llTag);
                 LinearLayout llWholeTagSub = new LinearLayout(getActivity());
@@ -1921,8 +1918,11 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 }else {
                     try {
                         listDeviceType.clear();
-                        SiteInspectionDeviceTypeModel.extractFromJson(result, listDeviceType);
-
+                        try {
+                            listDeviceType = LoganSquare.parseList(result,BVODeviceTypeListItem.class);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 //                    spGeraetetype.setOnItemSelectedListener(null);
 //                    spGeraetetype.setSelection(0);
 //                    spGeraetetype.setOnItemSelectedListener(this);
@@ -1966,7 +1966,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 new Gson().toJson(new PricingCustomerOrderBasicInfo()));
         labelProject.setText(model.getProject());
 
-         ArrayList<Pricing1BranchData> branches = new ArrayList<>();
+         ArrayList<PriceBranchListItem > branches = new ArrayList<>();
         branches=db.getBranchList(preferences.getBranchId());
         /*if(!TextUtils.isEmpty(preferences.getComefrom()))
         {
@@ -2091,7 +2091,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {
@@ -2178,7 +2178,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     ActivityCompat.requestPermissions(getActivity(), new String[] {
                                     android.Manifest.permission.ACCESS_FINE_LOCATION,
                                     android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                            3003);
+                            33);
                 }
             }
             else {
@@ -2190,7 +2190,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 3003 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == 33 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             getLocation();
         }
     }

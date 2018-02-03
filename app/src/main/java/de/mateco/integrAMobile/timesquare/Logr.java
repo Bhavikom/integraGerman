@@ -1,8 +1,9 @@
 package de.mateco.integrAMobile.timesquare;
 
 
-import android.support.graphics.drawable.animated.BuildConfig;
 import android.util.Log;
+
+import de.mateco.integrAMobile.BuildConfig;
 
 /** Log utility class to handle the log tag and DEBUG-only logging. */
 public final class Logr {

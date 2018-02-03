@@ -2,7 +2,6 @@ package de.mateco.integrAMobile.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,11 @@ import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.PricingOfflineStandardPriceData;
+import de.mateco.integrAMobile.model_logonsquare.PriceStandardListItem;
 
 public class Pricing2OfflineKaNrStandardPriceListViewDataAdapter extends BaseAdapter {
 
-    private List<PricingOfflineStandardPriceData> listKaNrOfflineStandardPriceListView;
+    private List<PriceStandardListItem> listKaNrOfflineStandardPriceListView;
     private Context context;
     private int selectionOfTag = -1, selectionOfRow = -1;
 
@@ -31,7 +30,7 @@ public class Pricing2OfflineKaNrStandardPriceListViewDataAdapter extends BaseAda
     }
 
     public Pricing2OfflineKaNrStandardPriceListViewDataAdapter(Activity context,
-            List<PricingOfflineStandardPriceData> listOfflineStandardPriceKaNrListView) {
+            List<PriceStandardListItem > listOfflineStandardPriceKaNrListView) {
         this.context = context;
         this.listKaNrOfflineStandardPriceListView = listOfflineStandardPriceKaNrListView;
     }
@@ -114,21 +113,21 @@ public class Pricing2OfflineKaNrStandardPriceListViewDataAdapter extends BaseAda
 
 
         txtPricing2OfflineStandard_1_2_R_DataRow.setText(DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR_1_2())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR12())));
         txtPricing2OfflineStandard_1_2_M_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM_1_2())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM12())));
         txtPricing2OfflineStandard_3_4_R_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR_3_4())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR34())));
         txtPricing2OfflineStandard_3_4_M_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM_3_4())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM34())));
         txtPricing2OfflineStandard_5_10_R_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR_5_10())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR510())));
         txtPricing2OfflineStandard_5_10_M_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM_5_10())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM510())));
         txtPricing2OfflineStandard_11_20_R_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR_11_20())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageR1120())));
         txtPricing2OfflineStandard_11_20_M_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
-                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM_11_20())));
+                (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getTageM1120())));
         txtPricing2OfflineStandard_Ab_21_R_DataRow.setText("" + DataHelper.getGermanCurrencyFormat
                 (String.valueOf(listKaNrOfflineStandardPriceListView.get(position).getAb21TageR())));
         txtPricing2OfflineStandard_Ab_21_M_DataRow.setText("" + DataHelper.getGermanCurrencyFormat

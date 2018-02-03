@@ -11,16 +11,16 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.ProjectTypeModel;
+import de.mateco.integrAMobile.model_logonsquare.ProjekttypComboListItem;
 
 public class ProjectTypeAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<ProjectTypeModel> listOfProjectType;
+    private ArrayList<ProjekttypComboListItem> listOfProjectType;
     private Context context;
     private Language language;
 
-    public ProjectTypeAdapter(Context context, ArrayList<ProjectTypeModel> listOfProjectType,
+    public ProjectTypeAdapter(Context context, ArrayList<ProjekttypComboListItem> listOfProjectType,
                               int resourceId, Language language)
     {
         this.context = context;
@@ -67,7 +67,7 @@ public class ProjectTypeAdapter extends BaseAdapter
             convertView = mInflater.inflate(resourceId, null);
 
             TextView labelListItemCountryName = (TextView)convertView.findViewById(R.id.labelListItemCountryName);
-            labelListItemCountryName.setText(listOfProjectType.get(position - 1).getProjectTypeDesignation());
+            labelListItemCountryName.setText(listOfProjectType.get(position - 1).getBezeichnung());
         }
         //imgvBackground.setImageResource(R.drawable.english);
 

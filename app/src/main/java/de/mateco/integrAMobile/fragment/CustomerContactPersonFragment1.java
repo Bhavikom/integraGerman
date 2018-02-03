@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,7 +46,6 @@ import de.mateco.integrAMobile.adapter.FeatureAdapter;
 import de.mateco.integrAMobile.adapter.FunctionAdapter;
 import de.mateco.integrAMobile.adapter.SalutationAdapter;
 import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
-import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.LoadedCustomerFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
@@ -55,14 +53,14 @@ import de.mateco.integrAMobile.model.ContactPersonModel;
 import de.mateco.integrAMobile.model.CustomerContactPersonAndFeatureAddModel;
 import de.mateco.integrAMobile.model.CustomerContactPersonAndFeatureUpdateModel;
 import de.mateco.integrAMobile.model.CustomerModel;
-import de.mateco.integrAMobile.model.DecisionMakerModel;
-import de.mateco.integrAMobile.model.DocumentLanguageModel;
-import de.mateco.integrAMobile.model.FeatureModel;
-import de.mateco.integrAMobile.model.FunctionModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 import de.mateco.integrAMobile.model.PricingCustomerOrderBasicInfo;
-import de.mateco.integrAMobile.model.SalutationModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonDecisionMakersListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonDocumentlanguageListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonFeatureListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonFunctionComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonSalutationComboListItem;
 
 public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
 {
@@ -72,13 +70,13 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
     private ListView listCustomerContactPersonFeature, listViewCustomerContactPersonList;
     private Spinner spinnerCustomerContactPersonSalutation, spinnerCustomerContactPersonFunction, spinnerCustomerContactPersonDocumentLanguage,
             spinnerCustomerContactPersonDecisionMaker;
-    private ArrayList<SalutationModel> listOfSalutation;
+    private ArrayList<CustomerContactPersonSalutationComboListItem> listOfSalutation;
     private SalutationAdapter salutationAdapter;
-    private ArrayList<FunctionModel> listOfFunction;
+    private ArrayList<CustomerContactPersonFunctionComboListItem> listOfFunction;
     private FunctionAdapter functionAdapter;
-    private ArrayList<DecisionMakerModel> listOfDecisionMaker;
+    private ArrayList<CustomerContactPersonDecisionMakersListItem> listOfDecisionMaker;
     private DecisionMakerAdapter decisionMakerAdapter;
-    private ArrayList<DocumentLanguageModel> listOfDocumentLanguage;
+    private ArrayList<CustomerContactPersonDocumentlanguageListItem> listOfDocumentLanguage;
     private DocumentLanguageAdapter documentLanguageAdapter;
     private ArrayList<ContactPersonModel> listOfContactPerson;
     private CheckBox checkboxCustomerContactPersonListHideRetired;
@@ -89,13 +87,13 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
     private boolean isInEditMode = false, isInAddMode = false;
     private ContactPersonModel selectedContactPerson;
     private Menu menu;
-    private ArrayList<FeatureModel> listOfFeatures, listOfSelectedFeatures, listOfRemainingFeature;
+    private ArrayList<CustomerContactPersonFeatureListItem> listOfFeatures, listOfSelectedFeatures, listOfRemainingFeature;
     private FeatureAdapter selectedFeatureAdapter, listOfFeatureAdapter;
     private ImageButton buttonAddCustomerContactPersonFeature, buttonRemoveCustomerContactPersonFeature;
-    private SalutationModel selectedSalutation;
-    private FunctionModel selectedFunction;
-    private DecisionMakerModel selectedDecisionMaker;
-    private DocumentLanguageModel selectedDocumentLanguage;
+    private CustomerContactPersonSalutationComboListItem selectedSalutation;
+    private CustomerContactPersonFunctionComboListItem selectedFunction;
+    private CustomerContactPersonDecisionMakersListItem selectedDecisionMaker;
+    private CustomerContactPersonDocumentlanguageListItem  selectedDocumentLanguage;
     private DataBaseHandler db;
     private LinearLayout linearLayoutCustomerContactPersonList;
     ArrayList<ContactPersonModel> arrayListContactfromDb;
@@ -175,17 +173,17 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
         listOfFeatures = new ArrayList<>();
         listOfFeatures = db.getFeatures();
         listOfRemainingFeature = new ArrayList<>();
-        listOfSelectedFeatures = new ArrayList<FeatureModel>();
+        listOfSelectedFeatures = new ArrayList<CustomerContactPersonFeatureListItem>();
         selectedFeatureAdapter = new FeatureAdapter(getActivity(), listOfSelectedFeatures, R.layout.list_item_customer_contact_person_feature);
         listOfFeatureAdapter = new FeatureAdapter(getActivity(), listOfRemainingFeature, R.layout.list_item_customer_contact_person_feature);
         listCustomerContactPersonFeature.setAdapter(selectedFeatureAdapter);
 
         setLanguage();
         makeEditable(false);
-        selectedSalutation = new SalutationModel();
-        selectedFunction = new FunctionModel();
-        selectedDecisionMaker = new DecisionMakerModel();
-        selectedDocumentLanguage = new DocumentLanguageModel();
+        selectedSalutation = new CustomerContactPersonSalutationComboListItem();
+        selectedFunction = new CustomerContactPersonFunctionComboListItem();
+        selectedDecisionMaker = new CustomerContactPersonDecisionMakersListItem();
+        selectedDocumentLanguage = new CustomerContactPersonDocumentlanguageListItem ();
         if(listOfContactPerson.size() > 0)
         {
             listViewCustomerContactPersonList.setSelection(0);
@@ -351,7 +349,7 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
             boolean isSalutationSelected = false;
             for(int i = 0; i < listOfSalutation.size(); i++)
             {
-                if(contactPerson.getAnredeID().equals(listOfSalutation.get(i).getSalutationId()))
+                if(contactPerson.getAnredeID().equals(listOfSalutation.get(i).getAnrede()))
                 {
                     spinnerCustomerContactPersonSalutation.setSelection(i + 1);
                     //selectedLegalForm = listOfLegalForm.get(i);
@@ -367,7 +365,7 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
             boolean isFunctionSelected = false;
             for(int i = 0; i < listOfFunction.size(); i++)
             {
-                if(contactPerson.getFunktionID().equals(listOfFunction.get(i).getFunctionId()))
+                if(contactPerson.getFunktionID().equals(listOfFunction.get(i).getFunktion()))
                 {
                     spinnerCustomerContactPersonFunction.setSelection(i + 1);
                     selectedFunction = listOfFunction.get(i);
@@ -384,7 +382,7 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
             boolean isDecisionMakerSelected = false;
             for(int i = 0; i < listOfDecisionMaker.size(); i++)
             {
-                if(contactPerson.getEntscheiderID().equals(listOfDecisionMaker.get(i).getDecisionMakerId()))
+                if(contactPerson.getEntscheiderID().equals(listOfDecisionMaker.get(i).getEntscheider()))
                 {
                     spinnerCustomerContactPersonDecisionMaker.setSelection(i + 1);
                     selectedDecisionMaker = listOfDecisionMaker.get(i);
@@ -401,7 +399,7 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
             boolean isDocumentLanguageSelected = false;
             for(int i = 0; i < listOfDocumentLanguage.size(); i++)
             {
-                if(contactPerson.getBelegsprache().equals(listOfDocumentLanguage.get(i).getDocumentLanguageId()))
+                if(contactPerson.getBelegsprache().equals(listOfDocumentLanguage.get(i).getSprache()))
                 {
                     spinnerCustomerContactPersonDocumentLanguage.setSelection(i + 1);
                     selectedDocumentLanguage = listOfDocumentLanguage.get(i);
@@ -712,13 +710,13 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
                             SiteInspectionNewFragment fragment = new SiteInspectionNewFragment();
                             if (getArguments().containsKey("SiteInspectionContactPerson"))
                             {
-                                args1.putParcelable("AnsprechPartnerBack", getArguments().getParcelable("AnsprechPartnerBack"));
-                                args1.putParcelable("ContactPerson", selectedContactPerson);
+                                //args1.putParcelable("AnsprechPartnerBack", getArguments().getParcelable("AnsprechPartnerBack"));
+                                //args1.putParcelable("ContactPerson", selectedContactPerson);
                             }
                             else
                             {
-                                args1.putParcelable("ContactPersonBack", getArguments().getParcelable("ContactPersonBack"));
-                                args1.putParcelable("AnsprechPartner", selectedContactPerson);
+                                //args1.putParcelable("ContactPersonBack", getArguments().getParcelable("ContactPersonBack"));
+                                //args1.putParcelable("AnsprechPartner", selectedContactPerson);
                             }
                             fragment.setArguments(args1);
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -849,7 +847,7 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
         dialog.show();
     }
 
-    private ArrayList<FeatureModel> removeSelectedFeatures(ArrayList<FeatureModel> listOfFeatures, ArrayList<FeatureModel> selectedFeature)
+    private ArrayList<CustomerContactPersonFeatureListItem> removeSelectedFeatures(ArrayList<CustomerContactPersonFeatureListItem> listOfFeatures, ArrayList<CustomerContactPersonFeatureListItem> selectedFeature)
     {
         for(int i = 0; i < selectedFeature.size(); i++)
         {
@@ -882,7 +880,7 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
         String salutation = "";
         if(selectedSalutation != null)
         {
-            salutation = selectedSalutation.getSalutationId();
+            salutation = selectedSalutation.getAnrede();
         }
         String title = textCustomerContactPersonTitle.getText().toString();
         String firstName = textCustomerContactPersonFirstName.getText().toString();
@@ -891,18 +889,18 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
         String function = "";
         if(selectedFunction != null)
         {
-            function = selectedFunction.getFunctionId();
+            function = selectedFunction.getFunktion();
         }
         String decisionMaker = "";
         if(selectedDecisionMaker != null)
         {
-            decisionMaker = selectedDecisionMaker.getDecisionMakerId();
+            decisionMaker = selectedDecisionMaker.getEntscheider();
         }
         String additionalInfo = textCustomerContactPersonAdditionalInfo.getText().toString();
         String documentLanguage = "";
         if(selectedDocumentLanguage != null)
         {
-            documentLanguage = selectedDocumentLanguage.getDocumentLanguageId();
+            documentLanguage = selectedDocumentLanguage.getSprache();
         }
         String telephone = textCustomerContactPersonPhone.getText().toString();
         String mobile = textCustomerContactPersonMobile.getText().toString();
@@ -1053,20 +1051,20 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
     {
         String salutation = "";
         if(selectedSalutation != null)
-            salutation = selectedSalutation.getSalutationId();
+            salutation = selectedSalutation.getAnrede();
         String title = textCustomerContactPersonTitle.getText().toString();
         String firstName = textCustomerContactPersonFirstName.getText().toString();
         String lastName = textCustomerContactPersonLastName.getText().toString();
         String function = "";
         if(selectedFunction != null)
-            function = selectedFunction.getFunctionId();
+            function = selectedFunction.getFunktion();
         String decisionMaker = "";
         if(selectedDecisionMaker != null)
-            decisionMaker = selectedDecisionMaker.getDecisionMakerId();
+            decisionMaker = selectedDecisionMaker.getEntscheider();
         String additionalInfo = textCustomerContactPersonAdditionalInfo.getText().toString();
         String documentLanguage = "";
         if(selectedDocumentLanguage != null)
-            documentLanguage = selectedDocumentLanguage.getDocumentLanguageId();
+            documentLanguage = selectedDocumentLanguage.getSprache();
         String telephone = textCustomerContactPersonPhone.getText().toString();
         String mobile = textCustomerContactPersonMobile.getText().toString();
         final String fax = textCustomerContactPersonFax.getText().toString();
@@ -1247,20 +1245,20 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
         {
             String salutation = "";
             if(selectedSalutation != null)
-                salutation = selectedSalutation.getSalutationId();
+                salutation = selectedSalutation.getAnrede();
             String title = textCustomerContactPersonTitle.getText().toString();
             String firstName = textCustomerContactPersonFirstName.getText().toString();
             String lastName = textCustomerContactPersonLastName.getText().toString();
             String function = "";
             if(selectedFunction != null)
-                function = selectedFunction.getFunctionId();
+                function = selectedFunction.getFunktion();
             String decisionMaker = "";
             if(selectedDecisionMaker != null)
-                decisionMaker = selectedDecisionMaker.getDecisionMakerId();
+                decisionMaker = selectedDecisionMaker.getEntscheider();
             String additionalInfo = textCustomerContactPersonAdditionalInfo.getText().toString();
             String documentLanguage = "";
             if(selectedDocumentLanguage != null)
-                documentLanguage = selectedDocumentLanguage.getDocumentLanguageId();
+                documentLanguage = selectedDocumentLanguage.getSprache();
             String telephone = textCustomerContactPersonPhone.getText().toString();
             String mobile = textCustomerContactPersonMobile.getText().toString();
             String fax = textCustomerContactPersonFax.getText().toString();
@@ -1278,7 +1276,7 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
             String defaultMobile = contactPerson.getMobil();
             String defaultFax = contactPerson.getTelefax();
             String defaultEmail = contactPerson.getEmail();
-            ArrayList<FeatureModel> defaultSelectedFeatures = contactPerson.getFeatureList();
+            ArrayList<CustomerContactPersonFeatureListItem> defaultSelectedFeatures = contactPerson.getFeatureList();
             if((salutation.equals(defaultSalutation)) && (title.equals(defaultTitle)) && (firstName.equals(defaultFirstName)) &&
                     (lastName.equals(defaultLastName)) && (function.equals(defaultFunction)) && (decisionMaker.equals(defaultDecisionMaker)) &&
                     (additionalInfo.equals(defaultAdditionalInfo)) && (documentLanguage.equals(defaultDocumentLanguage)) &&

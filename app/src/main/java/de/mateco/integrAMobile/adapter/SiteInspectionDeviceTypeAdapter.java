@@ -13,10 +13,10 @@ import java.util.List;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.SiteInspectionDeviceTypeModel;
+import de.mateco.integrAMobile.model_logonsquare.BVODeviceTypeListItem;
 
 public class SiteInspectionDeviceTypeAdapter extends BaseAdapter {
-    private List<SiteInspectionDeviceTypeModel> listDeviceType;
+    private List<BVODeviceTypeListItem> listDeviceType;
     private Context context;
     private Language language;
     public int selectedIndex=-1;
@@ -27,7 +27,7 @@ public class SiteInspectionDeviceTypeAdapter extends BaseAdapter {
     }
 
     public SiteInspectionDeviceTypeAdapter(Activity context,
-           ArrayList<SiteInspectionDeviceTypeModel> listDeviceType,Language language) {
+           List<BVODeviceTypeListItem> listDeviceType,Language language) {
         this.context = context;
         this.listDeviceType = listDeviceType;
         this.language = language;

@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.CustomerBranchModel;
 import de.mateco.integrAMobile.model.Language;
+import de.mateco.integrAMobile.model_logonsquare.BrancheListItem;
 
 public class CustomerBranchAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<CustomerBranchModel> listOfCustomerBranches;
+    private ArrayList<BrancheListItem> listOfCustomerBranches;
     private Context context;
     private Language language;
 
-    public CustomerBranchAdapter(Context context, ArrayList<CustomerBranchModel> listOfCustomerBranches,
+    public CustomerBranchAdapter(Context context, ArrayList<BrancheListItem> listOfCustomerBranches,
                                  int resourceId, Language language)
     {
         this.context = context;
@@ -35,7 +35,7 @@ public class CustomerBranchAdapter extends BaseAdapter
     }
 
     @Override
-    public CustomerBranchModel getItem(int position) {
+    public BrancheListItem getItem(int position) {
         return listOfCustomerBranches.get(position - 1);
     }
 
@@ -66,7 +66,7 @@ public class CustomerBranchAdapter extends BaseAdapter
         {
             convertView = mInflater.inflate(resourceId, null);
             TextView labelListItemBranchName = (TextView)convertView.findViewById(R.id.labelListItemBranchName);
-            labelListItemBranchName.setText(listOfCustomerBranches.get(position - 1).getName());
+            labelListItemBranchName.setText(listOfCustomerBranches.get(position - 1).getBrancheName());
         }
         //imgvBackground.setImageResource(R.drawable.english);
 

@@ -12,14 +12,14 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.SiteInspectionAccessModel;
+import de.mateco.integrAMobile.model_logonsquare.BVOZugangComboListItem;
 
 public class SiteInspectionAccessAdapter extends BaseAdapter {
-    private ArrayList<SiteInspectionAccessModel> listOfAccess;
+    private ArrayList<BVOZugangComboListItem> listOfAccess;
     private Context context;
     private Language language;
 
-    public SiteInspectionAccessAdapter(Activity context, ArrayList<SiteInspectionAccessModel>
+    public SiteInspectionAccessAdapter(Activity context, ArrayList<BVOZugangComboListItem>
             listOfAccess,Language language) {
         this.context = context;
         this.listOfAccess = listOfAccess;

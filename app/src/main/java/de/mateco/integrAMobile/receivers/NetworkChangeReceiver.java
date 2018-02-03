@@ -6,12 +6,6 @@ package de.mateco.integrAMobile.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
-import android.text.format.DateFormat;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -20,30 +14,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Random;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
-import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.NetworkUtil;
-import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.adapter.Pricing3LostSaleDataAdapter;
-import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
 import de.mateco.integrAMobile.asyncTask.AsynchTaskWithAuthorizationHeaderPost2;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.PriceInfoModelClass;
-import de.mateco.integrAMobile.model.Pricing2InsertPriceUseInformationListData;
-import de.mateco.integrAMobile.model.PricingCustomerOrderBasicInfo;
 
 
 public class NetworkChangeReceiver extends BroadcastReceiver

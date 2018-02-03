@@ -22,7 +22,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,8 +69,6 @@ import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.PricingCustomerOrderBasicInfo;
 import de.mateco.integrAMobile.model.SiteInspectionModel;
 import de.mateco.integrAMobile.model.SiteInspectionNewModel;
-
-import static de.mateco.integrAMobile.R.id.textRoad;
 
 public class SiteInspectionMapFragment extends BaseFragment implements View.OnClickListener, GoogleMap.OnMarkerDragListener, LocationListener
 {
@@ -236,7 +233,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                 ActivityCompat.requestPermissions(getActivity(), new String[] {
                                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                        3002);
+                        32);
             }
         }
         else {
@@ -366,7 +363,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 3002:
+            case 32:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
                     if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -440,7 +437,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         android.Manifest.permission.ACCESS_FINE_LOCATION,
                                         android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                                3002);
+                                32);
                     }
 
                 } else {
@@ -905,7 +902,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                     ActivityCompat.requestPermissions(getActivity(), new String[] {
                                     android.Manifest.permission.ACCESS_FINE_LOCATION,
                                     android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                            3003);
+                            33);
                 }
             }
             else {

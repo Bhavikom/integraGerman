@@ -4,13 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,30 +13,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import de.mateco.integrAMobile.Helper.DataHelper;
-import de.mateco.integrAMobile.Helper.SamplePagerItem;
-import de.mateco.integrAMobile.Helper.SlidingTabLayout;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.adapter.MailListAdapter;
-import de.mateco.integrAMobile.adapter.Pricing1BranchDataAdapter;
 import de.mateco.integrAMobile.adapter.SiteInspectionResumeAdapter;
-import de.mateco.integrAMobile.adapter.SiteInspectionResumeTabAdapter;
-import de.mateco.integrAMobile.adapter.VisitPlanDailyAdapter;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.SiteInspection;
 import de.mateco.integrAMobile.model.SiteInspectionModel;
 
 public class SiteInspectionResumeOutboxFragment extends BaseFragment

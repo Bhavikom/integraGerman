@@ -23,7 +23,6 @@ import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.SiteInspection;
 import de.mateco.integrAMobile.model.SiteInspectionModel;
 
 public class SiteInspectionResumeDraftFragment extends BaseFragment {

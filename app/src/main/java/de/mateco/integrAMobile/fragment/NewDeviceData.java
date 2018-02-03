@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,10 +34,10 @@ import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.Pricing1DeviceData;
 import de.mateco.integrAMobile.model.Pricing1LevelGroupData;
 import de.mateco.integrAMobile.model.SiteInspectionDeviceDataModel;
-import de.mateco.integrAMobile.model.SiteInspectionDeviceTypeModel;
+import de.mateco.integrAMobile.model_logonsquare.BVODeviceTypeListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceDeviceGroupListItem;
 
 
 public class NewDeviceData extends BaseFragment implements NumberPicker.OnScrollListener, View.OnClickListener
@@ -56,9 +55,9 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
     private SharedPreferences preferences;
     private boolean flag;
     private EditText textOthers;
-    private ArrayList<Pricing1DeviceData> lablesDevice = new ArrayList<Pricing1DeviceData>();
+    private ArrayList<PriceDeviceGroupListItem> lablesDevice = new ArrayList<PriceDeviceGroupListItem >();
     ArrayList<Pricing1LevelGroupData> rowLevelGroupItems = new ArrayList<Pricing1LevelGroupData>();
-    private ArrayList<SiteInspectionDeviceTypeModel> listDeviceType = new ArrayList<>();
+    private ArrayList<BVODeviceTypeListItem> listDeviceType = new ArrayList<>();
     private SiteInspectionDeviceTypeAdapter deviceTypeAdapter;
     private SiteInspectionHeightScaleAdapter heightScaleAdapter;
     private ArrayList<SiteInspectionDeviceDataModel> listOfDeviceData = new ArrayList<>();
@@ -573,7 +572,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             {
                 for(int i=0;i<lablesDevice.size();i++)
                 {
-                    if(model.getGeraetegruppe().equals(String.valueOf(lablesDevice.get(i).getHeight_main_group())))
+                    if(model.getGeraetegruppe().equals(String.valueOf(lablesDevice.get(i).getHoehenhauptgruppe())))
                         spnDeviceGroup.setSelection(i);
                 }
             }
@@ -593,7 +592,7 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 rowLevelGroupItems.clear();
-                rowLevelGroupItems.addAll(db.getPricing1LevelGroupData(lablesDevice.get(position).getHeight_main_group()));
+                rowLevelGroupItems.addAll(db.getPricing1LevelGroupData(Integer.parseInt(lablesDevice.get(position).getHoehenhauptgruppe())));
                 heightScaleAdapter = new SiteInspectionHeightScaleAdapter(getActivity(), rowLevelGroupItems, language);
                 spnHeightScale.setAdapter(heightScaleAdapter);
                 heightScaleAdapter.notifyDataSetChanged();
@@ -608,9 +607,9 @@ public class NewDeviceData extends BaseFragment implements NumberPicker.OnScroll
                     }
                 }
                 if(getArguments()==null)
-                    deviceData.setGeraetegruppe(lablesDevice.get(position).getHeight_main_group() + "");
+                    deviceData.setGeraetegruppe(lablesDevice.get(position).getHoehenhauptgruppe() + "");
                 else
-                    deviceData1.setGeraetegruppe(lablesDevice.get(position).getHeight_main_group() + "");
+                    deviceData1.setGeraetegruppe(lablesDevice.get(position).getHoehenhauptgruppe() + "");
             }
 
             @Override

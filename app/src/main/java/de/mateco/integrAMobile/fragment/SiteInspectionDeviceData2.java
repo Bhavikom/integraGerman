@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,10 +42,10 @@ import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.Pricing1DeviceData;
 import de.mateco.integrAMobile.model.Pricing1LevelGroupData;
 import de.mateco.integrAMobile.model.SiteInspectionDeviceDataModel;
-import de.mateco.integrAMobile.model.SiteInspectionDeviceTypeModel;
+import de.mateco.integrAMobile.model_logonsquare.BVODeviceTypeListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceDeviceGroupListItem;
 
 public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPicker.OnValueChangeListener, View.OnClickListener, AdapterView.OnItemSelectedListener
 {
@@ -62,11 +61,11 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
     private SiteInspectionDeviceDataModel deviceData;
 
     private SharedPreferences preferences;
-    private ArrayList<Pricing1DeviceData> lablesDevice;
+    private ArrayList<PriceDeviceGroupListItem> lablesDevice;
     private EditText textOthers;
     private Spinner spnDeviceGroup,spnHeightScale,spnHeightScale1,spnDeviceType,spnDeviceTypeNumber;
     private SiteInspectionHeightScaleAdapter heightScaleAdapter;
-    private ArrayList<SiteInspectionDeviceTypeModel> listDeviceType;
+    private ArrayList<BVODeviceTypeListItem> listDeviceType;
     private SiteInspectionDeviceTypeAdapter deviceTypeAdapter;
 
     private CustomNumberPicker nPWorkingHeight1, nPWorkingHeight2, nPWorkingHeight3;
@@ -77,7 +76,7 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
     private CustomNumberPicker nPMaxHeight;
     private CustomNumberPicker nPBasketLoad1, nPBasketLoad2, nPBasketLoad3, nPBasketLoad4;
     private CustomNumberPicker nPBoomLength1, nPBoomLength2, nPBoomLength3, nPBoomLength4;
-    private ArrayList<SiteInspectionDeviceTypeModel> allDevices, selectedDevices, remainingDevices;
+    private ArrayList<BVODeviceTypeListItem> allDevices, selectedDevices, remainingDevices;
     private ListView listViewAlternativeDevices;
     private SiteInspectionDeviceTypeListAdapter selectedDeviceTypeListViewAdapter, remainingDeviceTypeListViewAdapter;
     private String gerateType = "", heightMainGroup = "", heightGroup = "", anzahl = "",heightGroup1 = "";
@@ -262,9 +261,9 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
         });
     }
 
-    private ArrayList<SiteInspectionDeviceTypeModel> removeDeviceType(ArrayList<SiteInspectionDeviceTypeModel> listOfDeviceType, String id)
+    private ArrayList<BVODeviceTypeListItem> removeDeviceType(ArrayList<BVODeviceTypeListItem> listOfDeviceType, String id)
     {
-        ArrayList<SiteInspectionDeviceTypeModel> tempList = new ArrayList<>();
+        ArrayList<BVODeviceTypeListItem> tempList = new ArrayList<>();
         tempList.addAll(listOfDeviceType);
         for(int i = 0 ; i < tempList.size(); i++)
         {
@@ -929,7 +928,7 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
             rowLevelGroupItems.clear();
             if((heightMainGroup == null || heightMainGroup.equals("")) && lablesDevice.size() > 0)
             {
-                heightMainGroup = lablesDevice.get(0).getHeight_main_group()+"";
+                heightMainGroup = lablesDevice.get(0).getHoehenhauptgruppe()+"";
             }
             if(heightGroup == null)
                 heightGroup = "";
@@ -940,7 +939,7 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
             {
                 for (int i = 0; i < lablesDevice.size(); i++)
                 {
-                    if (heightMainGroup.equals(String.valueOf(lablesDevice.get(i).getHeight_main_group())))
+                    if (heightMainGroup.equals(String.valueOf(lablesDevice.get(i).getHoehenhauptgruppe())))
                     {
                         spnDeviceGroup.setSelection(i, false);
                     }
@@ -982,7 +981,7 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
                     heightGroup1 = listOfDeviceData.get(i).getHoehengruppe();
                 }
             }
-            ArrayList<SiteInspectionDeviceTypeModel> tempList = new ArrayList<>();
+            ArrayList<BVODeviceTypeListItem> tempList = new ArrayList<>();
             tempList.addAll(db.getDeviceType(heightGroup1));
             allDevices.addAll(tempList);
             for (int i = 1; i < listOfDeviceData.size(); i++)
@@ -1263,9 +1262,9 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
         }
     }
 
-    private ArrayList<SiteInspectionDeviceTypeModel> removeAlternativeDevice(ArrayList<SiteInspectionDeviceTypeModel> allDevices, ArrayList<SiteInspectionDeviceTypeModel> selectedDevices)
+    private ArrayList<BVODeviceTypeListItem> removeAlternativeDevice(ArrayList<BVODeviceTypeListItem> allDevices, ArrayList<BVODeviceTypeListItem> selectedDevices)
     {
-        ArrayList<SiteInspectionDeviceTypeModel> tempList = new ArrayList<>();
+        ArrayList<BVODeviceTypeListItem> tempList = new ArrayList<>();
         //listOfRemainingEmployee.clear();
         tempList.addAll(allDevices);
         for(int i = 0; i < selectedDevices.size(); i++)
@@ -1289,9 +1288,9 @@ public class SiteInspectionDeviceData2 extends BaseFragment implements NumberPic
         {
             case R.id.spnDeviceGroup:
                 rowLevelGroupItems.clear();
-                rowLevelGroupItems.addAll(db.getPricing1LevelGroupData(lablesDevice.get(position).getHeight_main_group()));
+                rowLevelGroupItems.addAll(db.getPricing1LevelGroupData(Integer.parseInt(lablesDevice.get(position).getHoehenhauptgruppe())));
                 heightScaleAdapter.notifyDataSetChanged();
-                heightMainGroup = lablesDevice.get(position).getHeight_main_group() + "";
+                heightMainGroup = lablesDevice.get(position).getHoehenhauptgruppe() + "";
                 if(rowLevelGroupItems.size() > 0)
                 {
                     spnHeightScale.setSelection(0);

@@ -1,14 +1,11 @@
 package de.mateco.integrAMobile.fragment;
 
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,12 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -36,18 +30,13 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
-import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
 import de.mateco.integrAMobile.Helper.FuturePastAgendaComparable;
-import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.DailyAgendaOtherAdapter;
-import de.mateco.integrAMobile.adapter.EmployeeAdapter;
 import de.mateco.integrAMobile.adapter.SimpleStringAdapter;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
@@ -55,9 +44,9 @@ import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.CustomerFullDetailModel;
 import de.mateco.integrAMobile.model.DailyAgendaModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 
 public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements View.OnClickListener
 {
@@ -73,9 +62,9 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
     private ArrayList<DailyAgendaModel> listWeeklyDue, listWeeklyFuture;
     private DailyAgendaOtherAdapter adapterAgendaWeeklyDue, adapterAgendaWeeklyFuture;
     private Button buttonCustomerDetails, buttonProjectDetails;
-    private ArrayList<EmployeeModel> listOfEmployee;
+    private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
 
-    private EmployeeModel selectedEmployee;
+    private CustomerActivityEmployeeListItem selectedEmployee;
     private ListView listViewAgendaEmployee, listViewAgendaContacts;
     private ArrayList<String> listOfAgendaRelatedContactPerson, listOfAgendaRelatedEmployee;
     private SimpleStringAdapter adapterAgendaRelatedContactPerson, adapterAgendaRelatedEmployee;

@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +35,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.vision.text.Text;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpEntity;
@@ -51,7 +49,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,7 +57,6 @@ import java.util.Date;
 
 import de.mateco.integrAMobile.Helper.AddPriceParsableClass;
 import de.mateco.integrAMobile.Helper.CustomSSLFactory;
-import de.mateco.integrAMobile.Helper.EinzatzInformationDataSet;
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
@@ -71,11 +67,10 @@ import de.mateco.integrAMobile.adapter.SpinnerAdapterClass;
 import de.mateco.integrAMobile.base.LoadedCustomerFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.LadefahrzeugComboBoxItemModel;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.Pricing1BranchData;
 import de.mateco.integrAMobile.model.Pricing2InsertPriceUseInformationListData;
 import de.mateco.integrAMobile.model.SpinnerModel;
+import de.mateco.integrAMobile.model_logonsquare.ListOfLadefahrzeugComboBoxItemItem;
 
 
 public class FragmentPricingDetail extends LoadedCustomerFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -123,7 +118,7 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
     ImageView imgQuestionMark1,imgQuestionMark2;
     DataBaseHandler databaseHanlder;
     public  ArrayList<SpinnerModel> arraylistSpinner = new ArrayList<SpinnerModel>();
-    private ArrayList<LadefahrzeugComboBoxItemModel> arraylistLadefahrzeug =  null;
+    private ArrayList<ListOfLadefahrzeugComboBoxItemItem> arraylistLadefahrzeug =  null;
     static SpinnerAdapterClass adapter;
 
     private String kanr;  //kanr is kontakton

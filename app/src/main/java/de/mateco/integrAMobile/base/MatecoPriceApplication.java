@@ -19,13 +19,13 @@ import android.os.Process;
 import android.preference.PreferenceManager;
 
 import android.support.multidex.MultiDex;
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.stetho.Stetho;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -33,9 +33,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
+import de.mateco.integrAMobile.BuildConfig;
 import de.mateco.integrAMobile.CrashDisplayActivity;
 import de.mateco.integrAMobile.Helper.Constants;
-import de.mateco.integrAMobile.Helper.LogApp;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 import io.fabric.sdk.android.Fabric;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -65,7 +66,6 @@ import de.mateco.integrAMobile.model.CustomerOfferModel;
 import de.mateco.integrAMobile.model.CustomerOpenOfferModel;
 import de.mateco.integrAMobile.model.CustomerOpenOrderModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 import de.mateco.integrAMobile.model.PricingCustomerOrderBasicInfo;
@@ -94,7 +94,11 @@ public class MatecoPriceApplication extends Application
                         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                         .build());
 
-        Fabric.with(this, new Crashlytics());
+        CrashlyticsCore core = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+        Fabric.with(this, new Crashlytics.Builder().core(core).build()); // comment it when signed apk
+
+        //Fabric.with(this, new Crashlytics()); // do uncomment when make signed apk
+
         MultiDex.install(this);
         //defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
         //Thread.setDefaultUncaughtExceptionHandler(handler);
@@ -185,10 +189,10 @@ public class MatecoPriceApplication extends Application
         //isCustomerLoaded = true;
     }
 
-    public EmployeeModel getAgendaSelectedEmployee(String variable, String data)
+    public CustomerActivityEmployeeListItem getAgendaSelectedEmployee(String variable, String data)
     {
         String json = prefs.getString(variable, data);
-        EmployeeModel employee = new Gson().fromJson(json, EmployeeModel.class);
+        CustomerActivityEmployeeListItem employee = new Gson().fromJson(json, CustomerActivityEmployeeListItem.class);
         return employee;
     }
 

@@ -140,7 +140,7 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener
                      else{
                          ActivityCompat.requestPermissions(getActivity(), new String[] {
                                          Manifest.permission.CALL_PHONE},
-                                 3005);
+                                 80);
                      }
                  }
                  else {

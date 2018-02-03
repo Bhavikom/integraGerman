@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,15 +26,12 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.fitness.data.DataPoint;
-import com.google.android.gms.plus.model.people.Person;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -46,11 +42,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
@@ -60,7 +52,6 @@ import de.mateco.integrAMobile.Helper.PreferencesClass;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.CustomerSearchResultAdapter;
-import de.mateco.integrAMobile.adapter.AutoCompleteSearchAdapter;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
@@ -77,10 +68,10 @@ import de.mateco.integrAMobile.model.CustomerOpenOfferModel;
 import de.mateco.integrAMobile.model.CustomerOpenOrderModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
 import de.mateco.integrAMobile.model.CustomerSearchPagingRequestModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.HintModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 
 public class CustomerSearchFragment extends BaseFragment implements TextView.OnEditorActionListener
 {
@@ -440,7 +431,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         +matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserName());*/
 
         /* replace above code  with below code on 26th june 2017 */
-        ArrayList<EmployeeModel> listOfEmployee = new ArrayList<>();
+        ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
         String loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber();
         listOfEmployee = db.getEmployees();
         for(int i = 0; i < listOfEmployee.size(); i++) {

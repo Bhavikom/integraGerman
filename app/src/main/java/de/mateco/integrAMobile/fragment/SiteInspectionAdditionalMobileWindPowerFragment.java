@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,10 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import de.mateco.integrAMobile.Helper.GlobalMethods;
 import de.mateco.integrAMobile.Helper.DataHelper;
@@ -532,7 +527,7 @@ public class SiteInspectionAdditionalMobileWindPowerFragment extends BaseFragmen
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {
@@ -551,7 +546,7 @@ public class SiteInspectionAdditionalMobileWindPowerFragment extends BaseFragmen
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {
@@ -571,7 +566,7 @@ public class SiteInspectionAdditionalMobileWindPowerFragment extends BaseFragmen
                     else{
                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         Manifest.permission.CALL_PHONE},
-                                3005);
+                                35);
                     }
                 }
                 else {

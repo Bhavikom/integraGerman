@@ -10,12 +10,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.FeatureModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonFeatureListItem;
 
 public class FeatureAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<FeatureModel> listOfFeature;
+    private ArrayList<CustomerContactPersonFeatureListItem> listOfFeature;
     private Context context;
 
     public int selectedIndex = -1;
@@ -25,7 +25,7 @@ public class FeatureAdapter extends BaseAdapter
         notifyDataSetChanged();
     }
 
-    public FeatureAdapter(Context context, ArrayList<FeatureModel> listOfFeature, int resourceId)
+    public FeatureAdapter(Context context, ArrayList<CustomerContactPersonFeatureListItem> listOfFeature, int resourceId)
     {
         this.context = context;
         this.listOfFeature = listOfFeature;

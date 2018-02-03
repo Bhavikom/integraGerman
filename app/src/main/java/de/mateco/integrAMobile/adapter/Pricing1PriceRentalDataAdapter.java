@@ -11,15 +11,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.Pricing1PriceRentalData;
+import de.mateco.integrAMobile.model_logonsquare.PriceRentalListItem;
 
 public class Pricing1PriceRentalDataAdapter extends BaseAdapter {
 
-    private ArrayList<Pricing1PriceRentalData> listPriceRental;
+    private ArrayList<PriceRentalListItem> listPriceRental;
     private Context context;
 
 
-    public Pricing1PriceRentalDataAdapter(Activity context, ArrayList<Pricing1PriceRentalData> listPriceRental) {
+    public Pricing1PriceRentalDataAdapter(Activity context, ArrayList<PriceRentalListItem > listPriceRental) {
         this.context = context;
         this.listPriceRental = listPriceRental;
     }
@@ -55,7 +55,7 @@ public class Pricing1PriceRentalDataAdapter extends BaseAdapter {
 
         TextView txtPricing1BranchData = (TextView)convertView.findViewById(R.id.txtPricing1PriceRentalDataRow);
 
-        txtPricing1BranchData.setText(listPriceRental.get(position).getDesignation());
+        txtPricing1BranchData.setText(listPriceRental.get(position).getBezeichnung());
 
         return convertView;
     }

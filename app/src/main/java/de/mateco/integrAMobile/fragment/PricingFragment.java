@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -73,12 +70,12 @@ import de.mateco.integrAMobile.model.ContactPersonModel;
 import de.mateco.integrAMobile.model.CustomerModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.Pricing1BranchData;
-import de.mateco.integrAMobile.model.Pricing1DeviceData;
 import de.mateco.integrAMobile.model.Pricing1EquipmentData;
 import de.mateco.integrAMobile.model.Pricing1EquipmentInsertData;
 import de.mateco.integrAMobile.model.Pricing1LevelGroupData;
-import de.mateco.integrAMobile.model.Pricing1PriceRentalData;
+import de.mateco.integrAMobile.model_logonsquare.PriceBranchListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceDeviceGroupListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceRentalListItem;
 import de.mateco.integrAMobile.timesquare.CalendarCellDecorator;
 
 public class PricingFragment extends LoadedCustomerFragment implements CalendarPickerView.interfaceDateSelected
@@ -108,14 +105,14 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
     private MatecoPriceApplication matecoPriceApplication;
     private Language language;
     private DataBaseHandler db;
-    private List<Pricing1BranchData> rowBranchItems;
-    private ArrayList<Pricing1BranchData> lablesBranch;
+    private List<PriceBranchListItem> rowBranchItems;
+    private ArrayList<PriceBranchListItem > lablesBranch;
     private List<ContactPersonModel> rowContactPersonItems;
     private ArrayList<ContactPersonModel> lablesContactPerson;
-    private List<Pricing1DeviceData> rowDeviceItems;
-    private ArrayList<Pricing1DeviceData> lablesDevice;
-    private List<Pricing1PriceRentalData> rowPriceRentalItems;
-    private ArrayList<Pricing1PriceRentalData> lablesPriceRental;
+    private List<PriceDeviceGroupListItem> rowDeviceItems;
+    private ArrayList<PriceDeviceGroupListItem > lablesDevice;
+    private List<PriceRentalListItem> rowPriceRentalItems;
+    private ArrayList<PriceRentalListItem > lablesPriceRental;
     private Spinner spPricing1Brand;
     private Spinner spPricing1ContactPerson;
     private Spinner spPricing1Device;
@@ -267,8 +264,8 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                 else
                 {
                     //selectedCountry = listOfCountry.get(position - 1);
-                    branchId = lablesBranch.get(position - 1).getClientId();
-                    branchName = lablesBranch.get(position - 1).getDesignation();
+                    branchId = Integer.parseInt(lablesBranch.get(position - 1).getMandant());
+                    branchName = lablesBranch.get(position - 1).getBezeichnung();
                     branchOrt = lablesBranch.get(position - 1) .getOrt();
                     branchPlz = lablesBranch.get(position - 1).getPlz();
                     branchStrasse = lablesBranch.get(position -1).getStrasse();
@@ -331,8 +328,8 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                 }
                 else
                 {
-                    deviceId = lablesDevice.get(position - 1).getHeight_main_group();
-                    prefereces.savePriceDevice(String.valueOf(lablesDevice.get(position - 1).getHeight_main_group()));
+                    deviceId = Integer.parseInt(lablesDevice.get(position - 1).getHoehenhauptgruppe());
+                    prefereces.savePriceDevice(String.valueOf(lablesDevice.get(position - 1).getHoehenhauptgruppe()));
 
                     //  LevelGroupDesignation = lablesDevice.get(position).getDesignation();
                 }
@@ -353,7 +350,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
         spPricing1PriceRental.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                unitId = lablesPriceRental.get(position).getUnit();
+                unitId = Integer.parseInt(lablesPriceRental.get(position).getEinheit());
                 //loadLevelGroupListViewData(deviceId);
             }
 
@@ -412,7 +409,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                         etRetalPriceDays.setText(String.valueOf(totalDays));
                         for(int i = 0; i < lablesPriceRental.size(); i++)
                         {
-                            if(lablesPriceRental.get(i).getUnit() == 2)
+                            if(Integer.parseInt(lablesPriceRental.get(i).getEinheit()) == 2)
                             {
                                 spPricing1PriceRental.setSelection(i);
                                 break;
@@ -424,7 +421,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                         etRetalPriceDays.setText("1");
                         for(int i = 0; i < lablesPriceRental.size(); i++)
                         {
-                            if(lablesPriceRental.get(i).getUnit() == 2)
+                            if(Integer.parseInt(lablesPriceRental.get(i).getEinheit()) == 2)
                             {
                                 spPricing1PriceRental.setSelection(i);
                                 break;
@@ -455,7 +452,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                     etRetalPriceDays.setText(String.valueOf(totalDays));
                     for(int i = 0; i < lablesPriceRental.size(); i++)
                     {
-                        if(lablesPriceRental.get(i).getUnit() == 2)
+                        if(Integer.parseInt(lablesPriceRental.get(i).getEinheit()) == 2)
                         {
                             spPricing1PriceRental.setSelection(i);
                             break;
@@ -985,7 +982,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                             etRetalPriceDays.setText(String.valueOf(totalDays));
                             for(int j = 0; j < lablesPriceRental.size(); j++)
                             {
-                                if(lablesPriceRental.get(j).getUnit() == 2)
+                                if(Integer.parseInt(lablesPriceRental.get(j).getEinheit()) == 2)
                                 {
                                     spPricing1PriceRental.setSelection(j);
                                     break;
@@ -997,7 +994,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                             etRetalPriceDays.setText("1");
                             for(int k = 0; k < lablesPriceRental.size(); k++)
                             {
-                                if(lablesPriceRental.get(k).getUnit() == 2)
+                                if(Integer.parseInt(lablesPriceRental.get(k).getEinheit()) == 2)
                                 {
                                     spPricing1PriceRental.setSelection(k);
                                     break;
@@ -1478,13 +1475,13 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
         boolean isbranchSeleted = false;
         for(int i = 0; i < lablesBranch.size(); i++)
         {
-            if(customerBranch.equals(lablesBranch.get(i).getDesignation()))
+            if(customerBranch.equals(lablesBranch.get(i).getBezeichnung()))
             {
                 spPricing1Brand.setSelection(i + 1);
                 isbranchSeleted = true;
                 break;
             }
-            else if(customerBranch.contains(lablesBranch.get(i).getDesignation()))
+            else if(customerBranch.contains(lablesBranch.get(i).getBezeichnung()))
             {
                 spPricing1Brand.setSelection(i + 1);
                 isbranchSeleted = true;
@@ -1501,7 +1498,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
         spPricing1PriceRental.setAdapter(priceRentalAdapter);
         for(int i = 0; i < lablesPriceRental.size(); i++)
         {
-            if(lablesPriceRental.get(i).getUnit() == 2)
+            if(Integer.parseInt(lablesPriceRental.get(i).getEinheit()) == 2)
             {
                spPricing1PriceRental.setSelection(i);
             }
@@ -1626,10 +1623,10 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                                 for (int i = 0; i < jsonArrayPriceRentalList.length(); i++) {
                                     JSONObject jsonObject = jsonArrayPriceRentalList.getJSONObject(i);
 
-                                    Pricing1PriceRentalData priceRental = new Pricing1PriceRentalData();
+                                    PriceRentalListItem  priceRental = new PriceRentalListItem ();
 
-                                    priceRental.setDesignation(jsonObject.getString("bezeichnung"));
-                                    priceRental.setUnit(Integer.parseInt(jsonObject.getString("einheit")));
+                                    priceRental.setBezeichnung(jsonObject.getString("bezeichnung"));
+                                    priceRental.setEinheit(jsonObject.getString("einheit"));
                                     lablesPriceRental.add(priceRental);
                                 }
                                 if (lablesPriceRental.size() > 0) {
@@ -1637,7 +1634,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
                                     spPricing1PriceRental.setAdapter(priceRentalAdapter);
 
                                     for (int i = 0; i < lablesPriceRental.size(); i++) {
-                                        if (lablesPriceRental.get(i).getUnit() == 2) {
+                                        if (Integer.parseInt(lablesPriceRental.get(i).getEinheit()) == 2) {
                                             spPricing1PriceRental.setSelection(i);
                                         }
                                     }
@@ -1676,7 +1673,7 @@ public class PricingFragment extends LoadedCustomerFragment implements CalendarP
 
                 for(int i = 0; i < lablesPriceRental.size(); i++)
                 {
-                    if(lablesPriceRental.get(i).getUnit() == 2)
+                    if(Integer.parseInt(lablesPriceRental.get(i).getEinheit()) == 2)
                     {
                         spPricing1PriceRental.setSelection(i);
                     }

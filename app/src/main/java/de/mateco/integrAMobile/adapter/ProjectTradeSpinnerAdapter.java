@@ -10,16 +10,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.ProjectTradeModel;
+import de.mateco.integrAMobile.model_logonsquare.ProjektGewerkComboListItem;
 
 public class ProjectTradeSpinnerAdapter extends BaseAdapter
 {
-    private ArrayList<ProjectTradeModel> listOfTrades = new ArrayList<ProjectTradeModel>();
+    private ArrayList<ProjektGewerkComboListItem> listOfTrades = new ArrayList<ProjektGewerkComboListItem>();
 
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public ProjectTradeSpinnerAdapter(Context context, ArrayList<ProjectTradeModel> listOfTrades)
+    public ProjectTradeSpinnerAdapter(Context context, ArrayList<ProjektGewerkComboListItem> listOfTrades)
     {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -32,7 +32,7 @@ public class ProjectTradeSpinnerAdapter extends BaseAdapter
     }
 
     @Override
-    public ProjectTradeModel getItem(int position) {
+    public ProjektGewerkComboListItem getItem(int position) {
         return listOfTrades.get(position);
     }
 
@@ -54,9 +54,9 @@ public class ProjectTradeSpinnerAdapter extends BaseAdapter
         return convertView;
     }
 
-    private void initializeViews(ProjectTradeModel object, ViewHolder holder) {
+    private void initializeViews(ProjektGewerkComboListItem object, ViewHolder holder) {
         //TODO implement
-        holder.listItemTradeName.setText(object.getProjectTradeDesignation());
+        holder.listItemTradeName.setText(object.getBezeichnung());
     }
 
     protected class ViewHolder {

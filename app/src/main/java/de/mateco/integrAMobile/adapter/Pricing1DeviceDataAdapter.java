@@ -12,17 +12,17 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.Pricing1DeviceData;
+import de.mateco.integrAMobile.model_logonsquare.PriceDeviceGroupListItem;
 
 public class Pricing1DeviceDataAdapter extends BaseAdapter {
 
-    private ArrayList<Pricing1DeviceData> listDevice;
+    private ArrayList<PriceDeviceGroupListItem> listDevice;
     private Context context;
     private LayoutInflater mInflater;
     private boolean isSelectionEnable;
     private Language language;
 
-    public Pricing1DeviceDataAdapter(Activity context, ArrayList<Pricing1DeviceData> listDevice,
+    public Pricing1DeviceDataAdapter(Activity context, ArrayList<PriceDeviceGroupListItem > listDevice,
                                      boolean isSelectionEnable, Language language) {
         this.context = context;
         this.listDevice = listDevice;
@@ -73,12 +73,12 @@ public class Pricing1DeviceDataAdapter extends BaseAdapter {
             }
             else
             {
-                txtPricing1BranchData.setText(listDevice.get(position - 1).getDesignation());
+                txtPricing1BranchData.setText(listDevice.get(position - 1).getBezeichnung());
             }
         }
         else
         {
-            txtPricing1BranchData.setText(listDevice.get(position).getDesignation());
+            txtPricing1BranchData.setText(listDevice.get(position).getBezeichnung());
         }
         return convertView;
     }

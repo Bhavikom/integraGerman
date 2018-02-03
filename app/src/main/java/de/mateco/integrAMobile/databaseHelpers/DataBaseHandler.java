@@ -7,11 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,17 +16,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.LogApp;
-import de.mateco.integrAMobile.model.ActivityTopicModel;
-import de.mateco.integrAMobile.model.ActivityTypeModel;
-import de.mateco.integrAMobile.model.BuheneartModel;
 import de.mateco.integrAMobile.model.ContactPersonModel;
-import de.mateco.integrAMobile.model.CountryModel;
 import de.mateco.integrAMobile.model.CustomerActivityModel;
-import de.mateco.integrAMobile.model.CustomerBranchModel;
 import de.mateco.integrAMobile.model.CustomerCompletedOrderModel;
 import de.mateco.integrAMobile.model.CustomerDatabaseModel;
 import de.mateco.integrAMobile.model.CustomerLostSaleDataModel;
@@ -39,46 +32,55 @@ import de.mateco.integrAMobile.model.CustomerOpenOfferModel;
 import de.mateco.integrAMobile.model.CustomerOpenOrderModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
 import de.mateco.integrAMobile.model.CustomerSearchPagingRequestModel;
-import de.mateco.integrAMobile.model.DecisionMakerModel;
-import de.mateco.integrAMobile.model.DocumentLanguageModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
-import de.mateco.integrAMobile.model.FeatureModel;
-import de.mateco.integrAMobile.model.FunctionModel;
 import de.mateco.integrAMobile.model.GridImage;
-import de.mateco.integrAMobile.model.LadefahrzeugComboBoxItemModel;
-import de.mateco.integrAMobile.model.LegalFormModel;
 import de.mateco.integrAMobile.model.PriceInfoModelClass;
-import de.mateco.integrAMobile.model.PriceStaffelModel;
-import de.mateco.integrAMobile.model.Pricing1BranchData;
-import de.mateco.integrAMobile.model.Pricing1DeviceData;
 import de.mateco.integrAMobile.model.Pricing1EquipmentData;
 import de.mateco.integrAMobile.model.Pricing1LevelGroupData;
-import de.mateco.integrAMobile.model.Pricing1PriceRentalData;
 import de.mateco.integrAMobile.model.Pricing2KaNrData;
 import de.mateco.integrAMobile.model.Pricing3InsertData;
 import de.mateco.integrAMobile.model.Pricing3LostSaleData;
-import de.mateco.integrAMobile.model.PricingOfflineEquipmentData;
-import de.mateco.integrAMobile.model.PricingOfflineStandardPriceData;
-import de.mateco.integrAMobile.model.ProjectAreaModel;
-import de.mateco.integrAMobile.model.ProjectArtModel;
-import de.mateco.integrAMobile.model.ProjectPhaseModel;
-import de.mateco.integrAMobile.model.ProjectStagesModel;
-import de.mateco.integrAMobile.model.ProjectTradeModel;
-import de.mateco.integrAMobile.model.ProjectTypeModel;
-import de.mateco.integrAMobile.model.SalutationModel;
-import de.mateco.integrAMobile.model.SiteInspectionAccessModel;
 import de.mateco.integrAMobile.model.SiteInspectionAdditionalMobileWindPowerModel;
-import de.mateco.integrAMobile.model.SiteInspectionBuildingProjectModel;
 import de.mateco.integrAMobile.model.SiteInspectionDeviceDataModel;
-import de.mateco.integrAMobile.model.SiteInspectionDeviceTypeModel;
 import de.mateco.integrAMobile.model.SiteInspectionModel;
 import de.mateco.integrAMobile.model.SiteInspectionNewModel;
 import de.mateco.integrAMobile.model.SiteInspectionOperationalDataPermitsModel;
 import de.mateco.integrAMobile.model.SiteInspectionOperationalEnvironmentModel;
+import de.mateco.integrAMobile.model_logonsquare.BVOBauvorhabenComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.BVODeviceTypeListItem;
+import de.mateco.integrAMobile.model_logonsquare.BVOZugangComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.BrancheListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTypeListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonDecisionMakersListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonDocumentlanguageListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonFeatureListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonFunctionComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonSalutationComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerLandListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerRechtsFormComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.ListOfBuheneartComboBoxItemItem;
+import de.mateco.integrAMobile.model_logonsquare.ListOfLadefahrzeugComboBoxItemItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceBranchListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceDeviceGroupListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceEquipmentHeightListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceRentalListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceStaffelListItem;
+import de.mateco.integrAMobile.model_logonsquare.PriceStandardListItem;
+import de.mateco.integrAMobile.model_logonsquare.ProjektBUhnenAubenInnenComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.ProjektGebietComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.ProjektGewerkComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.ProjektartComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.ProjektphaseComboListItem;
+import de.mateco.integrAMobile.model_logonsquare.ProjekttypComboListItem;
 
+/**
+ * Created by S Soft on 02-Feb-18.
+ */
 
 public class DataBaseHandler extends SQLiteOpenHelper
 {
+    SQLiteDatabase sqLiteDatabase;
     private static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "MatecoSales.db";
 
@@ -96,7 +98,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
     private static String KEY_DEVICE_ID = "id";
     private static String KEY_HEIGHT_MAIN_GROUP = "heightMainGroup";
     private static String KEY_DESIGNATION_DEVICE = "designation";
-   // private static String KEY_TIMESTAMP = "lastSynchronizationTimestamp";
+    // private static String KEY_TIMESTAMP = "lastSynchronizationTimestamp";
 
     private static String TABLE_PRICE_RENTAL = "TablePriceRental";
     private static String KEY_PRICE_RENTAL_ID = "id";
@@ -442,9 +444,9 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 + KEY_ID + " INTEGER PRIMARY KEY, "
                 + KEY_DESIGNATION + " TEXT, "
                 + KEY_CLIENT + " INTEGER, "
-                        + KEY_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP, "
-                        + KEY_ORT + " TEXT, "
-                        + KEY_PLZ + " TEXT, "
+                + KEY_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP, "
+                + KEY_ORT + " TEXT, "
+                + KEY_PLZ + " TEXT, "
                 + KEY_STRASSES + " TEXT )";
 
         db.execSQL(CREATE_BRANCH_TABLE);
@@ -1019,14 +1021,14 @@ public class DataBaseHandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public void addBranch(Pricing1BranchData branch)
+    public void addBranch(PriceBranchListItem  branch)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_DESIGNATION, branch.getDesignation());
-        values.put(KEY_CLIENT, branch.getClientId());
+        values.put(KEY_DESIGNATION, branch.getBezeichnung());
+        values.put(KEY_CLIENT, branch.getMandant());
         values.put(KEY_ORT, branch.getOrt());
         values.put(KEY_PLZ, branch.getPlz());
         values.put(KEY_STRASSES, branch.getStrasse());
@@ -1041,7 +1043,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
             db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
@@ -1119,20 +1120,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
     }
 
 
-    public void addLadefahzeg(ArrayList<LadefahrzeugComboBoxItemModel> arraylist)
+    public void addListOfLadefahrzeugComboBoxItemItem(List<ListOfLadefahrzeugComboBoxItemItem> arraylist)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_LADEFAHRZEUG + " (Bezeichnung,id,Sprache) VALUES ( ?,?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
-
+            db.beginTransactionNonExclusive();
             for(int x=0; x < arraylist.size(); x++){
 
-                LadefahrzeugComboBoxItemModel model = new LadefahrzeugComboBoxItemModel();
+                ListOfLadefahrzeugComboBoxItemItem model = new ListOfLadefahrzeugComboBoxItemItem();
                 model = arraylist.get(x);
 
                 stmt.bindString(1, model.getBezeichnung());
@@ -1179,16 +1178,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
 
     }
-    public ArrayList<LadefahrzeugComboBoxItemModel> getLadefahzeg()
+    public ArrayList<ListOfLadefahrzeugComboBoxItemItem> getLadefahzeg()
     {
-        ArrayList<LadefahrzeugComboBoxItemModel> ladefahrzeugArray = new ArrayList<LadefahrzeugComboBoxItemModel>();
+        ArrayList<ListOfLadefahrzeugComboBoxItemItem> ladefahrzeugArray = new ArrayList<ListOfLadefahrzeugComboBoxItemItem>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_LADEFAHRZEUG,null);
         if (cursor.moveToFirst())
         {
             do
             {
-                LadefahrzeugComboBoxItemModel ladefahrzeugModel = new LadefahrzeugComboBoxItemModel();
+                ListOfLadefahrzeugComboBoxItemItem ladefahrzeugModel = new ListOfLadefahrzeugComboBoxItemItem();
                 ladefahrzeugModel.setBezeichnung(cursor.getString(cursor.getColumnIndex("Bezeichnung")));
                 ladefahrzeugModel.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 ladefahrzeugModel.setSprache(cursor.getColumnIndex("Sprache"));
@@ -1200,49 +1199,48 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return ladefahrzeugArray;
     }
 
-    public void addDevice(Pricing1DeviceData device) {
+    public void addDevice(PriceDeviceGroupListItem  device) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_HEIGHT_MAIN_GROUP, device.getHeight_main_group());
-        values.put(KEY_DESIGNATION_DEVICE, device.getDesignation());
+        values.put(KEY_HEIGHT_MAIN_GROUP, device.getHoehenhauptgruppe());
+        values.put(KEY_DESIGNATION_DEVICE, device.getBezeichnung());
 
         db.replace(TABLE_DEVICE, null, values);
         db.close();
     }
 
-    public void addPriceRental(Pricing1PriceRentalData priceRent) {
+    public void addPriceRental(PriceRentalListItem  priceRent) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_PRICE_RENTAL_DESIGNATION, priceRent.getDesignation());
-        values.put(KEY_PRICE_RENTAL_UNIT, priceRent.getUnit());
+        values.put(KEY_PRICE_RENTAL_DESIGNATION, priceRent.getBezeichnung());
+        values.put(KEY_PRICE_RENTAL_UNIT, priceRent.getEinheit());
 
         db.replace(TABLE_PRICE_RENTAL, null, values);
         db.close();
     }
 
-    public void addBranch(ArrayList<Pricing1BranchData> listOfBranches)
+    public void addPriceBranchList(List<PriceBranchListItem> listOfBranches)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_BRANCH + " (designation,client," +
                 "ort,plz,strasses) VALUES ( ?,?,?,?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfBranches.size(); x++){
 
-                Pricing1BranchData branchData = new Pricing1BranchData();
+                PriceBranchListItem branchData = new PriceBranchListItem();
                 branchData = listOfBranches.get(x);
 
-                stmt.bindString(1, branchData.getDesignation());
-                stmt.bindString(2, String.valueOf(branchData.getClientId()));
+                stmt.bindString(1, branchData.getBezeichnung());
+                stmt.bindString(2, String.valueOf(branchData.getMandant()));
                 stmt.bindString(3, branchData.getOrt());
                 stmt.bindString(4, branchData.getPlz());
                 stmt.bindString(5, branchData.getStrasse());
@@ -1255,7 +1253,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addBranch"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addBranch "," excepiton while inserting login time : "+e.toString());
         }
 
        /* SQLiteDatabase db = this.getWritableDatabase();
@@ -1288,18 +1286,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
 
     }
-    public ArrayList<Pricing1BranchData> getBranchList(int id)
+    public ArrayList<PriceBranchListItem> getBranchList(int id)
     {
-        ArrayList<Pricing1BranchData> arraylistBranchlist = new ArrayList<Pricing1BranchData>();
+        ArrayList<PriceBranchListItem> arraylistBranchlist = new ArrayList<PriceBranchListItem>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_BRANCH + " Where client = " + id, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                Pricing1BranchData branchList = new Pricing1BranchData();
-                branchList.setDesignation(cursor.getString(cursor.getColumnIndex("designation")));
-                branchList.setClientId(cursor.getInt(cursor.getColumnIndex("client")));
+                PriceBranchListItem branchList = new PriceBranchListItem();
+                branchList.setBezeichnung(cursor.getString(cursor.getColumnIndex("designation")));
+                branchList.setMandant(String.valueOf(cursor.getInt(cursor.getColumnIndex("client"))));
                 branchList.setOrt(cursor.getString(cursor.getColumnIndex("ort")));
                 branchList.setPlz(cursor.getString(cursor.getColumnIndex("plz")));
                 branchList.setStrasse(cursor.getString(cursor.getColumnIndex("strasses")));
@@ -1311,24 +1309,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return arraylistBranchlist;
     }
 
-    public void addCustomerBranch(ArrayList<CustomerBranchModel> listOfBranches)
+    public void addBrancheListItem(List<BrancheListItem> listOfBranches)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_CUSTOMER_BRANCH + " (id,name) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfBranches.size(); x++){
 
-                CustomerBranchModel customerBranchModel = new CustomerBranchModel();
+                BrancheListItem customerBranchModel = new BrancheListItem();
                 customerBranchModel = listOfBranches.get(x);
 
-                stmt.bindString(1, customerBranchModel.getId());
-                stmt.bindString(2, customerBranchModel.getName());
+                stmt.bindString(1, customerBranchModel.getBrancheID());
+                stmt.bindString(2, customerBranchModel.getBrancheName());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -1339,7 +1336,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addCustomerBranch"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addCustomerBranch "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1367,24 +1364,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addDevice(ArrayList<Pricing1DeviceData> listOfDeviceData)
+    public void addPriceDeviceGroupListItem(List<PriceDeviceGroupListItem> listOfDeviceData)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_DEVICE + " (heightMainGroup,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfDeviceData.size(); x++){
 
-                Pricing1DeviceData deviceDataModel = new Pricing1DeviceData();
+                PriceDeviceGroupListItem deviceDataModel = new PriceDeviceGroupListItem();
                 deviceDataModel = listOfDeviceData.get(x);
 
-                stmt.bindString(1, String.valueOf(deviceDataModel.getHeight_main_group()));
-                stmt.bindString(2, deviceDataModel.getDesignation());
+                stmt.bindString(1, String.valueOf(deviceDataModel.getHoehenhauptgruppe()));
+                stmt.bindString(2, deviceDataModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
             }
@@ -1394,7 +1390,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addDevice"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addDevice "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1422,24 +1418,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addPriceRental(ArrayList<Pricing1PriceRentalData> priceRents)
+    public void addPriceRentalListItem(List<PriceRentalListItem> priceRents)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PRICE_RENTAL + " (designation,unit) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < priceRents.size(); x++){
 
-                Pricing1PriceRentalData priceRental = new Pricing1PriceRentalData();
+                PriceRentalListItem priceRental = new PriceRentalListItem();
                 priceRental = priceRents.get(x);
 
-                stmt.bindString(1, priceRental.getDesignation());
-                stmt.bindString(2, String.valueOf(priceRental.getUnit()));
+                stmt.bindString(1, priceRental.getBezeichnung());
+                stmt.bindString(2, String.valueOf(priceRental.getEinheit()));
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -1450,7 +1445,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addPriceRental"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addPriceRental "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1479,24 +1474,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addCountries(ArrayList<CountryModel> countris)
+    public void addCustomerLandListItem(List<CustomerLandListItem> countris)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_COUNTRY + " (id,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < countris.size(); x++){
 
-                CountryModel countryModel = new CountryModel();
+                CustomerLandListItem countryModel = new CustomerLandListItem();
                 countryModel = countris.get(x);
 
-                stmt.bindString(1, countryModel.getCountryId());
-                stmt.bindString(2, countryModel.getCountryName());
+                stmt.bindString(1, countryModel.getLand());
+                stmt.bindString(2, countryModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
             }
@@ -1506,7 +1500,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addCountries"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addCountries "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1534,23 +1528,22 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addActivityTypes(ArrayList<ActivityTypeModel> activitieTypes)
+    public void addCustomerActivityTypeListItem(List<CustomerActivityTypeListItem> activitieTypes)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_ACTIVITY_TYPE + " (id,name) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < activitieTypes.size(); x++){
 
-                ActivityTypeModel activityTypeModel = new ActivityTypeModel();
+                CustomerActivityTypeListItem activityTypeModel = new CustomerActivityTypeListItem();
                 activityTypeModel = activitieTypes.get(x);
-                stmt.bindString(1, activityTypeModel.getActivityTypeId());
-                stmt.bindString(2, activityTypeModel.getActivityTypeName());
+                stmt.bindString(1, activityTypeModel.getAkttyp());
+                stmt.bindString(2, activityTypeModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -1561,7 +1554,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addActivityTypes"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addActivityTypes "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1587,24 +1580,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 */
     }
 
-    public void addActivityTopics(ArrayList<ActivityTopicModel> activityTopics)
+    public void addCustomerActivityTopicListItem(List<CustomerActivityTopicListItem> activityTopics)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_ACTIVITY_TOPIC + " (id,name) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < activityTopics.size(); x++){
 
-                ActivityTopicModel activityTopicModel = new ActivityTopicModel();
+                CustomerActivityTopicListItem activityTopicModel = new CustomerActivityTopicListItem();
                 activityTopicModel = activityTopics.get(x);
 
-                stmt.bindString(1, activityTopicModel.getActivityTopicId());
-                stmt.bindString(2, activityTopicModel.getActivityTopicName());
+                stmt.bindString(1, activityTopicModel.getAktthema());
+                stmt.bindString(2, activityTopicModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
             }
@@ -1614,7 +1606,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addActivityTopics"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addActivityTopics "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1640,25 +1632,24 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addLegalForms(ArrayList<LegalFormModel> legalForms)
+    public void addCustomerRechtsFormComboListItem(List<CustomerRechtsFormComboListItem> legalForms)
     {
 
         String sql = "INSERT OR REPLACE INTO " + TABLE_RECHTS_FORM + " (id,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < legalForms.size(); x++){
 
-                LegalFormModel legalFormModel = new LegalFormModel();
+                CustomerRechtsFormComboListItem legalFormModel = new CustomerRechtsFormComboListItem();
                 legalFormModel = legalForms.get(x);
 
-                stmt.bindString(1, legalFormModel.getRechtsFormId());
-                stmt.bindString(2, legalFormModel.getRechtsFormDesignation());
+                stmt.bindString(1, legalFormModel.getRECHTSFORM());
+                stmt.bindString(2, legalFormModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
             }
@@ -1668,7 +1659,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addLegalForms"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addLegalForms "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1693,25 +1684,24 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addSalutation(ArrayList<SalutationModel> salutations)
+    public void addCustomerContactPersonSalutationComboListItem(List<CustomerContactPersonSalutationComboListItem> salutations)
     {
 
         String sql = "INSERT OR REPLACE INTO " + TABLE_SALUTATION + " (id,designation) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < salutations.size(); x++){
 
-                SalutationModel salutationModel = new SalutationModel();
+                CustomerContactPersonSalutationComboListItem salutationModel = new CustomerContactPersonSalutationComboListItem();
                 salutationModel = salutations.get(x);
 
-                stmt.bindString(1, salutationModel.getSalutationId());
-                stmt.bindString(2, salutationModel.getSalutationDesignation());
+                stmt.bindString(1, salutationModel.getAnrede());
+                stmt.bindString(2, salutationModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
             }
@@ -1721,7 +1711,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addSalutation"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addSalutation "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1746,20 +1736,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addEmployees(ArrayList<EmployeeModel> employees)
+    public void addCustomerActivityEmployeeListItem(List<CustomerActivityEmployeeListItem> employees)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_EMPLOYEE + " (id,employeeJson) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < employees.size(); x++){
 
-                EmployeeModel employeeModel = new EmployeeModel();
+                CustomerActivityEmployeeListItem employeeModel = new CustomerActivityEmployeeListItem();
                 employeeModel = employees.get(x);
 
                 stmt.bindString(1, employeeModel.getMitarbeiter());
@@ -1774,7 +1763,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addEmployees"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addEmployees "," excepiton while inserting login time : "+e.toString());
         }
         /*SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -1805,23 +1794,22 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addFunction(ArrayList<FunctionModel> functions)
+    public void addCustomerContactPersonFunctionComboListItem(List<CustomerContactPersonFunctionComboListItem> functions)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_FUNCTION + " (id,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < functions.size(); x++){
 
-                FunctionModel functionModel = new FunctionModel();
+                CustomerContactPersonFunctionComboListItem functionModel = new CustomerContactPersonFunctionComboListItem();
                 functionModel = functions.get(x);
-                stmt.bindString(1, functionModel.getFunctionId());
-                stmt.bindString(2, functionModel.getFunctionDesignation());
+                stmt.bindString(1, functionModel.getFunktion());
+                stmt.bindString(2, functionModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
             }
@@ -1831,7 +1819,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addFunction"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addFunction "," excepiton while inserting login time : "+e.toString());
         }
         /*if(functions != null && functions.size() > 0){
             SQLiteDatabase db = this.getWritableDatabase();
@@ -1857,21 +1845,20 @@ public class DataBaseHandler extends SQLiteOpenHelper
             }
         }*/
     }
-    public void addSiteInspectionDeviceType(ArrayList<SiteInspectionDeviceTypeModel> listOfSiteInspectionDeviceType)
+    public void addBVODeviceTypeListItem(List<BVODeviceTypeListItem> listOfSiteInspectionDeviceType)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_DEVICE_TYPE + " (Bezeichnung,GeraeettypID,Hoehengruppe," +
                 "arbeitshoehe) VALUES ( ?,?,?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfSiteInspectionDeviceType.size(); x++){
 
-                SiteInspectionDeviceTypeModel deviceTypeModel = new SiteInspectionDeviceTypeModel();
+                BVODeviceTypeListItem deviceTypeModel = new BVODeviceTypeListItem();
                 deviceTypeModel = listOfSiteInspectionDeviceType.get(x);
 
                 stmt.bindString(1, deviceTypeModel.getBezeichnung());
@@ -1887,7 +1874,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addSiteInspectionDeviceType"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addSiteInspectionDeviceType "," excepiton while inserting login time : "+e.toString());
         }
 
         //SQLiteDatabase db = this.getWritableDatabase();
@@ -1921,24 +1908,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
             }
         }*/
     }
-    public void addDocumentLanguage(ArrayList<DocumentLanguageModel> languages)
+    public void addCustomerContactPersonDocumentlanguageListItem(List<CustomerContactPersonDocumentlanguageListItem> languages)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_DOCUMENT_LANGUAGE + " (id,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < languages.size(); x++){
 
-                DocumentLanguageModel documentLanguageModel = new DocumentLanguageModel();
+                CustomerContactPersonDocumentlanguageListItem documentLanguageModel = new CustomerContactPersonDocumentlanguageListItem();
                 documentLanguageModel = languages.get(x);
 
-                stmt.bindString(1, documentLanguageModel.getDocumentLanguageId());
-                stmt.bindString(2, documentLanguageModel.getDocumentLanguageDesignation());
+                stmt.bindString(1, documentLanguageModel.getSprache());
+                stmt.bindString(2, documentLanguageModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -1949,7 +1935,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addDocumentLanguage"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addDocumentLanguage "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -1975,24 +1961,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addDecisionMakers(ArrayList<DecisionMakerModel> decisionMakers)
+    public void addCustomerContactPersonDecisionMakersListItem(List<CustomerContactPersonDecisionMakersListItem> decisionMakers)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_DECISION_MAKER + " (id,designation) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < decisionMakers.size(); x++){
 
-                DecisionMakerModel decisionMakerModel = new DecisionMakerModel();
+                CustomerContactPersonDecisionMakersListItem decisionMakerModel = new CustomerContactPersonDecisionMakersListItem();
                 decisionMakerModel = decisionMakers.get(x);
 
-                stmt.bindString(1, decisionMakerModel.getDecisionMakerId());
-                stmt.bindString(2, decisionMakerModel.getDecisionMakerDesignation());
+                stmt.bindString(1, decisionMakerModel.getEntscheider());
+                stmt.bindString(2, decisionMakerModel.getBezeichnung());
                 stmt.execute();
                 stmt.clearBindings();
 
@@ -2003,7 +1988,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addDecisionMakers"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addDecisionMakers "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2028,20 +2013,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addFeatures(ArrayList<FeatureModel> features)
+    public void addCustomerContactPersonFeatureListItem(List<CustomerContactPersonFeatureListItem> features)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_FEATURE + " (id,designation) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < features.size(); x++){
 
-                FeatureModel featureModel = new FeatureModel();
+                CustomerContactPersonFeatureListItem featureModel = new CustomerContactPersonFeatureListItem();
                 featureModel = features.get(x);
 
                 stmt.bindString(1, featureModel.getMerkmal());
@@ -2055,7 +2039,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addFeatures"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addFeatures "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2091,24 +2075,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public void addProjectStage(ArrayList<ProjectStagesModel> listOfProjectsStage)
+    public void addProjektBUhnenAubenInnenComboListItem(List<ProjektBUhnenAubenInnenComboListItem> listOfProjectsStage)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_STAGE + " (id,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfProjectsStage.size(); x++){
 
-                ProjectStagesModel stagesModel = new ProjectStagesModel();
+                ProjektBUhnenAubenInnenComboListItem stagesModel = new ProjektBUhnenAubenInnenComboListItem();
                 stagesModel = listOfProjectsStage.get(x);
 
-                stmt.bindString(1, stagesModel.getProjectStageId());
-                stmt.bindString(2, stagesModel.getProjectStageDesignation());
+                stmt.bindString(1, stagesModel.getBuehnenart());
+                stmt.bindString(2, stagesModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -2119,7 +2102,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addProjectStage"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addProjectStage "," excepiton while inserting login time : "+e.toString());
         }
         /*SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -2144,24 +2127,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addProjectArea(ArrayList<ProjectAreaModel> listOfProjectsArea)
+    public void addProjektGebietComboListItem(List<ProjektGebietComboListItem> listOfProjectsArea)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_AREA + " (id,designation) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfProjectsArea.size(); x++){
 
-                ProjectAreaModel projectAreaModel = new ProjectAreaModel();
+                ProjektGebietComboListItem projectAreaModel = new ProjektGebietComboListItem();
                 projectAreaModel = listOfProjectsArea.get(x);
 
-                stmt.bindString(1, projectAreaModel.getProjectAreaId());
-                stmt.bindString(2, projectAreaModel.getProjectAreaDesignation());
+                stmt.bindString(1, projectAreaModel.getGebiet());
+                stmt.bindString(2, projectAreaModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -2172,7 +2154,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addProjectArea"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addProjectArea "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2198,24 +2180,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 */
     }
 
-    public void addProjectArt(ArrayList<ProjectArtModel> listOfProjectsArt)
+    public void addProjektartComboListItem(List<ProjektartComboListItem> listOfProjectsArt)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_ART + " (id,designation) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfProjectsArt.size(); x++){
 
-                ProjectArtModel projectArtModel = new ProjectArtModel();
+                ProjektartComboListItem projectArtModel = new ProjektartComboListItem();
                 projectArtModel = listOfProjectsArt.get(x);
 
-                stmt.bindString(1, projectArtModel.getProjectArtId());
-                stmt.bindString(2, projectArtModel.getProjectArtdesignation());
+                stmt.bindString(1, projectArtModel.getObjektart());
+                stmt.bindString(2, projectArtModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -2226,7 +2207,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addProjectArt"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addProjectArt "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2252,24 +2233,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addProjectType(ArrayList<ProjectTypeModel> listOfProjectType)
+    public void addProjekttypComboListItem(List<ProjekttypComboListItem> listOfProjectType)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_TYPE + " (id,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfProjectType.size(); x++){
 
-                ProjectTypeModel projectTypeModel = new ProjectTypeModel();
+                ProjekttypComboListItem projectTypeModel = new ProjekttypComboListItem();
                 projectTypeModel = listOfProjectType.get(x);
 
-                stmt.bindString(1, projectTypeModel.getProjectTypeId());
-                stmt.bindString(2, projectTypeModel.getProjectTypeDesignation());
+                stmt.bindString(1, projectTypeModel.getObjekttyp());
+                stmt.bindString(2, projectTypeModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -2281,7 +2261,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addProjectType"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addProjectType "," excepiton while inserting login time : "+e.toString());
         }
 
        /* SQLiteDatabase db = this.getWritableDatabase();
@@ -2308,24 +2288,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addProjectPhase(ArrayList<ProjectPhaseModel> listOfProjectPhase)
+    public void addProjektphaseComboListItem(List<ProjektphaseComboListItem> listOfProjectPhase)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_PHASE + " (id,designation) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfProjectPhase.size(); x++){
 
-                ProjectPhaseModel phaseModel = new ProjectPhaseModel();
+                ProjektphaseComboListItem phaseModel = new ProjektphaseComboListItem();
                 phaseModel = listOfProjectPhase.get(x);
 
-                stmt.bindString(1, phaseModel.getProjectPhaseId());
-                stmt.bindString(2, phaseModel.getProjectPhaseDesignation());
+                stmt.bindString(1, phaseModel.getObjektphase());
+                stmt.bindString(2, phaseModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -2337,7 +2316,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addProjectPhase"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addProjectPhase "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2364,24 +2343,23 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addProjectTrade(ArrayList<ProjectTradeModel> listOfProjectTrade)
+    public void addProjektGewerkComboListItem(List<ProjektGewerkComboListItem> listOfProjectTrade)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PROJECT_TRADE + " (id,designation) VALUES (?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfProjectTrade.size(); x++){
 
-                ProjectTradeModel tradeModel = new ProjectTradeModel();
+                ProjektGewerkComboListItem tradeModel = new ProjektGewerkComboListItem();
                 tradeModel = listOfProjectTrade.get(x);
 
-                stmt.bindString(1, tradeModel.getProjectTradeId());
-                stmt.bindString(2, tradeModel.getProjectTradeDesignation());
+                stmt.bindString(1, tradeModel.getGewerk());
+                stmt.bindString(2, tradeModel.getBezeichnung());
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -2393,7 +2371,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addProjectTrade"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addProjectTrade "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2419,20 +2397,20 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addPriceStaffel(ArrayList<PriceStaffelModel> listOfPriceStaffel)
+    public void addPriceStaffelListItem(List<PriceStaffelListItem> listOfPriceStaffel)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_STAFFEL + " (Staffel,Bezeichnung,JsonObject) VALUES (?,?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
+
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfPriceStaffel.size(); x++){
 
-                PriceStaffelModel priceStaffelModel = new PriceStaffelModel();
+                PriceStaffelListItem priceStaffelModel = new PriceStaffelListItem();
                 priceStaffelModel = listOfPriceStaffel.get(x);
 
                 stmt.bindString(1, priceStaffelModel.getStaffel());
@@ -2449,7 +2427,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addPriceStaffel"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addPriceStaffel "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -2485,7 +2463,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
         SQLiteDatabase db = null;
         try {
             db = this.getWritableDatabase();
-            getPragma(db);
             db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
@@ -2598,7 +2575,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
     }
 
     public void updateCustomerActivityProjectOffer(String kontakt, ArrayList<CustomerActivityModel> listOfActivity,
-                ArrayList<CustomerProjectModel> listOfProject, ArrayList<CustomerOfferModel> listOfOffer)
+                                                   ArrayList<CustomerProjectModel> listOfProject, ArrayList<CustomerOfferModel> listOfOffer)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -2714,8 +2691,8 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public boolean isCustomerAvailable(String Kontakt)
     {
-       // Cursor cursor = db.rawQuery("select id,branch,hgrp,md,rentalPrice,sb,hf,sp,hb,best from " +
-                //TABLE_LOST_SALE + " where kundenNr=? ", new String[]{KundenNr});
+        // Cursor cursor = db.rawQuery("select id,branch,hgrp,md,rentalPrice,sb,hf,sp,hb,best from " +
+        //TABLE_LOST_SALE + " where kundenNr=? ", new String[]{KundenNr});
 
         //&&&&&
         //String query = "select CustomerContact from " + TABLE_CUSTOMER + " where CustomerContact=? ", new String[]{Kontakt});
@@ -2736,7 +2713,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         //ArrayList<CustomerDatabaseModel> listOfCustomer = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "select * from " + TABLE_CUSTOMER + " WHERE " +
-               // KEY_CUSTOMER_KONTAKT + " = '" + Kontakt +"'";
+        // KEY_CUSTOMER_KONTAKT + " = '" + Kontakt +"'";
 
         Cursor cursor = db.rawQuery("select * from " + TABLE_CUSTOMER + " WHERE CustomerContact=?",new String[]{Kontakt});
         CustomerDatabaseModel customerDatabaseModel = new CustomerDatabaseModel();
@@ -2871,17 +2848,17 @@ public class DataBaseHandler extends SQLiteOpenHelper
 //        return listOfCustomer;
 //    }
 
-    public ArrayList<CountryModel> getCountries()
+    public ArrayList<CustomerLandListItem > getCountries()
     {
-        ArrayList<CountryModel> listOfCountry = new ArrayList<>();
+        ArrayList<CustomerLandListItem > listOfCountry = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_COUNTRY, null);
         if (cursor.moveToFirst()) {
             do {
-                CountryModel country = new CountryModel();
+                CustomerLandListItem  country = new CustomerLandListItem ();
 
-                country.setCountryId(cursor.getInt(0) + "");
-                country.setCountryName(cursor.getString(1));
+                country.setLand(cursor.getInt(0) + "");
+                country.setBezeichnung(cursor.getString(1));
                 listOfCountry.add(country);
 
             } while (cursor.moveToNext());
@@ -2889,16 +2866,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
         db.close();
         return listOfCountry;
     }
-    public CountryModel getCountryFromName(String designation)
+    public CustomerLandListItem  getCountryFromName(String designation)
     {
-        CountryModel country = new CountryModel();
+        CustomerLandListItem  country = new CustomerLandListItem ();
         SQLiteDatabase db = this.getWritableDatabase();
         //Cursor cursor = db.rawQuery("select * from " + TABLE_FUNCTION + " WHERE " + KEY_FUNCTION_ID + "=" + id, null);
         Cursor cursor = db.rawQuery("select * from " + TABLE_COUNTRY +" where "+ KEY_COUNTRY_DESIGNATION + " ="+designation, null);
         if (cursor.moveToFirst()) {
             do {
-                country.setCountryId(cursor.getInt(0) + "");
-                country.setCountryName(cursor.getString(1));
+                country.setLand(cursor.getInt(0) + "");
+                country.setBezeichnung(cursor.getString(1));
 
             } while (cursor.moveToNext());
         }
@@ -2906,19 +2883,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return country;
     }
 
-    public ArrayList<CustomerBranchModel> getCustomerBranches()
+    public ArrayList<BrancheListItem> getCustomerBranches()
     {
-        ArrayList<CustomerBranchModel> listOfBranch = new ArrayList<>();
+        ArrayList<BrancheListItem> listOfBranch = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_CUSTOMER_BRANCH, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                CustomerBranchModel country = new CustomerBranchModel();
+                BrancheListItem country = new BrancheListItem();
 
-                country.setId(cursor.getInt(0) + "");
-                country.setName(cursor.getString(1));
+                country.setBrancheID(cursor.getInt(0) + "");
+                country.setBrancheName(cursor.getString(1));
                 listOfBranch.add(country);
 
             } while (cursor.moveToNext());
@@ -2927,19 +2904,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfBranch;
     }
 
-    public ArrayList<ActivityTypeModel> getActivityTypes()
+    public ArrayList<CustomerActivityTypeListItem> getActivityTypes()
     {
-        ArrayList<ActivityTypeModel> listOfActivity = new ArrayList<>();
+        ArrayList<CustomerActivityTypeListItem> listOfActivity = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_ACTIVITY_TYPE, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                ActivityTypeModel activity = new ActivityTypeModel();
+                CustomerActivityTypeListItem activity = new CustomerActivityTypeListItem();
 
-                activity.setActivityTypeId(cursor.getInt(0) + "");
-                activity.setActivityTypeName(cursor.getString(1));
+                activity.setAkttyp(cursor.getInt(0) + "");
+                activity.setBezeichnung(cursor.getString(1));
                 listOfActivity.add(activity);
 
             } while (cursor.moveToNext());
@@ -2948,19 +2925,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfActivity;
     }
 
-    public ArrayList<ActivityTopicModel> getActivityTopics()
+    public ArrayList<CustomerActivityTopicListItem> getActivityTopics()
     {
-        ArrayList<ActivityTopicModel> listOfActivityTopic = new ArrayList<>();
+        ArrayList<CustomerActivityTopicListItem> listOfActivityTopic = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_ACTIVITY_TOPIC, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                ActivityTopicModel activityTopic = new ActivityTopicModel();
+                CustomerActivityTopicListItem activityTopic = new CustomerActivityTopicListItem();
 
-                activityTopic.setActivityTopicId(cursor.getInt(0) + "");
-                activityTopic.setActivityTopicName(cursor.getString(1));
+                activityTopic.setAktthema(cursor.getInt(0) + "");
+                activityTopic.setBezeichnung(cursor.getString(1));
                 listOfActivityTopic.add(activityTopic);
 
             } while (cursor.moveToNext());
@@ -2969,15 +2946,15 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfActivityTopic;
     }
 
-    public ArrayList<FeatureModel> getFeatures()
+    public ArrayList<CustomerContactPersonFeatureListItem> getFeatures()
     {
-        ArrayList<FeatureModel> listOfFeature = new ArrayList<>();
+        ArrayList<CustomerContactPersonFeatureListItem> listOfFeature = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_FEATURE, null);
         if (cursor.moveToFirst()) {
             do {
-                FeatureModel feature = new FeatureModel();
+                CustomerContactPersonFeatureListItem feature = new CustomerContactPersonFeatureListItem();
 
                 feature.setMerkmal(cursor.getInt(0) + "");
                 feature.setBezeichnung(cursor.getString(1));
@@ -2989,16 +2966,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfFeature;
     }
 
-    public ArrayList<EmployeeModel> getEmployees()
+    public ArrayList<CustomerActivityEmployeeListItem> getEmployees()
     {
-        ArrayList<EmployeeModel> listOfEmployee = new ArrayList<>();
+        ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_EMPLOYEE, null);
         if (cursor.moveToFirst()) {
             do {
-                EmployeeModel employee = new EmployeeModel();
-                employee = new Gson().fromJson(cursor.getString(1), EmployeeModel.class);
+                CustomerActivityEmployeeListItem employee = new CustomerActivityEmployeeListItem();
+                employee = new Gson().fromJson(cursor.getString(1), CustomerActivityEmployeeListItem.class);
 //                employee.setEmployeeId(cursor.getInt(0) + "");
 //                employee.setEmployeeName(cursor.getString(1));
                 listOfEmployee.add(employee);
@@ -3038,19 +3015,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return KaNr_list;
     }
 
-    public ArrayList<DecisionMakerModel> getDecisionMakers()
+    public ArrayList<CustomerContactPersonDecisionMakersListItem> getDecisionMakers()
     {
-        ArrayList<DecisionMakerModel> listOfDecisionMaker = new ArrayList<>();
+        ArrayList<CustomerContactPersonDecisionMakersListItem> listOfDecisionMaker = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_DECISION_MAKER, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                DecisionMakerModel decisionMaker = new DecisionMakerModel();
+                CustomerContactPersonDecisionMakersListItem decisionMaker = new CustomerContactPersonDecisionMakersListItem();
 
-                decisionMaker.setDecisionMakerId(cursor.getInt(0) + "");
-                decisionMaker.setDecisionMakerDesignation(cursor.getString(1));
+                decisionMaker.setEntscheider(cursor.getInt(0) + "");
+                decisionMaker.setBezeichnung(cursor.getString(1));
                 listOfDecisionMaker.add(decisionMaker);
 
             } while (cursor.moveToNext());
@@ -3059,18 +3036,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfDecisionMaker;
     }
 
-    public ArrayList<DocumentLanguageModel> getDocumentLanguages()
+    public ArrayList<CustomerContactPersonDocumentlanguageListItem > getDocumentLanguages()
     {
-        ArrayList<DocumentLanguageModel> listOfLanguages = new ArrayList<>();
+        ArrayList<CustomerContactPersonDocumentlanguageListItem > listOfLanguages = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_DOCUMENT_LANGUAGE, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                DocumentLanguageModel language = new DocumentLanguageModel();
-                language.setDocumentLanguageId(cursor.getInt(0) + "");
-                language.setDocumentLanguageDesignation(cursor.getString(1));
+                CustomerContactPersonDocumentlanguageListItem  language = new CustomerContactPersonDocumentlanguageListItem ();
+                language.setSprache(cursor.getInt(0) + "");
+                language.setBezeichnung(cursor.getString(1));
                 listOfLanguages.add(language);
 
             } while (cursor.moveToNext());
@@ -3079,18 +3056,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfLanguages;
     }
 
-    public ArrayList<FunctionModel> getFunction()
+    public ArrayList<CustomerContactPersonFunctionComboListItem> getFunction()
     {
-        ArrayList<FunctionModel> listOfFunction = new ArrayList<>();
+        ArrayList<CustomerContactPersonFunctionComboListItem> listOfFunction = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_FUNCTION, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                FunctionModel function = new FunctionModel();
-                function.setFunctionId(cursor.getInt(0) + "");
-                function.setFunctionDesignation(cursor.getString(1));
+                CustomerContactPersonFunctionComboListItem function = new CustomerContactPersonFunctionComboListItem();
+                function.setFunktion(cursor.getInt(0) + "");
+                function.setBezeichnung(cursor.getString(1));
                 listOfFunction.add(function);
 
             } while (cursor.moveToNext());
@@ -3101,7 +3078,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     public String getFunctionById(int id)
     {
-        FunctionModel function = new FunctionModel();
+        CustomerContactPersonFunctionComboListItem function = new CustomerContactPersonFunctionComboListItem();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_FUNCTION + " WHERE " + KEY_FUNCTION_ID + "=" + id, null);
         if (cursor.moveToFirst())
@@ -3109,28 +3086,28 @@ public class DataBaseHandler extends SQLiteOpenHelper
             do
             {
 
-                function.setFunctionId(cursor.getInt(0) + "");
-                function.setFunctionDesignation(cursor.getString(1));
+                function.setFunktion(cursor.getInt(0) + "");
+                function.setBezeichnung(cursor.getString(1));
 
             } while (cursor.moveToNext());
         }
         db.close();
-        return function.getFunctionDesignation();
+        return function.getBezeichnung();
     }
 
-    public ArrayList<LegalFormModel> getLegalForms()
+    public ArrayList<CustomerRechtsFormComboListItem > getLegalForms()
     {
-        ArrayList<LegalFormModel> listOfLegalForms = new ArrayList<>();
+        ArrayList<CustomerRechtsFormComboListItem > listOfLegalForms = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_RECHTS_FORM, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                LegalFormModel legalForm = new LegalFormModel();
+                CustomerRechtsFormComboListItem  legalForm = new CustomerRechtsFormComboListItem ();
 
-                legalForm.setRechtsFormId(cursor.getInt(0) + "");
-                legalForm.setRechtsFormDesignation(cursor.getString(1));
+                legalForm.setRECHTSFORM(cursor.getInt(0) + "");
+                legalForm.setBezeichnung(cursor.getString(1));
                 listOfLegalForms.add(legalForm);
 
             } while (cursor.moveToNext());
@@ -3139,18 +3116,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfLegalForms;
     }
 
-    public ArrayList<SalutationModel> getSalutation()
+    public ArrayList<CustomerContactPersonSalutationComboListItem> getSalutation()
     {
-        ArrayList<SalutationModel> listOfSalutations = new ArrayList<>();
+        ArrayList<CustomerContactPersonSalutationComboListItem> listOfSalutations = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_SALUTATION, null);
         if (cursor.moveToFirst()) {
             do {
-                SalutationModel salutation = new SalutationModel();
+                CustomerContactPersonSalutationComboListItem salutation = new CustomerContactPersonSalutationComboListItem();
 
-                salutation.setSalutationId(cursor.getInt(0) + "");
-                salutation.setSalutationDesignation(cursor.getString(1));
+                salutation.setAnrede(cursor.getInt(0) + "");
+                salutation.setBezeichnung(cursor.getString(1));
                 listOfSalutations.add(salutation);
 
             } while (cursor.moveToNext());
@@ -3159,18 +3136,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfSalutations;
     }
 
-    public ArrayList<ProjectStagesModel> getProjectStage()
+    public ArrayList<ProjektBUhnenAubenInnenComboListItem> getProjectStage()
     {
-        ArrayList<ProjectStagesModel> listOfProjectStage = new ArrayList<>();
+        ArrayList<ProjektBUhnenAubenInnenComboListItem> listOfProjectStage = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_PROJECT_STAGE, null);
         if (cursor.moveToFirst()) {
             do {
-                ProjectStagesModel projectStage = new ProjectStagesModel();
+                ProjektBUhnenAubenInnenComboListItem projectStage = new ProjektBUhnenAubenInnenComboListItem();
 
-                projectStage.setProjectStageId(cursor.getInt(0) + "");
-                projectStage.setProjectStageDesignation(cursor.getString(1));
+                projectStage.setBuehnenart(cursor.getInt(0) + "");
+                projectStage.setBezeichnung(cursor.getString(1));
                 listOfProjectStage.add(projectStage);
 
             } while (cursor.moveToNext());
@@ -3179,18 +3156,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfProjectStage;
     }
 
-    public ArrayList<ProjectAreaModel> getProjectArea()
+    public ArrayList<ProjektGebietComboListItem> getProjectArea()
     {
-        ArrayList<ProjectAreaModel> listOfProjectArea = new ArrayList<>();
+        ArrayList<ProjektGebietComboListItem> listOfProjectArea = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_PROJECT_AREA, null);
         if (cursor.moveToFirst()) {
             do {
-                ProjectAreaModel projectArea = new ProjectAreaModel();
+                ProjektGebietComboListItem projectArea = new ProjektGebietComboListItem();
 
-                projectArea.setProjectAreaId(cursor.getInt(0) + "");
-                projectArea.setProjectAreaDesignation(cursor.getString(1));
+                projectArea.setGebiet(cursor.getInt(0) + "");
+                projectArea.setBezeichnung(cursor.getString(1));
                 listOfProjectArea.add(projectArea);
 
             } while (cursor.moveToNext());
@@ -3199,18 +3176,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfProjectArea;
     }
 
-    public ArrayList<ProjectArtModel> getProjectArt()
+    public ArrayList<ProjektartComboListItem> getProjectArt()
     {
-        ArrayList<ProjectArtModel> listOfProjectArt = new ArrayList<>();
+        ArrayList<ProjektartComboListItem> listOfProjectArt = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_PROJECT_ART, null);
         if (cursor.moveToFirst()) {
             do {
-                ProjectArtModel projectArt = new ProjectArtModel();
+                ProjektartComboListItem projectArt = new ProjektartComboListItem();
 
-                projectArt.setProjectArtId(cursor.getInt(0) + "");
-                projectArt.setProjectArtdesignation(cursor.getString(1));
+                projectArt.setObjektart(cursor.getInt(0) + "");
+                projectArt.setBezeichnung(cursor.getString(1));
                 listOfProjectArt.add(projectArt);
 
             } while (cursor.moveToNext());
@@ -3219,18 +3196,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfProjectArt;
     }
 
-    public ArrayList<ProjectTypeModel> getProjectType()
+    public ArrayList<ProjekttypComboListItem> getProjectType()
     {
-        ArrayList<ProjectTypeModel> listOfProjectType = new ArrayList<>();
+        ArrayList<ProjekttypComboListItem> listOfProjectType = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_PROJECT_TYPE, null);
         if (cursor.moveToFirst()) {
             do {
-                ProjectTypeModel projectArt = new ProjectTypeModel();
+                ProjekttypComboListItem projectArt = new ProjekttypComboListItem();
 
-                projectArt.setProjectTypeId(cursor.getInt(0) + "");
-                projectArt.setProjectTypeDesignation(cursor.getString(1));
+                projectArt.setObjekttyp(cursor.getInt(0) + "");
+                projectArt.setBezeichnung(cursor.getString(1));
                 listOfProjectType.add(projectArt);
 
             } while (cursor.moveToNext());
@@ -3239,18 +3216,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfProjectType;
     }
 
-    public ArrayList<ProjectPhaseModel> getProjectPhase()
+    public ArrayList<ProjektphaseComboListItem> getProjectPhase()
     {
-        ArrayList<ProjectPhaseModel> listOfProjectPhase = new ArrayList<>();
+        ArrayList<ProjektphaseComboListItem> listOfProjectPhase = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_PROJECT_PHASE, null);
         if (cursor.moveToFirst()) {
             do {
-                ProjectPhaseModel projectPhaseModel = new ProjectPhaseModel();
+                ProjektphaseComboListItem projectPhaseModel = new ProjektphaseComboListItem();
 
-                projectPhaseModel.setProjectPhaseId(cursor.getInt(0) + "");
-                projectPhaseModel.setProjectPhaseDesignation(cursor.getString(1));
+                projectPhaseModel.setObjektphase(cursor.getInt(0) + "");
+                projectPhaseModel.setBezeichnung(cursor.getString(1));
                 listOfProjectPhase.add(projectPhaseModel);
 
             } while (cursor.moveToNext());
@@ -3259,18 +3236,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfProjectPhase;
     }
 
-    public ArrayList<ProjectTradeModel> getProjectTrade()
+    public ArrayList<ProjektGewerkComboListItem> getProjectTrade()
     {
-        ArrayList<ProjectTradeModel> listOfProjectTrade = new ArrayList<>();
+        ArrayList<ProjektGewerkComboListItem> listOfProjectTrade = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_PROJECT_TRADE, null);
         if (cursor.moveToFirst()) {
             do {
-                ProjectTradeModel projectTradeModel = new ProjectTradeModel();
+                ProjektGewerkComboListItem projectTradeModel = new ProjektGewerkComboListItem();
 
-                projectTradeModel.setProjectTradeId(cursor.getInt(0) + "");
-                projectTradeModel.setProjectTradeDesignation(cursor.getString(1));
+                projectTradeModel.setGewerk(cursor.getInt(0) + "");
+                projectTradeModel.setBezeichnung(cursor.getString(1));
                 listOfProjectTrade.add(projectTradeModel);
 
             } while (cursor.moveToNext());
@@ -3521,7 +3498,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
             db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
@@ -3569,7 +3545,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         db.close();*/
     }
 
-    public void addPricingOfflineStandardPrice(ArrayList<PricingOfflineStandardPriceData> listOfPriceOfflineStandardPrice)
+    public void addPriceStandardListItem(List<PriceStandardListItem> listOfPriceOfflineStandardPrice)
     {
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -3646,20 +3622,20 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
         /*
          * According to the docs http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html
          * Writers should use beginTransactionNonExclusive() or beginTransactionWithListenerNonExclusive(SQLiteTransactionListener)
          * to start a transaction. Non-exclusive mode allows database file to be in readable by other threads executing queries.
          */
-            db.beginTransactionNonExclusive();
+
             // db.beginTransaction();
 
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfPriceOfflineStandardPrice.size(); x++){
 
-                PricingOfflineStandardPriceData priceOfflineStandardPrice = new PricingOfflineStandardPriceData();
+                PriceStandardListItem priceOfflineStandardPrice = new PriceStandardListItem();
                 priceOfflineStandardPrice = listOfPriceOfflineStandardPrice.get(x);
 
                 stmt.bindString(1, priceOfflineStandardPrice.getBezeichnung());
@@ -3669,14 +3645,14 @@ public class DataBaseHandler extends SQLiteOpenHelper
                 stmt.bindString(5, String.valueOf(priceOfflineStandardPrice.getListenpreis()));
                 stmt.bindString(6, String.valueOf(priceOfflineStandardPrice.getMandant()));
                 stmt.bindString(7, String.valueOf(priceOfflineStandardPrice.getNiederlassung()));
-                stmt.bindString(8, String.valueOf(priceOfflineStandardPrice.getTageM_11_20()));
-                stmt.bindString(9, String.valueOf(priceOfflineStandardPrice.getTageM_1_2()));
-                stmt.bindString(10, String.valueOf(priceOfflineStandardPrice.getTageM_3_4()));
-                stmt.bindString(11, String.valueOf(priceOfflineStandardPrice.getTageM_5_10()));
-                stmt.bindString(12, String.valueOf(priceOfflineStandardPrice.getTageR_11_20()));
-                stmt.bindString(13, String.valueOf(priceOfflineStandardPrice.getTageR_1_2()));
-                stmt.bindString(14, String.valueOf(priceOfflineStandardPrice.getTageR_3_4()));
-                stmt.bindString(15, String.valueOf(priceOfflineStandardPrice.getTageR_5_10()));
+                stmt.bindString(8, String.valueOf(priceOfflineStandardPrice.getTageM1120()));
+                stmt.bindString(9, String.valueOf(priceOfflineStandardPrice.getTageM12()));
+                stmt.bindString(10, String.valueOf(priceOfflineStandardPrice.getTageM34()));
+                stmt.bindString(11, String.valueOf(priceOfflineStandardPrice.getTageM510()));
+                stmt.bindString(12, String.valueOf(priceOfflineStandardPrice.getTageR1120()));
+                stmt.bindString(13, String.valueOf(priceOfflineStandardPrice.getTageR12()));
+                stmt.bindString(14, String.valueOf(priceOfflineStandardPrice.getTageR34()));
+                stmt.bindString(15, String.valueOf(priceOfflineStandardPrice.getTageR510()));
                 stmt.bindString(16, String.valueOf(priceOfflineStandardPrice.getAb21TageM()));
                 stmt.bindString(17, String.valueOf(priceOfflineStandardPrice.getAb21TageR()));
                 stmt.bindString(18, String.valueOf(priceOfflineStandardPrice.getBis8StundenM()));
@@ -3691,38 +3667,41 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.setTransactionSuccessful();
             db.endTransaction();
-
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addPricingOfflineStandardPrice"," excepiton while insert: "+e.toString());
+            LogApp.showLog(" addPricingOfflineStandardPrice "," excepiton while inserting login time : "+e.toString());
         }
 
 
     }
 
 
-    public void addPricingOfflineEquipmentData(ArrayList<PricingOfflineEquipmentData> listOfPriceOfflineEquipment)
+    public void addPriceEquipmentHeightListItem(List<PriceEquipmentHeightListItem> listOfPriceOfflineEquipment)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_PRICING_OFFLINE_EQUIPMENT_HEIGHT + " (Ausstattung,Bezeichnung,Hoehengruppe," +
                 "Hoehenhauptgruppe,bezeichnungName) VALUES ( ?,?,?,?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
+
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfPriceOfflineEquipment.size(); x++){
 
-                PricingOfflineEquipmentData priceOfflineEquipmentdata = new PricingOfflineEquipmentData();
+                PriceEquipmentHeightListItem priceOfflineEquipmentdata = new PriceEquipmentHeightListItem();
                 priceOfflineEquipmentdata = listOfPriceOfflineEquipment.get(x);
 
                 stmt.bindString(1, priceOfflineEquipmentdata.getAusstattung());
                 stmt.bindString(2, priceOfflineEquipmentdata.getBezeichnung());
                 stmt.bindString(3, priceOfflineEquipmentdata.getHoehengruppe());
                 stmt.bindString(4, String.valueOf(priceOfflineEquipmentdata.getHoehenhauptgruppe()));
-                stmt.bindString(5, priceOfflineEquipmentdata.getBezeichnung_1());
+                if(!TextUtils.isEmpty( priceOfflineEquipmentdata.getBezeichnung2())) {
+                    stmt.bindString(5, priceOfflineEquipmentdata.getBezeichnung2());
+                }else {
+                    stmt.bindString(5,"");
+                }
 
                 stmt.execute();
                 stmt.clearBindings();
@@ -3734,7 +3713,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addPricingOfflineEquipmentData"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addPricingOfflineEquipmentData "," excepiton while inserting login time : "+e.toString());
         }
         /*SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -3765,19 +3744,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public ArrayList<Pricing1BranchData> getPricing1BranchData()
+    public ArrayList<PriceBranchListItem > getPricing1BranchData()
     {
-        ArrayList<Pricing1BranchData> Branch_list = new ArrayList<Pricing1BranchData>();
+        ArrayList<PriceBranchListItem > Branch_list = new ArrayList<PriceBranchListItem >();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select designation,client from " + TABLE_BRANCH, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                Pricing1BranchData branch = new Pricing1BranchData();
+                PriceBranchListItem  branch = new PriceBranchListItem ();
 
-                branch.setDesignation(cursor.getString(0));
-                branch.setClientId(cursor.getInt(1));
+                branch.setBezeichnung(cursor.getString(0));
+                branch.setMandant(String.valueOf(cursor.getInt(1)));
                 Branch_list.add(branch);
 
             } while (cursor.moveToNext());
@@ -3786,18 +3765,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return Branch_list;
     }
 
-    public ArrayList<Pricing1DeviceData> getPricing1DeviceData()
+    public ArrayList<PriceDeviceGroupListItem > getPricing1DeviceData()
     {
-        ArrayList<Pricing1DeviceData> Device_list = new ArrayList<Pricing1DeviceData>();
+        ArrayList<PriceDeviceGroupListItem > Device_list = new ArrayList<PriceDeviceGroupListItem >();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select heightMainGroup,designation from " + TABLE_DEVICE, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                Pricing1DeviceData device = new Pricing1DeviceData();
-                device.setHeight_main_group(cursor.getInt(0));
-                device.setDesignation(cursor.getString(1));
+                PriceDeviceGroupListItem  device = new PriceDeviceGroupListItem ();
+                device.setHoehenhauptgruppe(String.valueOf(cursor.getInt(0)));
+                device.setBezeichnung(cursor.getString(1));
                 Device_list.add(device);
 
             } while (cursor.moveToNext());
@@ -3806,18 +3785,18 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return Device_list;
     }
 
-    public ArrayList<Pricing1PriceRentalData> getPricing1PriceRentalData()
+    public ArrayList<PriceRentalListItem > getPricing1PriceRentalData()
     {
-        ArrayList<Pricing1PriceRentalData> Price_Rental_list = new ArrayList<Pricing1PriceRentalData>();
+        ArrayList<PriceRentalListItem > Price_Rental_list = new ArrayList<PriceRentalListItem >();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select designation,unit from " + TABLE_PRICE_RENTAL, null);
         if (cursor.moveToFirst())
         {
             do
             {
-                Pricing1PriceRentalData priceRental = new Pricing1PriceRentalData();
-                priceRental.setDesignation(cursor.getString(0));
-                priceRental.setUnit(cursor.getInt(1));
+                PriceRentalListItem  priceRental = new PriceRentalListItem ();
+                priceRental.setBezeichnung(cursor.getString(0));
+                priceRental.setEinheit(String.valueOf(cursor.getInt(1)));
                 Price_Rental_list.add(priceRental);
 
             } while (cursor.moveToNext());
@@ -3859,7 +3838,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         ArrayList<Pricing1LevelGroupData> pricingLevelGroup_list = new ArrayList<Pricing1LevelGroupData>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select distinct Hoehengruppe, Bezeichnung from " +
-                TABLE_PRICING_OFFLINE_STANDARD_PRICE + " where HoehenhauptgruppeID = ? order by Hoehengruppe ",
+                        TABLE_PRICING_OFFLINE_STANDARD_PRICE + " where HoehenhauptgruppeID = ? order by Hoehengruppe ",
                 new String[]{String.valueOf(deviceTypeId)});
         if (cursor.moveToFirst())
         {
@@ -3897,10 +3876,10 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return pricingEquipment_list;
     }
 
-    public ArrayList<PricingOfflineStandardPriceData> getPricing2StandardPriceData
+    public ArrayList<PriceStandardListItem > getPricing2StandardPriceData
             (int Branch, final String DeviceType, int Einheit, String Assesories)
     {
-        ArrayList<PricingOfflineStandardPriceData> pricing2Standard_list = new ArrayList<PricingOfflineStandardPriceData>();
+        ArrayList<PriceStandardListItem > pricing2Standard_list = new ArrayList<PriceStandardListItem>();
         SQLiteDatabase db = this.getWritableDatabase();
 //        String query = "SELECT Hoehengruppe,Niederlassung,Listenpreis,TageM_1_2,TageR_1_2,TageM_3_4, TageR_3_4,TageM_5_10,TageR_5_10,TageM_11_20,TageR_11_20,ab21TageM,ab21TageR FROM "
 //                + TABLE_PRICING_OFFLINE_STANDARD_PRICE + " WHERE " +
@@ -3909,29 +3888,28 @@ public class DataBaseHandler extends SQLiteOpenHelper
         String query = "SELECT * FROM "+ TABLE_PRICING_OFFLINE_STANDARD_PRICE + " WHERE " +
                 KEY_PRICING_OFFLINE_STANDARD_PRICE_HOEHENGRUPPE + " = ? AND " + KEY_PRICING_OFFLINE_STANDARD_PRICE_MANDANT + " = ?";
         //KEY_PRICING_OFFLINE_STANDARD_PRICE_HOEHENHAUPTGRPPE_ID + " = ? AND " +
-                LogApp.showLog("query", query);
+        LogApp.showLog("query", query);
         //Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(Branch),DeviceType,String.valueOf(Einheit)});
         Cursor cursor = db.rawQuery(query, new String[]{DeviceType,String.valueOf(Branch)});
         if (cursor.moveToFirst())
         {
             do
             {
-                PricingOfflineStandardPriceData pricing2StandardPrice = new PricingOfflineStandardPriceData();
+                PriceStandardListItem  pricing2StandardPrice = new PriceStandardListItem ();
                 pricing2StandardPrice.setHoehengruppe(cursor.getString(cursor.getColumnIndex("Hoehengruppe")));
-                pricing2StandardPrice.setHoehenhauptgruppeID(Integer.parseInt
-                        (cursor.getString(cursor.getColumnIndex("HoehenhauptgruppeID"))));
+                pricing2StandardPrice.setHoehenhauptgruppeID(cursor.getString(cursor.getColumnIndex("HoehenhauptgruppeID")));
                 pricing2StandardPrice.setNiederlassung(cursor.getString(cursor.getColumnIndex("Niederlassung")));
-                pricing2StandardPrice.setListenpreis(cursor.getDouble(cursor.getColumnIndex("Listenpreis")));
-                pricing2StandardPrice.setTageM_1_2(cursor.getDouble(cursor.getColumnIndex("TageM_1_2")));
-                pricing2StandardPrice.setTageR_1_2(cursor.getDouble(cursor.getColumnIndex("TageR_1_2")));
-                pricing2StandardPrice.setTageM_3_4(cursor.getDouble(cursor.getColumnIndex("TageM_3_4")));
-                pricing2StandardPrice.setTageR_3_4(cursor.getDouble(cursor.getColumnIndex("TageR_3_4")));
-                pricing2StandardPrice.setTageM_5_10(cursor.getDouble(cursor.getColumnIndex("TageM_5_10")));
-                pricing2StandardPrice.setTageR_5_10(cursor.getDouble(cursor.getColumnIndex("TageR_5_10")));
-                pricing2StandardPrice.setTageM_11_20(cursor.getDouble(cursor.getColumnIndex("TageM_11_20")));
-                pricing2StandardPrice.setTageR_11_20(cursor.getDouble(cursor.getColumnIndex("TageR_11_20")));
-                pricing2StandardPrice.setAb21TageM(cursor.getDouble(cursor.getColumnIndex("ab21TageM")));
-                pricing2StandardPrice.setAb21TageR(cursor.getDouble(cursor.getColumnIndex("ab21TageR")));
+                pricing2StandardPrice.setListenpreis(String.valueOf(cursor.getDouble(cursor.getColumnIndex("Listenpreis"))));
+                pricing2StandardPrice.setTageM12(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageM_1_2"))));
+                pricing2StandardPrice.setTageR12(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageR_1_2"))));
+                pricing2StandardPrice.setTageM34(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageM_3_4"))));
+                pricing2StandardPrice.setTageR34(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageR_3_4"))));
+                pricing2StandardPrice.setTageM510(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageM_5_10"))));
+                pricing2StandardPrice.setTageR510(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageR_5_10"))));
+                pricing2StandardPrice.setTageM1120(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageM_11_20"))));
+                pricing2StandardPrice.setTageR1120(String.valueOf(cursor.getDouble(cursor.getColumnIndex("TageR_11_20"))));
+                pricing2StandardPrice.setAb21TageM(String.valueOf(cursor.getDouble(cursor.getColumnIndex("ab21TageM"))));
+                pricing2StandardPrice.setAb21TageR(String.valueOf(cursor.getDouble(cursor.getColumnIndex("ab21TageR"))));
 
                 pricing2Standard_list.add(pricing2StandardPrice);
 
@@ -3983,7 +3961,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
         SQLiteDatabase db = null;
         try {
             db = this.getWritableDatabase();
-            getPragma(db);
             db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
@@ -4164,7 +4141,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
         SQLiteDatabase db = null;
         try {
             db = this.getWritableDatabase();
-            getPragma(db);
             db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
@@ -4406,21 +4382,20 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfdeviceData;
     }
 
-    public void addBuildingProject(ArrayList<SiteInspectionBuildingProjectModel> listOfSiteInspectionBuildingProject)
+    public void addBVOBauvorhabenComboListItem(List<BVOBauvorhabenComboListItem> listOfSiteInspectionBuildingProject)
     {
 
         String sql = "INSERT OR REPLACE INTO " + TABLE_BUILDING_PROJECT + " (Bezeichnung,Bauvorhaben) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfSiteInspectionBuildingProject.size(); x++){
 
-                SiteInspectionBuildingProjectModel siteInspectionBuildingProjectModel = new SiteInspectionBuildingProjectModel();
+                BVOBauvorhabenComboListItem siteInspectionBuildingProjectModel = new BVOBauvorhabenComboListItem();
                 siteInspectionBuildingProjectModel = listOfSiteInspectionBuildingProject.get(x);
 
                 stmt.bindString(1, siteInspectionBuildingProjectModel.getBezeichnung());
@@ -4435,7 +4410,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addBuildingProject"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addBuildingProject "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -4467,20 +4442,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addAccess(ArrayList<SiteInspectionAccessModel> listOfSiteInspectionAccess)
+    public void addBVOZugangComboListItem(List<BVOZugangComboListItem> listOfSiteInspectionAccess)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_ACCESS + " (Bezeichnung,Zugang) VALUES ( ?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfSiteInspectionAccess.size(); x++){
 
-                SiteInspectionAccessModel siteInspectionAccessModel = new SiteInspectionAccessModel();
+                BVOZugangComboListItem siteInspectionAccessModel = new BVOZugangComboListItem();
                 siteInspectionAccessModel = listOfSiteInspectionAccess.get(x);
 
                 stmt.bindString(1, siteInspectionAccessModel.getBezeichnung());
@@ -4494,7 +4468,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog("addAccess"," excepiton while insert : "+e.toString());
+            LogApp.showLog(" addAccess "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -4534,7 +4508,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
             db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
@@ -4643,7 +4616,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
     }
 
     public void updateOperationalEnvironment(SiteInspectionOperationalEnvironmentModel
-                siteInspectionOperationalEnvironmentModel,int id)
+                                                     siteInspectionOperationalEnvironmentModel,int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -4653,7 +4626,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
     }
 
     public void updateOperationalDataPermits(SiteInspectionOperationalDataPermitsModel
-                siteInspectionOperationalDataPermitsModel,int id)
+                                                     siteInspectionOperationalDataPermitsModel,int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -4663,7 +4636,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
     }
 
     public void updateAdditionalMobileWindPower(SiteInspectionAdditionalMobileWindPowerModel
-                siteInspectionAdditionalMobileWindPowerModel,int id)
+                                                        siteInspectionAdditionalMobileWindPowerModel,int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -4768,9 +4741,9 @@ public class DataBaseHandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public ArrayList<SiteInspectionDeviceTypeModel> getDeviceType(String hightScale)
+    public ArrayList<BVODeviceTypeListItem> getDeviceType(String hightScale)
     {
-        ArrayList<SiteInspectionDeviceTypeModel> listOfSiteInspectionDeviceType = new ArrayList<>();
+        ArrayList<BVODeviceTypeListItem  > listOfSiteInspectionDeviceType = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * from " + TABLE_DEVICE_TYPE + " WHERE " + KEY_DEVICE_TYPE_HOHENGRUPPE + "=" + "'" +
                 hightScale + "'";
@@ -4779,7 +4752,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         if (cursor.moveToFirst()) {
             do {
-                SiteInspectionDeviceTypeModel deviceType = new SiteInspectionDeviceTypeModel();
+                BVODeviceTypeListItem deviceType = new BVODeviceTypeListItem();
                 deviceType.setGeraeettypID(cursor.getString(0));
                 deviceType.setBezeichnung(cursor.getString(1));
                 deviceType.setHoehengruppe(cursor.getString(2));
@@ -4791,9 +4764,9 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfSiteInspectionDeviceType;
     }
 
-    public ArrayList<SiteInspectionBuildingProjectModel> getBuildingProject()
+    public ArrayList<BVOBauvorhabenComboListItem> getBuildingProject()
     {
-        ArrayList<SiteInspectionBuildingProjectModel> listofBuidlignProject = new ArrayList<>();
+        ArrayList<BVOBauvorhabenComboListItem> listofBuidlignProject = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * from " + TABLE_BUILDING_PROJECT;
 
@@ -4802,7 +4775,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         if (cursor.moveToFirst()) {
             do {
 
-                SiteInspectionBuildingProjectModel buidlignProject = new SiteInspectionBuildingProjectModel();
+                BVOBauvorhabenComboListItem buidlignProject = new BVOBauvorhabenComboListItem();
                 buidlignProject.setBauvorhaben(cursor.getString(0));
                 buidlignProject.setBezeichnung(cursor.getString(1));
                 listofBuidlignProject.add(buidlignProject);
@@ -4812,9 +4785,9 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listofBuidlignProject;
     }
 
-    public ArrayList<PriceStaffelModel> getPriceStaffel()
+    public ArrayList<PriceStaffelListItem> getPriceStaffel()
     {
-        ArrayList<PriceStaffelModel> listOfPriceStaffel = new ArrayList<>();
+        ArrayList<PriceStaffelListItem> listOfPriceStaffel = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * from " + TABLE_STAFFEL;
 
@@ -4823,8 +4796,8 @@ public class DataBaseHandler extends SQLiteOpenHelper
         if (cursor.moveToFirst()) {
             do {
 
-                PriceStaffelModel object = new PriceStaffelModel();
-                object = new Gson().fromJson(cursor.getString(2), PriceStaffelModel.class);
+                PriceStaffelListItem object = new PriceStaffelListItem();
+                object = new Gson().fromJson(cursor.getString(2), PriceStaffelListItem.class);
                 //object.setStaffel(obj);
                 //access.setBezeichnung(cursor.getString(1));
                 listOfPriceStaffel.add(object);
@@ -4834,9 +4807,9 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfPriceStaffel;
     }
 
-    public PriceStaffelModel getStaffelObjectFromStaffel(int staffel)
+    public PriceStaffelListItem getStaffelObjectFromStaffel(int staffel)
     {
-        PriceStaffelModel object = new PriceStaffelModel();
+        PriceStaffelListItem object = new PriceStaffelListItem();
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "SELECT * from " + TABLE_STAFFEL + " where " + KEY_STAFFEL + "=" + staffel;
 
@@ -4847,16 +4820,16 @@ public class DataBaseHandler extends SQLiteOpenHelper
         if (cursor.moveToFirst())
         {
             do {
-                object = new Gson().fromJson(cursor.getString(2), PriceStaffelModel.class);
+                object = new Gson().fromJson(cursor.getString(2), PriceStaffelListItem.class);
             } while (cursor.moveToNext());
         }
         db.close();
         return object;
     }
 
-    public ArrayList<SiteInspectionAccessModel> getAccess()
+    public ArrayList<BVOZugangComboListItem> getAccess()
     {
-        ArrayList<SiteInspectionAccessModel> listOfAccess = new ArrayList<>();
+        ArrayList<BVOZugangComboListItem> listOfAccess = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * from " + TABLE_ACCESS;
 
@@ -4865,7 +4838,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
         if (cursor.moveToFirst()) {
             do {
 
-                SiteInspectionAccessModel access = new SiteInspectionAccessModel();
+                BVOZugangComboListItem access = new BVOZugangComboListItem();
                 access.setZugang(cursor.getString(0));
                 access.setBezeichnung(cursor.getString(1));
                 listOfAccess.add(access);
@@ -5069,7 +5042,6 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
             db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
@@ -5325,27 +5297,26 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public void addBuheneart(ArrayList<BuheneartModel> listOfBuheneart)
+    public void addListOfBuheneartComboBoxItemItem(List<ListOfBuheneartComboBoxItemItem> listOfBuheneart)
     {
         String sql = "INSERT OR REPLACE INTO " + TABLE_BUHENEART + " (Bezeichnung,Buheneart,Sort," +
                 "Sprache) VALUES ( ?,?,?,?)";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            getPragma(db);
-            db.beginTransactionNonExclusive();
             // db.beginTransaction();
             SQLiteStatement stmt = db.compileStatement(sql);
+            db.beginTransactionNonExclusive();
 
             for(int x=0; x < listOfBuheneart.size(); x++){
 
-                BuheneartModel buheneartModel = new BuheneartModel();
+                ListOfBuheneartComboBoxItemItem buheneartModel = new ListOfBuheneartComboBoxItemItem();
                 buheneartModel = listOfBuheneart.get(x);
 
                 stmt.bindString(1, buheneartModel.getBezeichnung());
-                stmt.bindString(2, buheneartModel.getBuehnenArt());
-                stmt.bindString(3, buheneartModel.getSort());
-                stmt.bindString(4, buheneartModel.getSprache());
+                stmt.bindString(2, String.valueOf(buheneartModel.getBuehnenArt()));
+                stmt.bindString(3, String.valueOf(buheneartModel.getSort()));
+                stmt.bindString(4, String.valueOf(buheneartModel.getSprache()));
                 stmt.execute();
                 stmt.clearBindings();
             }
@@ -5355,7 +5326,7 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
             db.close();
         }catch (Exception e){
-            LogApp.showLog(" prepare statment for device type"," excepiton while inser : "+e.toString());
+            LogApp.showLog(" addBuheneart "," excepiton while inserting login time : "+e.toString());
         }
 
         /*SQLiteDatabase db = this.getWritableDatabase();
@@ -5384,19 +5355,19 @@ public class DataBaseHandler extends SQLiteOpenHelper
 
     }
 
-    public ArrayList<BuheneartModel> getBuheneart()
+    public ArrayList<ListOfBuheneartComboBoxItemItem> getBuheneart()
     {
-        ArrayList<BuheneartModel> listOfBuheneart = new ArrayList<>();
+        ArrayList<ListOfBuheneartComboBoxItemItem> listOfBuheneart = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_BUHENEART, null);
         if (cursor.moveToFirst()) {
             do {
-                BuheneartModel buheneartModel = new BuheneartModel();
+                ListOfBuheneartComboBoxItemItem buheneartModel = new ListOfBuheneartComboBoxItemItem();
                 buheneartModel.setBezeichnung(cursor.getString(0));
-                buheneartModel.setBuehnenArt(cursor.getString(1));
-                buheneartModel.setSort(cursor.getString(2));
-                buheneartModel.setSprache(cursor.getString(3));
+                buheneartModel.setBuehnenArt(Integer.parseInt(cursor.getString(1)));
+                buheneartModel.setSort(Integer.parseInt(cursor.getString(2)));
+                buheneartModel.setSprache(Integer.parseInt(cursor.getString(3)));
                 listOfBuheneart.add(buheneartModel);
 
             } while (cursor.moveToNext());
@@ -5405,8 +5376,5 @@ public class DataBaseHandler extends SQLiteOpenHelper
         return listOfBuheneart;
     }
 
-    private void getPragma(SQLiteDatabase sqlDb){
-        sqlDb.execSQL("PRAGMA cache_size=10000");
-    }
 
 }

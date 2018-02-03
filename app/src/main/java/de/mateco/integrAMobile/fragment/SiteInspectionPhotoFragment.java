@@ -21,7 +21,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -61,7 +59,7 @@ public class SiteInspectionPhotoFragment extends BaseFragment implements View.On
     private Boolean flag=true;
     private DataBaseHandler db;
     private SharedPreferences preferences;
-    int PERMISSION_GELLARY_CODE = 1002;
+    int PERMISSION_GELLARY_CODE = 12;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -93,7 +91,7 @@ public class SiteInspectionPhotoFragment extends BaseFragment implements View.On
                 ActivityCompat.requestPermissions(getActivity(), new String[]{
                                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        3003);
+                        80);
             }
         }
         gridView = (GridView)rootView.findViewById(R.id.gridPhoto);
@@ -184,7 +182,7 @@ public class SiteInspectionPhotoFragment extends BaseFragment implements View.On
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == 1001 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == 81 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //setupContactsPicker();
             openCamera();
         }
@@ -218,7 +216,7 @@ public class SiteInspectionPhotoFragment extends BaseFragment implements View.On
                             ActivityCompat.requestPermissions(getActivity(), new String[] {
                                             android.Manifest.permission.CAMERA,
                                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                            Manifest.permission.READ_EXTERNAL_STORAGE}, 1001);
+                                            Manifest.permission.READ_EXTERNAL_STORAGE}, 81);
                         }
                     }
                     else {

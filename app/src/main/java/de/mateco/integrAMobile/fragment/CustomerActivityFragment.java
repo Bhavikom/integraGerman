@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,7 +66,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import de.mateco.integrAMobile.Helper.ContactPersonComparable;
 import de.mateco.integrAMobile.Helper.CustomerActivityComparable;
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
@@ -91,8 +89,6 @@ import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.LoadedCustomerFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.ActivityTopicModel;
-import de.mateco.integrAMobile.model.ActivityTypeModel;
 import de.mateco.integrAMobile.model.ContactPersonModel;
 import de.mateco.integrAMobile.model.CustomerActivityGetModel;
 import de.mateco.integrAMobile.model.CustomerActivityModel;
@@ -101,8 +97,6 @@ import de.mateco.integrAMobile.model.CustomerAddActivityModel;
 import de.mateco.integrAMobile.model.CustomerModel;
 import de.mateco.integrAMobile.model.CustomerOfferModel;
 import de.mateco.integrAMobile.model.CustomerProjectModel;
-import de.mateco.integrAMobile.model.DailyAgendaModel;
-import de.mateco.integrAMobile.model.EmployeeModel;
 import de.mateco.integrAMobile.model.HintModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
@@ -112,8 +106,9 @@ import de.mateco.integrAMobile.model.ProjectSearchPagingRequestModel;
 import de.mateco.integrAMobile.model.SimpleContactPersonAnsPartner;
 import de.mateco.integrAMobile.model.SimpleEmployeeMitrabeiter;
 import de.mateco.integrAMobile.model.WeeklyAgendaModel;
-
-import static android.R.attr.data;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTypeListItem;
 
 public class CustomerActivityFragment extends LoadedCustomerFragment implements View.OnClickListener, TextView.OnEditorActionListener
 {
@@ -141,10 +136,10 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
     private ImageButton imageButtonCustomerActivityStartDate, imageButtonStartTime, imageButtonEndTime;
     private ArrayList<ContactPersonModel> listOfSelectedContactPerson, listOfRemainingContactPerson, listOfAllContactPerson;
     private ArrayList<CustomerProjectModel> listOfAllProject; //listOfSelectedProjects, listOfRemainingProject,
-    private ArrayList<EmployeeModel> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
+    private ArrayList<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
     private ArrayList<CustomerOfferModel> listOfAllOffer;//listOfSelectedOffer, listOfRemainingOffer,
-    private ArrayList<ActivityTypeModel> listOfActivityType;
-    private ArrayList<ActivityTopicModel> listOfActivityTopic;
+    private ArrayList<CustomerActivityTypeListItem> listOfActivityType;
+    private ArrayList<CustomerActivityTopicListItem> listOfActivityTopic;
     private Spinner spinnerCustomerActivityActivityType, spinnerCustomerActivityActivityTopic, spinnerCustomerActivityOffer; /*,spinnerCustomerActivityProjects; */ // commented on 20161110 for change spinner to edittext for project
     /************20161110***********/
     private ImageButton buttonAddProject;
@@ -191,8 +186,8 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
     private ProjectAdapter projectAdapter;//, remainingProjectAdapter;
     private OfferAdapter offerAdapter;//, remainingOfferAdapter;
     private LinearLayout linearLayoutCustomerActivityList, linearLayoutCustomerActivityListNote;
-    private ActivityTypeModel selectedActivityTypeModel;
-    private ActivityTopicModel selectedActivityTopicModel;
+    private CustomerActivityTypeListItem selectedActivityTypeModel;
+    private CustomerActivityTopicListItem selectedActivityTopicModel;
     private CustomerOfferModel selectedCustomerOfferModel;
     private CustomerProjectModel selectedCustomerProjectModel;
     private DataBaseHandler db;
@@ -269,9 +264,9 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         listOfActivityType = db.getActivityTypes();
         listOfActivityTopic = db.getActivityTopics();
         listOfAllEmployee = db.getEmployees();
-        Collections.sort(listOfAllEmployee, new Comparator<EmployeeModel>() {
+        Collections.sort(listOfAllEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
             @Override
-            public int compare(EmployeeModel s1, EmployeeModel s2) {
+            public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
                 return s1.getNachname().compareToIgnoreCase(s2.getNachname());
             }
         });
@@ -340,8 +335,8 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
 
         textCustomerActivityNotes = (EditText)rootView.findViewById(R.id.textCustomerActivityNotes);
 
-        selectedActivityTypeModel = new ActivityTypeModel();
-        selectedActivityTopicModel = new ActivityTopicModel();
+        selectedActivityTypeModel = new CustomerActivityTypeListItem();
+        selectedActivityTopicModel = new CustomerActivityTopicListItem();
         selectedCustomerOfferModel = new CustomerOfferModel();
         selectedCustomerProjectModel = new CustomerProjectModel();
 
@@ -1293,7 +1288,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             boolean isActivityTypeSelected = false;
             for(int i = 0; i < listOfActivityType.size(); i++)
             {
-                if(activity.getAkttypID().equals(listOfActivityType.get(i).getActivityTypeId()))
+                if(activity.getAkttypID().equals(listOfActivityType.get(i).getAkttyp()))
                 {
                     spinnerCustomerActivityActivityType.setSelection(i + 1);
                     selectedActivityTypeModel = listOfActivityType.get(i);
@@ -1309,7 +1304,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             boolean isActivityTopicSelected = false;
             for(int i = 0; i < listOfActivityTopic.size(); i++)
             {
-                if(activity.getAktthemaID().equals(listOfActivityTopic.get(i).getActivityTopicId()))
+                if(activity.getAktthemaID().equals(listOfActivityTopic.get(i).getAktthema()))
                 {
                     spinnerCustomerActivityActivityTopic.setSelection(i + 1);
                     selectedActivityTopicModel = listOfActivityTopic.get(i);
@@ -1736,12 +1731,12 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         String activityType = null;
         if(selectedActivityTypeModel != null)
         {
-            activityType = selectedActivityTypeModel.getActivityTypeId();
+            activityType = selectedActivityTypeModel.getAkttyp();
         }
         String activityTopic = "";
         if(selectedActivityTopicModel != null)
         {
-            activityTopic = selectedActivityTopicModel.getActivityTopicId();
+            activityTopic = selectedActivityTopicModel.getAktthema();
         }
         String offer = "";
         if(selectedCustomerOfferModel != null)
@@ -1944,12 +1939,12 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         String activityType = null;
         if(selectedActivityTypeModel != null)
         {
-            activityType = selectedActivityTypeModel.getActivityTypeId();
+            activityType = selectedActivityTypeModel.getAkttyp();
         }
         String activityTopic = "";
         if(selectedActivityTopicModel != null)
         {
-            activityTopic = selectedActivityTopicModel.getActivityTopicId();
+            activityTopic = selectedActivityTopicModel.getAktthema();
         }
         String offer = "";
         if(selectedCustomerOfferModel != null)
@@ -2744,9 +2739,9 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
 //        }
     }
 
-    private ArrayList<EmployeeModel> removeSelectedEmployee(ArrayList<EmployeeModel> listOfEmployee, ArrayList<EmployeeModel> selectedEmployee)
+    private ArrayList<CustomerActivityEmployeeListItem> removeSelectedEmployee(ArrayList<CustomerActivityEmployeeListItem> listOfEmployee, ArrayList<CustomerActivityEmployeeListItem> selectedEmployee)
     {
-        ArrayList<EmployeeModel> tempList = new ArrayList<>();
+        ArrayList<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
         //listOfRemainingEmployee.clear();
         tempList.addAll(listOfEmployee);
         for(int i = 0; i < selectedEmployee.size(); i++)
@@ -2839,12 +2834,12 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             String activityType = null;
             if(selectedActivityTypeModel != null)
             {
-                activityType = selectedActivityTypeModel.getActivityTypeId();
+                activityType = selectedActivityTypeModel.getAkttyp();
             }
             String activityTopic = "";
             if(selectedActivityTopicModel != null)
             {
-                activityTopic = selectedActivityTopicModel.getActivityTopicId();
+                activityTopic = selectedActivityTopicModel.getAktthema();
             }
             String offer = "";
             if(selectedCustomerOfferModel != null)

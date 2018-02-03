@@ -5,19 +5,21 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
+import de.mateco.integrAMobile.model_logonsquare.PriceStaffelListItem;
+
 public class Pricing2KaNrListViewMoreThen1800Data implements Parcelable {
 
     private String Hoehengruppe;
     private Double Listenpreis;
     private String Sort;
-    private ArrayList<PriceStaffelModel> Key;
+    private ArrayList<PriceStaffelListItem> Key;
     private ArrayList<Double> listPrice;
 
 
     public Pricing2KaNrListViewMoreThen1800Data() {
     }
 
-    public Pricing2KaNrListViewMoreThen1800Data(String hoehengruppe, Double listenpreis, String sort, ArrayList<PriceStaffelModel> key, ArrayList<Double> listPrice) {
+    public Pricing2KaNrListViewMoreThen1800Data(String hoehengruppe, Double listenpreis, String sort, ArrayList<PriceStaffelListItem> key, ArrayList<Double> listPrice) {
         Hoehengruppe = hoehengruppe;
         Listenpreis = listenpreis;
         Sort = sort;
@@ -49,11 +51,11 @@ public class Pricing2KaNrListViewMoreThen1800Data implements Parcelable {
         Sort = sort;
     }
 
-    public ArrayList<PriceStaffelModel> getKey() {
+    public ArrayList<PriceStaffelListItem> getKey() {
         return Key;
     }
 
-    public void setKey(ArrayList<PriceStaffelModel> key) {
+    public void setKey(ArrayList<PriceStaffelListItem> key) {
         Key = key;
     }
 
@@ -84,7 +86,7 @@ public class Pricing2KaNrListViewMoreThen1800Data implements Parcelable {
         this.Hoehengruppe = in.readString();
         this.Listenpreis = (Double) in.readValue(Double.class.getClassLoader());
         this.Sort = in.readString();
-        this.Key = (ArrayList<PriceStaffelModel>) in.readSerializable();
+        this.Key = (ArrayList<PriceStaffelListItem>) in.readSerializable();
         this.listPrice = (ArrayList<Double>) in.readSerializable();
     }
 

@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.FunctionModel;
 import de.mateco.integrAMobile.model.Language;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonFunctionComboListItem;
 
 public class FunctionAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<FunctionModel> listOfFunction;
+    private ArrayList<CustomerContactPersonFunctionComboListItem> listOfFunction;
     private Context context;
     private Language language;
 
-    public FunctionAdapter(Context context, ArrayList<FunctionModel> listOfFunction,
+    public FunctionAdapter(Context context, ArrayList<CustomerContactPersonFunctionComboListItem> listOfFunction,
                            int resourceId, Language language)
     {
         this.context = context;
@@ -69,7 +69,7 @@ public class FunctionAdapter extends BaseAdapter
 
             TextView labelListItemSalutationName =
                     (TextView)convertView.findViewById(R.id.labelListItemFunctionName);
-            labelListItemSalutationName.setText(listOfFunction.get(position - 1).getFunctionDesignation());
+            labelListItemSalutationName.setText(listOfFunction.get(position - 1).getBezeichnung());
         }
         //imgvBackground.setImageResource(R.drawable.english);
 

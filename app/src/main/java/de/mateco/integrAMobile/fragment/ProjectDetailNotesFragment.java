@@ -2,7 +2,6 @@ package de.mateco.integrAMobile.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,15 +26,14 @@ import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
-import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.ProjectAreaModel;
 import de.mateco.integrAMobile.model.ProjectDetailGenerallyModel;
 import de.mateco.integrAMobile.model.ProjectDetailGenerallyUpdateModel;
+import de.mateco.integrAMobile.model_logonsquare.ProjektGebietComboListItem;
 
 public class ProjectDetailNotesFragment extends BaseFragment
 {
@@ -187,7 +185,7 @@ public class ProjectDetailNotesFragment extends BaseFragment
 
     private void updateNotice(final String string)
     {
-        ArrayList<ProjectAreaModel> listOfProjectArea = new ArrayList<>();
+        ArrayList<ProjektGebietComboListItem> listOfProjectArea = new ArrayList<>();
         projectGenerallyDetail = matecoPriceApplication.getProjectDetailGenerallyModel(DataHelper.LoadedProjectDetailGenerallyInfo, new ProjectDetailGenerallyModel().toString());
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
@@ -202,9 +200,9 @@ public class ProjectDetailNotesFragment extends BaseFragment
             listOfProjectArea.addAll(db.getProjectArea());
             for(int i = 0; i < listOfProjectArea.size(); i++)
             {
-                if(listOfProjectArea.get(i).getProjectAreaDesignation().equals(projectGenerallyDetail.getGebiet()))
+                if(listOfProjectArea.get(i).getBezeichnung().equals(projectGenerallyDetail.getGebiet()))
                 {
-                    model.setGebiet(listOfProjectArea.get(i).getProjectAreaId());
+                    model.setGebiet(listOfProjectArea.get(i).getGebiet());
                     break;
                 }
             }

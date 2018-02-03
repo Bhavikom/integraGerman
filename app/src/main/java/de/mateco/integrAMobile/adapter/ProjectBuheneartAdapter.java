@@ -10,19 +10,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.BuheneartModel;
 import de.mateco.integrAMobile.model.Language;
-
+import de.mateco.integrAMobile.model_logonsquare.ListOfBuheneartComboBoxItemItem;
 
 
 public class ProjectBuheneartAdapter extends BaseAdapter {
 
     private int resourceId;
-    private ArrayList<BuheneartModel> listOfBuheneart;
+    private ArrayList<ListOfBuheneartComboBoxItemItem> listOfBuheneart;
     private Context context;
     private Language language;
 
-    public ProjectBuheneartAdapter(Context context, ArrayList<BuheneartModel> listOfBuheneart,
+    public ProjectBuheneartAdapter(Context context, ArrayList<ListOfBuheneartComboBoxItemItem> listOfBuheneart,
                                    int resourceId, Language language)
     {
         this.context = context;

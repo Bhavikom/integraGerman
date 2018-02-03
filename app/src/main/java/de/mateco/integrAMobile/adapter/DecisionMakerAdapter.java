@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.DecisionMakerModel;
 import de.mateco.integrAMobile.model.Language;
+import de.mateco.integrAMobile.model_logonsquare.CustomerContactPersonDecisionMakersListItem;
 
 public class DecisionMakerAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<DecisionMakerModel> listOfDecisionMaker;
+    private ArrayList<CustomerContactPersonDecisionMakersListItem> listOfDecisionMaker;
     private Context context;
     private Language language;
 
-    public DecisionMakerAdapter(Context context, ArrayList<DecisionMakerModel> listOfDecisionMaker,
+    public DecisionMakerAdapter(Context context, ArrayList<CustomerContactPersonDecisionMakersListItem> listOfDecisionMaker,
                                 int resourceId, Language language)
     {
         this.context = context;
@@ -69,7 +69,7 @@ public class DecisionMakerAdapter extends BaseAdapter
             TextView labelListItemDecisionMakerDesignation =
                     (TextView)convertView.findViewById(R.id.labelListItemDecisionMakerDesignation);
             labelListItemDecisionMakerDesignation.setText
-                    (listOfDecisionMaker.get(position - 1).getDecisionMakerDesignation());
+                    (listOfDecisionMaker.get(position - 1).getBezeichnung());
         }
 
 

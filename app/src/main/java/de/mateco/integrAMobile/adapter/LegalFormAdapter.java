@@ -11,16 +11,16 @@ import java.util.ArrayList;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.LegalFormModel;
+import de.mateco.integrAMobile.model_logonsquare.CustomerRechtsFormComboListItem;
 
 public class LegalFormAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<LegalFormModel> listOfLegalForms;
+    private ArrayList<CustomerRechtsFormComboListItem> listOfLegalForms;
     private Context context;
     private Language language;
 
-    public LegalFormAdapter(Context context, ArrayList<LegalFormModel> listOfLegalForms,
+    public LegalFormAdapter(Context context, ArrayList<CustomerRechtsFormComboListItem > listOfLegalForms,
                             int resourceId, Language language)
     {
         this.context = context;
@@ -68,7 +68,7 @@ public class LegalFormAdapter extends BaseAdapter
 
             TextView labelListItemLegalFormName =
                     (TextView)convertView.findViewById(R.id.labelListItemLegalFormName);
-            labelListItemLegalFormName.setText((listOfLegalForms.get(position - 1)).getRechtsFormDesignation());
+            labelListItemLegalFormName.setText((listOfLegalForms.get(position - 1)).getBezeichnung());
         }
 
         //imgvBackground.setImageResource(R.drawable.english);
