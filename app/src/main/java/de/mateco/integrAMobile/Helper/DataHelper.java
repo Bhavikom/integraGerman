@@ -59,6 +59,11 @@ public class DataHelper
     public static String LoadedCustomerContactPerson = "LoadedCustomerContactPerson";
     //public static String LoadedCustomerFeatures = "LoadedCustomerFeatures";
     public static String LoadedCustomerActivity = "LoadedCustomerActivity";
+    public static String CustomerActivityEmployeelist = "CustomerActivityEmployeelist";
+
+    public static String CustomerActivityTypelist = "CustomerActivityTypelist";
+    public static String CustomerActivityTopiclist = "CustomerActivityTopiclist";
+
     public static String LoadedCustomerProject = "LoadedCustomerProject";
     public static String LoadedCustomerOffer = "LoadedCustomerOffer";
     public static String LoadedCustomerOpenSpecials = "CustomerOpenSpecials";

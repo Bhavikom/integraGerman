@@ -115,7 +115,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
         {
             rootView = inflater.inflate(R.layout.fragment_contact_person_search, container, false);
             super.initializeFragment(rootView);
-            ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Suche Ansprechpartner");
+
         }
         else
         {
@@ -129,6 +129,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
     {
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
         language = matecoPriceApplication.getLanguage();
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelContactPersonSearchTitle());
         db = new DataBaseHandler(getActivity());
         getActivity().invalidateOptionsMenu();
 //        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelSearch());

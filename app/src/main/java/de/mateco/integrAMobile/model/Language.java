@@ -228,6 +228,15 @@ public class Language
     private String messageNetworkNotAvailable;
     private String messageError;
     private String messageErrorCustomerInsert;
+    private String labelContactPersonSearchTitle;
+
+    public String getLabelContactPersonSearchTitle() {
+        return labelContactPersonSearchTitle;
+    }
+
+    public void setLabelContactPersonSearchTitle(String labelContactPersonSearchTitle) {
+        this.labelContactPersonSearchTitle = labelContactPersonSearchTitle;
+    }
 
     public String getMessageErrorCustomerInsert() {
         return messageErrorCustomerInsert;

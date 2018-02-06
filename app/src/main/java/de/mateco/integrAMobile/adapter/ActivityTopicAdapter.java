@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
@@ -16,12 +17,12 @@ import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
 public class ActivityTopicAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<CustomerActivityTopicListItem> listOfActivityTopic;
+    private List<CustomerActivityTopicListItem> listOfActivityTopic;
     private Context context;
     private Language language;
 
 
-    public ActivityTopicAdapter(Context context, ArrayList<CustomerActivityTopicListItem> listOfActivityTopic,
+    public ActivityTopicAdapter(Context context, List<CustomerActivityTopicListItem> listOfActivityTopic,
                                 int resourceId, Language language)
     {
         this.context = context;

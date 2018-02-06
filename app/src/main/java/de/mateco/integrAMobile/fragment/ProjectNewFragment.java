@@ -28,11 +28,14 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.EmployeeSorter;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
+import de.mateco.integrAMobile.adapter.ActivityTopicAdapter;
+import de.mateco.integrAMobile.adapter.ActivityTypeAdapter;
 import de.mateco.integrAMobile.adapter.EmployeeAdapter;
 import de.mateco.integrAMobile.adapter.ProjectArtAdapter;
 import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
@@ -54,7 +57,7 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
     private MatecoPriceApplication matecoPriceApplication;
     private Language language;
     private DataBaseHandler db;
-    private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
+    private List<CustomerActivityEmployeeListItem> listOfEmployee;
     private EmployeeAdapter adapterEmployee;
     private ArrayList<ProjektartComboListItem> listOfProjectArt;
     private ProjectArtAdapter adapterProjectArt;
@@ -88,12 +91,34 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
         buttonProjectNewCancel = (Button)rootView.findViewById(R.id.buttonProjectNewCancel);
 
         listOfProjectArt = new ArrayList<>();
-        listOfProjectArt.addAll(db.getProjectArt());
-        adapterProjectArt = new ProjectArtAdapter(getActivity(), listOfProjectArt, R.layout.list_item_spinner_country, language);
-        spinnerProjectNewProjectArt.setAdapter(adapterProjectArt);
-
         listOfEmployee = new ArrayList<>();
-        listOfEmployee = db.getEmployees();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                listOfProjectArt.addAll(db.getProjectArt());
+                //listOfEmployee = db.getEmployees();
+                listOfEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
+                if(isAdded()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapterProjectArt = new ProjectArtAdapter(getActivity(), listOfProjectArt, R.layout.list_item_spinner_country, language);
+                            spinnerProjectNewProjectArt.setAdapter(adapterProjectArt);
+                            adapterEmployee = new EmployeeAdapter(getActivity(), listOfEmployee, R.layout.list_item_employee);
+                            spinnerProjectNewEmployee.setAdapter(adapterEmployee);
+                            for (int i = 0; i < listOfEmployee.size(); i++) {
+                                if (listOfEmployee.get(i).getMitarbeiter().equals(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber())) {
+                                    spinnerProjectNewEmployee.setSelection(i);
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+
+
         Collections.sort(listOfEmployee, new EmployeeSorter());
         /*Collections.sort(listOfEmployee, new Comparator<EmployeeModel>() {
             @Override
@@ -101,15 +126,7 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
                 return (s1.getNachname()).equalsIgnoreCase(s2.getNachname());
             }
         });*/
-        adapterEmployee = new EmployeeAdapter(getActivity(), listOfEmployee, R.layout.list_item_employee);
-        spinnerProjectNewEmployee.setAdapter(adapterEmployee);
-        for(int i=0;i<listOfEmployee.size();i++)
-        {
-            if(listOfEmployee.get(i).getMitarbeiter().equals(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber()))
-            {
-                spinnerProjectNewEmployee.setSelection(i);
-            }
-        }
+
         ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelNewProject());
         setHasOptionsMenu(true);
         setupLanguage();

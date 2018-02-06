@@ -407,13 +407,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
             List<CustomerActivityTypeListItem> listOfActivityType = responseMain.getCustomerActivityTypeList(); // 15 = size 14
             db.addCustomerActivityTypeListItem(listOfActivityType); // 15
+            String jsonActivityType = LoganSquare.serialize(listOfActivityType,CustomerActivityTypeListItem.class);
+            matecoPriceApplication.saveData(DataHelper.CustomerActivityTypelist,jsonActivityType);
+
             List<CustomerActivityTopicListItem> listOfTopic = responseMain.getCustomerActivityTopicList(); // 16 = size 28
             db.addCustomerActivityTopicListItem(listOfTopic); // 16
+            String jsonActivityTopic = LoganSquare.serialize(listOfTopic,CustomerActivityTopicListItem.class);
+            matecoPriceApplication.saveData(DataHelper.CustomerActivityTopiclist,jsonActivityTopic);
+
             prd.setProgress(60);
 
 
             List<CustomerActivityEmployeeListItem> listOfEmployee = responseMain.getCustomerActivityEmployeeList(); // 17 = size 913
             db.addCustomerActivityEmployeeListItem(listOfEmployee); // 17
+            String jsonEmployeeList = LoganSquare.serialize(listOfEmployee,CustomerActivityEmployeeListItem.class);
+            matecoPriceApplication.saveData(DataHelper.CustomerActivityEmployeelist,jsonEmployeeList);
+
                 List<BVODeviceTypeListItem> listOfDeviceTypes = responseMain.getBVODeviceTypeList(); // 18 = size 859
             db.addBVODeviceTypeListItem(listOfDeviceTypes);// 18
             prd.setProgress(65);

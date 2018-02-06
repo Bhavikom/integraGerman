@@ -137,10 +137,10 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private Spinner spinnerProjectActivityActivityType, spinnerProjectActivityActivityTopic, spinnerProjectActivityOffer;
     private boolean isEdited=false;
     private ArrayList<ContactPersonModel> listOfSelectedContactPerson, listOfRemainingContactPerson, listOfAllContactPerson,listOfRemainingContactPersontemp;
-    private ArrayList<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
+    private List<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
     private ArrayList<CustomerOfferModel> listOfAllOffer;
-    private ArrayList<CustomerActivityTypeListItem> listOfActivityType;
-    private ArrayList<CustomerActivityTopicListItem> listOfActivityTopic;
+    private List<CustomerActivityTypeListItem> listOfActivityType;
+    private List<CustomerActivityTopicListItem> listOfActivityTopic;
     private ImageButton imageButtonProjectActivityStartDate, imageButtonStartTime, imageButtonEndTime;
     private CheckBox checkBoxProjectActivityRealized, checkBoxProjectActivityFixedTimes;
     private EmployeeAdapter selectedEmployeeAdapter, remainingEmployeeAdapter;
@@ -244,9 +244,14 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         listOfActivityTopic = new ArrayList<>();
         listOfActivityType = new ArrayList<>();
         //listOfAllContactPerson = matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ArrayList<ContactPersonModel>().toString());
-        listOfActivityType = db.getActivityTypes();
-        listOfActivityTopic = db.getActivityTopics();
-        listOfAllEmployee = db.getEmployees();
+        //listOfActivityType = db.getActivityTypes();
+        //listOfActivityTopic = db.getActivityTopics();
+        //listOfAllEmployee = db.getEmployees();
+
+
+        listOfActivityType = matecoPriceApplication.getCustomerActivityTypeList(DataHelper.CustomerActivityTypelist,"");
+        listOfActivityTopic = matecoPriceApplication.getCustomerActivityTopicList(DataHelper.CustomerActivityTypelist,"");
+        listOfAllEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
 
         adapterActivityType = new ActivityTypeAdapter(getActivity(), listOfActivityType, R.layout.list_item_spinner_activity_type, language);
         adapterActivityTopic = new ActivityTopicAdapter(getActivity(), listOfActivityTopic, R.layout.list_item_spinner_activity_topic, language);
@@ -1353,9 +1358,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         }
     }
 
-    private ArrayList<CustomerActivityEmployeeListItem> removeSelectedEmployee(ArrayList<CustomerActivityEmployeeListItem> listOfEmployee, ArrayList<CustomerActivityEmployeeListItem> selectedEmployee)
+    private List<CustomerActivityEmployeeListItem> removeSelectedEmployee(List<CustomerActivityEmployeeListItem> listOfEmployee, List<CustomerActivityEmployeeListItem> selectedEmployee)
     {
-        ArrayList<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
+        List<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
         //listOfRemainingEmployee.clear();
         tempList.addAll(listOfEmployee);
         for(int i = 0; i < selectedEmployee.size(); i++)

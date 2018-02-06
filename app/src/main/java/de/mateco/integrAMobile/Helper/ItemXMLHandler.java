@@ -1167,8 +1167,8 @@ public class ItemXMLHandler extends DefaultHandler {
             language.setLabelStatesADMOld(currentValue);
         else if (localName.equalsIgnoreCase("messageForKanrGreaterThen2"))
             language.setMessageForKanrGreaterThen2(currentValue);
-
-
+        else if (localName.equalsIgnoreCase("labelContactPersonSearchTitle"))
+            language.setLabelContactPersonSearchTitle(currentValue);
 
     }
 

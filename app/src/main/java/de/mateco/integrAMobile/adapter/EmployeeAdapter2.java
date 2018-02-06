@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.Language;
@@ -16,7 +17,7 @@ import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListIte
 public class EmployeeAdapter2 extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
+    private List<CustomerActivityEmployeeListItem> listOfEmployee;
     private Context context;
     private Language language;
 
@@ -27,7 +28,7 @@ public class EmployeeAdapter2 extends BaseAdapter
         notifyDataSetChanged();
     }
 
-    public EmployeeAdapter2(Context context, ArrayList<CustomerActivityEmployeeListItem> listOfEmployee,
+    public EmployeeAdapter2(Context context, List<CustomerActivityEmployeeListItem> listOfEmployee,
                             int resourceId,Language language)
     {
         this.context = context;

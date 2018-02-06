@@ -39,6 +39,7 @@ package de.mateco.integrAMobile.fragment;
     import java.util.Collections;
     import java.util.Comparator;
     import java.util.Date;
+    import java.util.List;
 
     import de.mateco.integrAMobile.Helper.DataHelper;
     import de.mateco.integrAMobile.Helper.DatePickerDialogFragment;
@@ -69,11 +70,12 @@ package de.mateco.integrAMobile.fragment;
     import de.mateco.integrAMobile.model_logonsquare.ProjekttypComboListItem;
 
 public class ProjectDetailGeneralFragment extends BaseFragment implements View.OnClickListener
-    {
-        boolean isFirstTIme=true,isFirstTime2=true;
-        private static String clickedTextbox="";
-        private ProgressDialog prd;
-        private View rootView;
+{
+    ProgressDialog progressDialog;
+    boolean isFirstTIme=true,isFirstTime2=true;
+    private static String clickedTextbox="";
+    private ProgressDialog prd;
+    private View rootView;
     private Spinner spinnerProjectDetailGeneralArea, spinnerProjectDetailGeneralStages, spinnerProjectDetailGeneralArt,
             spinnerProjectDetailGeneralType, spinnerProjectDetailGeneralPhase,spinnerProjectDetailGeneralStages1,spinnerProjectDetailGeneralZustAdm;
     private DataBaseHandler db;
@@ -114,7 +116,7 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
     private ListOfBuheneartComboBoxItemItem selectedBuheneart;
     private ProjectDetailGenerallyModel projectGenerallyDetail;
     private ImageButton imageButtonGenerallyStartDate,imageButtonGenerallyEndDate;
-    ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
+    List<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
     private CustomerActivityEmployeeListItem employeeModel = new CustomerActivityEmployeeListItem();
 
     @Override
@@ -200,20 +202,17 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
         listOfProjectStage = new ArrayList<>();
         listOfProjectType = new ArrayList<>();
         listOfProjectStage1 = new ArrayList<>();
-        listOfEmployee.addAll(db.getEmployees());
-        Collections.sort(listOfEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
-            @Override
-            public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
-                return s1.getNachname().compareToIgnoreCase(s2.getNachname());
-            }
-        });
+
+        //listOfEmployee.addAll(db.getEmployees());
+
+
         adapterProjectArea = new ProjectAreaAdapter(getActivity(), listOfProjectArea, R.layout.list_item_spinner_country, language);
         adapterProjectArt = new ProjectArtAdapter(getActivity(), listOfProjectArt, R.layout.list_item_spinner_country, language);
         adapterProjectPhase = new ProjectPhaseAdapter(getActivity(), listOfProjectPhase, R.layout.list_item_spinner_country, language);
         adapterProjectStage = new ProjectStagesAdapter(getActivity(), listOfProjectStage, R.layout.list_item_spinner_country, language);
         adapterProjectType = new ProjectTypeAdapter(getActivity(), listOfProjectType, R.layout.list_item_spinner_country, language);
         adapterProjectSatge1 = new ProjectBuheneartAdapter(getActivity(),listOfProjectStage1, R.layout.list_item_spinner_country,language);
-        adapterEmployee = new EmployeeAdapter2(getActivity(),listOfEmployee, R.layout.list_item_employee,language);
+
 
         spinnerProjectDetailGeneralArea.setAdapter(adapterProjectArea);
         spinnerProjectDetailGeneralStages.setAdapter(adapterProjectStage);
@@ -221,22 +220,45 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
         spinnerProjectDetailGeneralType.setAdapter(adapterProjectType);
         spinnerProjectDetailGeneralPhase.setAdapter(adapterProjectPhase);
         spinnerProjectDetailGeneralStages1.setAdapter(adapterProjectSatge1);
-        spinnerProjectDetailGeneralZustAdm.setAdapter(adapterEmployee);
 
 
-        listOfProjectArea.addAll(db.getProjectArea());
-        listOfProjectArt.addAll(db.getProjectArt());
-        listOfProjectPhase.addAll(db.getProjectPhase());
-        listOfProjectStage.addAll(db.getProjectStage());
-        listOfProjectType.addAll(db.getProjectType());
-        listOfProjectStage1.addAll(db.getBuheneart());
-        spinnerProjectDetailGeneralStages1.setSelection(0);
-        adapterProjectArea.notifyDataSetChanged();
-        adapterProjectArt.notifyDataSetChanged();
-        adapterProjectPhase.notifyDataSetChanged();
-        adapterProjectStage.notifyDataSetChanged();
-        adapterProjectType.notifyDataSetChanged();
-        adapterProjectSatge1.notifyDataSetChanged();
+        showProgressDialog();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                listOfEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
+                adapterEmployee = new EmployeeAdapter2(getActivity(),listOfEmployee, R.layout.list_item_employee,language);
+                listOfProjectArea.addAll(db.getProjectArea());
+                listOfProjectArt.addAll(db.getProjectArt());
+                listOfProjectPhase.addAll(db.getProjectPhase());
+                listOfProjectStage.addAll(db.getProjectStage());
+                listOfProjectType.addAll(db.getProjectType());
+                listOfProjectStage1.addAll(db.getBuheneart());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Collections.sort(listOfEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
+                            @Override
+                            public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
+                                return s1.getNachname().compareToIgnoreCase(s2.getNachname());
+                            }
+                        });
+                        spinnerProjectDetailGeneralStages1.setSelection(0);
+                        spinnerProjectDetailGeneralZustAdm.setAdapter(adapterEmployee);
+                        adapterProjectArea.notifyDataSetChanged();
+                        adapterProjectArt.notifyDataSetChanged();
+                        adapterProjectPhase.notifyDataSetChanged();
+                        adapterProjectStage.notifyDataSetChanged();
+                        adapterProjectType.notifyDataSetChanged();
+                        adapterProjectSatge1.notifyDataSetChanged();
+
+                        hideProgressDialog();
+                    }
+                });
+            }
+        }).start();
+
+
 
        // setupLanguage();
         showLoadedProjectData();
@@ -1155,4 +1177,16 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
         return  flag;
 
     }
+        public void showProgressDialog(){
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle(language.getMessageWaitWhileLoading());
+            progressDialog.setMessage(language.getMessageWaitWhileLoading());
+            progressDialog.show();
+        }
+        public void hideProgressDialog(){
+            if(progressDialog != null && progressDialog.isShowing()){
+                progressDialog.dismiss();
+            }
+        }
 }

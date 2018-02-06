@@ -136,10 +136,11 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
     private ImageButton imageButtonCustomerActivityStartDate, imageButtonStartTime, imageButtonEndTime;
     private ArrayList<ContactPersonModel> listOfSelectedContactPerson, listOfRemainingContactPerson, listOfAllContactPerson;
     private ArrayList<CustomerProjectModel> listOfAllProject; //listOfSelectedProjects, listOfRemainingProject,
-    private ArrayList<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
+    private List<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee;
+    private List<CustomerActivityEmployeeListItem> listOfAllEmployee;
     private ArrayList<CustomerOfferModel> listOfAllOffer;//listOfSelectedOffer, listOfRemainingOffer,
-    private ArrayList<CustomerActivityTypeListItem> listOfActivityType;
-    private ArrayList<CustomerActivityTopicListItem> listOfActivityTopic;
+    private List<CustomerActivityTypeListItem> listOfActivityType;
+    private List<CustomerActivityTopicListItem> listOfActivityTopic;
     private Spinner spinnerCustomerActivityActivityType, spinnerCustomerActivityActivityTopic, spinnerCustomerActivityOffer; /*,spinnerCustomerActivityProjects; */ // commented on 20161110 for change spinner to edittext for project
     /************20161110***********/
     private ImageButton buttonAddProject;
@@ -259,25 +260,51 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         listOfActivityType = new ArrayList<>();
 
         listOfAllContactPerson = matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ArrayList<ContactPersonModel>().toString());
-        DataBaseHandler db = new DataBaseHandler(getActivity());
 
-        listOfActivityType = db.getActivityTypes();
-        listOfActivityTopic = db.getActivityTopics();
-        listOfAllEmployee = db.getEmployees();
-        Collections.sort(listOfAllEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
-            @Override
-            public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
-                return s1.getNachname().compareToIgnoreCase(s2.getNachname());
-            }
-        });
         activityTypeAdapter = new ActivityTypeAdapter(getActivity(), listOfActivityType, R.layout.list_item_spinner_activity_type, language);
         activityTopicAdapter = new ActivityTopicAdapter(getActivity(), listOfActivityTopic, R.layout.list_item_spinner_activity_topic, language);
+
+
+
+        //showProgressDialog();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataBaseHandler db = new DataBaseHandler(getActivity());
+                //listOfActivityType = db.getActivityTypes();
+                //listOfActivityTopic = db.getActivityTopics();
+                listOfActivityType = matecoPriceApplication.getCustomerActivityTypeList(DataHelper.CustomerActivityTypelist,"");
+                listOfActivityTopic = matecoPriceApplication.getCustomerActivityTopicList(DataHelper.CustomerActivityTypelist,"");
+                //listOfAllEmployee = db.getEmployees();
+                listOfAllEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
+                Collections.sort(listOfAllEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
+                    @Override
+                    public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
+                        return s1.getNachname().compareToIgnoreCase(s2.getNachname());
+                    }
+                });
+                if(isAdded()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            activityTypeAdapter = new ActivityTypeAdapter(getActivity(), listOfActivityType, R.layout.list_item_spinner_activity_type, language);
+                            activityTopicAdapter = new ActivityTopicAdapter(getActivity(), listOfActivityTopic, R.layout.list_item_spinner_activity_topic, language);
+                            spinnerCustomerActivityActivityType.setAdapter(activityTypeAdapter);
+                            spinnerCustomerActivityActivityTopic.setAdapter(activityTopicAdapter);
+                            selectCustomerActivityAccordingToSelectionBundleOrDefault();
+                            //hideProgressDialog();
+                        }
+                    });
+                }
+            }
+        }).start();
+
+
 
         selectedEmployeeAdapter = new EmployeeAdapter(getActivity(), listOfSelectedEmployee, R.layout.list_item_employee);
         remainingEmployeeAdapter = new EmployeeAdapter(getActivity(), listOfRemainingEmployee, R.layout.list_item_employee);
 
-        spinnerCustomerActivityActivityType.setAdapter(activityTypeAdapter);
-        spinnerCustomerActivityActivityTopic.setAdapter(activityTopicAdapter);
+
 
         imageButtonCustomerActivityStartDate = (ImageButton)rootView.findViewById(R.id.imageButtonCustomerActivityStartDate);
         imageButtonCustomerActivityStartDate.setOnClickListener(this);
@@ -346,9 +373,9 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         setHasOptionsMenu(true);
         makeEditable(false);
 
-        selectCustomerActivityAccordingToSelectionBundleOrDefault();
 
-        super.initializeComponents(rootView);
+
+       // super.initializeComponents(rootView);
     }
 
     @Override
@@ -501,7 +528,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             }
         });
         /*******************************************************/
-        super.bindEvents(rootView);
+        //super.bindEvents(rootView);
     }
 
     /**************************20161011***********************/
@@ -2174,8 +2201,12 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         spinnerCustomerActivityActivityTopic.setSelection(0);
         spinnerCustomerActivityActivityType.setSelection(0);
 
-        activityTopicAdapter.notifyDataSetChanged();
-        activityTypeAdapter.notifyDataSetChanged();
+        if(activityTypeAdapter != null) {
+            activityTopicAdapter.notifyDataSetChanged();
+        }
+        if(activityTopicAdapter != null) {
+            activityTypeAdapter.notifyDataSetChanged();
+        }
         projectAdapter.notifyDataSetChanged();
         offerAdapter.notifyDataSetChanged();
 
@@ -2739,9 +2770,9 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
 //        }
     }
 
-    private ArrayList<CustomerActivityEmployeeListItem> removeSelectedEmployee(ArrayList<CustomerActivityEmployeeListItem> listOfEmployee, ArrayList<CustomerActivityEmployeeListItem> selectedEmployee)
+    private List<CustomerActivityEmployeeListItem> removeSelectedEmployee(List<CustomerActivityEmployeeListItem> listOfEmployee, List<CustomerActivityEmployeeListItem> selectedEmployee)
     {
-        ArrayList<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
+        List<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
         //listOfRemainingEmployee.clear();
         tempList.addAll(listOfEmployee);
         for(int i = 0; i < selectedEmployee.size(); i++)

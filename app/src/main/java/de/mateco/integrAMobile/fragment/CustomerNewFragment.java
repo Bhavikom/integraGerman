@@ -100,7 +100,6 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
         setHasOptionsMenu(true);
         language = matecoPriceApplication.getLanguage();
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelCustomer() + " "+ language.getLabelNew());
-        //int y = 5/0;
         textCustomerNewMatchCode = (EditText)rootView.findViewById(R.id.textCustomerNewMatachCode);
         textCustomerNewName1 = (EditText)rootView.findViewById(R.id.textCustomerNewName1);
         textCustomerNewName2 = (EditText)rootView.findViewById(R.id.textCustomerNewName2);
@@ -118,7 +117,6 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
         spinnerCustomerNewLegalForm = (Spinner)rootView.findViewById(R.id.spinnerCustomerNewLegalForm);
         textCustomerNewVatNo = (EditText)rootView.findViewById(R.id.textCustomerNewVatNo);
         textCustomerNewOrderNo = (EditText)rootView.findViewById(R.id.textCustomerNewOrderNo);
-        //textCustomerNewOrderBackLog = (EditText)rootView.findViewById(R.id.textCustomerNewOrderBackLog);
         textCustomerNewSalesPotential = (EditText)rootView.findViewById(R.id.textCustomerNewSalesPotential);
         imageViewCall = (ImageView)rootView.findViewById(R.id.imageViewCall);
         rbGroup = (RadioGroup)rootView.findViewById(R.id.radioGrp);
@@ -127,9 +125,8 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
         radioButtonIndustrie.setChecked(true);
 
 
-        //textCustomerNewKaNr = (EditText)rootView.findViewById(R.id.textCustomerNewKaNr);
-        listOfCountry = new ArrayList<CustomerLandListItem >();
-        DataBaseHandler db = null; //= new DataBaseHandler(getActivity());
+        listOfCountry = new ArrayList<CustomerLandListItem>();
+        DataBaseHandler db = new DataBaseHandler(getActivity());
         listOfCountry = db.getCountries();
         listOfLegalForm = new ArrayList<CustomerRechtsFormComboListItem >();
         listOfLegalForm = db.getLegalForms();
@@ -153,11 +150,9 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                 }
             }
         }
-
         setLanguage();
-        super.initializeComponents(rootView);
+        //super.initializeComponents(rootView);
     }
-
     @Override
     public void bindEvents(View rootView)
     {
@@ -237,7 +232,7 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
             }
         });
 
-        super.bindEvents(rootView);
+        //super.bindEvents(rootView);
     }
 
     private void setLanguage()

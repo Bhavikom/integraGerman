@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -42,6 +44,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
@@ -73,8 +76,10 @@ import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 
-public class CustomerSearchFragment extends BaseFragment implements TextView.OnEditorActionListener
+public class CustomerSearchFragment extends Fragment implements TextView.OnEditorActionListener
 {
+    ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
+    int count=0;
     private ProgressDialog progressDialog;
     private boolean isCallservice=true;
     String FOCUSED_CUSTOMER_NO="customerno",FOCUSED_KANR="kanrno",FOCUSED_MATCHCODE="matccode",FOCUSED_NAME1="name1",
@@ -93,9 +98,9 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
     private DelayAutoCompleteTextView textCustomerSearchCustomerNo, textCustomerSearchKanr,
             textCustomerSearchName1,textCustomerSearchRoad, textCustomerSearchZipCode,textCustomerSearchPlace, textCustomerSearchTel;
     private ListView listCustomerSearchResult;
-    private ArrayList<CustomerModel> listOfCustomerSearchResult;
+    private ArrayList<CustomerModel> listOfCustomerSearchResult = new ArrayList<>();
     private ArrayList<CustomerModel> listOfCustomerSearchResultTemp;
-    private CustomerSearchResultAdapter adapter;
+    private CustomerSearchResultAdapter customerSearchResultAdapter;
     private Menu menu;
     private DataBaseHandler db;
     private int pageNuber = 1;
@@ -124,26 +129,229 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         }*/
 
         rootView = inflater.inflate(R.layout.fragment_customer_search, container, false);
-        super.initializeFragment(rootView);
+        //super.initializeFragment(rootView);
+        initControl();
         return rootView;
     }
-
-    @Override
-    public void initializeComponents(View rootView)
-    {
+    private void initControl(){
         preferences2 = new PreferencesClass(getActivity());
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
         language = matecoPriceApplication.getLanguage();
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelCustomerSearch());
         db = new DataBaseHandler(getActivity());
-        getActivity().invalidateOptionsMenu();
-//        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelSearch());
-            setHasOptionsMenu(true);
-
-        listOfCustomerSearchResultTemp = new ArrayList<>();
+        setHasOptionsMenu(true);
 
         checkBoxCustomer=(CheckBox)rootView.findViewById(R.id.checkBoxCustomer);
         checkBoxCustomer.setChecked(false);
+
+        adapterAutocomplete = new AutoCompleteSearchAdapter(getActivity());
+        textCustomerSearchCustomerNo = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchCustomerNo);
+        textCustomerSearchCustomerNo.setThreshold(3);
+        textCustomerSearchCustomerNo.setAdapter(adapterAutocomplete);
+
+        textCustomerSearchKanr = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchKanr);
+        textCustomerSearchKanr.setThreshold(GlobalClass.thresHodValue);
+        //textCustomerSearchKanr.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
+        textCustomerSearchKanr.setAdapter(adapterAutocomplete);
+
+        textCustomerSearchMatchCode = (DelayAutoCompleteTextView) rootView.findViewById(R.id.textCustomerSearchMatchCode);
+        textCustomerSearchMatchCode.setThreshold(GlobalClass.thresHodValue);
+        //textCustomerSearchMatchCode.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
+        textCustomerSearchMatchCode.setAdapter(adapterAutocomplete);
+
+        textCustomerSearchName1 = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchName1);
+        textCustomerSearchName1.setThreshold(GlobalClass.thresHodValue);
+        // textCustomerSearchName1.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
+        textCustomerSearchName1.setAdapter(adapterAutocomplete);
+
+        textCustomerSearchTel = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchTel);
+        textCustomerSearchTel.setThreshold(GlobalClass.thresHodValue);
+        //textCustomerSearchTel.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
+        textCustomerSearchTel.setAdapter(adapterAutocomplete);
+
+        textCustomerSearchZipCode = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchZipCode);
+        textCustomerSearchZipCode.setThreshold(GlobalClass.thresHodValue);
+        //textCustomerSearchZipCode.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
+        textCustomerSearchZipCode.setAdapter(adapterAutocomplete);
+
+        textCustomerSearchRoad = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchRoad);
+        textCustomerSearchRoad.setThreshold(GlobalClass.thresHodValue);
+        //textCustomerSearchRoad.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
+        textCustomerSearchRoad.setAdapter(adapterAutocomplete);
+
+        textCustomerSearchPlace = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchPlace);
+        textCustomerSearchPlace.setThreshold(GlobalClass.thresHodValue);
+        //textCustomerSearchPlace.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
+        textCustomerSearchPlace.setAdapter(adapterAutocomplete);
+
+
+        footerView = ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_list_button, null, false);
+        footerButton = (Button)footerView.findViewById(R.id.buttonLoadMore);
+        pageSize = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).getInt("CustomerPageSize", 10);
+
+        listOfCustomerSearchResult = new ArrayList<>();
+        listOfCustomerSearchResultTemp = new ArrayList<>();
+        listCustomerSearchResult = (ListView)rootView.findViewById(R.id.listCustomerSearchResult);
+        customerSearchResultAdapter = new CustomerSearchResultAdapter(getActivity(), listOfCustomerSearchResult);
+        listCustomerSearchResult.setAdapter(customerSearchResultAdapter);
+        setUpLanguage();
+        bindEvents();
+    }
+    private void bindEvents(){
+        textCustomerSearchCustomerNo.setOnEditorActionListener(this);
+        textCustomerSearchKanr.setOnEditorActionListener(this);
+        textCustomerSearchMatchCode.setOnEditorActionListener(this);
+        textCustomerSearchName1.setOnEditorActionListener(this);
+        textCustomerSearchRoad.setOnEditorActionListener(this);
+        textCustomerSearchZipCode.setOnEditorActionListener(this);
+        textCustomerSearchPlace.setOnEditorActionListener(this);
+        textCustomerSearchTel.setOnEditorActionListener(this);
+        listCustomerSearchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                customerSearchResultAdapter.setSelectedIndex(position);
+                if (getArguments() == null) {
+                    menu.findItem(R.id.actionForward).setVisible(true);
+                } else {
+                    menu.findItem(R.id.actionRight).setVisible(true);
+                    if (!(customerSearchResultAdapter.selectedIndex == -1)) {
+                        getCustomerDetails(customerSearchResultAdapter.selectedIndex);
+                    } else {
+                        showShortToast(language.getMessageSelectCustomerFirst());
+                    }
+                }
+            }
+        });
+        footerButton.setText(language.getMessageLoadMoreData());
+        footerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchForNewPage();
+            }
+        });
+
+        textCustomerSearchCustomerNo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchCustomerNo.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchCustomerNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_CUSTOMER_NO;
+                }
+            }
+        });
+        textCustomerSearchKanr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchKanr.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchKanr.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_KANR;
+                }
+            }
+        });
+        textCustomerSearchMatchCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchMatchCode.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchMatchCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_MATCHCODE;
+                }
+            }
+        });
+        textCustomerSearchName1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchName1.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchName1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_NAME1;
+                }
+            }
+        });
+        textCustomerSearchRoad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchRoad.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchRoad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_STREET;
+                }
+            }
+        });
+        textCustomerSearchZipCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchZipCode.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchZipCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_PLZ;
+                }
+            }
+        });
+        textCustomerSearchPlace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchPlace.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchPlace.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_ORT;
+                }
+            }
+        });
+        textCustomerSearchTel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
+                textCustomerSearchTel.setText(hintModel.getHint());
+            }
+        });
+        textCustomerSearchTel.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    lastFocusedvalue=FOCUSED_TEL;
+                }
+            }
+        });
+
         checkBoxCustomer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -166,20 +374,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 
                             }
                         }
-
-
-                        /*new code to group objects in Java 8 to get matching records from list */
-                        //personByCity =  listOfCustomerSearchResult.stream().collect(Collectors.groupingBy(CustomerModel::getMitarbeiter));
-                       //listOfCustomerSearchResult =  listOfCustomerSearchResultTemp.stream().filter(listOfCustomerSearchResultTemp -> loginUserNumber.equals(listOfCustomerSearchResultTemp)).collect(Collectors.toList());
-                       // listOfCustomerSearchResult =  listOfCustomerSearchResultTemp.stream()                // convert list to stream
-                                //.filter(line -> "181".equals(line.getMitarbeiter()))     // we dont like mkyong
-                                //.collect(Collectors.toCollection(() -> new ArrayList<CustomerModel>()));
-                        /*List<CustomerModel> listOfCustomerSearchResult2 = listOfCustomerSearchResultTemp.stream()
-                                        .filter(p-> "181".equals((loginUserNumber)))
-                                        .collect(Collectors.toCollection(() -> new ArrayList<>()));
-
-                        Log.e(""," custome list with mitarbieter : "+listOfCustomerSearchResult2.size());*/
-                        adapter.notifyDataSetChanged();
+                        customerSearchResultAdapter.notifyDataSetChanged();
 
                     }
 
@@ -189,228 +384,27 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                         listOfCustomerSearchResult.clear();
                         listOfCustomerSearchResult.addAll(listOfCustomerSearchResultTemp);
                         listOfCustomerSearchResultTemp.clear();
-                        adapter.notifyDataSetChanged();
+                        customerSearchResultAdapter.notifyDataSetChanged();
                     }
                 }
 
 
             }
         });
-        listCustomerSearchResult = (ListView)rootView.findViewById(R.id.listCustomerSearchResult);
+    }
+    //@Override
+    public void initializeComponents(View rootView)
+    {
 
-        adapterAutocomplete = new AutoCompleteSearchAdapter(getActivity());
-        textCustomerSearchCustomerNo = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchCustomerNo);
-        textCustomerSearchCustomerNo.setThreshold(3);
-        //textCustomerSearchCustomerNo.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchCustomerNo.setAdapter(adapterAutocomplete);
-        textCustomerSearchCustomerNo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchCustomerNo.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchCustomerNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_CUSTOMER_NO;
-                }
-            }
-        });
-
-        textCustomerSearchKanr = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchKanr);
-        textCustomerSearchKanr.setThreshold(GlobalClass.thresHodValue);
-        //textCustomerSearchKanr.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchKanr.setAdapter(adapterAutocomplete);
-        textCustomerSearchKanr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchKanr.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchKanr.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_KANR;
-                }
-            }
-        });
-
-        textCustomerSearchMatchCode = (DelayAutoCompleteTextView) rootView.findViewById(R.id.textCustomerSearchMatchCode);
-        textCustomerSearchMatchCode.setThreshold(GlobalClass.thresHodValue);
-        //textCustomerSearchMatchCode.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchMatchCode.setAdapter(adapterAutocomplete);
-        textCustomerSearchMatchCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchMatchCode.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchMatchCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_MATCHCODE;
-                }
-            }
-        });
-
-        textCustomerSearchName1 = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchName1);
-        textCustomerSearchName1.setThreshold(GlobalClass.thresHodValue);
-       // textCustomerSearchName1.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchName1.setAdapter(adapterAutocomplete);
-        textCustomerSearchName1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchName1.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchName1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_NAME1;
-                }
-            }
-        });
-
-        textCustomerSearchRoad = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchRoad);
-        textCustomerSearchRoad.setThreshold(GlobalClass.thresHodValue);
-        //textCustomerSearchRoad.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchRoad.setAdapter(adapterAutocomplete);
-        textCustomerSearchRoad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchRoad.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchRoad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_STREET;
-                }
-            }
-        });
-
-        textCustomerSearchZipCode = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchZipCode);
-        textCustomerSearchZipCode.setThreshold(GlobalClass.thresHodValue);
-        //textCustomerSearchZipCode.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchZipCode.setAdapter(adapterAutocomplete);
-        textCustomerSearchZipCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchZipCode.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchZipCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_PLZ;
-                }
-            }
-        });
-
-        textCustomerSearchPlace = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchPlace);
-        textCustomerSearchPlace.setThreshold(GlobalClass.thresHodValue);
-        //textCustomerSearchPlace.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchPlace.setAdapter(adapterAutocomplete);
-        textCustomerSearchPlace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchPlace.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchPlace.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_ORT;
-                }
-            }
-        });
-
-        textCustomerSearchTel = (DelayAutoCompleteTextView)rootView.findViewById(R.id.textCustomerSearchTel);
-        textCustomerSearchTel.setThreshold(GlobalClass.thresHodValue);
-        //textCustomerSearchTel.setLoadingIndicator((android.widget.ProgressBar)rootView.findViewById(R.id.pb_loading_indicator));
-        textCustomerSearchTel.setAdapter(adapterAutocomplete);
-        textCustomerSearchTel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                HintModel hintModel = (HintModel) adapterView.getItemAtPosition(position);
-                textCustomerSearchTel.setText(hintModel.getHint());
-            }
-        });
-        textCustomerSearchTel.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    lastFocusedvalue=FOCUSED_TEL;
-                }
-            }
-        });
-
-        listOfCustomerSearchResult = new ArrayList<>();
-
-        adapter = new CustomerSearchResultAdapter(getActivity(), listOfCustomerSearchResult);
-        footerView = ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_list_button, null, false);
-        footerButton = (Button)footerView.findViewById(R.id.buttonLoadMore);
-        pageSize = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).getInt("CustomerPageSize", 10);
-        setUpLanguage();
-        super.initializeComponents(rootView);
+        getActivity().invalidateOptionsMenu();
+//        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelSearch());
+       // super.initializeComponents(rootView);
     }
 
-    @Override
+    //@Override
     public void bindEvents(View rootView)
     {
-        textCustomerSearchCustomerNo.setOnEditorActionListener(this);
-        textCustomerSearchKanr.setOnEditorActionListener(this);
-        textCustomerSearchMatchCode.setOnEditorActionListener(this);
-        textCustomerSearchName1.setOnEditorActionListener(this);
-        textCustomerSearchRoad.setOnEditorActionListener(this);
-        textCustomerSearchZipCode.setOnEditorActionListener(this);
-        textCustomerSearchPlace.setOnEditorActionListener(this);
-        textCustomerSearchTel.setOnEditorActionListener(this);
-        //listCustomerSearchResult.setOnScrollListener(this);
-        listCustomerSearchResult.setAdapter(adapter);
-        listCustomerSearchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setSelected(true);
-                //listCustomerSearchResult.setSelection(position);
-                adapter.setSelectedIndex(position);
-                if (getArguments() == null) {
-                    menu.findItem(R.id.actionForward).setVisible(true);
-                } else {
-                    menu.findItem(R.id.actionRight).setVisible(true);
-                    if (!(adapter.selectedIndex == -1)) {
-                        getCustomerDetails(adapter.selectedIndex);
-                    } else {
-                        showShortToast(language.getMessageSelectCustomerFirst());
-                    }
-                }
-                //menu.findItem(R.id.actionAdd).setVisible(true);
-            }
-        });
-
-        footerButton.setText(language.getMessageLoadMoreData());
-        footerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchForNewPage();
-            }
-        });
-
-        super.bindEvents(rootView);
+        //super.bindEvents(rootView);
     }
     private void setUpLanguage()
     {
@@ -431,19 +425,30 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         +matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserName());*/
 
         /* replace above code  with below code on 26th june 2017 */
-        ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
-        String loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber();
-        listOfEmployee = db.getEmployees();
-        for(int i = 0; i < listOfEmployee.size(); i++) {
-            if(listOfEmployee.get(i) != null) {
-                if (listOfEmployee.get(i).getMitarbeiter().equals(loginPersonId)) {
-                    checkBoxCustomer.setText(language.getLabelCustomervon() + " "
-                            + listOfEmployee.get(i).getNachname() + ", " + listOfEmployee.get(i).getVorname());
-                    break;
+        final String loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                listOfEmployee = db.getEmployees();
+                for(count = 0; count < listOfEmployee.size(); count++) {
+                    if(listOfEmployee.get(count) != null) {
+                        if (listOfEmployee.get(count).getMitarbeiter().equals(loginPersonId)) {
+                            if(isAdded()) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        checkBoxCustomer.setText(language.getLabelCustomervon() + " "
+                                                + listOfEmployee.get(count).getNachname() + ", " + listOfEmployee.get(count).getVorname());
+                                    }
+                                });
+                            }
+
+                            break;
+                        }
+                    }
                 }
             }
-        }
-
+        }).start();
         labelCustomerSearchCustomerNo.setText(language.getLabelCustomerNo());
         labelCustomerSearchKanr.setText(language.getLabelKanr());
         labelCustomerSearchMatchCode.setText(language.getLabelMatchCode());
@@ -452,7 +457,6 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         labelCustomerSearchZipCode.setText(language.getLabelZipCode());
         labelCustomerSearchPlace.setText(language.getLabelPlace());
         labelCustomerSearchTel.setText(language.getLabelTelephone());
-
     }
 
     @Override
@@ -505,10 +509,10 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 return true;
             case R.id.actionForward:
 
-                if(!(adapter.selectedIndex == -1))
+                if(!(customerSearchResultAdapter.selectedIndex == -1))
                 {
                     preferences2.clearPreferences();
-                    getCustomerDetails(adapter.selectedIndex);
+                    getCustomerDetails(customerSearchResultAdapter.selectedIndex);
                 }
                 else
                 {
@@ -561,8 +565,8 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         matecoPriceApplication.hideKeyboard(getActivity());
         listOfCustomerSearchResult.clear();
         listOfCustomerSearchResultTemp.clear();
-        adapter.setSelectedIndex(-1);
-        adapter.notifyDataSetChanged();
+        customerSearchResultAdapter.setSelectedIndex(-1);
+        customerSearchResultAdapter.notifyDataSetChanged();
         String customerNo = textCustomerSearchCustomerNo.getText().toString().trim();
         String kaNr = textCustomerSearchKanr.getText().toString().trim();
         String matchCode = textCustomerSearchMatchCode.getText().toString().trim();
@@ -654,9 +658,8 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                                 }
                                 else
                                 {
-                                    CustomerModel.extractFromJson(
-                                            resultsOfCustomers.toString(), listOfCustomerSearchResult);
-                                    adapter.notifyDataSetChanged();
+                                    CustomerModel.extractFromJson(resultsOfCustomers.toString(), listOfCustomerSearchResult);
+                                    customerSearchResultAdapter.notifyDataSetChanged();
                                 }
                             }
                             catch (Exception ex)
@@ -675,7 +678,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                adapter.notifyDataSetChanged();
+                customerSearchResultAdapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
 //                    showShortToast(language.getMessageSearchQueryBroad());
@@ -699,7 +702,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         return false;
     }
     public void showProgressDialog(){
-        progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         progressDialog.setTitle(language.getMessageWaitWhileLoading());
         progressDialog.setMessage(language.getMessageWaitWhileLoading());
@@ -769,7 +772,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                                     Fragment fragment = new CustomerDataFragment();
                                     //Bundle bundle = new Bundle();
                                     //bundle.putParcelable("");
-                                    //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(adapter.selectedIndex));
+                                    //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
                                     //fragment.setArguments(bundle);
                                     transaction.replace(R.id.content_frame, fragment);
                                     //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -781,7 +784,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                                 {
                                    /* Fragment fragment = new CustomerDataFragment1();
                                     Bundle bundle = new Bundle();
-                                    bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(adapter.selectedIndex));
+                                    bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
                                     fragment.setArguments(bundle);
                                     transaction.replace(R.id.content_frame, fragment);
                                     //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -858,7 +861,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                     Fragment fragment = new CustomerDataFragment();
                     //Bundle bundle = new Bundle();
                     //bundle.putParcelable("");
-                    //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(adapter.selectedIndex));
+                    //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
                     //fragment.setArguments(bundle);
                     transaction.replace(R.id.content_frame, fragment);
                     //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -870,7 +873,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 {
                     Fragment fragment = new CustomerDataFragment1();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(adapter.selectedIndex));
+                    bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
                     fragment.setArguments(bundle);
                     transaction.replace(R.id.content_frame, fragment);
                     getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -1013,7 +1016,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 //                                                                                        Fragment fragment = new CustomerDataFragment();
 //                                                                                        //Bundle bundle = new Bundle();
 //                                                                                        //bundle.putParcelable("");
-//                                                                                        //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(adapter.selectedIndex));
+//                                                                                        //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
 //                                                                                        //fragment.setArguments(bundle);
 //                                                                                        transaction.replace(R.id.content_frame, fragment);
 //                                                                                        //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -1025,7 +1028,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 //                                                                                    {
 //                                                                                        Fragment fragment = new CustomerDataFragment1();
 //                                                                                        Bundle bundle = new Bundle();
-//                                                                                        bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(adapter.selectedIndex));
+//                                                                                        bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
 //                                                                                        fragment.setArguments(bundle);
 //                                                                                        transaction.replace(R.id.content_frame, fragment);
 //                                                                                        //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -1082,7 +1085,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 //                                                                                                                        Fragment fragment = new CustomerDataFragment();
 //                                                                                                                        //Bundle bundle = new Bundle();
 //                                                                                                                        //bundle.putParcelable("");
-//                                                                                                                        //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(adapter.selectedIndex));
+//                                                                                                                        //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
 //                                                                                                                        //fragment.setArguments(bundle);
 //                                                                                                                        transaction.replace(R.id.content_frame, fragment);
 //                                                                                                                        //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -1094,7 +1097,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 //                                                                                                                    {
 //                                                                                                                        Fragment fragment = new CustomerDataFragment1();
 //                                                                                                                        Bundle bundle = new Bundle();
-//                                                                                                                        bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(adapter.selectedIndex));
+//                                                                                                                        bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
 //                                                                                                                        fragment.setArguments(bundle);
 //                                                                                                                        transaction.replace(R.id.content_frame, fragment);
 //                                                                                                                        //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -1299,7 +1302,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 //                    Fragment fragment = new CustomerDataFragment();
 //                    //Bundle bundle = new Bundle();
 //                    //bundle.putParcelable("");
-//                    //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(adapter.selectedIndex));
+//                    //bundle.putParcelable("customerObject", listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
 //                    //fragment.setArguments(bundle);
 //                    transaction.replace(R.id.content_frame, fragment);
 //                    //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -1311,7 +1314,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
 //                {
 //                    Fragment fragment = new CustomerDataFragment1();
 //                    Bundle bundle = new Bundle();
-//                    bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(adapter.selectedIndex));
+//                    bundle.putParcelable("customerObject",listOfCustomerSearchResult.get(customerSearchResultAdapter.selectedIndex));
 //                    fragment.setArguments(bundle);
 //                    transaction.replace(R.id.content_frame, fragment);
 //                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -1332,8 +1335,8 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
         //loadingMore = true;
         matecoPriceApplication.hideKeyboard(getActivity());
         //listOfCustomerSearchResult.clear();
-        adapter.setSelectedIndex(-1);
-        adapter.notifyDataSetChanged();
+        customerSearchResultAdapter.setSelectedIndex(-1);
+        customerSearchResultAdapter.notifyDataSetChanged();
         String customerNo = textCustomerSearchCustomerNo.getText().toString();
         String kaNr = textCustomerSearchKanr.getText().toString();
         String matchCode = textCustomerSearchMatchCode.getText().toString();
@@ -1427,7 +1430,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                                 {
                                     CustomerModel.extractFromJson(resultsOfCustomers.toString(), listOfCustomerSearchResult);
                                     CustomerModel.extractFromJson(resultsOfCustomers.toString(), listOfCustomerSearchResultTemp);
-                                    adapter.notifyDataSetChanged();
+                                    customerSearchResultAdapter.notifyDataSetChanged();
                                 }
                                 //loadingMore = false;
                             }
@@ -1447,7 +1450,7 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
-                adapter.notifyDataSetChanged();
+                customerSearchResultAdapter.notifyDataSetChanged();
 //                if(listOfCustomerSearchResult.size() > 20)
 //                {
 //                    showShortToast(language.getMessageSearchQueryBroad());
@@ -1612,6 +1615,45 @@ public class CustomerSearchFragment extends BaseFragment implements TextView.OnE
                 //Toast.makeText(context,"", Toast.LENGTH_SHORT).show();
             }
 
+        }
+    }
+    public  void showShortToast(String message)
+    {
+        if(getActivity() != null)
+        {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            if(inflater != null)
+            {
+                View layout = inflater.inflate(R.layout.toast_custom,
+                        (ViewGroup) rootView.findViewById(R.id.toast_layout_root));
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText(message+"");
+                Toast toast = new Toast(getActivity());
+                toast.setGravity(Gravity.BOTTOM|Gravity.FILL_HORIZONTAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
+            }
+        }
+    }
+
+    public void showLongToast(String message)
+    {
+        if(getActivity() != null)
+        {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            if(inflater != null)
+            {
+                View layout = inflater.inflate(R.layout.toast_custom,
+                        (ViewGroup) rootView.findViewById(R.id.toast_layout_root));
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText(message+"");
+                Toast toast = new Toast(getActivity());
+                toast.setGravity(Gravity.BOTTOM|Gravity.FILL_HORIZONTAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+            }
         }
     }
 

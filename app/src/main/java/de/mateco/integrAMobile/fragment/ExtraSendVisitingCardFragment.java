@@ -37,6 +37,7 @@ import java.io.Writer;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.Helper.PreferencesData;
@@ -58,7 +59,7 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
     private MatecoPriceApplication matecoPriceApplication;
     private Button buttonShareInformation;
 
-    ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
+    List<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
     private LinearLayout LayoutVisitingCard;
     private TextView labelName,labelFirm,labelPosition,labelInternet,labelEmail,labelWebsite,
             labelPhone,labelBusiness,labelMobile,labelAddress,labelBusinessAddress;
@@ -138,10 +139,14 @@ public class ExtraSendVisitingCardFragment extends BaseFragment implements View.
         }
 
         String loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber();
+
+
         String userInformation = "";
 
         DataBaseHandler db = new DataBaseHandler(getActivity());
-        listOfEmployee = db.getEmployees();
+        //listOfEmployee = db.getEmployees();
+
+        listOfEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
         for(int i = 0; i < listOfEmployee.size(); i++)
         {
             if(listOfEmployee.get(i).getMitarbeiter().equals(loginPersonId))

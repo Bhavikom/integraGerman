@@ -379,7 +379,7 @@
                 android:orientation="horizontal">
                         <LinearLayout
                             android:gravity="right"
-                            android:layout_weight="0.3"
+                            android:layout_weight="0.315"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
                     <TextView
@@ -478,7 +478,7 @@
 
                 <LinearLayout
                     android:gravity="right"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.315"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
                     <TextView

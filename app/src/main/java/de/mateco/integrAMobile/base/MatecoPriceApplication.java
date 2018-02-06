@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.stetho.Stetho;
@@ -37,6 +38,8 @@ import de.mateco.integrAMobile.BuildConfig;
 import de.mateco.integrAMobile.CrashDisplayActivity;
 import de.mateco.integrAMobile.Helper.Constants;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
+import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTypeListItem;
 import io.fabric.sdk.android.Fabric;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -48,6 +51,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -315,6 +319,51 @@ public class MatecoPriceApplication extends Application
             return null;
         }
         return listOfProjects;
+    }
+    public List<CustomerActivityEmployeeListItem> getCustomerActivityEmployeelist(String variable, String defaultValue)
+    {
+        String data = prefs.getString(variable, defaultValue);
+        List<CustomerActivityEmployeeListItem> listOfEmployee = null;
+
+        try {
+            /*CustomerActivityEmployeeListItem employeeListItem = LoganSquare.parse(data,CustomerActivityEmployeeListItem.class);
+            listOfEmployee.addAll(employeeListItem.get);*/
+            listOfEmployee = LoganSquare.parseList(data,CustomerActivityEmployeeListItem.class);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listOfEmployee;
+    }
+    public List<CustomerActivityTypeListItem> getCustomerActivityTypeList(String variable, String defaultValue)
+    {
+        String data = prefs.getString(variable, defaultValue);
+        List<CustomerActivityTypeListItem> listOfTypelist = null;
+
+        try {
+            /*CustomerActivityEmployeeListItem employeeListItem = LoganSquare.parse(data,CustomerActivityEmployeeListItem.class);
+            listOfEmployee.addAll(employeeListItem.get);*/
+            listOfTypelist = LoganSquare.parseList(data,CustomerActivityTypeListItem.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listOfTypelist;
+    }
+    public List<CustomerActivityTopicListItem> getCustomerActivityTopicList(String variable, String defaultValue)
+    {
+        String data = prefs.getString(variable, defaultValue);
+        List<CustomerActivityTopicListItem> listOfTopic = null;
+
+        try {
+            /*CustomerActivityEmployeeListItem employeeListItem = LoganSquare.parse(data,CustomerActivityEmployeeListItem.class);
+            listOfEmployee.addAll(employeeListItem.get);*/
+            listOfTopic = LoganSquare.parseList(data,CustomerActivityTopicListItem.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listOfTopic;
     }
 
     public ArrayList<CustomerOfferModel> getLoadedCustomerOffers(String variable, String defaultValue)

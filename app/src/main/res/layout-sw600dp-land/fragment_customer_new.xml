@@ -382,7 +382,8 @@
                                 android:drawablePadding="16dp"
                                 android:id="@+id/labelCustomerNewPhone"
                                 style="@style/TextView_Comman_Black_Right_Field"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.35"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/icn_phone"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -432,10 +433,11 @@
                             android:gravity="right">
 
                             <TextView
+                                android:layout_weight="0.35"
                                 android:drawablePadding="16dp"
                                 android:id="@+id/labelCustomerNewFax"
                                 style="@style/TextView_Comman_Black_Right_Field"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/icn_fax"
                                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -447,7 +449,6 @@
                             style="@style/EditTextCustNew_bg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
                             android:layout_weight="0.65"
                             android:drawablePadding="5dp"
                             android:hint="Telefax"
@@ -475,9 +476,10 @@
                             android:gravity="right">
 
                             <TextView
+                                android:layout_weight="0.35"
                                 android:id="@+id/labelCustomerNewEmail"
                                 style="@style/TextView_Comman_Black_Right_Field"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/icn_email"
                                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -489,7 +491,7 @@
                             style="@style/EditTextCustNew_bg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="0dp"
                             android:layout_weight="0.65"
                             android:hint="E-Mail"
                             android:inputType="textEmailAddress"
@@ -516,9 +518,10 @@
                             android:gravity="right">
 
                             <TextView
+                                android:layout_weight="0.35"
                                 android:id="@+id/labelCustomerNewWebsite"
                                 style="@style/TextView_Comman_Black_Right_Field"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/icn_website"
                                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -530,7 +533,7 @@
                             style="@style/EditTextCustNew_bg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="0dp"
                             android:layout_weight="0.65"
                             android:hint="Webseite"
                             android:inputType="textUri"
