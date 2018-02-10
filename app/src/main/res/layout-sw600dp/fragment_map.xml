@@ -21,7 +21,29 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <AutoCompleteTextView
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+
+                    android:paddingLeft="40dp"
+                    android:id="@+id/autoCompleteTextPlace"
+                    style="@style/Base.TextAppearance.AppCompat.Headline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/icn_edittext_search_white"
+                    android:drawablePadding="10dp"
+                    android:hint=""
+                    android:singleLine="true"/>
+                <ImageView
+                    android:id="@+id/imageViewSearch"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icn_search"/>
+            </FrameLayout>
+            <!--<AutoCompleteTextView
                 android:id="@+id/autoCompleteTextPlace"
                 style="@style/Base.TextAppearance.AppCompat.Headline"
                 android:layout_width="match_parent"
@@ -31,7 +53,7 @@
                 android:drawableLeft="@drawable/icn_search"
                 android:drawablePadding="10dp"
                 android:hint=""
-                android:singleLine="true"/>
+                android:singleLine="true"/>-->
 
             <LinearLayout
                 android:layout_width="match_parent"

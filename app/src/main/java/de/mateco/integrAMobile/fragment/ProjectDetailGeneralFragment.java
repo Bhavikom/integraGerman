@@ -206,20 +206,7 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
         //listOfEmployee.addAll(db.getEmployees());
 
 
-        adapterProjectArea = new ProjectAreaAdapter(getActivity(), listOfProjectArea, R.layout.list_item_spinner_country, language);
-        adapterProjectArt = new ProjectArtAdapter(getActivity(), listOfProjectArt, R.layout.list_item_spinner_country, language);
-        adapterProjectPhase = new ProjectPhaseAdapter(getActivity(), listOfProjectPhase, R.layout.list_item_spinner_country, language);
-        adapterProjectStage = new ProjectStagesAdapter(getActivity(), listOfProjectStage, R.layout.list_item_spinner_country, language);
-        adapterProjectType = new ProjectTypeAdapter(getActivity(), listOfProjectType, R.layout.list_item_spinner_country, language);
-        adapterProjectSatge1 = new ProjectBuheneartAdapter(getActivity(),listOfProjectStage1, R.layout.list_item_spinner_country,language);
 
-
-        spinnerProjectDetailGeneralArea.setAdapter(adapterProjectArea);
-        spinnerProjectDetailGeneralStages.setAdapter(adapterProjectStage);
-        spinnerProjectDetailGeneralArt.setAdapter(adapterProjectArt);
-        spinnerProjectDetailGeneralType.setAdapter(adapterProjectType);
-        spinnerProjectDetailGeneralPhase.setAdapter(adapterProjectPhase);
-        spinnerProjectDetailGeneralStages1.setAdapter(adapterProjectSatge1);
 
 
         showProgressDialog();
@@ -234,6 +221,16 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
                 listOfProjectStage.addAll(db.getProjectStage());
                 listOfProjectType.addAll(db.getProjectType());
                 listOfProjectStage1.addAll(db.getBuheneart());
+
+                adapterProjectArea = new ProjectAreaAdapter(getActivity(), listOfProjectArea, R.layout.list_item_spinner_country, language);
+                adapterProjectArt = new ProjectArtAdapter(getActivity(), listOfProjectArt, R.layout.list_item_spinner_country, language);
+                adapterProjectPhase = new ProjectPhaseAdapter(getActivity(), listOfProjectPhase, R.layout.list_item_spinner_country, language);
+                adapterProjectStage = new ProjectStagesAdapter(getActivity(), listOfProjectStage, R.layout.list_item_spinner_country, language);
+                adapterProjectType = new ProjectTypeAdapter(getActivity(), listOfProjectType, R.layout.list_item_spinner_country, language);
+                adapterProjectSatge1 = new ProjectBuheneartAdapter(getActivity(),listOfProjectStage1, R.layout.list_item_spinner_country,language);
+
+
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -245,13 +242,22 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
                         });
                         spinnerProjectDetailGeneralStages1.setSelection(0);
                         spinnerProjectDetailGeneralZustAdm.setAdapter(adapterEmployee);
-                        adapterProjectArea.notifyDataSetChanged();
+
+                        spinnerProjectDetailGeneralArea.setAdapter(adapterProjectArea);
+                        spinnerProjectDetailGeneralStages.setAdapter(adapterProjectStage);
+                        spinnerProjectDetailGeneralArt.setAdapter(adapterProjectArt);
+                        spinnerProjectDetailGeneralType.setAdapter(adapterProjectType);
+                        spinnerProjectDetailGeneralPhase.setAdapter(adapterProjectPhase);
+                        spinnerProjectDetailGeneralStages1.setAdapter(adapterProjectSatge1);
+
+                       /* adapterProjectArea.notifyDataSetChanged();
                         adapterProjectArt.notifyDataSetChanged();
                         adapterProjectPhase.notifyDataSetChanged();
                         adapterProjectStage.notifyDataSetChanged();
                         adapterProjectType.notifyDataSetChanged();
                         adapterProjectSatge1.notifyDataSetChanged();
-
+*/
+                        showLoadedProjectData();
                         hideProgressDialog();
                     }
                 });
@@ -261,7 +267,7 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
 
 
        // setupLanguage();
-        showLoadedProjectData();
+        //showLoadedProjectData();
         makeEditable(false);
         getActivity().invalidateOptionsMenu();
         setHasOptionsMenu(true);
@@ -452,8 +458,11 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
         textProjectDetailGeneralZipCode.setText(projectGenerallyDetail.getPLZ());
         textProjectDetailGeneralPlace.setText(projectGenerallyDetail.getOrt());
 
-        if(!projectGenerallyDetail.getHoehe().equals("0"))
-            textProjectDetailGeneralHeight.setText(projectGenerallyDetail.getHoehe());
+        if(projectGenerallyDetail != null && projectGenerallyDetail.getHoehe() != null) {
+            if (!projectGenerallyDetail.getHoehe().equals("0")) {
+                textProjectDetailGeneralHeight.setText(projectGenerallyDetail.getHoehe());
+            }
+        }
 
         textProjectDetailGeneralHeightFrom.setText(projectGenerallyDetail.getHoehe_von_bis());
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -891,11 +900,28 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
             model.setProjekttypID(projectType);
             model.setDatum(projectDate);
             //model.setMitarbeiter(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
-            if(employeeModel == null || employeeModel.getMitarbeiter().equals(""))
-                model.setMitarbeiter(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
-            else
-                model.setMitarbeiter(employeeModel.getMitarbeiter());
-            model.setArtaussenID(projectStage);
+            //if(employeeModel != null && employeeModel.getMitarbeiter() != null){
+                if(employeeModel == null) {
+                    /*if(employeeModel.getMitarbeiter() != null){
+                        model.setMitarbeiter(employeeModel.getMitarbeiter());
+                    }else {*/
+                        model.setMitarbeiter(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
+                    //}
+
+                }
+                else {
+                    if(employeeModel.getMitarbeiter() != null){
+                        model.setMitarbeiter(employeeModel.getMitarbeiter());
+                    }else {
+                        model.setMitarbeiter(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
+                    }
+                }
+            //}
+            if(TextUtils.isEmpty(projectStage)) {
+                model.setArtaussenID("0");
+            }else {
+                model.setArtaussenID(projectStage);
+            }
             model.setArtInnen(projectBuheneart);
             model.setGroesse(size);
             if(!TextUtils.isEmpty(projectGenerallyDetail.getNotiz())){
@@ -904,11 +930,11 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
                 model.setNotiz("");
             }
             //model.setNotiz("");
-            if(!TextUtils.isEmpty(projectGenerallyDetail.getArtaussenID())) {
+            /*if(!TextUtils.isEmpty(projectGenerallyDetail.getArtaussenID())) {
                 model.setArtaussenID(projectGenerallyDetail.getArtaussenID());
             }else{
                 model.setArtaussenID("0");
-            }
+            }*/
             model.setAenderungMitarbeiter(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber());
             model.setRampe(ramp);
             model.setWeisse_Reifen(matureWhite);
@@ -965,8 +991,8 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
 
-                /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();*/
+                /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             catch (Exception ex)
             {

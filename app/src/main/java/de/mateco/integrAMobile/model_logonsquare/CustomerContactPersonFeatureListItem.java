@@ -1,12 +1,15 @@
 package de.mateco.integrAMobile.model_logonsquare;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 @JsonObject
-public class CustomerContactPersonFeatureListItem{
+public class CustomerContactPersonFeatureListItem implements Parcelable {
 
 	@SerializedName("Merkmal")
 	@JsonField(name ="Merkmal")
@@ -53,4 +56,28 @@ public class CustomerContactPersonFeatureListItem{
 			",bezeichnung = '" + bezeichnung + '\'' + 
 			"}";
 		}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	public CustomerContactPersonFeatureListItem() {
+	}
+	private CustomerContactPersonFeatureListItem(Parcel in) {
+		this.merkmal = in.readString();
+		this.bezeichnung = in.readString();
+	}
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+
+	}
+	public static final Creator<CustomerContactPersonFeatureListItem> CREATOR = new Creator<CustomerContactPersonFeatureListItem>() {
+		public CustomerContactPersonFeatureListItem createFromParcel(Parcel source) {
+			return new CustomerContactPersonFeatureListItem(source);
+		}
+
+		public CustomerContactPersonFeatureListItem[] newArray(int size) {
+			return new CustomerContactPersonFeatureListItem[size];
+		}
+	};
 }

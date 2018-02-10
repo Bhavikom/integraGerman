@@ -1,5 +1,6 @@
 package de.mateco.integrAMobile;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,15 +54,17 @@ public class ForgotPassActivity extends BaseActivity implements View.OnClickList
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.setStatusBarColor(this.getResources().getColor(R.color.primary_dark));
             }
-
         }
-        else
-        {
+        else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             {
-                window.setStatusBarColor(this.getResources().getColor(R.color.primary_dark2));
+                if(DataHelper.APP_NAME.equalsIgnoreCase("integrAMobileTest/MatecoSalesAppService.svc/json/")){
+                    window.setStatusBarColor(this.getResources().getColor(R.color.primary_dark2));
+                }
+                else {
+                    window.setStatusBarColor(this.getResources().getColor(R.color.primary_dark3));
+                }
             }
-
         }
 
         textForgotPasswordUserName = (EditText)findViewById(R.id.textForgotPasswordUserName);

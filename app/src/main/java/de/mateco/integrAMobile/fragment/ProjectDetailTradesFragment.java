@@ -622,8 +622,8 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
         }else {
             showLongToast(language.getMessageNetworkNotAvailable());
         }
-        /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-        asyncTask.execute();*/
+        /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+        asyncTaskCustomerSearch.execute();*/
     }
 
     private void updateProjectTradeInfo() {
@@ -740,8 +740,8 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
             }else {
                 showLongToast(language.getMessageNetworkNotAvailable());
             }
-            /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-            asyncTask.execute();*/
+            /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+            asyncTaskCustomerSearch.execute();*/
         }
     }
 
@@ -1071,8 +1071,8 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                     }else {
                         showLongToast(language.getMessageNetworkNotAvailable());
                     }
-                    /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                    asyncTask.execute();*/
+                    /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                    asyncTaskCustomerSearch.execute();*/
                 }
             }
         });

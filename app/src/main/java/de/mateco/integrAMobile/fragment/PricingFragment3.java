@@ -45,6 +45,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -87,6 +88,7 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
 
     public class PricingFragment3 extends LoadedCustomerFragment
     {
+        Pricing2InsertPriceUseInformationListData PriceUseInformationListdata;
         SpinnerSBAdapter sbAdapter;
         ArrayList<SpinnerSBModel> arraylistSB;
         LinearLayout linearListview,linearTop,linearMain;
@@ -226,10 +228,12 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                 toDate=getArguments().getString("toDate");
 
             }
+            Gson gson = new Gson();
+            PriceUseInformationListdata = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
+
             preferences = new PreferencesClass(getActivity());
             parsableClass=preferences.getPriceData(getActivity());
-            Gson gson = new Gson();
-            Pricing2InsertPriceUseInformationListData myJson = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
+
 
             db = new DataBaseHandler(getActivity());
             lablesLostSale = new ArrayList<Pricing3LostSaleData>();
@@ -1177,7 +1181,23 @@ import de.mateco.integrAMobile.model.SpinnerSBModel;
                         db.addLostSale(new Pricing3LostSaleData(branchName, deviceType, "", "", "", rentalDaysWithoutSatSun, price, SB, hfStastus, spStatus, haftb, contactPerson, customer_KundenNr));
 
                         // first call service and on success insert into local database addPricing3InsertJson
-                        InsertPriceUseInformationList();
+                            // if all PriceUseInformation list field are empty that time don't call servcie instead directly store in db
+                                // added this functionality on 8th feb 2018
+                        if(TextUtils.isEmpty(PriceUseInformationListdata.getAVO()) &&
+                                TextUtils.isEmpty(PriceUseInformationListdata.getAVOTelefon()) &&
+                                TextUtils.isEmpty(PriceUseInformationListdata.getEinsatzort()) &&
+                                TextUtils.isEmpty(PriceUseInformationListdata.getEinsatzPLZ()) &&
+                                TextUtils.isEmpty(PriceUseInformationListdata.getEinsatzStrasse()) &&
+                                TextUtils.isEmpty(PriceUseInformationListdata.getProjekt()) &&
+                                TextUtils.isEmpty(PriceUseInformationListdata.getZusatz()) &&
+                                PriceUseInformationListdata.getEntfernung() == 0 &&
+                                PriceUseInformationListdata.getMautkilometer() == 0){
+                            // dont' call service here
+                            EinsatzinformationId="";
+                            insertDataIntoDB(0);
+                        }else {
+                            InsertPriceUseInformationList();
+                        }
 
                         loadLostSaleListViewData();
 

@@ -183,9 +183,10 @@ public class UploadService extends IntentService
                         model.getSiteInspectionNewModel().getEinsatzstrasse() + "_" + model.getUploadId() + "/");
             }
         }
-
-        if(!dir.exists())
-            dir.mkdirs();
+        if(dir != null) {
+            if (!dir.exists())
+                dir.mkdirs();
+        }
         Random random = new Random();
         int n = 10000;
         String image = "Bvo " + random.nextInt(n) + ".jpg";

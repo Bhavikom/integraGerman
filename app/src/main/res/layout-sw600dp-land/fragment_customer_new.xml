@@ -378,12 +378,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
                             <TextView
+                                android:layout_weight="0.35"
+                                android:layout_width="0dp"
+                                android:layout_height="1dp" />
+                            <TextView
                                 android:text="Telefon"
                                 android:drawablePadding="16dp"
                                 android:id="@+id/labelCustomerNewPhone"
                                 style="@style/TextView_Comman_Black_Right_Field"
+                                android:layout_weight="0.65"
                                 android:layout_width="0dp"
-                                android:layout_weight="0.35"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/icn_phone"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -431,13 +435,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.35"
                             android:gravity="right">
-
                             <TextView
                                 android:layout_weight="0.35"
-                                android:drawablePadding="16dp"
+                                android:layout_width="0dp"
+                                android:layout_height="1dp" />
+                            <TextView
+                                android:drawablePadding="18dp"
                                 android:id="@+id/labelCustomerNewFax"
                                 style="@style/TextView_Comman_Black_Right_Field"
                                 android:layout_width="0dp"
+                                android:layout_weight="0.65"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/icn_fax"
                                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -477,10 +484,15 @@
 
                             <TextView
                                 android:layout_weight="0.35"
+                                android:layout_width="0dp"
+                                android:layout_height="1dp" />
+                            <TextView
                                 android:id="@+id/labelCustomerNewEmail"
                                 style="@style/TextView_Comman_Black_Right_Field"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="0.65"
+                                android:drawablePadding="25dp"
                                 android:drawableLeft="@drawable/icn_email"
                                 android:textAppearance="?android:attr/textAppearanceMedium" />
                         </LinearLayout>
@@ -516,9 +528,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.35"
                             android:gravity="right">
-
                             <TextView
                                 android:layout_weight="0.35"
+                                android:layout_width="0dp"
+                                android:layout_height="1dp" />
+                            <TextView
+                                android:layout_weight="0.65"
+                                android:drawablePadding="3dp"
                                 android:id="@+id/labelCustomerNewWebsite"
                                 style="@style/TextView_Comman_Black_Right_Field"
                                 android:layout_width="0dp"

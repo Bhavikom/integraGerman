@@ -44,8 +44,8 @@ android {
         applicationId "de.mateco.integrAMobile"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 206
-        versionName "03.03.13"
+        versionCode 209
+        versionName "03.03.16"
         multiDexEnabled true
     }
     buildTypes {

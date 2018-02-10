@@ -16,8 +16,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -93,6 +95,7 @@ import de.mateco.integrAMobile.model_logonsquare.PriceStandardListItem;
 
 public class PricingFragment2 extends LoadedCustomerFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
+    private String strAvo="";
     private LocationManager locManager;
     private boolean gpsEnabled = false,networkEnabled = false;
     private MatecoPriceApplication matecoPriceApplication;
@@ -215,6 +218,26 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
         rowKaNrListViewMoreThenItems = new ArrayList<>();
         rowOfflineStandardPriceListViewItems = new ArrayList<>();
         textContactPersonName = (EditText) rootView.findViewById(R.id.etContractSpot);
+        textContactPersonName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    if(s.length() ==0){
+                        strAvo = "";
+                    }else {
+                        strAvo = s.toString();
+                    }
+            }
+        });
         textContactPersonTelephone = (EditText) rootView.findViewById(R.id.etAnspTelefon);
         labelProject = (TextView) rootView.findViewById(R.id.etProjectP2);
         textUseZipCode = (EditText) rootView.findViewById(R.id.etUseZipCodeP2);
@@ -446,8 +469,10 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(rowLandUseItems.size() > 0){
-                    countryNameId = Integer.parseInt(rowLandUseItems.get(position - 1).getLand());
-                    countryName = rowLandUseItems.get(position - 1).getBezeichnung();
+                    if(position != 0) {
+                        countryNameId = Integer.parseInt(rowLandUseItems.get(position - 1).getLand());
+                        countryName = rowLandUseItems.get(position - 1).getBezeichnung();
+                    }
                 }
 
                 //  LevelGroupDesignation = lablesDevice.get(position).getDesignation();

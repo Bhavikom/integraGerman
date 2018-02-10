@@ -270,11 +270,11 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
         labelCustomerNewLegalForm.setText(language.getLabelLegalForm());
         labelCustomerNewOwner.setText(language.getLabelOwner());
         labelCustomerNewWebsite.setText("");
-        //labelCustomerNewWebsite.setText(language.getLabelWebsite());
+        labelCustomerNewWebsite.setText(language.getLabelWebsite());
         labelCustomerNewEmail.setText("");
-        //labelCustomerNewEmail.setText(language.getLabelEmail());
+        labelCustomerNewEmail.setText(language.getLabelEmail());
         labelCustomerNewFax.setText("");
-        //labelCustomerNewFax.setText(language.getLabelFax());
+        labelCustomerNewFax.setText(language.getLabelFax());
         //labelCustomerNewPhone.setText("");
         labelCustomerNewPhone.setText(language.getLabelPhone());
         labelCustomerNewCountry.setText(language.getLabelCountry());
@@ -514,8 +514,8 @@ public class CustomerNewFragment extends BaseFragment implements TextView.OnEdit
                     //url += "/customerinsert=" + URLEncoder.encode(json, "UTF-8");
 
                 try {
-                    /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                    asyncTask.execute();*/
+                    /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                    asyncTaskCustomerSearch.execute();*/
 
                 /* this is for post method */
                     //String url = DataHelper.URL_PRICE_HELPER+"priceinsert";

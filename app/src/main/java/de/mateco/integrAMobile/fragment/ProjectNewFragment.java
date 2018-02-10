@@ -1,5 +1,6 @@
 package de.mateco.integrAMobile.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -50,6 +51,7 @@ import de.mateco.integrAMobile.model_logonsquare.ProjektartComboListItem;
 
 public class ProjectNewFragment extends BaseFragment implements View.OnClickListener
 {
+    ProgressDialog progressDialog;
     private View rootView;
     private EditText textProjectNewDescription, textProjectNewRoad, textProjectNewZipCode, textProjectNewPlace, textProjectNewMatchCode;
     private Spinner spinnerProjectNewProjectArt, spinnerProjectNewEmployee;
@@ -92,6 +94,8 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
 
         listOfProjectArt = new ArrayList<>();
         listOfEmployee = new ArrayList<>();
+
+        showProgressDialog();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -112,6 +116,7 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
                                     break;
                                 }
                             }
+                            hideProgressDialog();
                         }
                     });
                 }
@@ -377,8 +382,8 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
                     asyncTaskPost.execute();
 
 
-                    /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                    asyncTask.execute();*/
+                    /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                    asyncTaskCustomerSearch.execute();*/
                 }
                 catch (IOException ex)
                 {
@@ -389,6 +394,18 @@ public class ProjectNewFragment extends BaseFragment implements View.OnClickList
             {
                 showShortToast(language.getMessageNetworkNotAvailable());
             }
+        }
+    }
+    public void showProgressDialog(){
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle(language.getMessageWaitWhileLoading());
+        progressDialog.setMessage(language.getMessageWaitWhileLoading());
+        progressDialog.show();
+    }
+    public void hideProgressDialog(){
+        if(progressDialog != null && progressDialog.isShowing()){
+            progressDialog.dismiss();
         }
     }
 }

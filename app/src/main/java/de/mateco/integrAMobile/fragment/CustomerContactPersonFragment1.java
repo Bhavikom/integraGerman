@@ -710,13 +710,13 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
                             SiteInspectionNewFragment fragment = new SiteInspectionNewFragment();
                             if (getArguments().containsKey("SiteInspectionContactPerson"))
                             {
-                                //args1.putParcelable("AnsprechPartnerBack", getArguments().getParcelable("AnsprechPartnerBack"));
-                                //args1.putParcelable("ContactPerson", selectedContactPerson);
+                                args1.putParcelable("AnsprechPartnerBack", getArguments().getParcelable("AnsprechPartnerBack"));
+                                args1.putParcelable("ContactPerson", selectedContactPerson);
                             }
                             else
                             {
-                                //args1.putParcelable("ContactPersonBack", getArguments().getParcelable("ContactPersonBack"));
-                                //args1.putParcelable("AnsprechPartner", selectedContactPerson);
+                                args1.putParcelable("ContactPersonBack", getArguments().getParcelable("ContactPersonBack"));
+                                args1.putParcelable("AnsprechPartner", selectedContactPerson);
                             }
                             fragment.setArguments(args1);
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -1027,8 +1027,8 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
             {
                 /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.INSERT_CUSTOMER_CONTACT_PERSON + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 url += "&customercontactinsert=" + URLEncoder.encode(json, "UTF-8");
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();*/
+                BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
                 String url = DataHelper.URL_CUSTOMER_HELPER+"customercontactinsert";
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
@@ -1196,8 +1196,8 @@ public class CustomerContactPersonFragment1 extends LoadedCustomerFragment
                 /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.UPDATE_CUSTOMER_CONTACT_PERSON + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
                 url += "&customercontactupdate=" + URLEncoder.encode(json, "UTF-8");
 
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();*/
+                BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
                 String url = DataHelper.URL_CUSTOMER_HELPER+"customercontactupdate";
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));

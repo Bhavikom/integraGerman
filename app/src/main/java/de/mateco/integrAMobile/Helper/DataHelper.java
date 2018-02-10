@@ -118,6 +118,7 @@ public class DataHelper
     public static String URL_PROJECT_HELPER = "https://mobile.mateco.de/ProjectServiceTest/api/projecthelper/";
     public static String URL_AGENDA_HELPER = "https://mobile.mateco.de/AgendaServiceTest/api/agendahelper/";
 
+
     /* use when0 want to call with SCHULUNG url*/
     /*public static String APP_NAME = "integrAMobileSchulung/MatecoSalesAppService.svc/json/";
     public static String URL_USER_HELPER = "https://mobile.mateco.de/UserServiceSchulung/api/userhelper/";
@@ -135,8 +136,6 @@ public class DataHelper
     public static String URL_BVO_HELPER = "https://mobile4.mateco.de/BVOService/api/bvohelper/";
     public static String URL_PROJECT_HELPER = "https://mobile4.mateco.de/ProjectService/api/projecthelper/";
     public static String URL_AGENDA_HELPER = "https://mobile4.mateco.de/AgendaService/api/agendahelper/";*/
-
-
 
     //public static String CHECK_LOGIN = "GetUserDetails";3333333333333333333333
     public static String MAIN_SERVICE = "SalesServices";

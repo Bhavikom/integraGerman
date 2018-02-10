@@ -274,7 +274,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 //listOfActivityType = db.getActivityTypes();
                 //listOfActivityTopic = db.getActivityTopics();
                 listOfActivityType = matecoPriceApplication.getCustomerActivityTypeList(DataHelper.CustomerActivityTypelist,"");
-                listOfActivityTopic = matecoPriceApplication.getCustomerActivityTopicList(DataHelper.CustomerActivityTypelist,"");
+                listOfActivityTopic = matecoPriceApplication.getCustomerActivityTopicList(DataHelper.CustomerActivityTopiclist,"");
                 //listOfAllEmployee = db.getEmployees();
                 listOfAllEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
                 Collections.sort(listOfAllEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
@@ -373,9 +373,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
         setHasOptionsMenu(true);
         makeEditable(false);
 
-
-
-       // super.initializeComponents(rootView);
+        super.initializeComponents(rootView);
     }
 
     @Override
@@ -528,7 +526,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
             }
         });
         /*******************************************************/
-        //super.bindEvents(rootView);
+        super.bindEvents(rootView);
     }
 
     /**************************20161011***********************/
@@ -1947,8 +1945,8 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
 
-                /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultAddNewCustomerActivity, getActivity(), true);
-                asyncTask.execute();*/
+                /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResultAddNewCustomerActivity, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             catch (IOException ex)
             {
@@ -2161,8 +2159,8 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
 
-               /* asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
-                asyncTask.execute();*/
+               /* asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             catch (IOException ex)
             {

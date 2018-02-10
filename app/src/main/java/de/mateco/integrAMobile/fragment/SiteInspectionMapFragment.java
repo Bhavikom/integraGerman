@@ -13,6 +13,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -96,6 +99,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
     private Activity activity;
     private String street = "", road = "", zipCode = "";
     private boolean isFromPricing;
+    ImageView imgSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -108,6 +112,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
             preferences = activity.getSharedPreferences("SiteInspection", Context.MODE_PRIVATE);
         }
         super.initializeFragment(rootView);
+        imgSearch = (ImageView)rootView.findViewById(R.id.imageViewSearch);
         application = (MatecoPriceApplication)getActivity().getApplication();
         language = application.getLanguage();
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
@@ -349,6 +354,15 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
         buttonRefreshLocation.setOnClickListener(this);
         buttonRefreshLocation.setText(language.getLabelUpdate());
 
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!TextUtils.isEmpty(autoCompleteTextPlace.getText().toString())){
+                    onMapSearch(autoCompleteTextPlace.getText().toString());
+                }
+
+            }
+        });
         if(isFromPricing)
         {
             buttonMap.setVisibility(View.GONE);
@@ -358,6 +372,25 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
             updateAutoComplete();
         }
         return rootView;
+    }
+    public void onMapSearch(String inputString) {
+        matecoPriceApplication.hideKeyboard(getActivity());
+        ArrayList<BasicNameValuePair> latLong = DataHelper.getLatLongFromAddress(getActivity(),inputString);
+        if (latLong.size() > 0) {
+            Double latitue = Double.parseDouble(latLong.get(0).getValue());
+            Double longitude = Double.parseDouble(latLong.get(1).getValue());
+            LatLng latLng = new LatLng(latitue, longitude);
+            map.clear();
+            currentLocationMarker = map.addMarker(new MarkerOptions().position(latLng).title(inputString).draggable(true));
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+            map.animateCamera(cameraUpdate);
+            BasicNameValuePair nameValuePair = DataHelper.getFormattedLocationInDegree(getActivity(), latitue, longitude);
+            labelValueSelectedLongitudeFormat.setText(nameValuePair.getName());
+            labelValueSelectedLatitudeFormat.setText(nameValuePair.getValue());
+            updateLatLong(currentLocationMarker);
+        } else {
+            showShortToast(language.getMessageError());
+        }
     }
 
     @Override

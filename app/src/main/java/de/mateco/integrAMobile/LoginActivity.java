@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -221,6 +222,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             case R.id.buttonForgotPassword:
                 Intent intentHome = new Intent(LoginActivity.this, ForgotPassActivity.class);
                 startActivity(intentHome);
+                //finish();
                 break;
             case R.id.imgvisibility:
                 if (textPassword.getInputType() == InputType.TYPE_TEXT_VARIATION_PASSWORD)
@@ -253,15 +255,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                 @Override
                                 public void run()
                                 {
-                                    try
-                                    {
-                                        prd.setProgress(0);
-                                        prd.setMax(100);
-                                        prd.setProgress(5);
+                                    /*try
+                                    {*/
+
                                         //parseUsingGson(response.toString());
                                         parseUsingLogonSQuare(response.toString());
                                     }
-                                    catch (Exception ex)
+                                    /*catch (Exception ex)
                                     {
                                         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                                         ex.printStackTrace();
@@ -274,8 +274,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                                                 showShortToast(language.getMessageErrorAtParsing());
                                             }
                                         });
-                                    }
-                                }
+                                    }*/
+                                //}
                             }).start();
 
                         }
@@ -291,29 +291,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onErrorResponse(VolleyError error) {
                 prd.dismiss();
-                //showLongToast("Network problem while service calling before");
-                if(isCallservice) {
-                    // showLongToast("service call start now");
-                    isCallservice=false;
-                    showProgressDialog();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            // Actions to do after 10 seconds
-                            String urlLoginDetail = null;
-                            try {
-                                urlLoginDetail = DataHelper.URL_USER_HELPER +"logindetails/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
-                                urlLoginDetail = urlLoginDetail + "/name=" + userName;
-                                urlLoginDetail = urlLoginDetail + "/password=" + password;
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
+                    //showLongToast("Network problem while service calling before");
+                    if (isCallservice) {
+                        // showLongToast("service call start now");
+                        isCallservice = false;
+                        showProgressDialog();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                // Actions to do after 10 seconds
+                                String urlLoginDetail = null;
+                                try {
+                                    urlLoginDetail = DataHelper.URL_USER_HELPER + "logindetails/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
+                                    urlLoginDetail = urlLoginDetail + "/name=" + userName;
+                                    urlLoginDetail = urlLoginDetail + "/password=" + password;
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+                                callMainServiceUsingVolley(urlLoginDetail, userName, password);
                             }
-                            callMainServiceUsingVolley(urlLoginDetail,userName,password);
-                        }
-                    }, DataHelper.NETWORK_CALL_DURATION);
-                }else{
-                    showShortToast(language.getMessageError());
-                }
+                        }, DataHelper.NETWORK_CALL_DURATION);
+                    } else {
+                        showShortToast(language.getMessageError());
+                    }
             }
         });
 
@@ -339,154 +339,182 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         try {
             responseMain = LoganSquare.parse(response.toString(),ResponseMain.class);
 
-            List<de.mateco.integrAMobile.model_logonsquare.UserRecordListItem> listOfUser = new ArrayList<>();
-            listOfUser = responseMain.getUserRecordList(); // 1 = size 1
-            prd.setProgress(0);
-            prd.setMax(100);
-            prd.setProgress(20);
-            db.deleteTableAtLogin();
+            if(responseMain.getUserRecordList().size() > 0) {
+
+                prd.setProgress(0);
+                prd.setMax(100);
+                prd.setProgress(5);
+
+                List<de.mateco.integrAMobile.model_logonsquare.UserRecordListItem> listOfUser = new ArrayList<>();
+                listOfUser = responseMain.getUserRecordList(); // 1 = size 1
+                prd.setProgress(0);
+                prd.setMax(100);
+                prd.setProgress(20);
+                db.deleteTableAtLogin();
 
 
-            List<PriceBranchListItem> branches = responseMain.getPriceBranchList(); // 2 = size 51
-            db.addPriceBranchList(branches); // 2
-            List<PriceDeviceGroupListItem> deviceGroups = responseMain.getPriceDeviceGroupList(); // 3 = size 17
-            db.addPriceDeviceGroupListItem(deviceGroups); // 3
-            List<PriceRentalListItem> rentalData = responseMain.getPriceRentalList(); // 4 = size 7
-            db.addPriceRentalListItem(rentalData); // 4
-            prd.setProgress(0);
-            prd.setMax(100);
-            prd.setProgress(25);
+                List<PriceBranchListItem> branches = responseMain.getPriceBranchList(); // 2 = size 51
+                db.addPriceBranchList(branches); // 2
+                List<PriceDeviceGroupListItem> deviceGroups = responseMain.getPriceDeviceGroupList(); // 3 = size 17
+                db.addPriceDeviceGroupListItem(deviceGroups); // 3
+                List<PriceRentalListItem> rentalData = responseMain.getPriceRentalList(); // 4 = size 7
+                db.addPriceRentalListItem(rentalData); // 4
+                prd.setProgress(0);
+                prd.setMax(100);
+                prd.setProgress(25);
 
 
-            List<PriceStandardListItem> listOfOfflineStandardPrice = responseMain.getPriceStandardList(); // 5 = size 15975
-            db.addPriceStandardListItem(listOfOfflineStandardPrice); // 5
-            prd.setProgress(0);
-            prd.setMax(100);
-            prd.setProgress(35);
+                List<PriceStandardListItem> listOfOfflineStandardPrice = responseMain.getPriceStandardList(); // 5 = size 15975
+                db.addPriceStandardListItem(listOfOfflineStandardPrice); // 5
+                prd.setProgress(0);
+                prd.setMax(100);
+                prd.setProgress(35);
 
 
-            List<PriceEquipmentHeightListItem> listOfOfflineEquipment = responseMain.getPriceEquipmentHeightList(); // 6 = size 1445
-            db.addPriceEquipmentHeightListItem(listOfOfflineEquipment); // 6
-            List<PriceStaffelListItem> listOfPriceStaffel = responseMain.getPriceStaffelList(); // 7 = size 129
-            db.addPriceStaffelListItem(listOfPriceStaffel); // 7
-            List<CustomerLandListItem> countries = responseMain.getCustomerLandList(); // 8 = size = 65
-            db.addCustomerLandListItem(countries); // 8
-            prd.setProgress(0);
-            prd.setMax(100);
-            prd.setProgress(40);
+                List<PriceEquipmentHeightListItem> listOfOfflineEquipment = responseMain.getPriceEquipmentHeightList(); // 6 = size 1445
+                db.addPriceEquipmentHeightListItem(listOfOfflineEquipment); // 6
+                List<PriceStaffelListItem> listOfPriceStaffel = responseMain.getPriceStaffelList(); // 7 = size 129
+                db.addPriceStaffelListItem(listOfPriceStaffel); // 7
+                List<CustomerLandListItem> countries = responseMain.getCustomerLandList(); // 8 = size = 65
+                db.addCustomerLandListItem(countries); // 8
+                prd.setProgress(0);
+                prd.setMax(100);
+                prd.setProgress(40);
 
 
-            List<CustomerRechtsFormComboListItem> legalForms = responseMain.getCustomerRechtsFormComboList(); // 9 = size 40
-            db.addCustomerRechtsFormComboListItem(legalForms); // 9
-            List<CustomerContactPersonSalutationComboListItem> salutations =
-                    responseMain.getCustomerContactPersonSalutationComboList(); // 10 = size 2
-            db.addCustomerContactPersonSalutationComboListItem(salutations); // 10
-            prd.setProgress(0);
-            prd.setMax(100);
-            prd.setProgress(45);
+                List<CustomerRechtsFormComboListItem> legalForms = responseMain.getCustomerRechtsFormComboList(); // 9 = size 40
+                db.addCustomerRechtsFormComboListItem(legalForms); // 9
+                List<CustomerContactPersonSalutationComboListItem> salutations =
+                        responseMain.getCustomerContactPersonSalutationComboList(); // 10 = size 2
+                db.addCustomerContactPersonSalutationComboListItem(salutations); // 10
+                prd.setProgress(0);
+                prd.setMax(100);
+                prd.setProgress(45);
 
 
-            List<CustomerContactPersonFunctionComboListItem> functions =
-                    responseMain.getCustomerContactPersonFunctionComboList(); //11 = size 88 - prb 72
-            db.addCustomerContactPersonFunctionComboListItem(functions); // 11
-            List<CustomerContactPersonDecisionMakersListItem> listOfDecisionMaker =
-                    responseMain.getCustomerContactPersonDecisionMakersList();//12 = size 5
-            db.addCustomerContactPersonDecisionMakersListItem(listOfDecisionMaker); // 12
-            prd.setProgress(0);
-            prd.setMax(100);
-            prd.setProgress(50);
+                List<CustomerContactPersonFunctionComboListItem> functions =
+                        responseMain.getCustomerContactPersonFunctionComboList(); //11 = size 88 - prb 72
+                db.addCustomerContactPersonFunctionComboListItem(functions); // 11
+                List<CustomerContactPersonDecisionMakersListItem> listOfDecisionMaker =
+                        responseMain.getCustomerContactPersonDecisionMakersList();//12 = size 5
+                db.addCustomerContactPersonDecisionMakersListItem(listOfDecisionMaker); // 12
+                prd.setProgress(0);
+                prd.setMax(100);
+                prd.setProgress(50);
 
 
-            List<CustomerContactPersonDocumentlanguageListItem> languages =
-                    responseMain.getCustomerContactPersonDocumentlanguageList(); // 13 = size 1
-            db.addCustomerContactPersonDocumentlanguageListItem(languages); // 13
-            List<CustomerContactPersonFeatureListItem> listOfFeatures = responseMain.getCustomerContactPersonFeatureList(); // 14 = size 85
-            db.addCustomerContactPersonFeatureListItem(listOfFeatures); // 14
-            prd.setProgress(55);
+                List<CustomerContactPersonDocumentlanguageListItem> languages =
+                        responseMain.getCustomerContactPersonDocumentlanguageList(); // 13 = size 1
+                db.addCustomerContactPersonDocumentlanguageListItem(languages); // 13
+                List<CustomerContactPersonFeatureListItem> listOfFeatures = responseMain.getCustomerContactPersonFeatureList(); // 14 = size 85
+                db.addCustomerContactPersonFeatureListItem(listOfFeatures); // 14
+                prd.setProgress(55);
 
 
-            List<CustomerActivityTypeListItem> listOfActivityType = responseMain.getCustomerActivityTypeList(); // 15 = size 14
-            db.addCustomerActivityTypeListItem(listOfActivityType); // 15
-            String jsonActivityType = LoganSquare.serialize(listOfActivityType,CustomerActivityTypeListItem.class);
-            matecoPriceApplication.saveData(DataHelper.CustomerActivityTypelist,jsonActivityType);
+                List<CustomerActivityTypeListItem> listOfActivityType = responseMain.getCustomerActivityTypeList(); // 15 = size 14
+                db.addCustomerActivityTypeListItem(listOfActivityType); // 15
+                String jsonActivityType = LoganSquare.serialize(listOfActivityType, CustomerActivityTypeListItem.class);
+                matecoPriceApplication.saveData(DataHelper.CustomerActivityTypelist, jsonActivityType);
 
-            List<CustomerActivityTopicListItem> listOfTopic = responseMain.getCustomerActivityTopicList(); // 16 = size 28
-            db.addCustomerActivityTopicListItem(listOfTopic); // 16
-            String jsonActivityTopic = LoganSquare.serialize(listOfTopic,CustomerActivityTopicListItem.class);
-            matecoPriceApplication.saveData(DataHelper.CustomerActivityTopiclist,jsonActivityTopic);
+                List<CustomerActivityTopicListItem> listOfTopic = responseMain.getCustomerActivityTopicList(); // 16 = size 28
+                db.addCustomerActivityTopicListItem(listOfTopic); // 16
+                String jsonActivityTopic = LoganSquare.serialize(listOfTopic, CustomerActivityTopicListItem.class);
+                matecoPriceApplication.saveData(DataHelper.CustomerActivityTopiclist, jsonActivityTopic);
 
-            prd.setProgress(60);
+                prd.setProgress(60);
 
 
-            List<CustomerActivityEmployeeListItem> listOfEmployee = responseMain.getCustomerActivityEmployeeList(); // 17 = size 913
-            db.addCustomerActivityEmployeeListItem(listOfEmployee); // 17
-            String jsonEmployeeList = LoganSquare.serialize(listOfEmployee,CustomerActivityEmployeeListItem.class);
-            matecoPriceApplication.saveData(DataHelper.CustomerActivityEmployeelist,jsonEmployeeList);
+                List<CustomerActivityEmployeeListItem> listOfEmployee = responseMain.getCustomerActivityEmployeeList(); // 17 = size 913
+                db.addCustomerActivityEmployeeListItem(listOfEmployee); // 17
+                String jsonEmployeeList = LoganSquare.serialize(listOfEmployee, CustomerActivityEmployeeListItem.class);
+                matecoPriceApplication.saveData(DataHelper.CustomerActivityEmployeelist, jsonEmployeeList);
 
                 List<BVODeviceTypeListItem> listOfDeviceTypes = responseMain.getBVODeviceTypeList(); // 18 = size 859
-            db.addBVODeviceTypeListItem(listOfDeviceTypes);// 18
-            prd.setProgress(65);
+                db.addBVODeviceTypeListItem(listOfDeviceTypes);// 18
+                prd.setProgress(65);
 
 
-            List<BVOZugangComboListItem> listOfAccess = responseMain.getBVOZugangComboList(); // 19 = size 2
-            db.addBVOZugangComboListItem(listOfAccess); // 19
-            List<BVOBauvorhabenComboListItem> listOfBUildingProject = responseMain.getBVOBauvorhabenComboList(); // 20 = size 7
-            db.addBVOBauvorhabenComboListItem(listOfBUildingProject); // 20
-            prd.setProgress(70);
+                List<BVOZugangComboListItem> listOfAccess = responseMain.getBVOZugangComboList(); // 19 = size 2
+                db.addBVOZugangComboListItem(listOfAccess); // 19
+                List<BVOBauvorhabenComboListItem> listOfBUildingProject = responseMain.getBVOBauvorhabenComboList(); // 20 = size 7
+                db.addBVOBauvorhabenComboListItem(listOfBUildingProject); // 20
+                prd.setProgress(70);
 
 
-            List<ProjektBUhnenAubenInnenComboListItem> listOfProjectStage = responseMain.getProjektBUhnenAubenInnenComboList(); // 21 = size 3
-            db.addProjektBUhnenAubenInnenComboListItem(listOfProjectStage); // 21
-            List<ProjektGebietComboListItem> listOfArea = responseMain.getProjektGebietComboList(); // 22 = size 151 prb here = 127
-            db.addProjektGebietComboListItem(listOfArea); // 22
-            prd.setProgress(75);
+                List<ProjektBUhnenAubenInnenComboListItem> listOfProjectStage = responseMain.getProjektBUhnenAubenInnenComboList(); // 21 = size 3
+                db.addProjektBUhnenAubenInnenComboListItem(listOfProjectStage); // 21
+                List<ProjektGebietComboListItem> listOfArea = responseMain.getProjektGebietComboList(); // 22 = size 151 prb here = 127
+                db.addProjektGebietComboListItem(listOfArea); // 22
+                prd.setProgress(75);
 
-            List<ProjektartComboListItem> listOfProjectArt = responseMain.getProjektartComboList(); // 23 = size 37
-            db.addProjektartComboListItem(listOfProjectArt); // 23
-            prd.setProgress(80);
-
-
-            List<ProjekttypComboListItem> listOfProjectType = responseMain.getProjekttypComboList(); // 24 = size 4
-            db.addProjekttypComboListItem(listOfProjectType); // 24
-            prd.setProgress(85);
+                List<ProjektartComboListItem> listOfProjectArt = responseMain.getProjektartComboList(); // 23 = size 37
+                db.addProjektartComboListItem(listOfProjectArt); // 23
+                prd.setProgress(80);
 
 
-            List<ProjektphaseComboListItem> listOfProjectPhase = responseMain.getProjektphaseComboList(); // 25 = size 10
-            db.addProjektphaseComboListItem(listOfProjectPhase); // 25
-            prd.setProgress(90);
+                List<ProjekttypComboListItem> listOfProjectType = responseMain.getProjekttypComboList(); // 24 = size 4
+                db.addProjekttypComboListItem(listOfProjectType); // 24
+                prd.setProgress(85);
 
-            List<ProjektGewerkComboListItem> listOfProjectTrade = responseMain.getProjektGewerkComboList(); // 26 = size 36
-            db.addProjektGewerkComboListItem(listOfProjectTrade); // 26
-            List<BrancheListItem> listOfCustomerBranch = responseMain.getBrancheList(); // 27 = size 45
-            db.addBrancheListItem(listOfCustomerBranch); // 27
-            prd.setProgress(95);
 
-            List<ListOfBuheneartComboBoxItemItem> listOfBuheneart = responseMain.getListOfBuheneartComboBoxItem(); // 28 = size 3
-            db.addListOfBuheneartComboBoxItemItem(listOfBuheneart); // 28
-            List<ListOfLadefahrzeugComboBoxItemItem> arraylistLadefahrzeug = responseMain.getListOfLadefahrzeugComboBoxItem(); // 29 = size 6
-            db.addListOfLadefahrzeugComboBoxItemItem(arraylistLadefahrzeug); // 29
+                List<ProjektphaseComboListItem> listOfProjectPhase = responseMain.getProjektphaseComboList(); // 25 = size 10
+                db.addProjektphaseComboListItem(listOfProjectPhase); // 25
+                prd.setProgress(90);
 
-            long parsingElaplseTime = System.currentTimeMillis()-parsingTime;
-            LogApp.showLog(" logon parsing "," time taken by service calling and parsing : "+parsingElaplseTime);
-            long databaseTime = System.currentTimeMillis();
-            long databaseElaplseTime = System.currentTimeMillis()-databaseTime;
-            LogApp.showLog("database insertion"," time taken by service calling and parsing : "+databaseElaplseTime);
+                List<ProjektGewerkComboListItem> listOfProjectTrade = responseMain.getProjektGewerkComboList(); // 26 = size 36
+                db.addProjektGewerkComboListItem(listOfProjectTrade); // 26
+                List<BrancheListItem> listOfCustomerBranch = responseMain.getBrancheList(); // 27 = size 45
+                db.addBrancheListItem(listOfCustomerBranch); // 27
+                prd.setProgress(95);
 
-            prd.setProgress(100);
-            prd.dismiss();
+                List<ListOfBuheneartComboBoxItemItem> listOfBuheneart = responseMain.getListOfBuheneartComboBoxItem(); // 28 = size 3
+                db.addListOfBuheneartComboBoxItemItem(listOfBuheneart); // 28
+                List<ListOfLadefahrzeugComboBoxItemItem> arraylistLadefahrzeug = responseMain.getListOfLadefahrzeugComboBoxItem(); // 29 = size 6
+                db.addListOfLadefahrzeugComboBoxItemItem(arraylistLadefahrzeug); // 29
 
-            String json = new Gson().toJson(listOfUser);
-            matecoPriceApplication.saveLoginUser(DataHelper.LoginPerson, json);
-            elapsedTimeServiceCalling = System.currentTimeMillis() - startTimeSeviceCalling;
-            elapsedTimePermenent = System.currentTimeMillis() - startTimePermenent;
-            LogApp.showLog("parsing_logon_servicecall_entireTime"," time taken by service calling and parsing : "+elapsedTimePermenent);
+                long parsingElaplseTime = System.currentTimeMillis() - parsingTime;
+                LogApp.showLog(" logon parsing ", " time taken by service calling and parsing : " + parsingElaplseTime);
+                long databaseTime = System.currentTimeMillis();
+                long databaseElaplseTime = System.currentTimeMillis() - databaseTime;
+                LogApp.showLog("database insertion", " time taken by service calling and parsing : " + databaseElaplseTime);
 
-            Intent intentHome = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(intentHome);
-            finish();
+                prd.setProgress(100);
+                prd.dismiss();
+
+                String json = new Gson().toJson(listOfUser);
+                matecoPriceApplication.saveLoginUser(DataHelper.LoginPerson, json);
+                elapsedTimeServiceCalling = System.currentTimeMillis() - startTimeSeviceCalling;
+                elapsedTimePermenent = System.currentTimeMillis() - startTimePermenent;
+                LogApp.showLog("parsing_logon_servicecall_entireTime", " time taken by service calling and parsing : " + elapsedTimePermenent);
+
+                Intent intentHome = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intentHome);
+                finish();
+            }else {
+                LoginActivity.this.runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        prd.dismiss();
+                        showShortToast("Fehler");
+                    }
+                });
+
+
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
+            prd.dismiss();
+            LoginActivity.this.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    showShortToast(language.getMessageErrorAtParsing());
+                }
+            });
         }
     }
     public void showProgressDialog(){

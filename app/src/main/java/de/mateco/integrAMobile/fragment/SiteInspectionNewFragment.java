@@ -683,9 +683,9 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     if (application.isCustomerLoaded(DataHelper.isCustomerLoaded, false)) {
                         CustomerContactPersonFragment1 fragment3 = new CustomerContactPersonFragment1();
                         Bundle args2 = new Bundle();
-                        //args2.putParcelable("AnsprechPartnerBack", AnsprechPartner);
+                        args2.putParcelable("AnsprechPartnerBack", AnsprechPartner);
                         args2.putString("SiteInspectionContactPerson", "SiteInspectionContactPerson");
-                        //args2.putParcelableArrayList("contact_person",siteInspectionNewModel.getCustomerContactPersonList());
+                        args2.putParcelableArrayList("contact_person",siteInspectionNewModel.getCustomerContactPersonList());
                         fragment3.setArguments(args2);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                         transaction.replace(R.id.content_frame, fragment3);
@@ -700,7 +700,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                     {
                         CustomerContactPersonFragment1 fragment4 = new CustomerContactPersonFragment1();
                         Bundle args3 = new Bundle();
-                        //args3.putParcelable("ContactPersonBack",ContactPerson);
+                        args3.putParcelable("ContactPersonBack",ContactPerson);
                         args3.putString("SiteInspectionAnsprechPartner", "SiteInspectionAnsprechPartner");
                         fragment4.setArguments(args3);
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

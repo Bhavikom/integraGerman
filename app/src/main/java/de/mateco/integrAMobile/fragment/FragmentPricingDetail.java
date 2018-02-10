@@ -75,6 +75,8 @@ import de.mateco.integrAMobile.model_logonsquare.ListOfLadefahrzeugComboBoxItemI
 
 public class FragmentPricingDetail extends LoadedCustomerFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private String strAvo="";
+    boolean flagManuallySelection=false;
     private String startDate, endDate;
     public static Activity activity;
    // private Language language;maharshi.mehta@mateco.de
@@ -207,6 +209,11 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             toDate=getArguments().getString("toDate");
 
         }
+        Gson gson = new Gson();
+        Pricing2InsertPriceUseInformationListData PriceUseInformationListdata = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
+        if(PriceUseInformationListdata != null) {
+            strAvo = PriceUseInformationListdata.getAVO();
+        }
         matecoPriceApplication = (MatecoPriceApplication) getActivity().getApplication();
         parsableClass=preferences.getPriceData(getActivity());
         language = matecoPriceApplication.getLanguage();
@@ -294,8 +301,7 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                 args.putString("fromDate",fromDate);
                 args.putString("toDate",toDate);
 
-                Gson gson = new Gson();
-                Pricing2InsertPriceUseInformationListData myJson = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
+
 
                 /*if(checkBoxSelbstfahrer.isChecked()){
                     ArrayList<Pricing1BranchData> branches = new ArrayList<>();
@@ -371,13 +377,13 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
     public void initControl()
     {
         databaseHanlder = new DataBaseHandler(getActivity());
-
         spinnerLadefahrzeug =(Spinner)rootView.findViewById(R.id.spinnerLadefahrzeug);
-
-
         checkBoxAnlieferung =(CheckBox)rootView.findViewById(R.id.checkBoxAnlieferung);
         checkBoxKann =(CheckBox)rootView.findViewById(R.id.checkBoxKann);
         checkBoxLieferung =(CheckBox)rootView.findViewById(R.id.checkBoxLieferung);
+        if(!TextUtils.isEmpty(strAvo)){
+            checkBoxLieferung.setEnabled(false);
+        }
         checkBoxVoranmeldung =(CheckBox)rootView.findViewById(R.id.checkBoxVoranmeldung);
         checkBoxBenachrichtgung =(CheckBox)rootView.findViewById(R.id.checkBoxBenachrichtgung);
         checkBoxRampena =(CheckBox)rootView.findViewById(R.id.checkBoxRampena);
@@ -450,21 +456,22 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             imgbtnStartdate.setEnabled(false);
         }
 
-
-        /*if(!TextUtils.isEmpty(preferences.getPriceDevice())){
-            if(preferences.getPriceDevice().equalsIgnoreCase("Anhänger") || preferences.getPriceDevice().equalsIgnoreCase("LKW"))
-            {
-                checkBoxSelbstfahrer.setEnabled(true);
-            }
-            else {
-                checkBoxSelbstfahrer.setEnabled(false);
-            }
-        }
-        else {
-            checkBoxSelbstfahrer.setEnabled(false);
-        }*/
-
         checkBoxChangeEffect();
+
+        /*if(!TextUtils.isEmpty(strAvo)){
+            setDefaultTimeandDate();
+            textviewDate1.setEnabled(true);
+            textviewDate2.setEnabled(true);
+            textviewHourEnd.setEnabled(true);
+            textviewHourStart.setEnabled(true);
+            imgbtnendtime.setEnabled(true);
+            imgbtnStartdate.setEnabled(true);
+            imgbtnenddate.setEnabled(true);
+            imgbtnStarttime.setEnabled(true);
+            checkBoxLieferung.setChecked(true);
+        }else{
+
+        }*/
 
         spinnerLadefahrzeug.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -800,12 +807,34 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if(isChecked){
+                    checkBoxLieferung.setChecked(true);
                     edittextKannDetail.setEnabled(true);
                 }
                 else {
                     edittextKannDetail.setText("");
                     edittextKannDetail.setEnabled(false);
+                    if(!checkBoxVoranmeldung.isChecked() && !checkBoxBenachrichtgung.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxsonstige.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
 
+                }
+            }
+        });
+        checkBoxLieferung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBoxLieferung.isChecked()) {
+                    flagManuallySelection = true;
+                    LogApp.showLog(" "," checkbox value "+checkBoxLieferung.isChecked());
+                    /*if(flagManuallySelection == false){
+                        flagManuallySelection = true;
+                    }else {
+                        flagManuallySelection = false;
+                    }*/
+
+                }else {
+                    LogApp.showLog(" "," checkbox value "+checkBoxLieferung.isChecked());
                 }
             }
         });
@@ -813,7 +842,6 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-
                     setDefaultTimeandDate();
                     textviewDate1.setEnabled(true);
                     textviewDate2.setEnabled(true);
@@ -825,21 +853,46 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                     imgbtnStarttime.setEnabled(true);
                 }
                 else {
+                    flagManuallySelection = false;
+                    if(checkBoxKann.isChecked() || checkBoxVoranmeldung.isChecked() || checkBoxBenachrichtgung.isChecked()
+                            || checkBoxRampena.isChecked() || checkBoxsonstige.isChecked() || checkBoxEinweisung.isChecked() || !TextUtils.isEmpty(strAvo)) {
+                        checkBoxLieferung.setChecked(true);
+                    }
+                    else {
+                        checkBoxLieferung.setChecked(false);
+                        textviewDate1.setText("");
+                        textviewDate2.setText("");
+                        textviewHourEnd.setText("");
+                        textviewHourStart.setText("");
 
-                    textviewDate1.setText("");
-                    textviewDate2.setText("");
-                    textviewHourEnd.setText("");
-                    textviewHourStart.setText("");
+                        textviewDate1.setEnabled(false);
+                        textviewDate2.setEnabled(false);
+                        textviewHourEnd.setEnabled(false);
+                        textviewHourStart.setEnabled(false);
+                        imgbtnendtime.setEnabled(false);
+                        imgbtnStartdate.setEnabled(false);
+                        imgbtnenddate.setEnabled(false);
+                        imgbtnStarttime.setEnabled(false);
+                        /*if(TextUtils.isEmpty(strAvo)){
+                            checkBoxLieferung.setChecked(true);
+                            textviewDate1.setText("");
+                            textviewDate2.setText("");
+                            textviewHourEnd.setText("");
+                            textviewHourStart.setText("");
 
+                            textviewDate1.setEnabled(false);
+                            textviewDate2.setEnabled(false);
+                            textviewHourEnd.setEnabled(false);
+                            textviewHourStart.setEnabled(false);
+                            imgbtnendtime.setEnabled(false);
+                            imgbtnStartdate.setEnabled(false);
+                            imgbtnenddate.setEnabled(false);
+                            imgbtnStarttime.setEnabled(false);
+                        }else{
+                            checkBoxLieferung.setChecked(true);
+                        }*/
 
-                    textviewDate1.setEnabled(false);
-                    textviewDate2.setEnabled(false);
-                    textviewHourEnd.setEnabled(false);
-                    textviewHourStart.setEnabled(false);
-                    imgbtnendtime.setEnabled(false);
-                    imgbtnStartdate.setEnabled(false);
-                    imgbtnenddate.setEnabled(false);
-                    imgbtnStarttime.setEnabled(false);
+                    }
                 }
             }
         });
@@ -849,11 +902,16 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if(isChecked){
+                    checkBoxLieferung.setChecked(true);
                     edittextVoranmeldungDetail.setEnabled(true);
                 }
                 else {
                     edittextVoranmeldungDetail.setText("");
                     edittextVoranmeldungDetail.setEnabled(false);
+                    if(!checkBoxKann.isChecked() && !checkBoxBenachrichtgung.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxsonstige.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
                 }
             }
         });
@@ -863,11 +921,16 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if(isChecked){
+                    checkBoxLieferung.setChecked(true);
                     edittextSonstigeDetail.setEnabled(true);
                 }
                 else {
                     edittextSonstigeDetail.setText("");
                     edittextSonstigeDetail.setEnabled(false);
+                    if(!checkBoxKann.isChecked() && !checkBoxBenachrichtgung.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
                 }
             }
         });
@@ -877,14 +940,60 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if(isChecked){
+                    checkBoxLieferung.setChecked(true);
                     edittextBenachrichDetial.setEnabled(true);
                 }
                 else {
                     edittextBenachrichDetial.setText("");
                     edittextBenachrichDetial.setEnabled(false);
+                    if(!checkBoxKann.isChecked() && !checkBoxsonstige.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
                 }
             }
         });
+        checkBoxRampena.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                }else {
+                    if(!checkBoxKann.isChecked() && !checkBoxsonstige.isChecked() && !checkBoxBenachrichtgung.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
+                }
+            }
+        });
+        checkBoxEinweisung.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                }else{
+                    if(!checkBoxKann.isChecked() && !checkBoxsonstige.isChecked() && !checkBoxBenachrichtgung.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxRampena.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
+                }
+            }
+        });
+
+        if(!TextUtils.isEmpty(strAvo)){
+            checkBoxLieferung.setChecked(true);
+            /*setDefaultTimeandDate();
+            textviewDate1.setEnabled(true);
+            textviewDate2.setEnabled(true);
+            textviewHourEnd.setEnabled(true);
+            textviewHourStart.setEnabled(true);
+            imgbtnendtime.setEnabled(true);
+            imgbtnStartdate.setEnabled(true);
+            imgbtnenddate.setEnabled(true);
+            imgbtnStarttime.setEnabled(true);*/
+        }
+
+
     }
     public void setCurrentDateAndtime(){
         final  Calendar calendar = Calendar.getInstance();
@@ -1215,7 +1324,7 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
                 textviewDate2.setText(dateString);
             }
             else {
-                textviewDate2.setText(toDate);
+                textviewDate2.setText(fromDate);
             }
 
 
@@ -1232,9 +1341,9 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
         {
             Calendar calendar = Calendar.getInstance();
             // Set the time and date information and display it.
-            calendar.set(Calendar.HOUR, 17);
+            calendar.set(Calendar.HOUR, 9);
             calendar.set(Calendar.MINUTE, 00);
-            textviewHourEnd.setText("17"+":"+pad(calendar.get(Calendar.MINUTE)));
+            textviewHourEnd.setText("09"+":"+pad(calendar.get(Calendar.MINUTE)));
         }
 
     }
@@ -1249,9 +1358,15 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
         if(!TextUtils.isEmpty(parsableClass.flagKann)){
             checkBoxKann.setChecked(Boolean.parseBoolean(parsableClass.flagKann));
         }
-        if(!TextUtils.isEmpty(parsableClass.flagLieferung)){
-            checkBoxLieferung.setChecked(Boolean.parseBoolean(parsableClass.flagLieferung));
+        if(TextUtils.isEmpty(strAvo)){
+            checkBoxLieferung.setChecked(false);
         }
+        else{
+            if(!TextUtils.isEmpty(parsableClass.flagLieferung) ) {
+                checkBoxLieferung.setChecked(Boolean.parseBoolean(parsableClass.flagLieferung));
+            }
+        }
+
         if(!TextUtils.isEmpty(parsableClass.flagVoranmeldung)){
             checkBoxVoranmeldung.setChecked(Boolean.parseBoolean(parsableClass.flagVoranmeldung));
         }
@@ -1296,66 +1411,67 @@ public class FragmentPricingDetail extends LoadedCustomerFragment implements Vie
         }
 
 
-
-
-        try {
-            if(!TextUtils.isEmpty(preferences.getstartDate())){
-                if(fromDate.equalsIgnoreCase("")){
-                    if(preferences.getstartDate().equalsIgnoreCase("null")){
-                        textviewDate1.setText("");
+        if(!TextUtils.isEmpty(strAvo)){
+            try {
+                if(!TextUtils.isEmpty(preferences.getstartDate())){
+                    if(fromDate.equalsIgnoreCase("")){
+                        if(preferences.getstartDate().equalsIgnoreCase("null")){
+                            textviewDate1.setText("");
+                        }
+                        else {
+                            textviewDate1.setText(preferences.getstartDate());
+                        }
                     }
                     else {
-                        textviewDate1.setText(preferences.getstartDate());
+                        textviewDate1.setText(fromDate);
                     }
-                }
-                else {
-                    textviewDate1.setText(fromDate);
-                }
 
 
-            }
-            if(!TextUtils.isEmpty(preferences.getendDate())){
-                if(toDate.equalsIgnoreCase("")){
-                    if(preferences.getendDate().equalsIgnoreCase("null")){
-                        textviewDate2.setText("");
+                }
+                if(!TextUtils.isEmpty(preferences.getendDate())){
+                    if(toDate.equalsIgnoreCase("")){
+                        if(preferences.getendDate().equalsIgnoreCase("null")){
+                            textviewDate2.setText("");
+                        }
+                        else {
+                            textviewDate2.setText(preferences.getstartDate());
+                        }
                     }
                     else {
-                        textviewDate2.setText(preferences.getendDate());
+                        textviewDate2.setText(toDate);
                     }
-                }
-                else {
-                    textviewDate2.setText(toDate);
+
+
                 }
 
+                if(!TextUtils.isEmpty(preferences.getstartTime())){
+                    if(preferences.getstartTime().equalsIgnoreCase("null")){
+                        textviewHourStart.setText("");
+                    }
+                    else {
+                        textviewHourStart.setText(preferences.getstartTime());
+                    }
+                    //textviewHourStart.setText(parsableClass.strStartTime.substring(0, 2));
+                    //textviewMinuteStart.setText(Math.max(parsableClass.strStartTime.length() - 2, 0));
+                    //textviewMinuteStart.setText(parsableClass.strStartTime.substring(parsableClass.strStartTime.length() - 2));
+                }
+                if(!TextUtils.isEmpty(preferences.getendTime())){
+                    if(preferences.getendTime().equalsIgnoreCase("null")){
+                        textviewHourEnd.setText("");
+                    }
+                    else {
+                        textviewHourEnd.setText(preferences.getendTime());
+                    }
+                    //textviewHourEnd.setText(parsableClass.strEndtime.substring(0,2));
+                    //textviewMinuteEnd.setText(parsableClass.strEndtime.substring(parsableClass.strEndtime.length() - 2));
+                }
 
             }
-
-            if(!TextUtils.isEmpty(preferences.getstartTime())){
-                if(preferences.getstartTime().equalsIgnoreCase("null")){
-                    textviewHourStart.setText("");
-                }
-                else {
-                    textviewHourStart.setText(preferences.getstartTime());
-                }
-                //textviewHourStart.setText(parsableClass.strStartTime.substring(0, 2));
-                //textviewMinuteStart.setText(Math.max(parsableClass.strStartTime.length() - 2, 0));
-                //textviewMinuteStart.setText(parsableClass.strStartTime.substring(parsableClass.strStartTime.length() - 2));
+            catch (Exception e){
+                LogApp.showLog(" exeexe"," exception while date operation "+e.toString());
             }
-            if(!TextUtils.isEmpty(preferences.getendTime())){
-                if(preferences.getendTime().equalsIgnoreCase("null")){
-                    textviewHourEnd.setText("");
-                }
-                else {
-                    textviewHourEnd.setText(preferences.getendTime());
-                }
-                //textviewHourEnd.setText(parsableClass.strEndtime.substring(0,2));
-                //textviewMinuteEnd.setText(parsableClass.strEndtime.substring(parsableClass.strEndtime.length() - 2));
-            }
-
         }
-        catch (Exception e){
-            LogApp.showLog(" exeexe"," exception while date operation "+e.toString());
-        }
+
 
     }
 

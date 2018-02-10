@@ -132,19 +132,19 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private Menu menu;
     private LinearLayout linearLayoutProjectActivityList, linearLayoutProjectActivityListNote;
     private ListView listViewProjectActivityList, listViewProjectActivityEmployee, listProjectActivityContacts;
-    private ArrayList<ProjectDetailActivityModel> listOfLoadedProjectActivity;
+    private ArrayList<ProjectDetailActivityModel> arrayListLoadedProjectActivity;
     private ProjectActivityListAdapter adapterProjectActivityList;
     private Spinner spinnerProjectActivityActivityType, spinnerProjectActivityActivityTopic, spinnerProjectActivityOffer;
     private boolean isEdited=false;
     private ArrayList<ContactPersonModel> listOfSelectedContactPerson, listOfRemainingContactPerson, listOfAllContactPerson,listOfRemainingContactPersontemp;
-    private List<CustomerActivityEmployeeListItem> listOfSelectedEmployee, listOfRemainingEmployee, listOfAllEmployee;
-    private ArrayList<CustomerOfferModel> listOfAllOffer;
-    private List<CustomerActivityTypeListItem> listOfActivityType;
-    private List<CustomerActivityTopicListItem> listOfActivityTopic;
+    private List<CustomerActivityEmployeeListItem> arrayListSelectedEmployee, arrayListRemainingEmployee, arrayListAllEmployee;
+    private ArrayList<CustomerOfferModel> arrayListOffer;
+    private List<CustomerActivityTypeListItem> arrayListActivityType;
+    private List<CustomerActivityTopicListItem> arraListActivityTopic;
     private ImageButton imageButtonProjectActivityStartDate, imageButtonStartTime, imageButtonEndTime;
     private CheckBox checkBoxProjectActivityRealized, checkBoxProjectActivityFixedTimes;
-    private EmployeeAdapter selectedEmployeeAdapter, remainingEmployeeAdapter;
-    private CustomerContactPersonListAdapter selectedContactPersonAdapter, remainingContactPersonAdapter;
+    private EmployeeAdapter adapterSelectedEmployee, adapterRemainingEmployee;
+    private CustomerContactPersonListAdapter adapterSelectedContactPerson, remainingContactPersonAdapter;
     private OfferAdapter offerAdapter;
     private CustomerActivityTypeListItem selectedActivityTypeModel;
     private CustomerActivityTopicListItem selectedActivityTopicModel;
@@ -217,14 +217,14 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         linearLayoutProjectActivityList = (LinearLayout)rootView.findViewById(R.id.linearLayoutProjectActivityList);
         linearLayoutProjectActivityListNote = (LinearLayout)rootView.findViewById(R.id.linearLayoutProjectActivityListNote);
         listViewProjectActivityList = (ListView)rootView.findViewById(R.id.listViewProjectActivityList);
-        listOfLoadedProjectActivity = new ArrayList<>();
+        arrayListLoadedProjectActivity = new ArrayList<>();
 
         listViewProjectActivityEmployee = (ListView)rootView.findViewById(R.id.listViewProjectActivityEmployee);
         listProjectActivityContacts = (ListView)rootView.findViewById(R.id.listProjectActivityContacts);
 
-        listOfLoadedProjectActivity = matecoPriceApplication.getLoadedProjectActivities(DataHelper.LoadedProjectDetailActivityInfo, new ArrayList<>().toString());
+        arrayListLoadedProjectActivity = matecoPriceApplication.getLoadedProjectActivities(DataHelper.LoadedProjectDetailActivityInfo, new ArrayList<>().toString());
 
-        adapterProjectActivityList = new ProjectActivityListAdapter(getActivity(), listOfLoadedProjectActivity, R.layout.list_item_project_activity);
+        adapterProjectActivityList = new ProjectActivityListAdapter(getActivity(), arrayListLoadedProjectActivity, R.layout.list_item_project_activity);
         listViewProjectActivityList.setAdapter(adapterProjectActivityList);
 
         spinnerProjectActivityActivityType = (Spinner)rootView.findViewById(R.id.spinnerProjectActivityActivityType);
@@ -232,94 +232,98 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
 
         spinnerProjectActivityOffer = (Spinner)rootView.findViewById(R.id.spinnerProjectActivityOffer);
 
-        listOfAllEmployee = new ArrayList<>();
-        listOfSelectedEmployee = new ArrayList<>();
-        listOfRemainingEmployee = new ArrayList<>();
+        arrayListAllEmployee = new ArrayList<>();
+        arrayListSelectedEmployee = new ArrayList<>();
+        arrayListRemainingEmployee = new ArrayList<>();
 
         listOfSelectedContactPerson = new ArrayList<>();
         listOfRemainingContactPerson = new ArrayList<>();
         listOfAllContactPerson = new ArrayList<>();
 
-        listOfAllOffer = new ArrayList<>();
-        listOfActivityTopic = new ArrayList<>();
-        listOfActivityType = new ArrayList<>();
+        arrayListOffer = new ArrayList<>();
+        arraListActivityTopic = new ArrayList<>();
+        arrayListActivityType = new ArrayList<>();
         //listOfAllContactPerson = matecoPriceApplication.getLoadedCustomerContactPersons(DataHelper.LoadedCustomerContactPerson, new ArrayList<ContactPersonModel>().toString());
-        //listOfActivityType = db.getActivityTypes();
-        //listOfActivityTopic = db.getActivityTopics();
-        //listOfAllEmployee = db.getEmployees();
+        //arrayListActivityType = db.getActivityTypes();
+        //arraListActivityTopic = db.getActivityTopics();
+        //arrayListAllEmployee = db.getEmployees();
+
+        adapterSelectedEmployee = new EmployeeAdapter(getActivity(), arrayListSelectedEmployee, R.layout.list_item_employee);
+        adapterRemainingEmployee = new EmployeeAdapter(getActivity(), arrayListRemainingEmployee, R.layout.list_item_employee);
+        adapterSelectedContactPerson = new CustomerContactPersonListAdapter(getActivity(), listOfSelectedContactPerson, R.layout.list_item_customer_contact_person);
+        remainingContactPersonAdapter = new CustomerContactPersonListAdapter(getActivity(), listOfRemainingContactPerson, R.layout.list_item_customer_contact_person);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                arrayListActivityType = matecoPriceApplication.getCustomerActivityTypeList(DataHelper.CustomerActivityTypelist,"");
+                arraListActivityTopic = matecoPriceApplication.getCustomerActivityTopicList(DataHelper.CustomerActivityTopiclist,"");
+                arrayListAllEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
+
+                adapterActivityType = new ActivityTypeAdapter(getActivity(), arrayListActivityType, R.layout.list_item_spinner_activity_type, language);
+                adapterActivityTopic = new ActivityTopicAdapter(getActivity(), arraListActivityTopic, R.layout.list_item_spinner_activity_topic, language);
+
+                offerAdapter = new OfferAdapter(getActivity(), arrayListOffer, R.layout.list_item_offer, language);
+                if(isAdded()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            spinnerProjectActivityActivityType.setAdapter(adapterActivityType);
+                            spinnerProjectActivityActivityTopic.setAdapter(adapterActivityTopic);
+                            spinnerProjectActivityOffer.setAdapter(offerAdapter);
+                            if(arrayListLoadedProjectActivity.size() > 0)
+                            {
+                                adapterProjectActivityList.setSelectedIndex(0);
+                                selectedActivity = arrayListLoadedProjectActivity.get(0);
+                                setProjectActivity(selectedActivity);
 
 
-        listOfActivityType = matecoPriceApplication.getCustomerActivityTypeList(DataHelper.CustomerActivityTypelist,"");
-        listOfActivityTopic = matecoPriceApplication.getCustomerActivityTopicList(DataHelper.CustomerActivityTypelist,"");
-        listOfAllEmployee = matecoPriceApplication.getCustomerActivityEmployeelist(DataHelper.CustomerActivityEmployeelist,"");
 
-        adapterActivityType = new ActivityTypeAdapter(getActivity(), listOfActivityType, R.layout.list_item_spinner_activity_type, language);
-        adapterActivityTopic = new ActivityTopicAdapter(getActivity(), listOfActivityTopic, R.layout.list_item_spinner_activity_topic, language);
 
-        selectedEmployeeAdapter = new EmployeeAdapter(getActivity(), listOfSelectedEmployee, R.layout.list_item_employee);
-        remainingEmployeeAdapter = new EmployeeAdapter(getActivity(), listOfRemainingEmployee, R.layout.list_item_employee);
+                                listProjectActivityContacts.setAdapter(adapterSelectedContactPerson);
+                                listViewProjectActivityEmployee.setAdapter(adapterSelectedEmployee);
 
-        spinnerProjectActivityActivityType.setAdapter(adapterActivityType);
-        spinnerProjectActivityActivityTopic.setAdapter(adapterActivityTopic);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+
+
 
         imageButtonProjectActivityStartDate = (ImageButton)rootView.findViewById(R.id.imageButtonProjectActivityStartDate);
         imageButtonProjectActivityStartDate.setOnClickListener(this);
         labelProjectActivityStartDate = (TextView)rootView.findViewById(R.id.labelProjectActivityStartDate);
-
         imageButtonProjectActivityStartDate = (ImageButton)rootView.findViewById(R.id.imageButtonProjectActivityStartDate);
-
         labelProjectActivityStartTime = (TextView)rootView.findViewById(R.id.labelProjectActivityStartTime);
-
         imageButtonEndTime = (ImageButton)rootView.findViewById(R.id.imageButtonEndTime);
         imageButtonStartTime = (ImageButton)rootView.findViewById(R.id.imageButtonStartTime);
-
         labelProjectActivityEndTime = (TextView)rootView.findViewById(R.id.labelProjectActivityEndTime);
-
         checkBoxProjectActivityRealized = (CheckBox)rootView.findViewById(R.id.checkBoxProjectActivityRealized);
         checkBoxProjectActivityFixedTimes = (CheckBox)rootView.findViewById(R.id.checkBoxProjectActivityFixedTimes);
-
         buttonRemoveProjectActivityEmployee = (ImageButton)rootView.findViewById(R.id.buttonRemoveProjectActivityEmployee);
         buttonAddProjectActivityEmployee = (ImageButton)rootView.findViewById(R.id.buttonAddProjectActivityEmployee);
         buttonRemoveProjectActivityContacts = (ImageButton)rootView.findViewById(R.id.buttonRemoveProjectActivityContacts);
         buttonAddProjectActivityContacts = (ImageButton)rootView.findViewById(R.id.buttonAddProjectActivityContacts);
-
         buttonAddProjectActivityKunde = (ImageButton)rootView.findViewById(R.id.buttonAddProjectActivityKunde);
-
-        selectedContactPersonAdapter = new CustomerContactPersonListAdapter(getActivity(), listOfSelectedContactPerson, R.layout.list_item_customer_contact_person);
-        remainingContactPersonAdapter = new CustomerContactPersonListAdapter(getActivity(), listOfRemainingContactPerson, R.layout.list_item_customer_contact_person);
-
-        listProjectActivityContacts.setAdapter(selectedContactPersonAdapter);
-
-        listViewProjectActivityEmployee.setAdapter(selectedEmployeeAdapter);
-        setListViewHeightBasedOnChildren(listViewProjectActivityEmployee);
-
-        //listOfAllOffer.addAll(matecoPriceApplication.getLoadedCustomerOffers(DataHelper.LoadedCustomerOffer, new ArrayList<CustomerOfferModel>().toString()));
-        offerAdapter = new OfferAdapter(getActivity(), listOfAllOffer, R.layout.list_item_offer, language);
-
-        spinnerProjectActivityOffer.setAdapter(offerAdapter);
-
         textProjectActivityNotes = (EditText)rootView.findViewById(R.id.textProjectActivityNotes);
+        labelProjectActivityStartDate.setOnClickListener(this);
 
+
+
+
+
+        setListViewHeightBasedOnChildren(listViewProjectActivityEmployee);
+        //arrayListOffer.addAll(matecoPriceApplication.getLoadedCustomerOffers(DataHelper.LoadedCustomerOffer, new ArrayList<CustomerOfferModel>().toString()));
         selectedActivityTypeModel = new CustomerActivityTypeListItem();
         selectedActivityTopicModel = new CustomerActivityTopicListItem();
         selectedCustomerOfferModel = new CustomerOfferModel();
         setLanguage();
-
-        if(listOfLoadedProjectActivity.size() > 0)
-        {
-            /*if(isViewShown)
-            {*/
-                adapterProjectActivityList.setSelectedIndex(0);
-                selectedActivity = listOfLoadedProjectActivity.get(0);
-                setProjectActivity(selectedActivity);
-            //}
-        }
         makeEditable(false);
         getActivity().invalidateOptionsMenu();
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelProject());
         setHasOptionsMenu(true);
-
-        labelProjectActivityStartDate.setOnClickListener(this);
     }
 
     /*@Override
@@ -340,7 +344,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adapterProjectActivityList.setSelectedIndex(position);
-                selectedActivity = listOfLoadedProjectActivity.get(position);
+                selectedActivity = arrayListLoadedProjectActivity.get(position);
                 setProjectActivity(selectedActivity);
                 kontaktWhileUpdate = selectedActivity.getKontakt();
             }
@@ -348,7 +352,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         listViewProjectActivityEmployee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedEmployeeAdapter.setSelectedIndex(position);
+                adapterSelectedEmployee.setSelectedIndex(position);
             }
         });
 
@@ -359,7 +363,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     //selectedLegalForm = listOfLegalForm.get(i);
                     selectedActivityTypeModel = null;
                 } else {
-                    selectedActivityTypeModel = listOfActivityType.get(position - 1);
+                    selectedActivityTypeModel = arrayListActivityType.get(position - 1);
                 }
             }
 
@@ -380,7 +384,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 }
                 else
                 {
-                    selectedActivityTopicModel = listOfActivityTopic.get(position - 1);
+                    selectedActivityTopicModel = arraListActivityTopic.get(position - 1);
                 }
             }
 
@@ -396,7 +400,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     //selectedLegalForm = listOfLegalForm.get(i);
                     selectedCustomerOfferModel = null;
                 } else {
-                    selectedCustomerOfferModel = listOfAllOffer.get(position - 1);
+                    selectedCustomerOfferModel = arrayListOffer.get(position - 1);
                 }
             }
             @Override
@@ -409,7 +413,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //view.setSelected(true);
-                selectedContactPersonAdapter.setSelectedIndex(position);
+                adapterSelectedContactPerson.setSelectedIndex(position);
             }
         });
 
@@ -417,7 +421,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //view.setSelected(true);
-                selectedEmployeeAdapter.setSelectedIndex(position);
+                adapterSelectedEmployee.setSelectedIndex(position);
             }
         });
     }
@@ -550,7 +554,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         listOfAllContactPerson.clear();
         listOfSelectedContactPerson.clear();
         listOfRemainingContactPerson.clear();
-        listOfAllOffer.clear();
+        arrayListOffer.clear();
 
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
@@ -558,12 +562,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             {
 
                 boolean isActivityTypeSelected = false;
-                for(int i = 0; i < listOfActivityType.size(); i++)
+                for(int i = 0; i < arrayListActivityType.size(); i++)
                 {
-                    if(activity.getAkttypID().equals(listOfActivityType.get(i).getAkttyp()))
+                    if(activity.getAkttypID().equals(arrayListActivityType.get(i).getAkttyp()))
                     {
                         spinnerProjectActivityActivityType.setSelection(i + 1);
-                        selectedActivityTypeModel = listOfActivityType.get(i);
+                        selectedActivityTypeModel = arrayListActivityType.get(i);
                         isActivityTypeSelected = true;
                         //selectedLegalForm = listOfLegalForm.get(i);
                         break;
@@ -574,12 +578,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     spinnerProjectActivityActivityType.setSelection(0);
                 }
                 boolean isActivityTopicSelected = false;
-                for(int i = 0; i < listOfActivityTopic.size(); i++)
+                for(int i = 0; i < arraListActivityTopic.size(); i++)
                 {
-                    if(activity.getAktthemaID().equals(listOfActivityTopic.get(i).getAktthema()))
+                    if(activity.getAktthemaID().equals(arraListActivityTopic.get(i).getAktthema()))
                     {
                         spinnerProjectActivityActivityTopic.setSelection(i + 1);
-                        selectedActivityTopicModel = listOfActivityTopic.get(i);
+                        selectedActivityTopicModel = arraListActivityTopic.get(i);
                         isActivityTopicSelected = true;
                         break;
                     }
@@ -589,12 +593,12 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                     spinnerProjectActivityActivityTopic.setSelection(0);
                 }
                 boolean isActivityOfferSelected = false;
-                for(int i = 0; i < listOfAllOffer.size(); i++)
+                for(int i = 0; i < arrayListOffer.size(); i++)
                 {
-                    if(activity.getAngebot().equals(listOfAllOffer.get(i).getOfferno()))
+                    if(activity.getAngebot().equals(arrayListOffer.get(i).getOfferno()))
                     {
                         spinnerProjectActivityOffer.setSelection(i + 1);
-                        selectedCustomerOfferModel = listOfAllOffer.get(i);
+                        selectedCustomerOfferModel = arrayListOffer.get(i);
                         isActivityOfferSelected = true;
                         //selectedLegalForm = listOfLegalForm.get(i);
                         break;
@@ -615,16 +619,20 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 }
                 for(int i = 0; i < activity.getListOfEmployee().size(); i++)
                 {
-                    for(int j = 0; j < listOfAllEmployee.size(); j++)
+                    for(int j = 0; j < arrayListAllEmployee.size(); j++)
                     {
-                        if(activity.getListOfEmployee().get(i).getMitarbeiter().equals(listOfAllEmployee.get(j).getMitarbeiter()))
+                        if(activity.getListOfEmployee().get(i).getMitarbeiter().equals(arrayListAllEmployee.get(j).getMitarbeiter()))
                         {
-                            listOfSelectedEmployee.add(listOfAllEmployee.get(j));
+                            arrayListSelectedEmployee.add(arrayListAllEmployee.get(j));
                             break;
                         }
                     }
                 }
+                adapterSelectedEmployee = new EmployeeAdapter(getActivity(), arrayListSelectedEmployee, R.layout.list_item_employee);
+                listViewProjectActivityEmployee.setAdapter(adapterSelectedEmployee);
+
                 setListViewHeightBasedOnChildren(listViewProjectActivityEmployee);
+
                 if(!activity.getStartzeit().equals("00:00"))
                     labelProjectActivityStartTime.setText(DataHelper.formatTime(activity.getStartzeit()));
                 if(!activity.getEndzeit().equals("00:00"))
@@ -703,11 +711,14 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                                             }
                                         }
                                     }
+                                    if(adapterSelectedContactPerson != null) {
+                                        adapterSelectedContactPerson.notifyDataSetChanged();
+                                    }
                                     setListViewHeightBasedOnChildren(listProjectActivityContacts);
-                                    listOfAllOffer.addAll(customerFullDetail.getCustomerActivityListt().getListOfOffers());
-                                    for(int j = 0; j < listOfAllOffer.size(); j++)
+                                    arrayListOffer.addAll(customerFullDetail.getCustomerActivityListt().getListOfOffers());
+                                    for(int j = 0; j < arrayListOffer.size(); j++)
                                     {
-                                        if(activity.getAngebot().equals(listOfAllOffer.get(j).getOfferno()))
+                                        if(activity.getAngebot().equals(arrayListOffer.get(j).getOfferno()))
                                         {
                                             spinnerProjectActivityOffer.setSelection(j+1);
                                             break;
@@ -750,24 +761,38 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private void clearAllValues()
     {
         textViewProjectActivityKunde.setText("");
-        listOfSelectedEmployee.clear();
-        listOfRemainingEmployee.addAll(listOfAllEmployee);
+        arrayListSelectedEmployee.clear();
+        arrayListRemainingEmployee.addAll(arrayListAllEmployee);
         selectedActivityTypeModel = null;
         selectedActivityTopicModel = null;
         selectedCustomerOfferModel = null;
-        selectedEmployeeAdapter.notifyDataSetChanged();
+
+        if(adapterSelectedEmployee != null) {
+            adapterSelectedEmployee.notifyDataSetChanged();
+        }
+
         spinnerProjectActivityOffer.setSelection(0);
         spinnerProjectActivityActivityTopic.setSelection(0);
         spinnerProjectActivityActivityType.setSelection(0);
 
-        adapterActivityTopic.notifyDataSetChanged();
-        adapterActivityType.notifyDataSetChanged();
-        offerAdapter.notifyDataSetChanged();
+        if(adapterActivityTopic != null) {
+            adapterActivityTopic.notifyDataSetChanged();
+        }
+        if(adapterActivityType != null) {
+            adapterActivityType.notifyDataSetChanged();
+        }
+        if(offerAdapter != null) {
+            offerAdapter.notifyDataSetChanged();
+        }
 
         listOfSelectedContactPerson.clear();
         listOfRemainingContactPerson.addAll(listOfAllContactPerson);
-        selectedContactPersonAdapter.notifyDataSetChanged();
-        offerAdapter.notifyDataSetChanged();
+        if(adapterSelectedContactPerson != null) {
+            adapterSelectedContactPerson.notifyDataSetChanged();
+        }
+        if(offerAdapter != null) {
+            offerAdapter.notifyDataSetChanged();
+        }
         checkBoxProjectActivityRealized.setChecked(false);
         checkBoxProjectActivityFixedTimes.setChecked(false);
         labelProjectActivityStartTime.setText("");
@@ -827,13 +852,13 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 newFragment4.show(getActivity().getFragmentManager(), "TimePicker");
                 break;
             case R.id.buttonRemoveProjectActivityEmployee:
-                if(selectedEmployeeAdapter.selectedIndex != -1)
+                if(adapterSelectedEmployee.selectedIndex != -1)
                 {
-                    listOfRemainingEmployee.add(listOfSelectedEmployee.get(selectedEmployeeAdapter.selectedIndex));
-                    listOfSelectedEmployee.remove(selectedEmployeeAdapter.selectedIndex);
-                    selectedEmployeeAdapter.setSelectedIndex(-1);
-                    remainingEmployeeAdapter.notifyDataSetChanged();
-                    selectedEmployeeAdapter.notifyDataSetChanged();
+                    arrayListRemainingEmployee.add(arrayListSelectedEmployee.get(adapterSelectedEmployee.selectedIndex));
+                    arrayListSelectedEmployee.remove(adapterSelectedEmployee.selectedIndex);
+                    adapterSelectedEmployee.setSelectedIndex(-1);
+                    adapterRemainingEmployee.notifyDataSetChanged();
+                    adapterSelectedEmployee.notifyDataSetChanged();
                 }
                 else
                 {
@@ -844,11 +869,11 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 showAddEmployeeDialog();
                 break;
             case R.id.buttonRemoveProjectActivityContacts:
-                if(selectedContactPersonAdapter.selectedIndex != -1)
+                if(adapterSelectedContactPerson.selectedIndex != -1)
                 {
-                    listOfRemainingContactPerson.add(listOfSelectedContactPerson.get(selectedContactPersonAdapter.selectedIndex));
-                    listOfSelectedContactPerson.remove(selectedContactPersonAdapter.selectedIndex);
-                    selectedContactPersonAdapter.setSelectedIndex(-1);
+                    listOfRemainingContactPerson.add(listOfSelectedContactPerson.get(adapterSelectedContactPerson.selectedIndex));
+                    listOfSelectedContactPerson.remove(adapterSelectedContactPerson.selectedIndex);
+                    adapterSelectedContactPerson.setSelectedIndex(-1);
                     remainingContactPersonAdapter.notifyDataSetChanged();
                 }
                 else
@@ -867,13 +892,13 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 {
                     //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
                     imageSortDate.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listOfLoadedProjectActivity, new ProjectActivityComparable(1, 0));
+                    Collections.sort(arrayListLoadedProjectActivity, new ProjectActivityComparable(1, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortDate.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listOfLoadedProjectActivity, new ProjectActivityComparable(1, 1));
+                    Collections.sort(arrayListLoadedProjectActivity, new ProjectActivityComparable(1, 1));
                     imageSortDate.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
@@ -881,7 +906,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 imageSortRealized.setVisibility(View.GONE);
 
                 adapterProjectActivityList.notifyDataSetChanged();
-                /*Collections.sort(listOfLoadedProjectActivity, new Comparator<ProjectDetailActivityModel>() {
+                /*Collections.sort(arrayListLoadedProjectActivity, new Comparator<ProjectDetailActivityModel>() {
                     @Override
                     public int compare(ProjectDetailActivityModel p1, ProjectDetailActivityModel p2)
                     {
@@ -895,20 +920,20 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 {
                     //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
                     imageSortDesignation.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listOfLoadedProjectActivity, new ProjectActivityComparable(2, 0));
+                    Collections.sort(arrayListLoadedProjectActivity, new ProjectActivityComparable(2, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortDesignation.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listOfLoadedProjectActivity, new ProjectActivityComparable(2, 1));
+                    Collections.sort(arrayListLoadedProjectActivity, new ProjectActivityComparable(2, 1));
                     imageSortDesignation.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortDate.setVisibility(View.GONE);
                 imageSortRealized.setVisibility(View.GONE);
                 adapterProjectActivityList.notifyDataSetChanged();
-                /*Collections.sort(listOfLoadedProjectActivity, new Comparator<ProjectDetailActivityModel>() {
+                /*Collections.sort(arrayListLoadedProjectActivity, new Comparator<ProjectDetailActivityModel>() {
                     @Override
                     public int compare(ProjectDetailActivityModel p1, ProjectDetailActivityModel p2)
                     {
@@ -922,20 +947,20 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 {
                     //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
                     imageSortRealized.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listOfLoadedProjectActivity, new ProjectActivityComparable(3, 0));
+                    Collections.sort(arrayListLoadedProjectActivity, new ProjectActivityComparable(3, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortRealized.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listOfLoadedProjectActivity, new ProjectActivityComparable(3, 1));
+                    Collections.sort(arrayListLoadedProjectActivity, new ProjectActivityComparable(3, 1));
                     imageSortRealized.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortDesignation.setVisibility(View.GONE);
                 imageSortDate.setVisibility(View.GONE);
                 adapterProjectActivityList.notifyDataSetChanged();
-                /*Collections.sort(listOfLoadedProjectActivity, new Comparator<ProjectDetailActivityModel>() {
+                /*Collections.sort(arrayListLoadedProjectActivity, new Comparator<ProjectDetailActivityModel>() {
                     @Override
                     public int compare(ProjectDetailActivityModel p1, ProjectDetailActivityModel p2)
                     {
@@ -974,7 +999,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
 
         ListView listViewAlertSelectFeature = (ListView)dialog.findViewById(R.id.listViewAlertSelectEmployee);
         listViewAlertSelectFeature.setAdapter(remainingContactPersonAdapter);
-        remainingContactPersonAdapter.notifyDataSetChanged();
+        if(remainingContactPersonAdapter != null) {
+            remainingContactPersonAdapter.notifyDataSetChanged();
+        }
         Button buttonDialogAddEmployee, buttonDialogAddEmployeeCancel;
 
         buttonDialogAddEmployee = (Button)dialog.findViewById(R.id.buttonDialogAddEmployee);
@@ -987,7 +1014,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 //view.setSelected(true);
-                remainingContactPersonAdapter.setSelectedIndex(position);
+                if(remainingContactPersonAdapter != null) {
+                    remainingContactPersonAdapter.setSelectedIndex(position);
+                }
             }
         });
         buttonDialogAddEmployee.setOnClickListener(new View.OnClickListener()
@@ -995,21 +1024,33 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             @Override
             public void onClick(View v)
             {
-                if(remainingContactPersonAdapter.selectedIndex != -1)
-                {
-                    listOfSelectedContactPerson.add(listOfRemainingContactPerson.get(remainingContactPersonAdapter.selectedIndex));
-                    listOfRemainingContactPerson.remove(remainingContactPersonAdapter.selectedIndex);
+                if(remainingContactPersonAdapter != null){
+                    if(remainingContactPersonAdapter.selectedIndex != -1)
+                    {
+                        listOfSelectedContactPerson.add(listOfRemainingContactPerson.get(remainingContactPersonAdapter.selectedIndex));
+                        listOfRemainingContactPerson.remove(remainingContactPersonAdapter.selectedIndex);
 
-                    remainingContactPersonAdapter.notifyDataSetChanged();
-                    selectedContactPersonAdapter.notifyDataSetChanged();
-                    setListViewHeightBasedOnChildren(listProjectActivityContacts);
-                    remainingContactPersonAdapter.setSelectedIndex(-1);
-                    dialog.dismiss();
+                        remainingContactPersonAdapter.notifyDataSetChanged();
+
+                        adapterSelectedContactPerson = new CustomerContactPersonListAdapter(getActivity(), listOfSelectedContactPerson, R.layout.list_item_customer_contact_person);
+                        listProjectActivityContacts.setAdapter(adapterSelectedContactPerson);
+
+                        //adapterSelectedContactPerson.notifyDataSetChanged();&&&&&
+
+                        setListViewHeightBasedOnChildren(listProjectActivityContacts);
+                        remainingContactPersonAdapter.setSelectedIndex(-1);
+                        dialog.dismiss();
+                    }
+                    else
+                    {
+                        showShortToast(language.getMessageSelectItemToRemove());
+                    }
                 }
                 else
                 {
                     showShortToast(language.getMessageSelectItemToRemove());
                 }
+
             }
         });
 
@@ -1290,17 +1331,19 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private void showAddEmployeeDialog()
     {
         final Dialog dialog = showCustomDialog(R.layout.dialog_add_employee, language.getMessageSelectEmployee());
-        listOfRemainingEmployee.clear();
-        listOfRemainingEmployee.addAll(removeSelectedEmployee(listOfAllEmployee, listOfSelectedEmployee));
-        Collections.sort(listOfRemainingEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
+        arrayListRemainingEmployee.clear();
+        arrayListRemainingEmployee.addAll(removeSelectedEmployee(arrayListAllEmployee, arrayListSelectedEmployee));
+        Collections.sort(arrayListRemainingEmployee, new Comparator<CustomerActivityEmployeeListItem>() {
             @Override
             public int compare(CustomerActivityEmployeeListItem s1, CustomerActivityEmployeeListItem s2) {
                 return s1.getNachname().compareToIgnoreCase(s2.getNachname());
             }
         });
         ListView listViewAlertSelectFeature = (ListView)dialog.findViewById(R.id.listViewAlertSelectEmployee);
-        listViewAlertSelectFeature.setAdapter(remainingEmployeeAdapter);
-        remainingEmployeeAdapter.notifyDataSetChanged();
+        listViewAlertSelectFeature.setAdapter(adapterRemainingEmployee);
+        if(adapterRemainingEmployee != null) {
+            adapterRemainingEmployee.notifyDataSetChanged();
+        }
         Button buttonDialogAddEmployee, buttonDialogAddEmployeeCancel;
 
         buttonDialogAddEmployee = (Button)dialog.findViewById(R.id.buttonDialogAddEmployee);
@@ -1313,7 +1356,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 //view.setSelected(true);
-                remainingEmployeeAdapter.setSelectedIndex(position);
+                if(adapterRemainingEmployee != null) {
+                    adapterRemainingEmployee.setSelectedIndex(position);
+                }
             }
         });
         buttonDialogAddEmployee.setOnClickListener(new View.OnClickListener()
@@ -1321,18 +1366,23 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             @Override
             public void onClick(View v)
             {
-                if(remainingEmployeeAdapter.selectedIndex != -1)
-                {
-                    listOfSelectedEmployee.add(listOfRemainingEmployee.get(remainingEmployeeAdapter.selectedIndex));
-                    listOfRemainingEmployee.remove(remainingEmployeeAdapter.selectedIndex);
-                    remainingEmployeeAdapter.notifyDataSetChanged();
-                    selectedEmployeeAdapter.notifyDataSetChanged();
-                    setListViewHeightBasedOnChildren(listViewProjectActivityEmployee);
-                    remainingEmployeeAdapter.setSelectedIndex(-1);
-                    dialog.dismiss();
-                }
-                else
-                {
+                if(adapterRemainingEmployee != null) {
+                    if (adapterRemainingEmployee.selectedIndex != -1) {
+                        arrayListSelectedEmployee.add(arrayListRemainingEmployee.get(adapterRemainingEmployee.selectedIndex));
+                        arrayListRemainingEmployee.remove(adapterRemainingEmployee.selectedIndex);
+
+                        adapterSelectedEmployee = new EmployeeAdapter(getActivity(), arrayListSelectedEmployee, R.layout.list_item_employee);
+                        listViewProjectActivityEmployee.setAdapter(adapterSelectedEmployee);
+
+                        adapterRemainingEmployee.notifyDataSetChanged();
+                        //adapterSelectedEmployee.notifyDataSetChanged();
+                        setListViewHeightBasedOnChildren(listViewProjectActivityEmployee);
+                        adapterRemainingEmployee.setSelectedIndex(-1);
+                        dialog.dismiss();
+                    } else {
+                        showShortToast(language.getMessageSelectItemToRemove());
+                    }
+                }else {
                     showShortToast(language.getMessageSelectItemToRemove());
                 }
             }
@@ -1347,7 +1397,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 dialog.dismiss();
             }
         });
-        if(listOfAllEmployee.size() > 0)
+        if(arrayListAllEmployee.size() > 0)
         {
             dialog.show();
         }
@@ -1361,7 +1411,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private List<CustomerActivityEmployeeListItem> removeSelectedEmployee(List<CustomerActivityEmployeeListItem> listOfEmployee, List<CustomerActivityEmployeeListItem> selectedEmployee)
     {
         List<CustomerActivityEmployeeListItem> tempList = new ArrayList<>();
-        //listOfRemainingEmployee.clear();
+        //arrayListRemainingEmployee.clear();
         tempList.addAll(listOfEmployee);
         for(int i = 0; i < selectedEmployee.size(); i++)
         {
@@ -1379,7 +1429,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
     private ArrayList<ContactPersonModel> removeSelectedContactPerson(ArrayList<ContactPersonModel> listOfContactPerson, ArrayList<ContactPersonModel> selectedContactPerson)
     {
         ArrayList<ContactPersonModel> tempList = new ArrayList<>();
-        //listOfRemainingEmployee.clear();
+        //arrayListRemainingEmployee.clear();
         tempList.addAll(listOfContactPerson);
         for(int i = 0; i < selectedContactPerson.size(); i++)
         {
@@ -1425,7 +1475,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 getActivity().onBackPressed();
                 return true;
             case R.id.actionEdit:
-                if(listOfLoadedProjectActivity.size() > 0)
+                if(arrayListLoadedProjectActivity.size() > 0)
                 {
                     makeEditable(true);
                     menu.findItem(R.id.actionEdit).setVisible(false);
@@ -1445,13 +1495,17 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 clearAllValues();
                 listOfAllContactPerson.clear();
                 listOfSelectedContactPerson.clear();
-                selectedContactPersonAdapter.notifyDataSetChanged();
-                for(int i=0;i<listOfAllEmployee.size();i++)
+                if(adapterSelectedContactPerson != null) {
+                    adapterSelectedContactPerson.notifyDataSetChanged();
+                }
+                for(int i = 0; i< arrayListAllEmployee.size(); i++)
                 {
-                    if(listOfAllEmployee.get(i).getMitarbeiter().equals(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber()))
+                    if(arrayListAllEmployee.get(i).getMitarbeiter().equals(matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new ArrayList<LoginPersonModel>().toString()).get(0).getUserNumber()))
                     {
-                        listOfSelectedEmployee.add(listOfAllEmployee.get(i));
-                        selectedEmployeeAdapter.notifyDataSetChanged();
+                        arrayListSelectedEmployee.add(arrayListAllEmployee.get(i));
+                        if(adapterSelectedEmployee != null) {
+                            adapterSelectedEmployee.notifyDataSetChanged();
+                        }
                     }
 
                 }
@@ -1631,9 +1685,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         projectAddactivityModel.setFirstName(" this is test ");
 
         ArrayList<String> listOfSelectedEmployeeId = new ArrayList<>();
-        for(int i = 0; i < listOfSelectedEmployee.size(); i++)
+        for(int i = 0; i < arrayListSelectedEmployee.size(); i++)
         {
-            listOfSelectedEmployeeId.add(listOfSelectedEmployee.get(i).getMitarbeiter());
+            listOfSelectedEmployeeId.add(arrayListSelectedEmployee.get(i).getMitarbeiter());
         }
         projectAddactivityModel.setMitarbeiter(listOfSelectedEmployeeId);
 
@@ -1678,8 +1732,8 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                         try {
                             matecoPriceApplication.saveData(DataHelper.AgendaDate, "");
                             matecoPriceApplication.saveData(DataHelper.LoadedProjectDetailActivityInfo, result);
-                            listOfLoadedProjectActivity.clear();
-                            listOfLoadedProjectActivity.addAll(matecoPriceApplication.getLoadedProjectActivities(DataHelper.LoadedProjectDetailActivityInfo, new ArrayList<>().toString()));
+                            arrayListLoadedProjectActivity.clear();
+                            arrayListLoadedProjectActivity.addAll(matecoPriceApplication.getLoadedProjectActivities(DataHelper.LoadedProjectDetailActivityInfo, new ArrayList<>().toString()));
                             menu.findItem(R.id.actionAdd).setVisible(true);
                             menu.findItem(R.id.actionEdit).setVisible(true);
                             menu.findItem(R.id.actionRight).setVisible(false);
@@ -1689,11 +1743,11 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                             adapterProjectActivityList.notifyDataSetChanged();
                             addNewActivityFormRedesign(false);
                             makeEditable(false);
-                            if(listOfLoadedProjectActivity.size() > 0)
+                            if(arrayListLoadedProjectActivity.size() > 0)
                             {
                                 adapterProjectActivityList.setSelectedIndex(0);
-                                selectedActivity = listOfLoadedProjectActivity.get(0);
-                                setProjectActivity(listOfLoadedProjectActivity.get(0));
+                                selectedActivity = arrayListLoadedProjectActivity.get(0);
+                                setProjectActivity(arrayListLoadedProjectActivity.get(0));
                             }
                             else
                             {
@@ -1722,8 +1776,8 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 multipartEntity.addPart("projectactivityinsert", new StringBody(json, Charset.forName("UTF-8")));
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
-                /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultAddNewCustomerActivity, getActivity(), true);
-                asyncTask.execute();*/
+                /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResultAddNewCustomerActivity, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             catch (IOException ex)
             {
@@ -1821,7 +1875,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
         }
 
         // new
-        //projectActivityUpdateModel.setKontakt(listOfLoadedProjectActivity.get(adapterProjectActivityList.selectedIndex).getKontakt());
+        //projectActivityUpdateModel.setKontakt(arrayListLoadedProjectActivity.get(adapterProjectActivityList.selectedIndex).getKontakt());
 
 
         // old
@@ -1842,9 +1896,9 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
             projectActivityUpdateModel.setAktivitaet(selectedActivity.getAktivitaet());
 
         ArrayList<String> listOfSelectedEmployeeId = new ArrayList<>();
-        for(int i = 0; i < listOfSelectedEmployee.size(); i++)
+        for(int i = 0; i < arrayListSelectedEmployee.size(); i++)
         {
-            listOfSelectedEmployeeId.add(listOfSelectedEmployee.get(i).getMitarbeiter());
+            listOfSelectedEmployeeId.add(arrayListSelectedEmployee.get(i).getMitarbeiter());
         }
         projectActivityUpdateModel.setMitarbeiter(listOfSelectedEmployeeId);
 
@@ -1892,8 +1946,8 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                         try
                         {
                             matecoPriceApplication.saveData(DataHelper.LoadedProjectDetailActivityInfo, result);
-                            listOfLoadedProjectActivity.clear();
-                            listOfLoadedProjectActivity.addAll(matecoPriceApplication.getLoadedProjectActivities(DataHelper.LoadedProjectDetailActivityInfo, new ArrayList<>().toString()));
+                            arrayListLoadedProjectActivity.clear();
+                            arrayListLoadedProjectActivity.addAll(matecoPriceApplication.getLoadedProjectActivities(DataHelper.LoadedProjectDetailActivityInfo, new ArrayList<>().toString()));
                             adapterProjectActivityList.notifyDataSetChanged();
                             menu.findItem(R.id.actionAdd).setVisible(true);
                             menu.findItem(R.id.actionEdit).setVisible(true);
@@ -1904,11 +1958,11 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                             flag = true;
                             addNewActivityFormRedesign(false);
                             makeEditable(false);
-                            if(listOfLoadedProjectActivity.size() > 0)
+                            if(arrayListLoadedProjectActivity.size() > 0)
                             {
                                 adapterProjectActivityList.setSelectedIndex(0);
-                                selectedActivity = listOfLoadedProjectActivity.get(0);
-                                setProjectActivity(listOfLoadedProjectActivity.get(0));
+                                selectedActivity = arrayListLoadedProjectActivity.get(0);
+                                setProjectActivity(arrayListLoadedProjectActivity.get(0));
                             }
                             else
                             {
@@ -1937,8 +1991,8 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
 
-                /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
-                asyncTask.execute();*/
+                /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             catch (IOException ex)
             {
@@ -2418,7 +2472,7 @@ public class ProjectDetailActivityFragment extends BaseFragment implements TextV
                                 /// my code 16-09
                                 //listOfSelectedContactPerson.clear();
                                 //listOfSelectedContactPerson.addAll(customerFullDetail.getCustomerContactPersonList());
-                                //selectedContactPersonAdapter.notifyDataSetChanged();
+                                //adapterSelectedContactPerson.notifyDataSetChanged();
                                 // my code
 
 

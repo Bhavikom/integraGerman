@@ -56,7 +56,7 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
     private EditText textAgendaCustomerDetails, textAgendaProjectDetails, textAgendaOfferDetails,
                 textAgendaNotice, textAgendaActivityStartTime, textAgendaActivityEndTime;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    private ArrayList<DailyAgendaModel> listAgendaMeeting, listAgendaTelephone;
+    private ArrayList<DailyAgendaModel> arrayListAgendaMeeting, arrayListAgendaTelephone;
     private DailyAgendaTodayAdapter adapterAgendaDailyMetting, adapterAgendaDailyPhoneCalls;
     private Button buttonCustomerDetails, buttonProjectDetails;
     private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
@@ -98,20 +98,21 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
         textAgendaActivityStartTime = (EditText)rootView.findViewById(R.id.textAgendaActivityStartTime);
         textAgendaActivityEndTime = (EditText)rootView.findViewById(R.id.textAgendaActivityEndTime);
 
-        listAgendaMeeting = new ArrayList<>();
-        listAgendaTelephone = new ArrayList<>();
+        arrayListAgendaMeeting = new ArrayList<>();
+        arrayListAgendaTelephone = new ArrayList<>();
 
-        adapterAgendaDailyMetting = new DailyAgendaTodayAdapter(getActivity(), listAgendaMeeting, R.layout.list_item_daily_today_agenda);
-        adapterAgendaDailyPhoneCalls = new DailyAgendaTodayAdapter(getActivity(), listAgendaTelephone, R.layout.list_item_daily_today_agenda);
+        //adapterAgendaDailyMetting = new DailyAgendaTodayAdapter(getActivity(), arrayListAgendaMeeting, R.layout.list_item_daily_today_agenda);
+        //adapterAgendaDailyPhoneCalls = new DailyAgendaTodayAdapter(getActivity(), arrayListAgendaTelephone, R.layout.list_item_daily_today_agenda);
 
-        listViewMeeting.setAdapter(adapterAgendaDailyMetting);
-        listViewPhoneCalls.setAdapter(adapterAgendaDailyPhoneCalls);
+        //listViewMeeting.setAdapter(adapterAgendaDailyMetting);
+        //listViewPhoneCalls.setAdapter(adapterAgendaDailyPhoneCalls);
 
         buttonProjectDetails = (Button)rootView.findViewById(R.id.buttonProjectDetails);
         buttonCustomerDetails = (Button)rootView.findViewById(R.id.buttonCustomerDetails);
 
         buttonCustomerDetails.setOnClickListener(this);
         buttonProjectDetails.setOnClickListener(this);
+
 
         setAgenda(matecoPriceApplication.getData(DataHelper.StoreAgenda, ""));
 
@@ -161,13 +162,13 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
         clearFields();
         if(type == 0)
         {
-            model = listAgendaMeeting.get(position);
+            model = arrayListAgendaMeeting.get(position);
             adapterAgendaDailyPhoneCalls.setSelectedIndex(-1);
         }
         else
         {
             adapterAgendaDailyMetting.setSelectedIndex(-1);
-            model = listAgendaTelephone.get(position);
+            model = arrayListAgendaTelephone.get(position);
         }
         String customerDetail = model.getMatchcode() + "\n" + model.getName1() + "\n" + model.getStrasse() + "\n" + model.getPLZ() + " " + model.getOrt();
         textAgendaCustomerDetails.setText(customerDetail);
@@ -282,8 +283,8 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
         textAgendaProjectDetails.setText("");
         listOfAgendaRelatedContactPerson.clear();
         listOfAgendaRelatedEmployee.clear();
-//        listAgendaMeeting.clear();
-//        listAgendaTelephone.clear();
+//        arrayListAgendaMeeting.clear();
+//        arrayListAgendaTelephone.clear();
 //        adapterAgendaDailyMetting.notifyDataSetChanged();
 //        adapterAgendaDailyPhoneCalls.notifyDataSetChanged();
     }
@@ -462,18 +463,24 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
     {
         try
         {
-            listAgendaMeeting.clear();
-            listAgendaTelephone.clear();
+            arrayListAgendaMeeting = new ArrayList<>();
+            arrayListAgendaTelephone = new ArrayList<>();
             if(!result.equals(""))
             {
                 JSONObject jsonObject = new JSONObject(result);
                 if(jsonObject.has("Termine"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Termine").toString(), listAgendaMeeting);
+                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Termine").toString(), arrayListAgendaMeeting);
                 if(jsonObject.has("Telefonate"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Telefonate").toString(), listAgendaTelephone);
+                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Telefonate").toString(), arrayListAgendaTelephone);
             }
-            adapterAgendaDailyMetting.notifyDataSetChanged();
-            adapterAgendaDailyPhoneCalls.notifyDataSetChanged();
+            adapterAgendaDailyMetting = new DailyAgendaTodayAdapter(getActivity(), arrayListAgendaMeeting, R.layout.list_item_daily_today_agenda);
+            adapterAgendaDailyPhoneCalls = new DailyAgendaTodayAdapter(getActivity(), arrayListAgendaTelephone, R.layout.list_item_daily_today_agenda);
+
+            listViewMeeting.setAdapter(adapterAgendaDailyMetting);
+            listViewPhoneCalls.setAdapter(adapterAgendaDailyPhoneCalls);
+
+            //adapterAgendaDailyMetting.notifyDataSetChanged();
+            //adapterAgendaDailyPhoneCalls.notifyDataSetChanged();
         }
         catch (JSONException ex)
         {

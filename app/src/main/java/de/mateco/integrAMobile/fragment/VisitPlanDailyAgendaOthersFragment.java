@@ -59,7 +59,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
     private EditText textAgendaCustomerDetails, textAgendaProjectDetails, textAgendaOfferDetails,
             textAgendaNotice, textAgendaActivityStartTime, textAgendaActivityEndTime;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    private ArrayList<DailyAgendaModel> listWeeklyDue, listWeeklyFuture;
+    private ArrayList<DailyAgendaModel> arrayListWeeklyDue, arrayListWeeklyFuture;
     private DailyAgendaOtherAdapter adapterAgendaWeeklyDue, adapterAgendaWeeklyFuture;
     private Button buttonCustomerDetails, buttonProjectDetails;
     private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
@@ -114,14 +114,14 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         textAgendaActivityStartTime = (EditText)rootView.findViewById(R.id.textAgendaActivityStartTime);
         textAgendaActivityEndTime = (EditText)rootView.findViewById(R.id.textAgendaActivityEndTime);
 
-        listWeeklyDue = new ArrayList<>();
-        listWeeklyFuture = new ArrayList<>();
+        arrayListWeeklyDue = new ArrayList<>();
+        arrayListWeeklyFuture = new ArrayList<>();
 
-        adapterAgendaWeeklyDue = new DailyAgendaOtherAdapter(getActivity(), listWeeklyDue, R.layout.list_item_daily_other_agenda);
-        adapterAgendaWeeklyFuture = new DailyAgendaOtherAdapter(getActivity(), listWeeklyFuture, R.layout.list_item_daily_other_agenda);
+        //adapterAgendaWeeklyDue = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyDue, R.layout.list_item_daily_other_agenda);
+        //adapterAgendaWeeklyFuture = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyFuture, R.layout.list_item_daily_other_agenda);
 
-        listViewWeeklyDue.setAdapter(adapterAgendaWeeklyDue);
-        listViewWeeklyFuture.setAdapter(adapterAgendaWeeklyFuture);
+        //listViewWeeklyDue.setAdapter(adapterAgendaWeeklyDue);
+        //listViewWeeklyFuture.setAdapter(adapterAgendaWeeklyFuture);
 
         buttonProjectDetails = (Button)rootView.findViewById(R.id.buttonProjectDetails);
         buttonCustomerDetails = (Button)rootView.findViewById(R.id.buttonCustomerDetails);
@@ -183,13 +183,13 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         clearFields();
         if (type == 0)
         {
-            model = listWeeklyDue.get(position);
+            model = arrayListWeeklyDue.get(position);
             adapterAgendaWeeklyFuture.setSelectedIndex(-1);
         }
         else
         {
             adapterAgendaWeeklyDue.setSelectedIndex(-1);
-            model = listWeeklyFuture.get(position);
+            model = arrayListWeeklyFuture.get(position);
         }
         activityId = model.getAktivitaet();
         String customerDetail = model.getMatchcode() + "\n" + model.getName1() + "\n" + model.getStrasse() + "\n" + model.getPLZ() + " " + model.getOrt();
@@ -328,8 +328,8 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         textAgendaProjectDetails.setText("");
         listOfAgendaRelatedContactPerson.clear();
         listOfAgendaRelatedEmployee.clear();
-//        listWeeklyDue.clear();
-//        listWeeklyFuture.clear();
+//        arrayListWeeklyDue.clear();
+//        arrayListWeeklyFuture.clear();
 //        adapterAgendaWeeklyDue.notifyDataSetChanged();
 //        adapterAgendaWeeklyFuture.notifyDataSetChanged();
     }
@@ -350,19 +350,19 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 {
                     //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
                     imageSortName.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listWeeklyDue, new FuturePastAgendaComparable(1, 0));
+                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(1, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortName.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listWeeklyDue, new FuturePastAgendaComparable(1, 1));
+                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(1, 1));
                     imageSortName.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortType.setVisibility(View.GONE);
                 imageSortDate.setVisibility(View.GONE);
-                if(listWeeklyDue.size() > 0)
+                if(arrayListWeeklyDue.size() > 0)
                 {
                     adapterAgendaWeeklyDue.setSelectedIndex(0);
                     showDetailAgenda(0, 0);
@@ -373,19 +373,19 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortDate.getVisibility() != View.GONE && !isAscending)
                 {
                     imageSortDate.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listWeeklyDue, new FuturePastAgendaComparable(2, 0));
+                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(2, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortDate.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listWeeklyDue, new FuturePastAgendaComparable(2, 1));
+                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(2, 1));
                     imageSortDate.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortType.setVisibility(View.GONE);
                 imageSortName.setVisibility(View.GONE);
-                if(listWeeklyDue.size() > 0)
+                if(arrayListWeeklyDue.size() > 0)
                 {
                     adapterAgendaWeeklyDue.setSelectedIndex(0);
                     showDetailAgenda(0, 0);
@@ -396,19 +396,19 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortType.getVisibility() != View.GONE && !isAscending)
                 {
                     imageSortType.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listWeeklyDue, new FuturePastAgendaComparable(3, 0));
+                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(3, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortType.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listWeeklyDue, new FuturePastAgendaComparable(3, 1));
+                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(3, 1));
                     imageSortType.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortDate.setVisibility(View.GONE);
                 imageSortName.setVisibility(View.GONE);
-                if(listWeeklyDue.size() > 0)
+                if(arrayListWeeklyDue.size() > 0)
                 {
                     adapterAgendaWeeklyDue.setSelectedIndex(0);
                     showDetailAgenda(0, 0);
@@ -420,19 +420,19 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 {
                     //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
                     imageSortNameFuture.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listWeeklyFuture, new FuturePastAgendaComparable(1, 0));
+                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(1, 0));
                     isAscendingFuture = true;
                 }
                 else
                 {
                     imageSortNameFuture.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listWeeklyFuture, new FuturePastAgendaComparable(1, 1));
+                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(1, 1));
                     imageSortNameFuture.setVisibility(View.VISIBLE);
                     isAscendingFuture = false;
                 }
                 imageSortTypeFuture.setVisibility(View.GONE);
                 imageSortDateFuture.setVisibility(View.GONE);
-                if(listWeeklyFuture.size() > 0)
+                if(arrayListWeeklyFuture.size() > 0)
                 {
                     adapterAgendaWeeklyFuture.setSelectedIndex(0);
                     showDetailAgenda(0, 1);
@@ -443,19 +443,19 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortDateFuture.getVisibility() != View.GONE && !isAscendingFuture)
                 {
                     imageSortDateFuture.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listWeeklyFuture, new FuturePastAgendaComparable(2, 0));
+                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(2, 0));
                     isAscendingFuture = true;
                 }
                 else
                 {
                     imageSortDateFuture.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listWeeklyFuture, new FuturePastAgendaComparable(2, 1));
+                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(2, 1));
                     imageSortDateFuture.setVisibility(View.VISIBLE);
                     isAscendingFuture = false;
                 }
                 imageSortTypeFuture.setVisibility(View.GONE);
                 imageSortNameFuture.setVisibility(View.GONE);
-                if(listWeeklyFuture.size() > 0)
+                if(arrayListWeeklyFuture.size() > 0)
                 {
                     adapterAgendaWeeklyFuture.setSelectedIndex(0);
                     showDetailAgenda(0, 1);
@@ -466,19 +466,19 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortTypeFuture.getVisibility() != View.GONE && !isAscendingFuture)
                 {
                     imageSortTypeFuture.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listWeeklyFuture, new FuturePastAgendaComparable(3, 0));
+                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(3, 0));
                     isAscendingFuture = true;
                 }
                 else
                 {
                     imageSortTypeFuture.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listWeeklyFuture, new FuturePastAgendaComparable(3, 1));
+                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(3, 1));
                     imageSortTypeFuture.setVisibility(View.VISIBLE);
                     isAscendingFuture = false;
                 }
                 imageSortDateFuture.setVisibility(View.GONE);
                 imageSortNameFuture.setVisibility(View.GONE);
-                if(listWeeklyFuture.size() > 0)
+                if(arrayListWeeklyFuture.size() > 0)
                 {
                     adapterAgendaWeeklyFuture.setSelectedIndex(0);
                     showDetailAgenda(0, 1);
@@ -503,8 +503,8 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
             {
                 loginPersonId = selectedEmployee.getMitarbeiter();
             }
-            listWeeklyDue.clear();
-            listWeeklyFuture.clear();
+            arrayListWeeklyDue.clear();
+            arrayListWeeklyFuture.clear();
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -534,8 +534,8 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                         //+ "&datum=" + "13-11-2003";
                         + "&datum=" + finaldate;
 
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();
+                BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();
             }
             else
             {
@@ -556,18 +556,22 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
     {
         try
         {
-            listWeeklyDue.clear();
-            listWeeklyFuture.clear();
+            arrayListWeeklyDue.clear();
+            arrayListWeeklyFuture.clear();
             if(!result.equals(""))
             {
                 JSONObject jsonObject = new JSONObject(result);
                 if(jsonObject.has("Past"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Past").toString(), listWeeklyDue);
+                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Past").toString(), arrayListWeeklyDue);
                 if(jsonObject.has("Future"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Future").toString(), listWeeklyFuture);
+                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Future").toString(), arrayListWeeklyFuture);
             }
+            adapterAgendaWeeklyDue = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyDue, R.layout.list_item_daily_other_agenda);
+            adapterAgendaWeeklyFuture = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyFuture, R.layout.list_item_daily_other_agenda);
+            listViewWeeklyDue.setAdapter(adapterAgendaWeeklyDue);
+            listViewWeeklyFuture.setAdapter(adapterAgendaWeeklyFuture);
 
-            /*Collections.sort(listWeeklyDue, new Comparator<DailyAgendaModel>() {
+            /*Collections.sort(arrayListWeeklyDue, new Comparator<DailyAgendaModel>() {
                 @Override
                 public int compare(DailyAgendaModel lhs, DailyAgendaModel rhs) {
                     Date firstDate = new Date();
@@ -587,7 +591,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 }
             });*/
 
-            /*Collections.sort(listWeeklyFuture, new Comparator<DailyAgendaModel>() {
+            /*Collections.sort(arrayListWeeklyFuture, new Comparator<DailyAgendaModel>() {
                 @Override
                 public int compare(DailyAgendaModel lhs, DailyAgendaModel rhs) {
                     Date firstDate = new Date();
@@ -605,8 +609,8 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                     return firstDate.compareTo(secondDate);
                 }
             });*/
-            adapterAgendaWeeklyDue.notifyDataSetChanged();
-            adapterAgendaWeeklyFuture.notifyDataSetChanged();
+            //adapterAgendaWeeklyDue.notifyDataSetChanged();
+            //adapterAgendaWeeklyFuture.notifyDataSetChanged();
         }
         catch (JSONException ex)
         {

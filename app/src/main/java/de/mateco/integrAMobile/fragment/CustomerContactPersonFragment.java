@@ -1136,8 +1136,8 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                 multipartEntity.addPart("customercontactinsert", new StringBody(json, Charset.forName("UTF-8")));
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
-                /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();*/
+                /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             catch (IOException e)
             {
@@ -1328,8 +1328,8 @@ public class CustomerContactPersonFragment extends LoadedCustomerFragment implem
                 AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
                 asyncTaskPost.execute();
 
-                /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();*/
+                /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             catch (IOException e)
             {

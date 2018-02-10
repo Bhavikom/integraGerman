@@ -1923,8 +1923,8 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&customeractivityupdate=" + URLEncoder.encode(json, "UTF-8");
 
-                asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
-                asyncTask.execute();
+                asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
+                asyncTaskCustomerSearch.execute();
             }
             catch (IOException ex)
             {
@@ -2140,8 +2140,8 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&projectactivityupdate=" + URLEncoder.encode(json, "UTF-8");
 
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
-                asyncTask.execute();*/
+                BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResultCustomerActivityUpdate, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
                 String url = DataHelper.URL_PROJECT_HELPER+"projectactivityupdate";
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));

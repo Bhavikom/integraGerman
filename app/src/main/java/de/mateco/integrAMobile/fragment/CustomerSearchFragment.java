@@ -2,6 +2,7 @@ package de.mateco.integrAMobile.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -44,7 +45,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
@@ -56,7 +56,6 @@ import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.CustomerSearchResultAdapter;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
-import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.ContactPersonModel;
@@ -78,9 +77,10 @@ import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListIte
 
 public class CustomerSearchFragment extends Fragment implements TextView.OnEditorActionListener
 {
+    BasicAsyncTaskGetRequest asyncTaskCustomerSearch;
     ArrayList<CustomerActivityEmployeeListItem> listOfEmployee = new ArrayList<>();
     int count=0;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progressDialog,progressDialogWithButton;
     private boolean isCallservice=true;
     String FOCUSED_CUSTOMER_NO="customerno",FOCUSED_KANR="kanrno",FOCUSED_MATCHCODE="matccode",FOCUSED_NAME1="name1",
         FOCUSED_STREET="street",FOCUSED_PLZ="plz",FOCUSED_ORT="ort",FOCUSED_TEL="telephone";
@@ -618,6 +618,7 @@ public class CustomerSearchFragment extends Fragment implements TextView.OnEdito
                     @Override
                     public void OnAsynResult(String result)
                     {
+                        hideProgressDialogWithCancel();
                         hideProgressDialog();
                         if(result.equals("error"))
                         {
@@ -669,12 +670,13 @@ public class CustomerSearchFragment extends Fragment implements TextView.OnEdito
                         }
                     }
                 };
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();
+                //showProgressDialogWithCancel();
+                asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();
             }
             else
             {
-                hideProgressDialog();
+                //hideProgressDialog();
                 listOfCustomerSearchResult.clear();
                 showLongToast(language.getMessageNetworkNotAvailable());
                 listOfCustomerSearchResult.addAll(db.getCustomer(customerSearch));
@@ -713,6 +715,26 @@ public class CustomerSearchFragment extends Fragment implements TextView.OnEdito
             progressDialog.dismiss();
         }
     }
+    public void showProgressDialogWithCancel(){
+        progressDialogWithButton = new ProgressDialog(getActivity());
+        progressDialogWithButton.setCancelable(false);
+        progressDialogWithButton.setTitle(language.getMessageWaitWhileLoading());
+        progressDialogWithButton.setMessage(language.getMessageWaitWhileLoading());
+        progressDialogWithButton.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                asyncTaskCustomerSearch.cancel(true);
+            }
+        });
+
+        progressDialogWithButton.show();
+    }
+    public void hideProgressDialogWithCancel(){
+        if(progressDialogWithButton != null && progressDialogWithButton.isShowing()){
+            progressDialogWithButton.dismiss();
+        }
+    }
+
     private void getCustomerDetails(int selectedIndex)
     {
         if(DataHelper.isNetworkAvailable(getActivity()))

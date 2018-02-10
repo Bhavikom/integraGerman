@@ -72,4 +72,9 @@ public class BaseActivity extends ActionBarActivity
         toast.setView(layout);
         toast.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

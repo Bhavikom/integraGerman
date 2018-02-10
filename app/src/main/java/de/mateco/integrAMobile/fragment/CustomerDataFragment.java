@@ -940,8 +940,8 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                     //CustomerModel customer = new CustomerModel();
 
                     String json = new Gson().toJson(customerUpdateModel);
-                    /*BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                    asyncTask.execute();*/
+                    /*BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                    asyncTaskCustomerSearch.execute();*/
 
                     /* this is for post method */
                         //String url = DataHelper.URL_PRICE_HELPER+"priceinsert";
@@ -978,8 +978,8 @@ public class CustomerDataFragment extends LoadedCustomerFragment implements Text
                     ex.printStackTrace();
                 }
                 /*Log.e("url", url);
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();*/
+                BasicAsyncTaskGetRequest asyncTaskCustomerSearch = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
+                asyncTaskCustomerSearch.execute();*/
             }
             else if(customerStored == null)
             {

@@ -235,10 +235,10 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                                     else
                                     {
                                         matecoPriceApplication.saveData(DataHelper.StoreOtherAgenda, result);
-                                        //adapter = new VisitPlanDailyAdapter(getChildFragmentManager(), mTabs);
-                                        //mViewPager.setAdapter(adapter);
-                                        /*if(getArguments()!=null)
-                                            mViewPager.setCurrentItem(2);*/
+                                        adapter = new VisitPlanDailyAdapter(getChildFragmentManager(), mTabs);
+                                        mViewPager.setAdapter(adapter);
+                                        if(getArguments()!=null)
+                                            mViewPager.setCurrentItem(2);
                                     }
 
                                 }
@@ -253,7 +253,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
-                            asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), false);
+                            asyncTask1 = new BasicAsyncTaskGetRequest(url, onAsyncResult1, getActivity(), true);
                             asyncTask1.execute();
                         }
                     }
@@ -267,7 +267,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
                         + "/datum=" + dateString;
-                asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
+                asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute(); // load adapter
             }
             else
