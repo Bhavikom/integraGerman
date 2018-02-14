@@ -458,9 +458,11 @@ public class ProjectDetailGeneralFragment extends BaseFragment implements View.O
         textProjectDetailGeneralZipCode.setText(projectGenerallyDetail.getPLZ());
         textProjectDetailGeneralPlace.setText(projectGenerallyDetail.getOrt());
 
-        if(projectGenerallyDetail != null && projectGenerallyDetail.getHoehe() != null) {
-            if (!projectGenerallyDetail.getHoehe().equals("0")) {
-                textProjectDetailGeneralHeight.setText(projectGenerallyDetail.getHoehe());
+        if(projectGenerallyDetail != null) {
+            if(projectGenerallyDetail.getHoehe() != null) {
+                if (!projectGenerallyDetail.getHoehe().equals("0")) {
+                    textProjectDetailGeneralHeight.setText(projectGenerallyDetail.getHoehe());
+                }
             }
         }
 
