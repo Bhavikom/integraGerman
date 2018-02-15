@@ -45,7 +45,7 @@ import de.mateco.integrAMobile.fragment.CustomerOfferOrderFragment;
 import de.mateco.integrAMobile.fragment.CustomerSearchFragment;
 import de.mateco.integrAMobile.fragment.ExtraSendVisitingCardFragment;
 import de.mateco.integrAMobile.fragment.HomeFragment;
-import de.mateco.integrAMobile.fragment.PricingFragment;
+import de.mateco.integrAMobile.fragment.PricingFragment1;
 import de.mateco.integrAMobile.fragment.ProjectNewFragment;
 import de.mateco.integrAMobile.fragment.ProjectSearchFragment;
 import de.mateco.integrAMobile.fragment.SettingAppFragment;
@@ -515,7 +515,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
 
 
                 //preferences2.clearPreferences();
-                fragment = new PricingFragment();
+                fragment = new PricingFragment1();
                 setTitle("Pricing");
                 args.putString("Name", "Pricing");
                 tag = "Pricing";

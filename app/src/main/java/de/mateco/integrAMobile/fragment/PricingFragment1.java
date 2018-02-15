@@ -78,7 +78,7 @@ import de.mateco.integrAMobile.model_logonsquare.PriceDeviceGroupListItem;
 import de.mateco.integrAMobile.model_logonsquare.PriceRentalListItem;
 import de.mateco.integrAMobile.timesquare.CalendarCellDecorator;
 
-public class PricingFragment extends LoadedCustomerFragment implements CalendarPickerView.interfaceDateSelected
+public class PricingFragment1 extends LoadedCustomerFragment implements CalendarPickerView.interfaceDateSelected
 {
 
     private Handler customHandler = new Handler();

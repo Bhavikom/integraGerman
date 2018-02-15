@@ -1102,7 +1102,7 @@ public class ContactPersonSearchFragment extends BaseFragment implements TextVie
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                                     ((HomeActivity)getActivity()).updateAdapter();
-                                Fragment fragment = new PricingFragment();
+                                Fragment fragment = new PricingFragment1();
                                 Bundle bundle = new Bundle();
                                 bundle.putBoolean(Constants.IsFromSearch,true);
                                 bundle.putString("AnsPartenrId",arrayListContactPersonSearchResult.get(selectedIndex).getAnsPartnerId());

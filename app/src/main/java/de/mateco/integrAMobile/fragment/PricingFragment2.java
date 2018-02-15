@@ -1721,7 +1721,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 args.putDouble("gesAminities", gesAm);
                 if (KaNrNo == 0) {
                     if ((price > 0)) {
-                       //PricingFragment3 ft = new PricingFragment3();
+                       //PricingFragment4 ft = new PricingFragment4();
                        // transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                         //ft.setArguments(args);
                        //transaction.replace(R.id.content_frame, ft);
@@ -1731,7 +1731,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                 DataHelper.APP_NAME.equalsIgnoreCase("integrAMobileSchulung/MatecoSalesAppService.svc/json/")||
                                 DataHelper.APP_NAME.equalsIgnoreCase("integrAMobileTest/MatecoSalesAppService.svc/json/"))
                         {
-                            FragmentPricingDetail fragmentPricingDetail = new FragmentPricingDetail();
+                            PricingFragment3 fragmentPricingDetail = new PricingFragment3();
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                             fragmentPricingDetail.setArguments(args);
                             transaction.replace(R.id.content_frame, fragmentPricingDetail);
@@ -1739,7 +1739,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                             transaction.commit();
                         }
                         else{
-                            PricingFragment3 fragmentPricingDetail = new PricingFragment3();
+                            PricingFragment4 fragmentPricingDetail = new PricingFragment4();
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                             fragmentPricingDetail.setArguments(args);
                             transaction.replace(R.id.content_frame, fragmentPricingDetail);
@@ -1753,7 +1753,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                 } else if (KaNrNo <= 1800) {
                     if (!GeratetypeId.equals("")) {
                         if ((price > 0)) {
-                            //PricingFragment3 ft = new PricingFragment3();
+                            //PricingFragment4 ft = new PricingFragment4();
                             //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                             //ft.setArguments(args);
                             //transaction.replace(R.id.content_frame, ft);
@@ -1763,7 +1763,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                     DataHelper.APP_NAME.equalsIgnoreCase("integrAMobileSchulung/MatecoSalesAppService.svc/json/")||
                                     DataHelper.APP_NAME.equalsIgnoreCase("integrAMobileTest/MatecoSalesAppService.svc/json/"))
                             {
-                                FragmentPricingDetail fragmentPricingDetail = new FragmentPricingDetail();
+                                PricingFragment3 fragmentPricingDetail = new PricingFragment3();
                                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                                 fragmentPricingDetail.setArguments(args);
                                 transaction.replace(R.id.content_frame, fragmentPricingDetail);
@@ -1771,7 +1771,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                                 transaction.commit();
                             }
                             else {
-                                PricingFragment3 fragmentPricingDetail = new PricingFragment3();
+                                PricingFragment4 fragmentPricingDetail = new PricingFragment4();
                                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                                 fragmentPricingDetail.setArguments(args);
                                 transaction.replace(R.id.content_frame, fragmentPricingDetail);
@@ -1794,7 +1794,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                     }
                 } else {
                     if ((price > 0)) {
-                        //PricingFragment3 ft = new PricingFragment3();
+                        //PricingFragment4 ft = new PricingFragment4();
                         //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                         //ft.setArguments(args);
                         //transaction.replace(R.id.content_frame, ft);
@@ -1803,7 +1803,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                         if(DataHelper.APP_NAME.equalsIgnoreCase("integrAMobile/MatecoSalesAppService.svc/json/") ||
                                 DataHelper.APP_NAME.equalsIgnoreCase("integrAMobileSchulung/MatecoSalesAppService.svc/json/")||
                                 DataHelper.APP_NAME.equalsIgnoreCase("integrAMobileTest/MatecoSalesAppService.svc/json/")){
-                            FragmentPricingDetail fragmentPricingDetail = new FragmentPricingDetail();
+                            PricingFragment3 fragmentPricingDetail = new PricingFragment3();
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                             fragmentPricingDetail.setArguments(args);
                             transaction.replace(R.id.content_frame, fragmentPricingDetail);
@@ -1811,7 +1811,7 @@ public class PricingFragment2 extends LoadedCustomerFragment implements View.OnC
                             transaction.commit();
                         }
                         else {
-                            PricingFragment3 fragmentPricingDetail = new PricingFragment3();
+                            PricingFragment4 fragmentPricingDetail = new PricingFragment4();
                             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                             fragmentPricingDetail.setArguments(args);
                             transaction.replace(R.id.content_frame, fragmentPricingDetail);

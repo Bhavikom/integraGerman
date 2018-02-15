@@ -2,3409 +2,1660 @@ package de.mateco.integrAMobile.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import org.apache.http.ParseException;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Locale;
 
 import de.mateco.integrAMobile.Helper.AddPriceParsableClass;
-import de.mateco.integrAMobile.Helper.DataHelper;
-import de.mateco.integrAMobile.Helper.GlobalMethods;
+import de.mateco.integrAMobile.Helper.CustomSSLFactory;
+import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.LogApp;
-import de.mateco.integrAMobile.Helper.NestedListView;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
+import de.mateco.integrAMobile.Helper.PreferencesData;
 import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.adapter.Pricing3LostSaleDataAdapter;
-import de.mateco.integrAMobile.asyncTask.AsyncTaskWithAuthorizationHeaderPost;
-import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
+import de.mateco.integrAMobile.adapter.SpinnerAdapterClass;
 import de.mateco.integrAMobile.base.LoadedCustomerFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
-import de.mateco.integrAMobile.model.ContactPersonModel;
-import de.mateco.integrAMobile.model.CustomerModel;
 import de.mateco.integrAMobile.model.Language;
-import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.Pricing1EquipmentInsertData;
 import de.mateco.integrAMobile.model.Pricing2InsertPriceUseInformationListData;
-import de.mateco.integrAMobile.model.Pricing3GetDetailRequestModel;
-import de.mateco.integrAMobile.model.Pricing3InsertData;
-import de.mateco.integrAMobile.model.Pricing3LostSaleData;
-import de.mateco.integrAMobile.model.Pricing3LostSaleInsertData;
-import de.mateco.integrAMobile.model.PricingCustomerOrderBasicInfo;
-import de.mateco.integrAMobile.model.PricingScreen3ObjectList;
-import de.mateco.integrAMobile.model.SpinnerSBModel;
+import de.mateco.integrAMobile.model.SpinnerModel;
+import de.mateco.integrAMobile.model_logonsquare.ListOfLadefahrzeugComboBoxItemItem;
 
-    public class PricingFragment3 extends LoadedCustomerFragment
+
+public class PricingFragment3 extends LoadedCustomerFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private String strAvo="";
+    boolean flagManuallySelection=false;
+    private String startDate, endDate;
+    public static Activity activity;
+    private MatecoPriceApplication matecoPriceApplication;
+    private static Language language;
+    private View rootView;
+    AddPriceParsableClass parsableClass;
+    PreferencesClass preferences;
+    PreferencesData prerObj;
+
+    private Menu menu;
+    public static final String ROOT_URL = "http://sm.ssoft.in/StudService.svc/AddPricing";
+    boolean flagAnlieferung, flagKann, flagLieferung, flagVoranmeldung, flagBenachrichtgung, flagRampena, flagSonstige,
+            flagEinweisung,flagSelbstfahrer;
+    String strKann ="", strVoranmeldung ="", strBenachrich ="", strSonstige ="";
+    String strStartDate ="", strEndDate ="", strStartTime ="", strEndtime ="";
+    int intLadefahrzeug=0;
+
+    private int Hour;
+    private int Minute;
+    static final int TIME_DIALOG_ID = 0;
+
+    private DatePicker datePicker;
+    private Calendar calendar;
+    private int year, month, day;
+    private static String clickedTextbox="";
+    private static String clickedTextboxTime="";
+
+
+    Spinner spinnerLadefahrzeug;
+    CheckBox checkBoxAnlieferung, checkBoxKann, checkBoxLieferung, checkBoxVoranmeldung, checkBoxBenachrichtgung, checkBoxRampena,
+            checkBoxsonstige,checkBoxEinweisung,checkBoxSelbstfahrer;
+    EditText edittextKannDetail, edittextVoranmeldungDetail, edittextBenachrichDetial, edittextSonstigeDetail;
+    static EditText textviewHourStart;
+    static EditText textviewHourEnd;
+    static EditText textviewDate1;
+    static EditText textviewDate2;
+    ImageButton imgbtnStartdate,imgbtnenddate;
+    ImageButton imgbtnStarttime,imgbtnendtime;
+    Button btnSubmit;
+    ImageView imgQuestionMark1,imgQuestionMark2;
+    DataBaseHandler databaseHanlder;
+    public  ArrayList<SpinnerModel> arraylistSpinner = new ArrayList<SpinnerModel>();
+    private ArrayList<ListOfLadefahrzeugComboBoxItemItem> arraylistLadefahrzeug =  null;
+    static SpinnerAdapterClass adapter;
+
+    private String kanr;  //kanr is kontakton
+    private int kaNrOfLoadedCustomer;
+    private int branchId;
+    private String branchName;
+    private String contactPersonNo = "", contactPerson = "";
+    private String deviceType;
+    private String equipmentIds,fromDate="",toDate="";
+    private int rental;
+    private String equipmentJson = "";
+
+    private int countryNameId = 0;
+    String Besteller_Telefon = "";
+    String Besteller_Email = "";
+    String Besteller_Anrede = "";
+    String Besteller_Mobil = "";
+    String GeratetypeId = "0";
+    private int rentalDays;
+    private String datesComma="";
+    private double price = 0.0;
+    String PriceUseInformationList="",plz="",besteller_Telefon="",besteller_Email="",besteller_Anrede="",besteller_Mobil="";
+    private double gesAm = 0.0;
+    DataBaseHandler db;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //if (rootView == null) {
+         //   rootView = inflater.inflate(R.layout.fragment_pricing_detail, container, false);
+        //    super.initializeFragment(rootView);
+        //} else {
+          //  Log.e("at error", "not null rootview");
+           // ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelPrice());
+           // if (rootView.getParent() != null)
+            //    ((ViewGroup) rootView.getParent()).removeView(rootView);
+           // gesAm = 0.0;
+       // }
+        rootView = inflater.inflate(R.layout.fragment_pricing_detail, container, false);
+        super.initializeFragment(rootView);
+
+        return rootView;
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void initializeComponents(View rootView)
     {
-        Pricing2InsertPriceUseInformationListData PriceUseInformationListdata;
-        SpinnerSBAdapter sbAdapter;
-        ArrayList<SpinnerSBModel> arraylistSB;
-        LinearLayout linearListview,linearTop,linearMain;
-        LinearLayout.LayoutParams paramListview;
-        LinearLayout.LayoutParams paramTop;
+        super.initializeComponents(rootView);
 
-        private String startDate, endDate,fromDate="",toDate="";
-        PreferencesClass preferences;
-        AddPriceParsableClass parsableClass;
-        private MatecoPriceApplication matecoPriceApplication;
-        private Language language;
-        private View rootView;
-        private Menu menu;
-        Spinner spinnerSB;
-        private TextView txtCost, txtCost1, txtHaftb, txtHandllingFee, txtTotal, txtTransport1, txtEquipmentRent, txtToll, txtGesAmenities, txtSatntag, txtServicePackages, txtBranch, txtHGRP, txtMD, txtRentalPrice, txtSB, txtHF, txtTransport, txtApproach, txtDeparture, txtAdditionalCargoPrice, txtFlateRate, txtNote, txtLiabilityLimitation,txtBest,txtHb,txtSP;
-        private CheckBox chkCalendarDaily, chkInrinsicActivity, chkHandllingFeeP2, chkServicePackagesP2,chkGenehmi;
-        private Button btnCache, btnLostSale, btnContract, btnOffer, btnVerbalOffer;
-        private EditText etApproachP2, etAdditionalCargoPriceP2, etDepartureP2, etFlatRateP2, etCostP2, etGesAmenitiesP2, etHaftbP2, etSatntagP2, etTollP2, etTotalP2, etNoteP2, etTranspotP2,
-                etEuipmentRentP2;
-        private RadioGroup radioGrpSB;
-        private RadioButton rbSB1000, rbSB2000, rbSB3000,rbSB500;
-        private NestedListView lvPricing3LostSaleListView;
-        //ArrayList<Pricing3LostSaleData> rowLostSaleItems;
-        private ArrayList<Pricing3LostSaleData> lablesLostSale;
-        final ArrayList<Integer> selectedEquipments = new ArrayList<>();
-        private Pricing3LostSaleDataAdapter lostSaleAdapter;
-        private String kanr;
-        private int kaNrOfLoadedCustomer;
-        private int branchId;
-        private String deviceType;
-        private String branchName;
-        private String contactPerson = "", contactPersonNo = "";
-        private String equipmentIds;
-        private String equipmentJson;
-        private int rental;
-        private int rentalDaysWithoutSatSun,rentalDaysWithSatSun;
-        private String datesComma="";
-        private String GeratetypeId = "";
-        private double price = 0, gesAminities = 0, haftb;
-        private String plz;
-        private String customer_contactNo = "";
-        private String customer_KundenNr = "";
-        private DataBaseHandler db;
-        private double SB, hf, sp;
-        private String hfStastus = "", spStatus = "";
-        private int WarenkorbartBtnPressIds = 0;
-        private int AbsagegrundIds = 0;
-        private int totalCountofLostSaleItem = 0;
-        private ArrayList<Pricing3InsertData> pricingInser = null;
-
-        private TextWatcher twApproach, twAdditionalCargoPrice, twDeparture, twFlatRate, twCost, twGesAmenities, twTransport, twEquipment,
-                twHaftb, twsatntagp2, twToll, twOtherDLGP3;
-        private String LostsaleUId = "";
-        private int chkCounter = 0;
-        String PriceUseInformationList = "";
-        /* Lost Sale Dialog Param*/
-        CheckBox chkLogisticsDLGP3, chkAvailabilityDLGP3, chkPriceDLGP3, chkGeratermieteDLGP3, chkLimitationOfLiabilityDLGP3, chkTransportDLGP3, chkTermsofPaymentDLGP3, chkPaysNoAdvancePaymentDLGP3, chkCashDiscountDLGP3, chkTheCustomerHasChosenAnAlternativeMtecoUnitDLGP3, chkTheCustomerDoesNotHaveNeedLessDLGP3, chkTheCustomerHasNotReceivedTheOrderDLGP3, chkOtherDLGP3;
-        TextView txtPriceDLGP3, txtCompetitorDLGP3, txtCompetitor1DLGP3,txtGenehmigungsgebiet;
-        EditText etGeratermietePriceDLGP3, etGeratermieteCompititerDLGP3, etLimitationOfLiabilityPriceDLGP3, etLimitationOfLiabilityCompititerDLGP3, etTransportPriceDLGP3, etTransportCompititerDLGP3, etTheCustomerHasNotReceivedTheOrderCompititerDLGP3, etOtherDLGP3;
-        final ArrayList<Integer> AbsagegrundId = new ArrayList<>();
-        final ArrayList<String> WarenkorbIds = new ArrayList<>();
-        final ArrayList<Double> AbsPreis = new ArrayList<>();
-        final ArrayList<String> Wettbewerber = new ArrayList<>();
-        final ArrayList<String> Notiz = new ArrayList<>();
-
-        String besteller_Telefon = "";
-        String besteller_Email = "";
-        String besteller_Anrede = "";
-        String besteller_Mobil = "";
-
-        private ContactPersonModel ContactPerson = new ContactPersonModel();
-        String EinsatzinformationId = "";
-        String jsonOfEqi = "";
-        /**********20161114*******/
-        ArrayList<String> jsonOfEqiForInsert = new ArrayList<>();
-        /**********20161114*******/
-        private PricingScreen3ObjectList pricingScreen;
-        private BasicAsyncTaskGetRequest asyncTask;
-        boolean isGenehmigungsgebiet=false;
-        /*@Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-            if(savedInstanceState!=null)
-            {
-                String app=savedInstanceState.getString("approach");
-
-            }
-        }*/
-
-        @Override
-        public void onPause() {
-            super.onPause();
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        db = new DataBaseHandler(getActivity());
+        preferences = new PreferencesClass(getActivity());
+        prerObj = new PreferencesData(getActivity());
+        activity = getActivity();
+        if (getArguments() != null)
         {
-            rootView = inflater.inflate(R.layout.fragment_pricing_3, container, false);
-            super.initializeFragment(rootView);
+            price = getArguments().getDouble("price");
+            endDate = getArguments().getString("endDate");
+            startDate = getArguments().getString("startDate");
 
+            kanr = getArguments().getString("kanr");
+            kaNrOfLoadedCustomer = getArguments().getInt("kaNrOfLoadedCustomer");
+            branchId = getArguments().getInt("branchId");
+            branchName = getArguments().getString("branchName");
+            contactPersonNo = getArguments().getString("contactPersonNo");
+            contactPerson = getArguments().getString("contactPersonName", contactPerson);
+            deviceType = getArguments().getString("deviceType");
+            equipmentIds = getArguments().getString("equipmentIds");
+            equipmentJson = getArguments().getString("EquipmentJson");
 
-            return rootView;
+            rental = getArguments().getInt("rental");
+            rentalDays = getArguments().getInt("rentalDays");
+            datesComma = getArguments().getString("dates_comma");
+
+            gesAm = getArguments().getDouble("gesAminities");
+            PriceUseInformationList = getArguments().getString("PriceUseInformationList");
+            GeratetypeId = getArguments().getString("GeratetypeId");
+            plz = getArguments().getString("plz");
+            besteller_Telefon = getArguments().getString("Besteller_Telefon");
+            besteller_Email = getArguments().getString("Besteller_Email");
+            besteller_Anrede = getArguments().getString("Besteller_Anrede");
+            besteller_Mobil = getArguments().getString("Besteller_Mobil");
+            fromDate=getArguments().getString("fromDate");
+            toDate=getArguments().getString("toDate");
+
         }
+        Gson gson = new Gson();
+        Pricing2InsertPriceUseInformationListData PriceUseInformationListdata = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
+        if(PriceUseInformationListdata != null) {
+            strAvo = PriceUseInformationListdata.getAVO();
+        }
+        matecoPriceApplication = (MatecoPriceApplication) getActivity().getApplication();
+        parsableClass=preferences.getPriceData(getActivity());
+        language = matecoPriceApplication.getLanguage();
+        initControl();
+        getActivity().invalidateOptionsMenu();
+        setHasOptionsMenu(true);
+        ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelPrice());
 
-        @Override
-        public void initializeComponents(View rootView)
+
+        loadDataFromParsable();
+
+
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main_menu, menu);
+        this.menu = menu;
+        menu.findItem(R.id.actionAdd).setVisible(false);
+        menu.findItem(R.id.actionSearch).setVisible(false);
+        menu.findItem(R.id.actionEdit).setVisible(false);
+        menu.findItem(R.id.actionRight).setVisible(false);
+        menu.findItem(R.id.actionWrong).setVisible(false);
+        //return true;
+        //super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        switch (item.getItemId())
         {
-            super.initializeComponents(rootView);
-            if (getArguments() != null)
-            {
-                endDate = getArguments().getString("endDate");
-                startDate = getArguments().getString("startDate");
-
-                kanr = getArguments().getString("kanr");
-                kaNrOfLoadedCustomer = getArguments().getInt("kaNrOfLoadedCustomer");
-                branchId = getArguments().getInt("branchId");
-                branchName = getArguments().getString("branchName");
-                contactPersonNo = getArguments().getString("contactPersonNo");
-                contactPerson = getArguments().getString("contactPersonName", contactPerson);
-                deviceType = getArguments().getString("deviceType");
-                equipmentIds = getArguments().getString("equipmentIds");
-                equipmentJson = getArguments().getString("EquipmentJson");
-
-                rental = getArguments().getInt("rental");
-                rentalDaysWithoutSatSun = getArguments().getInt("rentalDays");
-                datesComma = getArguments().getString("dates_comma");
-                price = getArguments().getDouble("price");
-                gesAminities = getArguments().getDouble("gesAminities");
-                PriceUseInformationList = getArguments().getString("PriceUseInformationList");
-                GeratetypeId = getArguments().getString("GeratetypeId");
-                plz = getArguments().getString("plz");
-                besteller_Telefon = getArguments().getString("Besteller_Telefon");
-                besteller_Email = getArguments().getString("Besteller_Email");
-                besteller_Anrede = getArguments().getString("Besteller_Anrede");
-                besteller_Mobil = getArguments().getString("Besteller_Mobil");
-                fromDate=getArguments().getString("fromDate");
-                toDate=getArguments().getString("toDate");
-
-            }
-            Gson gson = new Gson();
-            PriceUseInformationListdata = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
-
-            preferences = new PreferencesClass(getActivity());
-            parsableClass=preferences.getPriceData(getActivity());
-
-
-            db = new DataBaseHandler(getActivity());
-            lablesLostSale = new ArrayList<Pricing3LostSaleData>();
-
-            matecoPriceApplication = (MatecoPriceApplication) getActivity().getApplication();
-            language = matecoPriceApplication.getLanguage();
-
-            spinnerSB = (Spinner)rootView.findViewById(R.id.spinnerSB);
-            spinnerSB.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(arraylistSB != null && arraylistSB.size() > 0){
-
-                        String strSelected = arraylistSB.get(position).getStrTitle();
-                        if(strSelected.equalsIgnoreCase("SB 1000")){
-                            SB = 1000;
-                            etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistSB.get(position).getValue()) + ""));
-                        }else if(strSelected.equalsIgnoreCase("SB 2000")){
-                            SB = 2000;
-                            etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistSB.get(position).getValue()) + ""));
-                        }
-                        else if(strSelected.equalsIgnoreCase("SB 3000")){
-                            SB = 3000;
-                            etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistSB.get(position).getValue()) + ""));
-                        }
-                        else if(strSelected.equalsIgnoreCase("SB 500")){
-                            SB = 500;
-                            etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistSB.get(position).getValue()) + ""));
-                        }
-
-
-                        SpinnerSBModel model = new SpinnerSBModel();
-                        model.setStrTitle(arraylistSB.get(position).getStrTitle());
-                        model.setValue(arraylistSB.get(position).getValue());
-                        model.setSelected(true);
-                        arraylistSB.set(position,model);
-
+            case R.id.actionSettings:
+                if(!preferences.getisPrice().equalsIgnoreCase(""))
+                {
+                    if(db.getLostsaleCount() > 0 ){
+                        showAlertDialg();
                     }
-                    for (int i=0;i<arraylistSB.size();i++){
-                        if(i != position){
-                            arraylistSB.get(i).setSelected(false);
-                        }
-                    }
-                    Collections.swap(arraylistSB,0,position);
-                    if(sbAdapter != null) {
-                        sbAdapter.notifyDataSetChanged();
-                    }
-                    spinnerSB.setSelection(0);
-
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-            linearListview = (LinearLayout)rootView.findViewById(R.id.linearListview);
-            linearTop = (LinearLayout)rootView.findViewById(R.id.linearTop);
-            linearMain = (LinearLayout) rootView.findViewById(R.id.linearMain);
-
-            etApproachP2 = (EditText) rootView.findViewById(R.id.etApproachP2);
-            etAdditionalCargoPriceP2 = (EditText) rootView.findViewById(R.id.etAdditionalCargoPriceP2);
-            etDepartureP2 = (EditText) rootView.findViewById(R.id.etDepartureP2);
-            etFlatRateP2 = (EditText) rootView.findViewById(R.id.etFlatRateP2);
-            etCostP2 = (EditText) rootView.findViewById(R.id.etCostP2);
-            etTranspotP2 = (EditText) rootView.findViewById(R.id.etTranspotP2);
-            etGesAmenitiesP2 = (EditText) rootView.findViewById(R.id.etGesAmenitiesP2);
-            etHaftbP2 = (EditText) rootView.findViewById(R.id.etHaftbP2);
-            etEuipmentRentP2 = (EditText) rootView.findViewById(R.id.etEuipmentRentP2);
-            etSatntagP2 = (EditText) rootView.findViewById(R.id.etSatntagP2);
-            etSatntagP2.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
-            etTollP2 = (EditText) rootView.findViewById(R.id.etTollP2);
-            etTotalP2 = (EditText) rootView.findViewById(R.id.etTotalP2);
-            etNoteP2 = (EditText) rootView.findViewById(R.id.etNoteP2);
-
-            txtGenehmigungsgebiet = (TextView)rootView.findViewById(R.id.txtGenehmigungsgebiet);
-            txtLiabilityLimitation = (TextView) rootView.findViewById(R.id.txtLiabilityLimitation);
-            txtCost = (TextView) rootView.findViewById(R.id.txtCost);
-            txtCost1 = (TextView) rootView.findViewById(R.id.txtPrice);
-            txtHaftb = (TextView) rootView.findViewById(R.id.txtHaftb);
-            txtHandllingFee = (TextView) rootView.findViewById(R.id.txtHandllingFee);
-            txtTotal = (TextView) rootView.findViewById(R.id.txtTotal);
-            txtTransport1 = (TextView) rootView.findViewById(R.id.txtTransportCost);
-            txtEquipmentRent = (TextView) rootView.findViewById(R.id.txtEquipmentRent);
-            txtToll = (TextView) rootView.findViewById(R.id.txtToll);
-            txtGesAmenities = (TextView) rootView.findViewById(R.id.txtGesAmenities);
-            txtSatntag = (TextView) rootView.findViewById(R.id.txtSatntag);
-            txtServicePackages = (TextView) rootView.findViewById(R.id.txtServicePackages);
-            txtBranch = (TextView) rootView.findViewById(R.id.txtBranch);
-            txtHGRP = (TextView) rootView.findViewById(R.id.txtHGRP);
-
-            txtBest = (TextView) rootView.findViewById(R.id.txtBest);
-            txtHb = (TextView) rootView.findViewById(R.id.txtHB);
-            txtSP = (TextView) rootView.findViewById(R.id.txtSP);
-
-            txtMD = (TextView) rootView.findViewById(R.id.txtMD);
-            txtRentalPrice = (TextView) rootView.findViewById(R.id.txtRentalPrice);
-            txtSB = (TextView) rootView.findViewById(R.id.txtSB);
-            txtHF = (TextView) rootView.findViewById(R.id.txtHF);
-            txtNote = (TextView) rootView.findViewById(R.id.txtNote);
-
-
-            txtTransport = (TextView) rootView.findViewById(R.id.txtTransport);
-            txtApproach = (TextView) rootView.findViewById(R.id.txtApproach);
-            txtDeparture = (TextView) rootView.findViewById(R.id.txtDeparture);
-            txtAdditionalCargoPrice = (TextView) rootView.findViewById(R.id.txtAdditionalCargoPrice);
-            txtFlateRate = (TextView) rootView.findViewById(R.id.txtFlateRate);
-
-            chkCalendarDaily = (CheckBox) rootView.findViewById(R.id.chkCalendarDailyP2);
-            chkCalendarDaily.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    sumOfAll();
-                }
-            });
-            chkInrinsicActivity = (CheckBox) rootView.findViewById(R.id.chkInrinsicActivityP2);
-            chkHandllingFeeP2 = (CheckBox) rootView.findViewById(R.id.chkHandllingFeeP2);
-            chkServicePackagesP2 = (CheckBox) rootView.findViewById(R.id.chkServicePackagesP2);
-            chkGenehmi=(CheckBox)rootView.findViewById(R.id.chkGenehmigungsgebiet);
-            chkGenehmi.setChecked(false);
-
-            radioGrpSB = (RadioGroup) rootView.findViewById(R.id.radioGrpSB);
-            rbSB1000 = (RadioButton) radioGrpSB.findViewById(R.id.rdBtnSB1000P3);
-            rbSB2000 = (RadioButton) radioGrpSB.findViewById(R.id.rdBtnSB2000P3);
-            rbSB3000 = (RadioButton) radioGrpSB.findViewById(R.id.rdBtnSB3000P3);
-            rbSB500 = (RadioButton) radioGrpSB.findViewById(R.id.rdBtnSB500P3);
-
-            btnCache = (Button) rootView.findViewById(R.id.btnCache);
-
-            btnContract = (Button) rootView.findViewById(R.id.txtShoppingCartContract);
-            btnOffer = (Button) rootView.findViewById(R.id.txtShoppingCartOffer);
-
-            btnVerbalOffer = (Button) rootView.findViewById(R.id.txtShoppingCartVerbalOffer);
-            btnLostSale = (Button) rootView.findViewById(R.id.txtShoppingCartLostSale);
-
-            lvPricing3LostSaleListView = (NestedListView) rootView.findViewById(R.id.lvPricing3LostSaleListView);
-            /*lvPricing3LostSaleListView.setOnTouchListener(new ListView.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    int action = event.getAction();
-                    switch (action) {
-                        case MotionEvent.ACTION_DOWN:
-                            // Disallow ScrollView to intercept touch events.
-                            v.getParent().requestDisallowInterceptTouchEvent(true);
-                            break;
-
-                        case MotionEvent.ACTION_UP:
-                            // Allow ScrollView to intercept touch events.
-                            v.getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
-                    }
-
-                    // Handle ListView touch events.
-                    v.onTouchEvent(event);
-                    return true;
-                }
-            });*/
-            /*if(getScreenOrientation() ==1) {
-                //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                //linearMain.setWeightSum(1f);
-                /// for landscape
-                *//* this is to set HEIGHT as orientation change *//*
-                *//*paramTop = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, 0,0.66f);*//*
-                paramListview = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,0,1f);
-            } else {
-                //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                // for portrait
-                *//* this is to set HEIGHT as orientation change *//*
-                //linearMain.setWeightSum(1f);
-                *//*paramTop = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, 0,0.40f);*//*
-                paramListview = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,400);
-            }*/
-            //linearListview.setLayoutParams(paramListview);
-            //linearTop.setLayoutParams(paramTop);s
-            getActivity().invalidateOptionsMenu();
-            setHasOptionsMenu(true);
-
-            etCostP2.setText(DataHelper.getGermanCurrencyFormat(price + ""));
-            //etGesAmenitiesP2.setHint(DataHelper.getGermanCurrencyFormat(gesAminities + ""));
-            etGesAmenitiesP2.setText(DataHelper.getGermanCurrencyFormat(gesAminities + ""));
-            etEuipmentRentP2.setHint(DataHelper.getGermanCurrencyFormat("0.00"));
-            etTranspotP2.setHint(DataHelper.getGermanCurrencyFormat("0.00"));
-            etHaftbP2.setHint(DataHelper.getGermanCurrencyFormat("0.00"));
-            etSatntagP2.setHint(DataHelper.getGermanCurrencyFormat("100.00"));
-            etTollP2.setHint(DataHelper.getGermanCurrencyFormat("0"));
-            etTotalP2.setHint(DataHelper.getGermanCurrencyFormat("0.00"));
-
-            //etSatntagP2.setFilters(new InputFilter[]{new InputFilterDecimal("0.00", "100.00")});
-
-            PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
-                    new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-
-            if(preferences.getComefrom().equalsIgnoreCase("selected")){
-                etApproachP2.setText("0,00");
-            }
-            else {
-                if(model != null && model.getAbfahrt() != null && !model.getAbfahrt().equals(""))
-                {
-                    if(Double.parseDouble(model.getAbfahrt()) == 0.00)
-                    {
-                        etApproachP2.setText("");
-                    }
-                    else
-                    {
-                        etApproachP2.setText(DataHelper.getGermanCurrencyFormat(model.getAbfahrt()));
-                    }
-
-                }
-            }
-
-            if(preferences.getComefrom().equalsIgnoreCase("selected")){
-                etDepartureP2.setText("0,00");
-            }
-            else {
-                if(model != null && model.getAnfahrt() != null && !model.getAnfahrt().equals(""))
-                {
-                    if(Double.parseDouble(model.getAnfahrt()) == 0.00)
-                    {
-                        etDepartureP2.setText("");
-                    }
-                    else
-                    {
-
-                        etDepartureP2.setText(DataHelper.getGermanCurrencyFormat(model.getAnfahrt()));
-                    }
-                }
-            }
-
-            if(model != null && model.getBeiladungsPreis() != null && !model.getBeiladungsPreis().equals(""))
-            {
-                if(Double.parseDouble(model.getBeiladungsPreis()) == 0.00)
-                {
-                    etAdditionalCargoPriceP2.setText("");
-                }
-                else
-                {
-                    etAdditionalCargoPriceP2.setText(DataHelper.getGermanCurrencyFormat(model.getBeiladungsPreis()));
-                }
-
-            }
-            if(model != null && model.getPauschale() != null && !model.getPauschale().equals(""))
-            {
-                if(Double.parseDouble(model.getPauschale()) == 0.00)
-                {
-                    etFlatRateP2.setText("");
-                }
-                else
-                {
-                    etFlatRateP2.setText(DataHelper.getGermanCurrencyFormat(model.getPauschale()));
-                }
-
-            }
-            if(model != null && model.getNotes() != null && !model.getNotes().equals(""))
-            {
-                etNoteP2.setText(model.getNotes());
-            }
-            ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelPrice());
-            setUpLanguage();
-        }
-
-        private double MiteduerCalculation(int rentalDays)
-        {
-            double md = rentalDays;
-            double temp = 0;
-            if (md >= 5)
-            {
-                temp = md - 5;
-                temp = ((Math.floor(temp / 5)) + 1) * 2;
-                md = md + temp;
-            }
-            return md;
-        }
-
-        private void sumOfAll()
-        {
-            if (chkHandllingFeeP2.isChecked() == true)
-            {
-                hf = 1.98;
-            }
-            else
-            {
-                hf = 0;
-            }
-            // commented on 12th Oct becasue from now it will display from service of getInitialStatus
-            /*if (chkServicePackagesP2.isChecked() == true)
-            {
-                sp = 15;
-            }
-            else
-            {
-                sp = 0;
-            }*/
-
-            String approach = etApproachP2.getText().toString().trim();
-
-            String departure = etDepartureP2.getText().toString().trim();
-            double approachFinal,departureFinal;
-
-                approachFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(approach));
-                departureFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(departure));
-                double tranportTotal = approachFinal + departureFinal;
-                String flat = etFlatRateP2.getText().toString().trim();
-            //410
-            //0
-                double flatFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(flat));
-
-                if (flatFinal > 0)
-                {
-                    etApproachP2.removeTextChangedListener(twApproach);
-                    etDepartureP2.removeTextChangedListener(twDeparture);
-                    //etTranspotP2.removeTextChangedListener(twApproach);
-                    etApproachP2.setText("");
-                    etDepartureP2.setText("");
-                    etApproachP2.setHint("0");
-                    etDepartureP2.setHint("0");
-                    etApproachP2.addTextChangedListener(twApproach);
-                    etDepartureP2.addTextChangedListener(twDeparture);
-                    etTranspotP2.setText(DataHelper.getGermanFromEnglish(flatFinal + ""));
-                }
-                else if (tranportTotal > 0)
-                {
-                    etTranspotP2.setText(DataHelper.getGermanFromEnglish(tranportTotal + ""));
-                    //410
-                }
-                else if(tranportTotal <= 0)
-                {
-                    etTranspotP2.setText(DataHelper.getGermanFromEnglish(tranportTotal + ""));
-                }
-
-
-            String transpot = etTranspotP2.getText().toString();
-            String haftb = etHaftbP2.getText().toString();
-            //11
-            String equipmentRent = etEuipmentRentP2.getText().toString();
-            //125
-            String cost = etCostP2.getText().toString();
-            //125
-            String gesAmenities = etGesAmenitiesP2.getText().toString();
-            //10
-            String satntag = etSatntagP2.getText().toString();
-            //100
-            String toll = etTollP2.getText().toString();
-            //31.86
-            //etTotalP2
-            double costFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(cost));
-            //125
-            double haftbFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(haftb));
-            //11
-            double transportFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(transpot));
-            //410
-            double equipmentRentFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(equipmentRent));
-            //125
-            double amenitiesFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(gesAmenities));
-            //10
-            //double satntagFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(satntag));
-            double tollFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(toll));
-            //31,86
-            double equipmentRentTotal = costFinal + amenitiesFinal;
-            //135
-            if (equipmentRentTotal > 0)
-            {
-                etEuipmentRentP2.setText(DataHelper.getGermanFromEnglish(equipmentRentTotal + ""));
-            }
-
-            /*if (rentalDaysWithoutSatSun >= 5)
-            {
-                double eqp = equipmentRentTotal;
-                equipmentRentTotal = (eqp * rentalDaysWithoutSatSun);
-            }*/
-
-            /*if (chkCalendarDaily.isChecked())
-            {
-                double calenderDays = MiteduerCalculation(rentalDaysWithoutSatSun);
-                double haf = haftbFinal;
-                haftbFinal = (haf * calenderDays);
-            }
-            else
-            {
-                double haf = haftbFinal;
-                haftbFinal = (haf * rentalDaysWithoutSatSun);
-            }*/
-            /*chkCalendarDaily.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    String haftb = etHaftbP2.getText().toString();
-                    double haftbFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(haftb));
-                    if(isChecked){
-                        double calenderDays = MiteduerCalculation(rentalDaysWithoutSatSun);
-                        double haf = haftbFinal;
-                        haftbFinal = (haf * calenderDays);
-                    }
-                    else {
-                        double haf = haftbFinal;
-                        haftbFinal = (haf * rentalDaysWithoutSatSun);
-                    }
-                }
-            });*/
-            //double finalTotal = equipmentRentTotal + haftbFinal + transportFinal + satntagFinal + tollFinal + hf + sp;
-            PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
-                    new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-            String startdate = model.getStartDate();
-            String enddate = model.getEndDate();
-
-            if(!TextUtils.isEmpty(startdate) && !startdate.equalsIgnoreCase("")){
-                if (enddate != null && !enddate.equalsIgnoreCase("")) {
-                    rentalDaysWithSatSun = (int) Daybetween(startdate,enddate,"dd.MM.yyyy") + 1;
-                }
-                else {
-                    rentalDaysWithSatSun=rentalDaysWithoutSatSun;
-                }
-            }
-            else {
-                rentalDaysWithSatSun=rentalDaysWithoutSatSun;
-            }
-            double newValue1;
-            double newValue2;
-            double totalofNewvalue;
-            if(chkCalendarDaily.isChecked()){
-                newValue1=rentalDaysWithoutSatSun*equipmentRentTotal;
-                newValue2=rentalDaysWithSatSun*haftbFinal;
-            }
-            else {
-                newValue1=rentalDaysWithoutSatSun*equipmentRentTotal;
-                newValue2=rentalDaysWithoutSatSun*haftbFinal;
-            }
-            totalofNewvalue=newValue1+newValue2;
-            //double finalTotal = equipmentRentTotal + haftbFinal + transportFinal + tollFinal + hf + sp;
-            double finalTotal = totalofNewvalue + transportFinal + tollFinal + hf + sp;
-            if (finalTotal > 0)
-            {
-                etTotalP2.setText(DataHelper.getGermanFromEnglish(finalTotal + ""));
-            }
-        }
-
-
-        public long Daybetween(String date1,String date2,String pattern)
-        {
-            SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.ENGLISH);
-            Date Date1 = null,Date2 = null;
-            try{
-                Date1 = sdf.parse(date1);
-                Date2 = sdf.parse(date2);
-            }catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-            return (Date2.getTime() - Date1.getTime())/(24*60*60*1000);
-        }
-        static long days(Date start, Date end){
-            //Ignore argument check
-
-            Calendar c1 = Calendar.getInstance();
-            c1.setTime(start);
-            int w1 = c1.get(Calendar.DAY_OF_WEEK);
-            c1.add(Calendar.DAY_OF_WEEK, -w1);
-
-            Calendar c2 = Calendar.getInstance();
-            c2.setTime(end);
-            int w2 = c2.get(Calendar.DAY_OF_WEEK);
-            c2.add(Calendar.DAY_OF_WEEK, -w2);
-
-            //end Saturday to start Saturday
-            long days = (c2.getTimeInMillis()-c1.getTimeInMillis())/(1000*60*60*24);
-            long daysWithoutWeekendDays = days-(days*2/7);
-
-            // Adjust days to add on (w2) and days to subtract (w1) so that Saturday
-            // and Sunday are not included
-            if (w1 == Calendar.SUNDAY && w2 != Calendar.SATURDAY) {
-                w1 = Calendar.MONDAY;
-            } else if (w1 == Calendar.SATURDAY && w2 != Calendar.SUNDAY) {
-                w1 = Calendar.FRIDAY;
-            }
-
-            if (w2 == Calendar.SUNDAY) {
-                w2 = Calendar.MONDAY;
-            } else if (w2 == Calendar.SATURDAY) {
-                w2 = Calendar.FRIDAY;
-            }
-
-            return daysWithoutWeekendDays-w1+w2;
-        }
-        public Date StringtoDate(String strdate)
-        {
-            Date date=null;
-            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-            try {
-                 date = format.parse(strdate);
-                System.out.println(date);
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-            }
-            return  date;
-        }
-
-        @Override
-        public void bindEvents(View rootView)
-        {
-            super.bindEvents(rootView);
-            twApproach = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    String flat = etFlatRateP2.getText().toString().trim();
-                        double flatFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(flat));
-                        if (flatFinal > 0)
-                        {
-                            showShortToast(language.getMessagePleaseRemoveFlatRate());
-                            etApproachP2.removeTextChangedListener(twApproach);
-                            etApproachP2.setText("");
-                            etApproachP2.addTextChangedListener(twApproach);
-                        }
-                        else
-                        {
-                            sumOfAll();
-                        }
-                }
-            };
-
-            twAdditionalCargoPrice = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-            twDeparture = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    String flat = etFlatRateP2.getText().toString().trim();
-                    double flatFinal=0;
-
-
-
-                        flatFinal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(flat));
-
-
-                    if (flatFinal > 0)
-                    {
-                        showShortToast(language.getMessagePleaseRemoveFlatRate());
-                        etDepartureP2.removeTextChangedListener(twDeparture);
-                        etDepartureP2.setText("");
-                        etDepartureP2.addTextChangedListener(twDeparture);
-                    }
-                    else
-                    {
-                        sumOfAll();
-                    }
-                }
-            };
-
-            twFlatRate = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-            twCost = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-
-            twGesAmenities = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-
-            twTransport = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-            twEquipment = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-            twHaftb = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-            twsatntagp2 = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    String enteredValue = s.toString();
-                    if(checkNullValues(enteredValue))
-                    {
-                        float inputvalue = Float.parseFloat(DataHelper.getEnglishCurrencyFromGerman(enteredValue.trim()));
-                        if(inputvalue > 100)
-                        {
-                            showShortToast(language.getMessageValueMustBeLessThen100());
-                            etSatntagP2.setText("");
-                        }
-                    }
-                    sumOfAll();
-                }
-            };
-
-            twToll = new TextWatcher()
-            {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    sumOfAll();
-                }
-            };
-
-            etApproachP2.addTextChangedListener(twApproach);
-            etDepartureP2.addTextChangedListener(twDeparture);
-            etAdditionalCargoPriceP2.addTextChangedListener(twAdditionalCargoPrice);
-            etFlatRateP2.addTextChangedListener(twFlatRate);
-            etCostP2.addTextChangedListener(twCost);
-            etGesAmenitiesP2.addTextChangedListener(twGesAmenities);
-            etHaftbP2.addTextChangedListener(twHaftb);
-            etSatntagP2.addTextChangedListener(twsatntagp2);
-            etTollP2.addTextChangedListener(twToll);
-
-            /*rbSB1000.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Is the button now checked?
-                    boolean checkedRadioSB1000 = ((RadioButton) v).isChecked();
-                    if (checkedRadioSB1000) {
-                        if (pricingScreen != null) {
-                            SB = 1000;
-                            if(pricingScreen.getListOfPriceHaftb() != null)
-                                etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(pricingScreen.getListOfPriceHaftb().get(0).getValue()) + ""));
-                        }
-
-                        //loadPriceHAFTBDataStandardPrice(customer_contactNo, 1000, deviceType);
-                    } else {
-
-                    }
-                }
-            });
-            rbSB500.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Is the button now checked?
-                    boolean checkedRadioSB500 = ((RadioButton) v).isChecked();
-                    if (checkedRadioSB500) {
-                        if (pricingScreen != null) {
-                            SB = 500;
-                            if(pricingScreen.getListOfPriceHaftb() != null)
-                                etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(pricingScreen.getListOfPriceHaftb().get(3).getValue()) + ""));
-                        }
-
-                        //loadPriceHAFTBDataStandardPrice(customer_contactNo, 1000, deviceType);
-                    } else {
-
-                    }
-                }
-            });
-
-            rbSB2000.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    boolean checkedRadioSB2000 = ((RadioButton) v).isChecked();
-                    if (checkedRadioSB2000)
-                    {
-                        if(pricingScreen != null){
-                            SB = 2000;
-                            if(pricingScreen.getListOfPriceHaftb() != null)
-                                etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(pricingScreen.getListOfPriceHaftb().get(1).getValue()) + ""));
-                        }
-
-                        //loadPriceHAFTBDataStandardPrice(customer_contactNo, 2000, deviceType);
-                    }
-                    else
-                    {
-
-                    }
-                }
-            });
-            rbSB3000.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    boolean checkedRadioSB3000 = ((RadioButton) v).isChecked();
-                    if (checkedRadioSB3000) {
-                        if(pricingScreen != null){
-                            SB = 3000;
-                            //SB = 1000;
-                            if(pricingScreen.getListOfPriceHaftb() != null)
-                                etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(pricingScreen.getListOfPriceHaftb().get(2).getValue()) + ""));
-                            //loadPriceHAFTBDataStandardPrice(customer_contactNo, 3000, deviceType);
-                        }
-
-                    } else {
-
-                    }
-                }
-            });*/
-
-            chkHandllingFeeP2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        hf = 1.98;
-                        hfStastus = "ja";
-                    } else {
-                        hf = 0;
-                        hfStastus = "nein";
-                    }
-                }
-            });
-            chkServicePackagesP2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        sp = 15;
-                        spStatus = "ja";
-                    } else {
-                        sp = 0;
-                        spStatus = "nein";
-                    }
-                }
-            });
-            chkGenehmi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        isGenehmigungsgebiet=true;
-                    } else {
-                        isGenehmigungsgebiet=false;
-                    }
-                }
-            });
-
-
-            btnCache.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(DataHelper.isNetworkAvailable(context))
-                    {
-                        if (chkHandllingFeeP2.isEnabled() == true) {
-                            if (chkHandllingFeeP2.isChecked() == true) {
-                                hf = 1.98;
-                                hfStastus = "ja";
-                            } else {
-                                hf = 0;
-                                hfStastus = "nein";
-                            }
-                        } else {
-                            if (chkHandllingFeeP2.isChecked() == true) {
-                                hf = 1.98;
-                                hfStastus = "ja";
-                            } else {
-                                hf = 0;
-                                hfStastus = "nein";
-                            }
-                        }
-
-                        if (chkServicePackagesP2.isEnabled() == true) {
-                            if (chkServicePackagesP2.isChecked() == true) {
-                                //sp = 15;
-                                spStatus = "ja";
-                            } else {
-                                //sp = 0;
-                                spStatus = "nein";
-                            }
-                        } else {
-                            if (chkServicePackagesP2.isChecked() == true) {
-                                //sp = 15;
-                                spStatus = "ja";
-                            } else {
-                                //sp = 0;
-                                spStatus = "nein";
-                            }
-                        }
-
-                        price = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etCostP2.getText().toString().trim()));
-                        haftb = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etHaftbP2.getText().toString().trim()));
-
-                        db.addLostSale(new Pricing3LostSaleData(branchName, deviceType, "", "", "", rentalDaysWithoutSatSun, price, SB, hfStastus, spStatus, haftb, contactPerson, customer_KundenNr));
-
-                        // first call service and on success insert into local database addPricing3InsertJson
-                            // if all PriceUseInformation list field are empty that time don't call servcie instead directly store in db
-                                // added this functionality on 8th feb 2018
-                        if(TextUtils.isEmpty(PriceUseInformationListdata.getAVO()) &&
-                                TextUtils.isEmpty(PriceUseInformationListdata.getAVOTelefon()) &&
-                                TextUtils.isEmpty(PriceUseInformationListdata.getEinsatzort()) &&
-                                TextUtils.isEmpty(PriceUseInformationListdata.getEinsatzPLZ()) &&
-                                TextUtils.isEmpty(PriceUseInformationListdata.getEinsatzStrasse()) &&
-                                TextUtils.isEmpty(PriceUseInformationListdata.getProjekt()) &&
-                                TextUtils.isEmpty(PriceUseInformationListdata.getZusatz()) &&
-                                PriceUseInformationListdata.getEntfernung() == 0 &&
-                                PriceUseInformationListdata.getMautkilometer() == 0){
-                            // dont' call service here
-                            EinsatzinformationId="";
-                            insertDataIntoDB(0);
-                        }else {
-                            InsertPriceUseInformationList();
-                        }
-
-                        loadLostSaleListViewData();
-
-                                                                                        //btnCache.setEnabled(true);
-
-                         showShortToast(language.getMessageCachePriceAddedToCacheCart());
-                    }
-                    else
-                    {
-                        showShortToast(language.getMessageNetworkNotAvailable());
-                    }
-                }
-            });
-
-
-            btnContract.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectedEquipments.clear();
-                    WarenkorbartBtnPressIds = 0;
-                    WarenkorbartBtnPressIds = 4;
-
-                    for (int i = 0; i < lablesLostSale.size(); i++) {
-                        if (lablesLostSale.get(i).isSelected() == true) {
-                            selectedEquipments.add(lablesLostSale.get(i).getId());
-                        }
-                    }
-
-                    if (selectedEquipments.isEmpty()) {
-                        showShortToast(language.getMessagePleaseSelectCartItem());
-                    } else {
-                        if (selectedEquipments.size() > 1) {
-    //                        btnContract.setEnabled(false);
-                            showShortToast(language.getMessageAuftragSelectOne());
-                        } else {
-                            // getting data from db and calling service
-                            InsertData(WarenkorbartBtnPressIds, selectedEquipments, 4);
-                        }
-                    }
-                }
-            });
-
-            btnVerbalOffer.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    btnContract.setEnabled(true);
-                    WarenkorbartBtnPressIds = 0;
-                    WarenkorbartBtnPressIds = 2;
-                    selectedEquipments.clear();
-                    for (int i = 0; i < lablesLostSale.size(); i++)
-                    {
-                        if (lablesLostSale.get(i).isSelected() == true)
-                        {
-                            selectedEquipments.add(lablesLostSale.get(i).getId());
-                        }
-                    }
-
-                    if (selectedEquipments.isEmpty())
-                    {
-                        showShortToast(language.getMessagePleaseSelectCartItem());
-                    }
-                    else
-                    {
-                        InsertData(WarenkorbartBtnPressIds, selectedEquipments, 2);
-                    }
-                }
-            });
-
-            btnLostSale.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    btnContract.setEnabled(true);
-                    WarenkorbartBtnPressIds = 0;
-                    WarenkorbartBtnPressIds = 3;
-                    selectedEquipments.clear();
-                    for (int i = 0; i < lablesLostSale.size(); i++)
-                    {
-                        if (lablesLostSale.get(i).isSelected() == true)
-                        {
-                            selectedEquipments.add(lablesLostSale.get(i).getId());
-                        }
-                    }
-
-                    if (selectedEquipments.isEmpty())
-                    {
-                        showShortToast(language.getMessagePleaseSelectCartItem());
-                    }
-                    else
-                    {
-                        LostSaleDialog(WarenkorbartBtnPressIds, selectedEquipments, 3);
-                    }
-                }
-            });
-
-            btnOffer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    btnContract.setEnabled(true);
-                    WarenkorbartBtnPressIds = 0;
-                    WarenkorbartBtnPressIds = 1;
-                    selectedEquipments.clear();
-                    for (int i = 0; i < lablesLostSale.size(); i++) {
-                        if (lablesLostSale.get(i).isSelected() == true) {
-                            selectedEquipments.add(lablesLostSale.get(i).getId());
-                        }
-                    }
-                    if (selectedEquipments.isEmpty()) {
-                        showShortToast(language.getMessagePleaseSelectCartItem());
-                    } else {
-                        // InsertData(WarenkorbartBtnPressIds,selectedEquipments.get(i),i);
-                        InsertData(WarenkorbartBtnPressIds, selectedEquipments, 1);
-                    }
-                }
-            });
-
-            lvPricing3LostSaleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
-                    //view.setSelected(true);
-                    //lostSaleAdapter.setSelectedIndex(position);
-                }
-            });
-
-
-            if (matecoPriceApplication.isCustomerLoaded(DataHelper.isCustomerLoaded, false))
-            {
-                customer_contactNo = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
-                customer_KundenNr = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKundenNr();
-                btnCache.setEnabled(true);
-                btnLostSale.setEnabled(true);
-                btnContract.setEnabled(true);
-                btnOffer.setEnabled(true);
-                btnVerbalOffer.setEnabled(true);
-                PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo, new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-                if(GlobalMethods.isZero(model.getAbfahrt()) && GlobalMethods.isZero(model.getAnfahrt()))
-                {
-                    //getTransportPrice(customer_contactNo, deviceType, String.valueOf(branchId), plz);
-
-                }
-                loadLostSaleListViewData();
-                getInitialStatus(kanr, kaNrOfLoadedCustomer+"", deviceType);
-                 /* Add new Functionality */
-                /* Add new Functionality */
-
-    //            chkHAFTBDataIsTrue(kanr);
-    //            chkPriceHandlingCheckBoxDataIsTrue(kanr);
-    //            chkPriceServiceCheckBoxDataIsTrue(kanr);
-
-                //deviceType
-            }
-            else
-            {
-                showLongToast(language.getMessageSelectCustomerFirst());
-                btnCache.setEnabled(false);
-                btnLostSale.setEnabled(false);
-                btnContract.setEnabled(false);
-                btnOffer.setEnabled(false);
-                btnVerbalOffer.setEnabled(false);
-
-                radioGrpSB.setEnabled(false);
-                rbSB1000.setEnabled(false);
-                rbSB2000.setEnabled(false);
-                rbSB3000.setEnabled(false);
-                rbSB500.setEnabled(false);
-                spinnerSB.setEnabled(false);
-
-    //            chkCalendarDaily.setEnabled(false);
-                chkHandllingFeeP2.setEnabled(false);
-                chkServicePackagesP2.setEnabled(false);
-            }
-            sumOfAll();
-
-        }
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
-                asyncTask.cancel(true);
-        }
-
-        public boolean checkNullValues(String valueToCheck)
-        {
-            //Log.i("Log","CheckForNullValues : "+valueToCheck);
-            if(!(valueToCheck == null))
-            {
-                String valueCheck = valueToCheck.trim();
-                if(valueCheck.equals("") || valueCheck.equals("0")  )
-                {
-                    //  Log.i("Log","Returning false 0 or Blank");
-                    return false;
+}
+                else{
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    transaction.replace(R.id.content_frame, new SettingFragment(),"Setting");
+                    transaction.addToBackStack("Setting");
+                    transaction.commit();
                 }
                 return true;
-            }
-            //Log.i("Log","Returning false null");
-            return false;
-        }
+            case R.id.actionBack:
+                //savePricingCustomerOrderBasicInfo();
+                storedataInParsableClass();
+                /*if(checkBoxSelbstfahrer.isChecked())
+                {
+                    preferences.saveComeFrom("selected");
+                }
+                else {
+                    preferences.saveComeFrom("");
+                }*/
+                if (getFragmentManager().getBackStackEntryCount() == 0)
+                {
 
-        private void setUpLanguage()
-        {
-            txtBest.setText(language.getLabelBest());
-            txtHb.setText(language.getLableHB());
-            txtSP.setText(language.getLabelSP());
+                    getActivity().finish();
 
-            txtCost.setText(language.getLabelCost());
-            txtLiabilityLimitation.setText(language.getLabelLiabilityLimitation());
-            txtCost1.setText(language.getLabelPrice());
-            txtHaftb.setText(language.getLabelHaftb());
-            txtHandllingFee.setText(language.getLabelHandlingFee());
-            txtTotal.setText(language.getLabelTotal());
-            txtTransport1.setText(language.getLabelTransport());
-            txtEquipmentRent.setText(language.getLabelEquipmentRent());
-            txtToll.setText(language.getLabelToll());
+                }
+                else
+                {
+                    getFragmentManager().popBackStack();
+                }
+                return true;
+            case R.id.actionForward:
+                Bundle args = new Bundle();
+                args.putString("kanr", kanr);
+                args.putInt("kaNrOfLoadedCustomer", kaNrOfLoadedCustomer);
+                args.putInt("branchId", branchId);
+                args.putString("deviceType", deviceType);
+                args.putString("branchName", branchName);
+                args.putString("contactPersonNo", contactPersonNo);
+                args.putString("contactPersonName", contactPerson);
+                args.putString("equipmentIds", equipmentIds);
+                args.putString("EquipmentJson", equipmentJson);
+                args.putInt("rental", rental);
+                args.putInt("rentalDays", rentalDays);
+                args.putString("dates_comma",datesComma);
+                args.putDouble("price", price);
+                args.putString("startDate",startDate);
+                args.putString("endDate",endDate);
+                args.putString("fromDate",fromDate);
+                args.putString("toDate",toDate);
 
-            txtGesAmenities.setText(language.getLabelGesAmenities());
-            txtSatntag.setText(language.getLabelSatntag());
-            txtServicePackages.setText(language.getLabelServicePackages());
-            txtBranch.setText(language.getLabelBranch());
-            txtHGRP.setText(language.getLabelHGRP());
-    //        txtDeviceType.setText(language.getLabelDeviceType());
-            // txtManufacturer.setText(language.getLabelManufacturer());
-            //  txtType.setText(language.getLabelType());
-            txtMD.setText(language.getLabelMD());
-            txtRentalPrice.setText(language.getLabelRentalPrice());
-            txtSB.setText(language.getLabelSB());
-            txtHF.setText(language.getLabelHF());
-            txtNote.setText(language.getLabelNotes());
-            txtTransport.setText(language.getLabelTransport());
-            txtApproach.setText(language.getLabelApproach());
-            txtDeparture.setText(language.getLabelDeparture());
-            txtAdditionalCargoPrice.setText(language.getLabelAdditionalCargoPrice());
-            txtFlateRate.setText(language.getLabelFlateRate());
-            chkCalendarDaily.setText(language.getLabelIntegraCalenderFrom());
-            chkInrinsicActivity.setText(language.getLabelInrinsicActivity());
-            btnCache.setText(language.getLabelCache());
-            btnLostSale.setText(language.getLabelLostSale());
-            btnContract.setText(language.getLabelWithContract());
-            btnOffer.setText(language.getLabelOffer());
-            btnVerbalOffer.setText(language.getLabelVerbleOffered());
-            txtGenehmigungsgebiet.setText(language.getLabelGenehmi());
-        }
 
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-        {
-            inflater.inflate(R.menu.menu_main_menu, menu);
-            this.menu = menu;
-            menu.findItem(R.id.actionAdd).setVisible(false);
-            menu.findItem(R.id.actionEdit).setVisible(false);
-            menu.findItem(R.id.actionSearch).setVisible(false);
-            menu.findItem(R.id.actionRight).setVisible(false);
-            menu.findItem(R.id.actionWrong).setVisible(false);
-            //menu.findItem(R.id.actionForward).setVisible(false);
-            menu.findItem(R.id.actionForward).setIcon(R.drawable.icn_blank);
-        }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item)
-        {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            switch (item.getItemId())
-            {
-                case R.id.actionSettings:
-                    if(!preferences.getisPrice().equalsIgnoreCase(""))
+                /*if(checkBoxSelbstfahrer.isChecked()){
+                    ArrayList<Pricing1BranchData> branches = new ArrayList<>();
+                    branches=db.getBranchList(preferences.getBranchId());
+                    PriceUseInformationList=PriceUseInformationList.replace(myJson.getEinsatzort(), String.valueOf(preferences.getBranchId()));
+                    PriceUseInformationList=PriceUseInformationList.replace(String.valueOf(myJson.getEinsatzPLZ()),String.valueOf(branches.get(0).getPlz()));
+
+                    PriceUseInformationList=PriceUseInformationList.replace(String.valueOf(myJson.getEinsatzStrasse()), String.valueOf(branches.get(0).getStrasse()));
+                }*/
+                /*if(preferences.getComefrom().equalsIgnoreCase("selected")){
+                    ArrayList<Pricing1BranchData> branches = new ArrayList<>();
+                    branches=db.getBranchList(preferences.getBranchId());
+                    PriceUseInformationList=PriceUseInformationList.replace(myJson.getEinsatzort(), String.valueOf(preferences.getBranchId()));
+                    PriceUseInformationList=PriceUseInformationList.replace(String.valueOf(myJson.getEinsatzPLZ()),String.valueOf(branches.get(0).getPlz()));
+
+                    PriceUseInformationList=PriceUseInformationList.replace(String.valueOf(myJson.getEinsatzStrasse()), String.valueOf(branches.get(0).getStrasse()));
+                }*/
+
+               // Pricing2InsertPriceUseInformationListData pricingInformation = new Pricing2InsertPriceUseInformationListData();
+
+
+
+                Gson gson2 = new Gson();
+                Pricing2InsertPriceUseInformationListData myJson2 = gson2.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
+                args.putString("PriceUseInformationList", PriceUseInformationList);
+                args.putString("GeratetypeId", GeratetypeId);
+
+                args.putString("plz",plz.toString().trim());
+
+                args.putString("Besteller_Telefon", Besteller_Telefon);
+                args.putString("Besteller_Email", Besteller_Email);
+                args.putString("Besteller_Anrede", Besteller_Anrede);
+                args.putString("Besteller_Mobil", Besteller_Mobil);
+                args.putDouble("gesAminities", gesAm);
+
+                if(!TextUtils.isEmpty(textviewDate2.getText().toString()) && !TextUtils.isEmpty(textviewDate1.getText().toString())){
+                    String selecteddate=textviewDate1.getText().toString().replace(".","-");
+                    String seconddate = textviewDate2.getText().toString().replace(".","-");
+                    if(compareDate1WithDate2(selecteddate,seconddate))
                     {
-                        if(db.getLostsaleCount() > 0 ){
-                            showAlertDialg();
-                        }
-
-                    }
-                    else{
+                        storedataInParsableClass();
+                        PricingFragment4 pricingFragment3 = new PricingFragment4();
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                        transaction.replace(R.id.content_frame, new SettingFragment(),"Setting");
-                        transaction.addToBackStack("Setting");
+                        transaction.replace(R.id.content_frame, pricingFragment3);
+                        pricingFragment3.setArguments(args);
+                        transaction.addToBackStack("Gethering Activity");
                         transaction.commit();
                     }
-
-                    return true;
-                case R.id.actionBack:
-                    savePricingCustomerOrderBasicInfo();
-                    if (getFragmentManager().getBackStackEntryCount() == 0)
-                    {
-
-                        getActivity().finish();
+                    else {
+                        // give message here
+                        showShortToast(language.getMessageEndTimeGreaterThenStartTime());
+                        //GlobalClass.showToast(getActivity(),"please selecte proprer start date");
                     }
-                    else
-                    {
-                        getFragmentManager().popBackStack();
-                    }
-                    return true;
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
-            //return super.onOptionsItemSelected(item);
+                }
+                else
+                {
+                    storedataInParsableClass();
+                    PricingFragment4 pricingFragment3 = new PricingFragment4();
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    transaction.replace(R.id.content_frame, pricingFragment3);
+                    pricingFragment3.setArguments(args);
+                    transaction.addToBackStack("Gethering Activity");
+                    transaction.commit();
+                }
+
+                //getActivity().finish();
+                return  true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        //return super.onOptionsItemSelected(item);
+    }
+    public void initControl()
+    {
+        databaseHanlder = new DataBaseHandler(getActivity());
+        spinnerLadefahrzeug =(Spinner)rootView.findViewById(R.id.spinnerLadefahrzeug);
+        checkBoxAnlieferung =(CheckBox)rootView.findViewById(R.id.checkBoxAnlieferung);
+        checkBoxKann =(CheckBox)rootView.findViewById(R.id.checkBoxKann);
+        checkBoxLieferung =(CheckBox)rootView.findViewById(R.id.checkBoxLieferung);
+        if(!TextUtils.isEmpty(strAvo)){
+            checkBoxLieferung.setEnabled(false);
+        }
+        checkBoxVoranmeldung =(CheckBox)rootView.findViewById(R.id.checkBoxVoranmeldung);
+        checkBoxBenachrichtgung =(CheckBox)rootView.findViewById(R.id.checkBoxBenachrichtgung);
+        checkBoxRampena =(CheckBox)rootView.findViewById(R.id.checkBoxRampena);
+        checkBoxsonstige =(CheckBox)rootView.findViewById(R.id.checkBoxsonstige);
+        checkBoxEinweisung=(CheckBox)rootView.findViewById(R.id.checkBoxEinweisung);
+        checkBoxSelbstfahrer=(CheckBox)rootView.findViewById(R.id.checkBoxSelbstfaher);
+
+        edittextKannDetail =(EditText)rootView.findViewById(R.id.edittextKannDetail);
+        edittextVoranmeldungDetail =(EditText)rootView.findViewById(R.id.edittextVoranmeldungDetail);
+        edittextBenachrichDetial =(EditText)rootView.findViewById(R.id.edittextBenachrichDetial);
+        edittextSonstigeDetail =(EditText)rootView.findViewById(R.id.edittextSonstigeDetail);
+
+        edittextKannDetail.setEnabled(false);
+        edittextVoranmeldungDetail.setEnabled(false);
+        edittextBenachrichDetial.setEnabled(false);
+        edittextSonstigeDetail.setEnabled(false);
+
+        textviewHourStart =(EditText) rootView.findViewById(R.id.textviewHourStart);
+        textviewHourEnd =(EditText)rootView.findViewById(R.id.textviewHourEnd);
+        //textviewMinuteEnd =(TextView)rootView.findViewById(R.id.textviewMinuteEnd);
+
+        textviewDate1=(EditText)rootView.findViewById(R.id.textviewDateStart);
+        textviewDate2=(EditText)rootView.findViewById(R.id.textviewDateEnd);
+
+
+
+        imgQuestionMark1=(ImageView)rootView.findViewById(R.id.imageviewQuetionMark1);
+        imgQuestionMark2=(ImageView)rootView.findViewById(R.id.imageviewQuetionMark2);
+        imgQuestionMark2.setOnClickListener(this);
+        imgQuestionMark1.setOnClickListener(this);
+
+        btnSubmit=(Button)rootView.findViewById(R.id.btnSubmit);
+        imgbtnStartdate=(ImageButton) rootView.findViewById(R.id.imgBtnFromDate);
+        imgbtnenddate=(ImageButton)rootView.findViewById(R.id.imgBtnToDate);
+
+        imgbtnStarttime=(ImageButton) rootView.findViewById(R.id.imgBtnstartTime);
+        imgbtnendtime=(ImageButton)rootView.findViewById(R.id.imgBtnendTime);
+        imgbtnStarttime.setOnClickListener(this);
+        imgbtnendtime.setOnClickListener(this);
+
+        imgbtnStartdate.setOnClickListener(this);
+        imgbtnenddate.setOnClickListener(this);
+        btnSubmit.setOnClickListener(this);
+        textviewDate1.setOnClickListener(this);
+        textviewDate2.setOnClickListener(this);
+        textviewHourStart.setOnClickListener(this);
+        textviewHourEnd.setOnClickListener(this);
+       // textviewMinuteEnd.setOnClickListener(this);
+
+        if(checkBoxAnlieferung.isChecked()){
+            textviewDate1.setEnabled(true);
+            textviewDate2.setEnabled(true);
+            textviewHourStart.setEnabled(true);
+            textviewHourEnd.setEnabled(true);
+
+            imgbtnendtime.setEnabled(true);
+            imgbtnStarttime.setEnabled(true);
+            imgbtnenddate.setEnabled(true);
+            imgbtnStartdate.setEnabled(true);
+        }
+        else {
+            textviewDate1.setEnabled(false);
+            textviewDate2.setEnabled(false);
+            textviewHourStart.setEnabled(false);
+            textviewHourEnd.setEnabled(false);
+
+            imgbtnendtime.setEnabled(false);
+            imgbtnStarttime.setEnabled(false);
+            imgbtnenddate.setEnabled(false);
+            imgbtnStartdate.setEnabled(false);
         }
 
-        public void LostSaleDialog(final int fromWhichBtn, final ArrayList<Integer> ids, final int starting)
+        checkBoxChangeEffect();
+
+        /*if(!TextUtils.isEmpty(strAvo)){
+            setDefaultTimeandDate();
+            textviewDate1.setEnabled(true);
+            textviewDate2.setEnabled(true);
+            textviewHourEnd.setEnabled(true);
+            textviewHourStart.setEnabled(true);
+            imgbtnendtime.setEnabled(true);
+            imgbtnStartdate.setEnabled(true);
+            imgbtnenddate.setEnabled(true);
+            imgbtnStarttime.setEnabled(true);
+            checkBoxLieferung.setChecked(true);
+        }else{
+
+        }*/
+
+        spinnerLadefahrzeug.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                preferences.saveComboboxPos(position);
+                intLadefahrzeug = arraylistLadefahrzeug.get(position).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        addToArraylist();
+        arraylistLadefahrzeug=databaseHanlder.getLadefahzeg();
+        // Resources passed to adapter to get image
+        Resources res = getResources();
+
+        // Create custom adapter object
+        adapter = new SpinnerAdapterClass(getActivity(), R.layout.spinner_rows, arraylistLadefahrzeug,res);
+
+        // Set adapter to spinner
+        spinnerLadefahrzeug.setAdapter(adapter);
+        spinnerLadefahrzeug.setSelection(preferences.getComboboxPos());
+
+        //setCurrentDateAndtime();
+    }
+    public void storedataInParsableClass(){
+        flagAnlieferung = checkBoxAnlieferung.isChecked();
+        flagKann = checkBoxKann.isChecked();
+        flagLieferung = checkBoxLieferung.isChecked();
+        flagVoranmeldung = checkBoxVoranmeldung.isChecked();
+        flagBenachrichtgung = checkBoxBenachrichtgung.isChecked();
+        flagRampena = checkBoxRampena.isChecked();
+        flagSonstige = checkBoxsonstige.isChecked();
+        flagEinweisung = checkBoxEinweisung.isChecked();
+        if(preferences.getComefrom().equalsIgnoreCase("selected")){
+            flagSelbstfahrer=true;
+        }
+        else {
+            flagSelbstfahrer=false;
+        }
+
+
+        if(checkBoxKann.isChecked()){
+            strKann = edittextKannDetail.getText().toString();
+        }
+        else {
+            strKann = "";
+        }
+
+        if(checkBoxVoranmeldung.isChecked()){
+            strVoranmeldung = edittextVoranmeldungDetail.getText().toString();
+        }
+        else {
+            strVoranmeldung = "";
+        }
+        if(checkBoxBenachrichtgung.isChecked())
         {
-            LayoutInflater li = LayoutInflater.from(getActivity());
-            View promptsView = li.inflate(R.layout.fragment_pricing_3_lost_contract_dialog, null);
-            final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-            alertDialog.setCancelable(false);
-            alertDialog.setTitle(language.getMessagePleaseEnterReasonForRejection());
-            LinearLayout linearLostSaleDLG = (LinearLayout) promptsView.findViewById(R.id.linearLostSaleDLG);
-
-            alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-            //DataHelper.setUpUi(getActivity(), alertDialog.getWindow().getDecorView().findViewById(android.R.id.content));
-            //DataHelper.setUpUi(getActivity(), linearLostSaleDLG);
-            linearLostSaleDLG.setOnTouchListener(new View.OnTouchListener()
-            {
-                @Override
-                public boolean onTouch(View view, MotionEvent ev)
-                {
-                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                    hideKeyboard(view);
-                    return true;
-                }
-            });
-
-            etGeratermietePriceDLGP3 = (EditText) promptsView.findViewById(R.id.etGeratermietePriceDLGP3);
-            etGeratermieteCompititerDLGP3 = (EditText) promptsView.findViewById(R.id.etGeratermieteCompititerDLGP3);
-            etLimitationOfLiabilityPriceDLGP3 = (EditText) promptsView.findViewById(R.id.etLimitationOfLiabilityPriceDLGP3);
-            etLimitationOfLiabilityCompititerDLGP3 = (EditText) promptsView.findViewById(R.id.etLimitationOfLiabilityCompititerDLGP3);
-            etTransportPriceDLGP3 = (EditText) promptsView.findViewById(R.id.etTransportPriceDLGP3);
-            etTransportCompititerDLGP3 = (EditText) promptsView.findViewById(R.id.etTransportCompititerDLGP3);
-            etTheCustomerHasNotReceivedTheOrderCompititerDLGP3 = (EditText) promptsView.findViewById(R.id.etTheCustomerHasNotReceivedTheOrderCompititerDLGP3);
-            etOtherDLGP3 = (EditText) promptsView.findViewById(R.id.etOtherDLGP3);
-            chkLogisticsDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkLogisticsDLGP3);
-            chkAvailabilityDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkAvailabilityDLGP3);
-            chkPriceDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkPriceDLGP3);
-            chkGeratermieteDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkGeratermieteDLGP3);
-            chkLimitationOfLiabilityDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkLimitationOfLiabilityDLGP3);
-            chkTransportDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkTransportDLGP3);
-            chkTermsofPaymentDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkTermsofPaymentDLGP3);
-            chkPaysNoAdvancePaymentDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkPaysNoAdvancePaymentDLGP3);
-            chkCashDiscountDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkCashDiscountDLGP3);
-            chkTheCustomerHasChosenAnAlternativeMtecoUnitDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkTheCustomerHasChosenAnAlternativeMtecoUnitDLGP3);
-            chkTheCustomerDoesNotHaveNeedLessDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkTheCustomerDoesNotHaveNeedLessDLGP3);
-            chkTheCustomerHasNotReceivedTheOrderDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkTheCustomerHasNotReceivedTheOrderDLGP3);
-            chkOtherDLGP3 = (CheckBox) promptsView.findViewById(R.id.chkOtherDLGP3);
-            txtPriceDLGP3 = (TextView) promptsView.findViewById(R.id.txtPriceDLGP3);
-            txtCompetitorDLGP3 = (TextView) promptsView.findViewById(R.id.txtCompetitorDLGP3);
-            txtCompetitor1DLGP3 = (TextView) promptsView.findViewById(R.id.txtCompetitor1DLGP3);
-            chkLogisticsDLGP3.setText(language.getLabelLogistics());
-            chkAvailabilityDLGP3.setText(language.getLabelAvailability());
-            chkPriceDLGP3.setText(language.getLabelPrice());
-            chkGeratermieteDLGP3.setText(language.getLabelGeratermiete());
-            chkTransportDLGP3.setText(language.getLabelTransport());
-            chkLimitationOfLiabilityDLGP3.setText(language.getLabelLimitationOfLiability());
-            chkTermsofPaymentDLGP3.setText(language.getLabelTermsofPayment());
-            chkPaysNoAdvancePaymentDLGP3.setText(language.getLabelPaysNoAdvancePayment());
-            chkCashDiscountDLGP3.setText(language.getLabelCashDiscount());
-            chkTheCustomerHasChosenAnAlternativeMtecoUnitDLGP3.setText(language.getLabelTheCustomerHasChosenAnAlternativeMtecoUnit());
-            chkTheCustomerDoesNotHaveNeedLessDLGP3.setText(language.getLabelTheCustomerDoesNotHaveNeedLess());
-            chkTheCustomerHasNotReceivedTheOrderDLGP3.setText(language.getLabelTheCustomerHasNotReceivedTheOrder());
-            chkOtherDLGP3.setText(language.getLabelOther());
-            txtPriceDLGP3.setText(language.getLabelPrice());
-            txtCompetitorDLGP3.setText(language.getLabelCompetitor());
-            txtCompetitor1DLGP3.setText(language.getLabelCompetitor());
-
-            Button btnOk = (Button) promptsView.findViewById(R.id.btnOkDLGP3);
-            Button btnAbortDLGP3 = (Button) promptsView.findViewById(R.id.btnAbortDLGP3);
+            strBenachrich = edittextBenachrichDetial.getText().toString();
+        } else
+        {
+            strBenachrich = "";
+        }
+        if(checkBoxsonstige.isChecked()) {
+            strSonstige = edittextSonstigeDetail.getText().toString();
+        }
+        else {
+            strSonstige = "";
+        }
 
 
-            chkLogisticsDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkAvailabilityDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkPriceDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkGeratermieteDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkTransportDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkLimitationOfLiabilityDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkTermsofPaymentDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkPaysNoAdvancePaymentDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkCashDiscountDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkTheCustomerHasChosenAnAlternativeMtecoUnitDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkTheCustomerDoesNotHaveNeedLessDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-            chkTheCustomerHasNotReceivedTheOrderDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
 
 
-            twOtherDLGP3 = new TextWatcher()
+        // intLadefahrzeug = spinnerLadefahrzeug.getSelectedItemPosition();
+        if(checkBoxLieferung.isChecked()){
+            strStartDate =textviewDate1.getText().toString();
+            strEndDate =textviewDate2.getText().toString();
+            strStartTime = textviewHourStart.getText().toString();
+            strEndtime =textviewHourEnd.getText().toString();
+
+        }
+        else {
+            strStartDate ="";
+            strEndDate ="";
+            strStartTime = "";
+            strEndtime ="";
+        }
+
+
+        preferences.startDate(strStartDate);
+        preferences.endDate(strEndDate);
+        preferences.startTime(strStartTime);
+        preferences.endTime(strEndtime);
+        AddPriceParsableClass parssable = new AddPriceParsableClass(String.valueOf(flagAnlieferung),String.valueOf(flagKann),
+                String.valueOf(flagLieferung),String.valueOf(flagVoranmeldung),String.valueOf(flagBenachrichtgung)
+                ,String.valueOf(flagRampena),
+                String.valueOf(flagSonstige),String.valueOf(flagEinweisung),String.valueOf(flagSelbstfahrer),strKann,
+                strVoranmeldung, strBenachrich, strSonstige, intLadefahrzeug);
+
+        PreferencesClass.storePriceData(getActivity(), parssable);
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==btnSubmit){
+            strKann = edittextKannDetail.getText().toString();
+            strVoranmeldung = edittextVoranmeldungDetail.getText().toString();
+            strBenachrich = edittextBenachrichDetial.getText().toString();
+            strSonstige = edittextSonstigeDetail.getText().toString();
+
+
+            flagAnlieferung = checkBoxAnlieferung.isChecked();
+            flagKann = checkBoxKann.isChecked();
+            flagLieferung = checkBoxLieferung.isChecked();
+            flagVoranmeldung = checkBoxVoranmeldung.isChecked();
+            flagBenachrichtgung = checkBoxBenachrichtgung.isChecked();
+            flagRampena = checkBoxRampena.isChecked();
+            flagSonstige = checkBoxsonstige.isChecked();
+            flagEinweisung = checkBoxEinweisung.isChecked();
+            flagSelbstfahrer=checkBoxSelbstfahrer.isChecked();
+
+            strStartDate =textviewDate1.getText().toString();
+            strEndDate =textviewDate2.getText().toString();
+            strStartTime = textviewHourStart.getText().toString();
+            strEndtime =textviewHourEnd.getText().toString();
+
+            /*if(TextUtils.isEmpty(strKann))
             {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
+                edittextKannDetail.setError(getResources().getString(R.string.error_message));
+            }
+            else if(TextUtils.isEmpty(strVoranmeldung))
+            {
+                edittextVoranmeldungDetail.setError(getResources().getString(R.string.error_message));
+            }
+            else if(TextUtils.isEmpty(strBenachrich)){
+                edittextBenachrichDetial.setError(getResources().getString(R.string.error_message));
+            }
+            else if(TextUtils.isEmpty(strSonstige)){
+                edittextSonstigeDetail.setError(getResources().getString(R.string.error_message));
+            }
+            else if(strLadefahrzeug.equalsIgnoreCase("") || strLadefahrzeug.equalsIgnoreCase("Select")){
+                Toast.makeText(MainActivity.this,"PLease select item",Toast.LENGTH_SHORT).show();
+            }
+            else {*/
+            if(GlobalClass.isNetworkAvailable(getActivity()))
+            {
+                GlobalClass.showToast(getActivity(), "Network available");
+                // call service here to add the data in service
+                callWebservice();
+            }
+            else
+            {
+                GlobalClass.showToast(getActivity(),"NOOO Network available");
+                //databaseHanlder.addTransportDetail(GlobalClass.boolToInt(flagAnlieferung),GlobalClass.boolToInt(flagKann),
+                       // GlobalClass.boolToInt(flagLieferung),GlobalClass.boolToInt(flagVoranmeldung),GlobalClass.boolToInt(flagBenachrichtgung),
+                       // GlobalClass.boolToInt(flagRampena),GlobalClass.boolToInt(flagSonstige),GlobalClass.boolToInt(flagEinweisung),
+                       // GlobalClass.boolToInt(flagSelbstfahrer), strKann, strVoranmeldung, strBenachrich, strSonstige,strLadefahrzeug,strStartDate,strStartTime,strEndDate,strEndtime);
+            }
 
-                }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
+            // }
 
-                }
 
-                @Override
-                public void afterTextChanged(Editable s)
-                {
-                    if (s.toString().length() > 0)
-                    {
-                        chkOtherDLGP3.setChecked(true);
-                    }
-                    else
-                    {
-                        chkOtherDLGP3.setChecked(false);
-                    }
+        }
+        if(v== imgbtnStartdate){
+            clickedTextbox="first";
+            DialogFragment newFragment = new SelectDateFragment();
+            newFragment.show(getActivity().getFragmentManager(), "DatePicker");
+        }
+        if(v== imgbtnenddate){
+            clickedTextbox="second";
+            DialogFragment newFragment = new SelectDateFragment();
+            newFragment.show(getActivity().getFragmentManager(), "DatePicker");
+        }
+        if(v==textviewDate1){
+            clickedTextbox="first";
+            DialogFragment newFragment = new SelectDateFragment();
+            newFragment.show(getActivity().getFragmentManager(), "DatePicker");
+
+
+
+        }
+        if(v==imgbtnStarttime){
+            clickedTextboxTime="first";
+            DialogFragment newFragment = new SelectTimeFragment();
+            newFragment.show(getActivity().getFragmentManager(), "TimePicker");
+        }
+        if(v==imgbtnendtime){
+            clickedTextboxTime="second";
+            DialogFragment newFragment = new SelectTimeFragment();
+            newFragment.show(getActivity().getFragmentManager(), "TimePicker");
+        }
+        if(v==textviewDate2){
+            clickedTextbox="second";
+            DialogFragment newFragment = new SelectDateFragment();
+            newFragment.show(getActivity().getFragmentManager(), "DatePicker");
+
+        }
+        if(v== textviewHourStart){
+            clickedTextboxTime="first";
+            DialogFragment newFragment = new SelectTimeFragment();
+            newFragment.show(getActivity().getFragmentManager(), "TimePicker");
+
+        }
+        if(v==textviewHourEnd){
+            clickedTextboxTime="second";
+            DialogFragment newFragment = new SelectTimeFragment();
+            newFragment.show(getActivity().getFragmentManager(), "TimePicker");
+
+        }
+        /*if(v== textviewMinuteStart){
+            clickedTextboxTime="first";
+            DialogFragment newFragment = new SelectTimeFragment();
+            newFragment.show(getActivity().getFragmentManager(), "TimePicker");
+
+        }*/
+        /*if(v== textviewMinuteEnd){
+            clickedTextboxTime="second";
+            DialogFragment newFragment = new SelectTimeFragment();
+            newFragment.show(getActivity().getFragmentManager(), "TimePicker");
+
+        }*/
+        if(v==imgQuestionMark1)
+        {
+
+        }
+        if(v==imgQuestionMark2)
+        {
+
+        }
+    }
+    public void addToArraylist()
+    {
+        for (int i = 0; i < 11; i++)
+        {
+            final SpinnerModel model = new SpinnerModel();
+            model.setCompanyName("Item "+i);
+            arraylistSpinner.add(model);
+        }
+
+    }
+    @SuppressWarnings("deprecation")
+    public void setDate() {
+        //showDialog(999);
+
+    }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            // TODO Auto-generated method stub
+            // arg1 = year
+            // arg2 = month
+            // arg3 = day
+            showDate(arg1, arg2 + 1, arg3);
+        }
+    };
+
+    private void showDate(int year, int month, int day) {
+
+        if(!TextUtils.isEmpty(clickedTextbox)){
+            if(clickedTextbox.equalsIgnoreCase("first")){
+                textviewDate1.setText(new StringBuilder().append(day).append(".")
+                        .append(month).append(".").append(year));
+            }
+            else if(clickedTextbox.equalsIgnoreCase("second")) {
+                textviewDate2.setText(new StringBuilder().append(day).append(".")
+                        .append(month).append(".").append(year));
+            }
+
+        }
+        else {
+            textviewDate1.setText(new StringBuilder().append(day).append(".")
+                    .append(month).append(".").append(year));
+            textviewDate2.setText(new StringBuilder().append(day).append(".")
+                    .append(month).append(".").append(year));
+        }
+
+    }
+    /** Callback received when the user "picks" a time in the dialog */
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener =
+            new TimePickerDialog.OnTimeSetListener() {
+                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                    Hour = hourOfDay;
+                    Minute = minute;
+                    updateDisplay();
+
                 }
             };
+    /** Updates the time in the TextView */
+    private void updateDisplay() {
 
-            etOtherDLGP3.addTextChangedListener(twOtherDLGP3);
+        if(!TextUtils.isEmpty(clickedTextboxTime)){
+            if(clickedTextboxTime.equalsIgnoreCase("first")){
+                textviewHourStart.setText(new StringBuilder().append(pad(Hour)));
+                //textviewMinuteStart.setText(new StringBuilder().append(pad(Minute)));
+            }
+            else {
+                textviewHourEnd.setText(new StringBuilder().append(pad(Hour)));
+                //textviewMinuteEnd.setText(new StringBuilder().append(pad(Minute)));
+            }
 
-            chkOtherDLGP3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    if (isChecked)
-                    {
-                        chkCounter = 1;
-                    }
-                    else
-                    {
-                        chkCounter = 0;
-                    }
-                }
-            });
-
-
-            btnOk.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    if (chkCounter > 0)
-                    {
-                        try
-                        {
-                            //  InsertData(3,selectedEquipments, 1);
-                            selectedEquipments.clear();
-                            for (int i = 0; i < lablesLostSale.size(); i++)
-                            {
-                                if (lablesLostSale.get(i).isSelected() == true)
-                                {
-                                    selectedEquipments.add(lablesLostSale.get(i).getId());
-                                }
-                            }
-                            InsertData(WarenkorbartBtnPressIds, selectedEquipments, 3);
-                        }
-                        catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
-                        alertDialog.dismiss();
-                    }
-                    else
-                    {
-                        showShortToast(language.getMessageSelectOneReasonForRejection());
-                    }
-                }
-            });
-            btnAbortDLGP3.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    alertDialog.dismiss();
-                    //  overCounter();
-                }
-            });
-            alertDialog.setView(promptsView);
-            alertDialog.show();
+        }
+        else {
+            textviewHourStart.setText(new StringBuilder().append(pad(Hour)));
+            //textviewMinuteStart.setText(new StringBuilder().append(pad(Minute)));
+            textviewHourEnd.setText(new StringBuilder().append(pad(Hour)));
+            //textviewMinuteEnd.setText(new StringBuilder().append(pad(Minute)));
         }
 
-        /**
-         * Function to load the spinner data from SQLite database
-         */
-        private void loadLostSaleListViewData()
+    }
+
+
+    public void checkBoxChangeEffect(){
+        checkBoxKann.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
-            lablesLostSale.clear();
-            // ListView elements
-            lablesLostSale = db.getPricing3LostsaleData(customer_KundenNr);
-            if(lablesLostSale.size() > 0){
-                lostSaleAdapter = new Pricing3LostSaleDataAdapter(getActivity(), R.layout.fragment_pricing_3_lost_sale_row, lablesLostSale);
-                // Drop down layout style - list view with radio button
-                // attaching data adapter to spinner
-                lvPricing3LostSaleListView.setAdapter(lostSaleAdapter);
-                preferences.setisPrice("yes");
-            }
-        }
-        private void getInitialStatus(String kontakt, String kanr, String deviceType)
-        {
-            if(DataHelper.isNetworkAvailable(getActivity()))
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
-                {
-                    @Override
-                    public void OnAsynResult(String result)
-                    {
-                        if(result.equals("error"))
-                        {
-                            showShortToast(language.getMessageError());
-                        }
-                        else if(result.equals(DataHelper.NetworkError)){
-                            showShortToast(language.getMessageNetworkNotAvailable());
-                        }
-                        else
-                        {
-                            try
-                            {
-                                pricingScreen = new Gson().fromJson(result, PricingScreen3ObjectList.class);
-                                if(pricingScreen.getPriceHaftungsbegrenzungBoxStatus().equals("True"))
-                                {
-                                    radioGrpSB.setEnabled(true);
-                                    rbSB1000.setEnabled(true);
-                                    rbSB2000.setEnabled(true);
-                                    rbSB3000.setEnabled(true);
-                                    rbSB500.setEnabled(true);
-                                    spinnerSB.setEnabled(true);
-
-                                }
-                                else
-                                {
-                                    radioGrpSB.setEnabled(false);
-                                    rbSB1000.setEnabled(false);
-                                    rbSB2000.setEnabled(false);
-                                    rbSB3000.setEnabled(false);
-                                    rbSB500.setEnabled(false);
-                                    spinnerSB.setEnabled(false);
-                                }
-
-                                if(Integer.parseInt(pricingScreen.getPriceHandlingCheckBox()) > 0)
-                                {
-                                    chkHandllingFeeP2.setChecked(false);
-                                }
-                                else
-                                {
-                                    chkHandllingFeeP2.setChecked(true);
-                                }
-
-                                if(pricingScreen.getPriceKalendertaeglichCheckBox().equals("True"))
-                                {
-                                    chkCalendarDaily.setChecked(true);
-                                }
-                                else
-                                {
-                                    chkCalendarDaily.setChecked(false);
-                                }
-                                if(pricingScreen.getPriceServicePauschal() != null){
-                                    //Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(approach));
-                                    sp=Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(pricingScreen.getPriceServicePauschal()));
-                                }
-
-                                if(Integer.parseInt(pricingScreen.getPriceServiceCheckBox()) > 0)
-                                {
-                                    chkServicePackagesP2.setChecked(false);
-                                }
-                                else
-                                {
-                                    chkServicePackagesP2.setChecked(true);
-                                }
-                                Boolean selected=false;
-
-                                arraylistSB = new ArrayList<>();
-                                for(int j = 0; j < pricingScreen.getListOfPriceHaftb().size(); j++)
-                                {
-                                    if(pricingScreen.getListOfPriceHaftb().get(j).getSelected().equals("1")) {
-                                        SpinnerSBModel model = new SpinnerSBModel();
-                                        model.setSelected(true);
-                                        model.setValue(pricingScreen.getListOfPriceHaftb().get(j).getValue());
-                                        model.setStrTitle("SB " + pricingScreen.getListOfPriceHaftb().get(j).getName());
-                                        arraylistSB.add(model);
-                                    }
-                                }
-                                for(int k = 0; k < pricingScreen.getListOfPriceHaftb().size(); k++)
-                                {
-                                        if(pricingScreen.getListOfPriceHaftb().get(k).getSelected().equals("0")) {
-                                            SpinnerSBModel model = new SpinnerSBModel();
-                                            model.setSelected(false);
-                                            model.setValue(pricingScreen.getListOfPriceHaftb().get(k).getValue());
-                                            model.setStrTitle("SB " + pricingScreen.getListOfPriceHaftb().get(k).getName());
-                                            arraylistSB.add(model);
-                                        }
-                                }
-                                sbAdapter = new SpinnerSBAdapter(getActivity(),arraylistSB);
-                                spinnerSB.setAdapter(sbAdapter);
-
-                                for(int i = 0; i < pricingScreen.getListOfPriceHaftb().size(); i++)
-                                {
-
-                                    if(pricingScreen.getListOfPriceHaftb().get(i).getSelected().equals("1"))
-                                    {
-                                        selected=true;
-                                        if(i == 0)
-                                        {
-                                            rbSB1000.setChecked(true);
-                                            SB = 1000;
-                                        }
-                                        else if( i == 1)
-                                        {
-                                            rbSB2000.setChecked(true);
-                                            SB = 2000;
-                                        }
-                                        else if (i== 2){
-                                            rbSB3000.setChecked(true);
-                                            SB = 3000;
-                                        }
-                                        else
-                                        {
-                                            rbSB500.setChecked(true);
-                                            SB = 500;
-                                        }
-                                        etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(pricingScreen.getListOfPriceHaftb().get(i).getValue())+""));
-                                        sumOfAll();
-                                        break;
-                                    }
-                                }
-                                if(selected){
-                                    spinnerSB.setEnabled(true);
-                                    rbSB1000.setEnabled(true);
-                                    rbSB500.setEnabled(true);
-                                    rbSB3000.setEnabled(true);
-                                    rbSB2000.setEnabled(true);
-                                }
-                                else {
-                                    spinnerSB.setEnabled(false);
-                                    rbSB1000.setEnabled(false);
-                                    rbSB500.setEnabled(false);
-                                    rbSB3000.setEnabled(false);
-                                    rbSB2000.setEnabled(false);
-                                }
-
-                                if(preferences.getComefrom().equalsIgnoreCase("selected")){
-                                    etApproachP2.setText("0,00");
-                                    etDepartureP2.setText("0,00");
-
-                                }
-                                else {
-                                    etApproachP2.setText("" + pricingScreen.getTransportPrice());
-                                    etDepartureP2.setText("" + pricingScreen.getTransportPrice());
-                                }
-
-                                GlobalMethods.setBlankValueForZero(etApproachP2);
-
-                                GlobalMethods.setBlankValueForZero(etDepartureP2);
-                                etTollP2.setText(pricingScreen.getMaut() + "");
-                                GlobalMethods.setBlankValueForZero(etDepartureP2);
-                            }
-                            catch (Exception ex)
-                            {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }
-                };
-                try
-                {
-                    Pricing3GetDetailRequestModel object = new Pricing3GetDetailRequestModel();
-                    object.setKontakt(kontakt);
-                    object.setKanr(kanr);
-                    object.setDeviceType(deviceType);
-                    object.setZipCode(plz);
-                    object.setMandant(branchId+"");
-                    object.setGeratetypeId(GeratetypeId);
-                    String json = new Gson().toJson(object);
-                    //+ "&kontakt=" + kontakt+ "&hoehengruppe=" + hoehengruppe+ "&mandant=" + mandant+ "&plz=" + plz;
-                    /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.Pricing_Screen_3_Obj
-                            + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
-                            + "&pricing3ScreenJson=" + URLEncoder.encode(json, "UTF-8");*/
-                    String url = DataHelper.URL_PRICE_HELPER
-                            + "pricescreenthreeobj/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
-                            + "/pricing3ScreenJson=" + URLEncoder.encode(json, "UTF-8");
-    //                        + "&Kontakt=" + kontakt
-    //                        + "&KaNr=" + kanr
-    //                        + "&Hoehengruppe=" + deviceType;
-                    asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                    asyncTask.execute();
-                }
-                catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-            else
-            {
-                showShortToast(language.getMessageNetworkNotAvailable());
-            }
-        }
-
-        public void InsertData(final int fromWhichBtn, final ArrayList<Integer> ids, final int starting)
-        {
-            final ArrayList<Pricing3InsertData> listOfPricingSend = new ArrayList<>();
-            jsonOfEqi = "";
-            pricingInser = new ArrayList<>();
-
-            for (int i = 0; i < ids.size(); i++)
-            {
-                jsonOfEqi = "";
-                pricingInser.add(db.getPricing3InsertData(customer_KundenNr, ids.get(i)));
-                Pricing3InsertData pricingInsert = new Pricing3InsertData();
-                String loginUserNumberrange = pricingInser.get(i).getUserID();
-                String Kontakt = pricingInser.get(i).getKontakt();
-                String KundenNr = pricingInser.get(i).getKundenNr();
-                int Mandant = pricingInser.get(i).getMandant();
-                int Warenkorbart = fromWhichBtn;
-                String Hoehengruppe = pricingInser.get(i).getHoehengruppe();
-                int Einheit_Mietdauer = pricingInser.get(i).getEinheit_Mietdauer();
-                int Mietdauer = pricingInser.get(i).getMietdauer();
-                //String Mietpreis = (String.valueOf(pricingInser.get(i).getMietpreis()));
-                String Mietpreis = String.valueOf(Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(String.valueOf(pricingInser.get(i).getMietpreis()))));
-                //double Mietpreis = (pricingInser.get(i).getMietpreis());
-                double Standtag = pricingInser.get(i).getStandtag();
-                String Selbstbehalt = pricingInser.get(i).getSelbstbehalt();
-                int HandlingFee = pricingInser.get(i).getHandlingFee();
-
-                int ServicePauschale = pricingInser.get(i).getServicePauschale();
-                double Versicherung = pricingInser.get(i).getVersicherung();
-                int WochenendeMitversichert = pricingInser.get(i).getWochenendeMitversichert();
-                double TransportAnfahrt = pricingInser.get(i).getTransportAnfahrt();
-                double TransportPauschal = pricingInser.get(i).getTransportPauschal();
-                double TransportAbfahrt = pricingInser.get(i).getTransportAbfahrt();
-                double Beiladungspauschale = pricingInser.get(i).getBeiladungspauschale();
-                String Einsatzinformation="";
-                if(pricingInser.get(i).getEinsatzinformation() == null) {
-                     Einsatzinformation = "";
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                    edittextKannDetail.setEnabled(true);
                 }
                 else {
-                     Einsatzinformation = pricingInser.get(i).getEinsatzinformation();
-                }
-
-                String Besteller = pricingInser.get(i).getBesteller();
-                String Besteller_Telefon="";
-                if(pricingInser.get(i).getBesteller_Telefon() != null) {
-                    if (pricingInser.get(i).getBesteller_Telefon().equalsIgnoreCase("")) {
-                        Besteller_Telefon = "";
-                    } else {
-                        Besteller_Telefon = pricingInser.get(i).getBesteller_Telefon();
+                    edittextKannDetail.setText("");
+                    edittextKannDetail.setEnabled(false);
+                    if(!checkBoxVoranmeldung.isChecked() && !checkBoxBenachrichtgung.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxsonstige.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
                     }
+
                 }
-                String Besteller_Email = pricingInser.get(i).getBesteller_Email();
-                String Notiz = pricingInser.get(i).getNotiz();
+            }
+        });
+        checkBoxLieferung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBoxLieferung.isChecked()) {
+                    flagManuallySelection = true;
+                    LogApp.showLog(" "," checkbox value "+checkBoxLieferung.isChecked());
+                    /*if(flagManuallySelection == false){
+                        flagManuallySelection = true;
+                    }else {
+                        flagManuallySelection = false;
+                    }*/
 
-                PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
-                        new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-
-
-                //Notiz = Notiz + " Mietbeginn: " + model.getStartDate() + " Mietende: " + model.getEndDate();
-                Notiz = Notiz + " Mietbeginn: " + startDate + " Mietende: " + endDate;
-
-                int Ersteller = pricingInser.get(i).getErsteller();
-                int KaNr = pricingInser.get(i).getKaNr();
-                String AnsPartner = pricingInser.get(i).getAnsPartner();
-                String Besteller_Anrede="";
-                String Besteller_Mobil="";
-
-                if(pricingInser.get(i).getBesteller_Anrede() != null) {
-                    if (!pricingInser.get(i).getBesteller_Anrede().equalsIgnoreCase("")) {
-                        Besteller_Anrede = pricingInser.get(i).getBesteller_Anrede();
-                    }
+                }else {
+                    LogApp.showLog(" "," checkbox value "+checkBoxLieferung.isChecked());
                 }
-
-
-                if(pricingInser.get(i).getBesteller_Mobil() != null) {
-                    if (!pricingInser.get(i).getBesteller_Mobil().equalsIgnoreCase("")) {
-                        Besteller_Mobil = pricingInser.get(i).getBesteller_Mobil();
-                    }
+            }
+        });
+        checkBoxLieferung.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    setDefaultTimeandDate();
+                    textviewDate1.setEnabled(true);
+                    textviewDate2.setEnabled(true);
+                    textviewHourEnd.setEnabled(true);
+                    textviewHourStart.setEnabled(true);
+                    imgbtnendtime.setEnabled(true);
+                    imgbtnStartdate.setEnabled(true);
+                    imgbtnenddate.setEnabled(true);
+                    imgbtnStarttime.setEnabled(true);
                 }
-                String Mautkilometer="";
-                if(pricingInser.get(i).getMautkilometer() != null) {
-                     Mautkilometer = pricingInser.get(i).getMautkilometer();
-                }
-                int Winterreifenpauschale = pricingInser.get(i).getWinterreifenpauschale();
-                int Bearbeitet = pricingInser.get(i).getBearbeitet();
-                int Kalendertage = pricingInser.get(i).getKalendertage();
-
-                String Referenz="";
-                if(pricingInser.get(i).getReferenz() != null) {
-                    Referenz = pricingInser.get(i).getReferenz();
-                }
-                String Geraetetyp="";
-                if(pricingInser.get(i).getGeraetetyp() != null) {
-                     Geraetetyp = pricingInser.get(i).getGeraetetyp();
-                }
-
-                if(pricingInser.get(i).getJsonOfEqu() != null) {
-                    jsonOfEqi = pricingInser.get(i).getJsonOfEqu();
-                }
-                /*******20161114******/
-                jsonOfEqiForInsert.add(jsonOfEqi);
-                /*********************/
-
-                pricingInsert.setStrDateList(datesComma);
-                pricingInsert.setUserID(loginUserNumberrange);
-                pricingInsert.setAnsPartner(AnsPartner);
-                pricingInsert.setSelbstbehalt(Selbstbehalt);
-                pricingInsert.setReferenz(Referenz);
-                pricingInsert.setGeraetetyp(Geraetetyp);
-                if(Besteller != null){
-                    if(Besteller.equalsIgnoreCase("null") || Besteller == null){
-                        pricingInsert.setBesteller("");
+                else {
+                    flagManuallySelection = false;
+                    if(checkBoxKann.isChecked() || checkBoxVoranmeldung.isChecked() || checkBoxBenachrichtgung.isChecked()
+                            || checkBoxRampena.isChecked() || checkBoxsonstige.isChecked() || checkBoxEinweisung.isChecked() || !TextUtils.isEmpty(strAvo)) {
+                        checkBoxLieferung.setChecked(true);
                     }
                     else {
-                        pricingInsert.setBesteller(Besteller);
+                        checkBoxLieferung.setChecked(false);
+                        textviewDate1.setText("");
+                        textviewDate2.setText("");
+                        textviewHourEnd.setText("");
+                        textviewHourStart.setText("");
+
+                        textviewDate1.setEnabled(false);
+                        textviewDate2.setEnabled(false);
+                        textviewHourEnd.setEnabled(false);
+                        textviewHourStart.setEnabled(false);
+                        imgbtnendtime.setEnabled(false);
+                        imgbtnStartdate.setEnabled(false);
+                        imgbtnenddate.setEnabled(false);
+                        imgbtnStarttime.setEnabled(false);
+                        /*if(TextUtils.isEmpty(strAvo)){
+                            checkBoxLieferung.setChecked(true);
+                            textviewDate1.setText("");
+                            textviewDate2.setText("");
+                            textviewHourEnd.setText("");
+                            textviewHourStart.setText("");
+
+                            textviewDate1.setEnabled(false);
+                            textviewDate2.setEnabled(false);
+                            textviewHourEnd.setEnabled(false);
+                            textviewHourStart.setEnabled(false);
+                            imgbtnendtime.setEnabled(false);
+                            imgbtnStartdate.setEnabled(false);
+                            imgbtnenddate.setEnabled(false);
+                            imgbtnStarttime.setEnabled(false);
+                        }else{
+                            checkBoxLieferung.setChecked(true);
+                        }*/
+
                     }
+                }
+            }
+        });
+        checkBoxVoranmeldung.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                    edittextVoranmeldungDetail.setEnabled(true);
                 }
                 else {
-                    pricingInsert.setBesteller("");
+                    edittextVoranmeldungDetail.setText("");
+                    edittextVoranmeldungDetail.setEnabled(false);
+                    if(!checkBoxKann.isChecked() && !checkBoxBenachrichtgung.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxsonstige.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
                 }
-                pricingInsert.setBesteller_Telefon(Besteller_Telefon);
-                pricingInsert.setBesteller_Anrede(Besteller_Anrede);
-                pricingInsert.setBesteller_Email(Besteller_Email);
-                pricingInsert.setBesteller_Mobil(Besteller_Mobil);
-                pricingInsert.setNotiz(Notiz);
-                pricingInsert.setEinsatzinformation(Einsatzinformation);
-                pricingInsert.setMautkilometer(Mautkilometer);
-                pricingInsert.setKundenNr(KundenNr);
-                pricingInsert.setHoehengruppe(Hoehengruppe);
-                pricingInsert.setKontakt(Kontakt);
-                pricingInsert.setKalendertage(Kalendertage);
-                pricingInsert.setVersicherung(Versicherung);
-                pricingInsert.setTransportPauschal(TransportPauschal);
-                pricingInsert.setTransportAnfahrt(TransportAnfahrt);
-                pricingInsert.setTransportAbfahrt(TransportAbfahrt);
-                pricingInsert.setStandtag(Standtag);
-                pricingInsert.setMietpreis(Mietpreis);
-                pricingInsert.setBeiladungspauschale(Beiladungspauschale);
-                pricingInsert.setEinheit_Mietdauer(Einheit_Mietdauer);
-                pricingInsert.setBearbeitet(Bearbeitet);
-                pricingInsert.setServicePauschale(ServicePauschale);
-                pricingInsert.setMietdauer(Mietdauer);
-                pricingInsert.setErsteller(Ersteller);
-                pricingInsert.setMandant(Mandant);
-                pricingInsert.setHandlingFee(HandlingFee);
-
-                pricingInsert.setKann(pricingInser.get(i).isKann());
-                pricingInsert.setLieferung(pricingInser.get(i).isLieferung());
-                pricingInsert.setVoranmeldung(pricingInser.get(i).isVoranmeldung());
-                pricingInsert.setBenachrichtgung(pricingInser.get(i).isBenachrichtgung());
-                pricingInsert.setRampena(pricingInser.get(i).isRampena());
-                pricingInsert.setSonstige(pricingInser.get(i).isSonstige());
-                pricingInsert.setEinweisung(pricingInser.get(i).isEinweisung());
-                pricingInsert.setSelbstfahrer(pricingInser.get(i).isSelbstfahrer());
-
-                pricingInsert.setStrKann(pricingInser.get(i).getStrKann());
-                pricingInsert.setStrVoranmeldung(pricingInser.get(i).getStrVoranmeldung());
-                pricingInsert.setStrBenachrich(pricingInser.get(i).getStrBenachrich());
-                pricingInsert.setStrSonstige(pricingInser.get(i).getStrSonstige());
-                pricingInsert.setintLadeiahrzeug(pricingInser.get(i).getintLadeiahrzeug());
-                if((pricingInser.get(i).getStrstartDate().equalsIgnoreCase("")) && (pricingInser.get(i).getStrstartTime().equalsIgnoreCase(""))){
-                    pricingInsert.setStrstartDate(pricingInser.get(i).getStrstartDate());
-                }
-                else if(pricingInser.get(i).getStrstartTime().equalsIgnoreCase("")){
-                    pricingInsert.setStrstartDate(pricingInser.get(i).getStrstartDate());
-                }
-                else if((!pricingInser.get(i).getStrstartDate().equalsIgnoreCase("")) && (!pricingInser.get(i).getStrstartTime().equalsIgnoreCase(""))){
-                    pricingInsert.setStrstartDate(pricingInser.get(i).getStrstartDate() + " " + pricingInser.get(i).getStrstartTime());
-                }
-                else
-                {
-                    pricingInsert.setStrstartDate(pricingInser.get(i).getStrstartDate());
-                }
-
-                pricingInsert.setStrstartTime(pricingInser.get(i).getStrstartTime());
-
-                if((pricingInser.get(i).getStrendDate().equalsIgnoreCase("")) && (pricingInser.get(i).getStrendTime().equalsIgnoreCase(""))){
-                    pricingInsert.setStrendDate(pricingInser.get(i).getStrendDate());
-                }
-                else if(pricingInser.get(i).getStrendTime().equalsIgnoreCase("")){
-                    pricingInsert.setStrendDate(pricingInser.get(i).getStrendDate());
-                }
-                else if((!pricingInser.get(i).getStrendDate().equalsIgnoreCase("")) && (!pricingInser.get(i).getStrendTime().equalsIgnoreCase(""))){
-                    pricingInsert.setStrendDate(pricingInser.get(i).getStrendDate() + " " + pricingInser.get(i).getStrendTime());
-                }
-                else{
-                    pricingInsert.setStrendDate(pricingInser.get(i).getStrendDate());
-                }
-                //pricingInsert.setStrendDate(pricingInser.get(i).getStrendDate() + " " + (pricingInser.get(i).getStrendTime()));
-
-                pricingInsert.setStrendTime(pricingInser.get(i).getStrendTime());
-                if (fromWhichBtn == 1)
-                {
-                    pricingInsert.setAngebotSuffix(i);
-                }
-                else if (fromWhichBtn == 2)
-                {
-                    pricingInsert.setAngebotSuffix(i);
-                }
-                else
-                {
-                    pricingInsert.setAngebotSuffix(0);
-                }
-                pricingInsert.setKaNr(KaNr);
-                pricingInsert.setWarenkorbart(Warenkorbart);
-                pricingInsert.setWinterreifenpauschale(Winterreifenpauschale);
-                pricingInsert.setWochenendeMitversichert(WochenendeMitversichert);
-                pricingInsert.setGenehmigungsgebiet(isGenehmigungsgebiet);
-
-                Gson gson = new GsonBuilder().serializeNulls().create();
-                Pricing2InsertPriceUseInformationListData myJson = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
-
-                pricingInsert.setStrAVO(myJson.getAVO());
-                pricingInsert.setStrAVOMobile(myJson.getAVOTelefon());
-                listOfPricingSend.add(pricingInsert);
-                String json = new Gson().toJson(listOfPricingSend);
-                LogApp.showLog(" fragment 333"," json string while calling service" + json);
             }
-
-            if(DataHelper.isNetworkAvailable(context))
+        });
+        checkBoxsonstige.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
-                {
-                    @Override
-                    public void OnAsynResult(String result)
-                    {
-                        //Toast.makeText(getActivity(),"result variable in price :  "+result, Toast.LENGTH_LONG).show();
-                        if(result.equals(DataHelper.NetworkError)){
-                        showShortToast(language.getMessageNetworkNotAvailable());
-                        }else {
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                    edittextSonstigeDetail.setEnabled(true);
+                }
+                else {
+                    edittextSonstigeDetail.setText("");
+                    edittextSonstigeDetail.setEnabled(false);
+                    if(!checkBoxKann.isChecked() && !checkBoxBenachrichtgung.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
+                }
+            }
+        });
+        checkBoxBenachrichtgung.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                    edittextBenachrichDetial.setEnabled(true);
+                }
+                else {
+                    edittextBenachrichDetial.setText("");
+                    edittextBenachrichDetial.setEnabled(false);
+                    if(!checkBoxKann.isChecked() && !checkBoxsonstige.isChecked() && !checkBoxRampena.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
+                }
+            }
+        });
+        checkBoxRampena.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                }else {
+                    if(!checkBoxKann.isChecked() && !checkBoxsonstige.isChecked() && !checkBoxBenachrichtgung.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxEinweisung.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
+                }
+            }
+        });
+        checkBoxEinweisung.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    checkBoxLieferung.setChecked(true);
+                }else{
+                    if(!checkBoxKann.isChecked() && !checkBoxsonstige.isChecked() && !checkBoxBenachrichtgung.isChecked()
+                            && !checkBoxVoranmeldung.isChecked() && !checkBoxRampena.isChecked() && flagManuallySelection==false && TextUtils.isEmpty(strAvo)){
+                        checkBoxLieferung.setChecked(false);
+                    }
+                }
+            }
+        });
+
+        if(!TextUtils.isEmpty(strAvo)){
+            checkBoxLieferung.setChecked(true);
+            /*setDefaultTimeandDate();
+            textviewDate1.setEnabled(true);
+            textviewDate2.setEnabled(true);
+            textviewHourEnd.setEnabled(true);
+            textviewHourStart.setEnabled(true);
+            imgbtnendtime.setEnabled(true);
+            imgbtnStartdate.setEnabled(true);
+            imgbtnenddate.setEnabled(true);
+            imgbtnStarttime.setEnabled(true);*/
+        }
+
+
+    }
+    public void setCurrentDateAndtime(){
+        final  Calendar calendar = Calendar.getInstance();
+        int date = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        textviewDate1.setText(pad(date) + "-" + pad(month) + "-" + pad(year));
+        textviewHourStart.setText(pad(hour));
+        //textviewMinuteStart.setText(pad(minute));
+
+        textviewDate2.setText(pad(date) + "-" + pad(month) + "-" + pad(year));
+        textviewHourEnd.setText(pad(hour));
+        //textviewMinuteEnd.setText(pad(minute));
+    }
+    private  class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener
+    {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar calendar = Calendar.getInstance();
+            int yy = calendar.get(Calendar.YEAR);
+            int mm = calendar.get(Calendar.MONTH);
+            int dd = calendar.get(Calendar.DAY_OF_MONTH);
+            return new DatePickerDialog(getActivity(), this, yy, mm, dd);
+        }
+
+
+        public void populateSetDate(int day, int month, int year) {
+            if(!TextUtils.isEmpty(clickedTextbox)){
+                if(clickedTextbox.equalsIgnoreCase("first")){
+                    if(!TextUtils.isEmpty(textviewDate2.getText().toString())){
+                        String selecteddate=day+"-"+month+"-"+year;
+                        String seconddate = textviewDate2.getText().toString().replace(".","-");
+                        //if(compareDate1WithDate2(selecteddate,seconddate))
+                        //{
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                            String date=day+"."+month+"."+year;
+
+                            Date start=null;
                             try {
-                                if (result.equalsIgnoreCase("error")) {
-                                    String json = new Gson().toJson(listOfPricingSend);
-                                    db.addPriceInfo(json);
-                                /*for (int i=0;i<20;i++){
-                                    db.addPriceInfo(json);
-                                }*/
-
-                                /*String json = new Gson().toJson(pricingInsertDuplicate);
-                                for (int i=0;i<20;i++){
-                                    final ArrayList<Pricing3InsertData> listOfPricingSend = new ArrayList<>();
-                                    Gson gson = new Gson();
-                                    Pricing3InsertData pricingdata =  gson.fromJson(json,Pricing3InsertData.class);
-                                    pricingdata.setNotiz(" : "+i+" : ");
-
-                                    String json2 = gson.toJson(pricingdata);
-
-                                    db.addPriceInfo(json2);
-                                }*/
-
-
-                                    JSONObject jsonObject = new JSONObject(result);
-                                    JSONArray jsonArray = jsonObject.getJSONArray("Warenkorb");
-                                    if (jsonArray.length() > 0) {
-                                        if (fromWhichBtn == 2)
-                                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                                        else if (fromWhichBtn == 0)
-                                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                                        else if (fromWhichBtn == 1)
-                                            showShortToast(language.getMessageAngeboteBtn());
-                                        else if (fromWhichBtn == 3)
-                                            ;//showShortToast(language.getMessageMunclichesAngeboteBtn());
-                                        else if (fromWhichBtn == 4)
-                                            showShortToast(language.getMessageAuftragBtn());
-                                    }
-
-
-                                } else if (result.equalsIgnoreCase("")) {
-                                    String json = new Gson().toJson(listOfPricingSend);
-                                    db.addPriceInfo(json);
-                                    showShortToast(language.getMessageFailer());
-                                }
-                                // successfully added to service
-                                else {
-                                    JSONObject jsonObject = new JSONObject(result);
-                                    JSONArray jsonArray = jsonObject.getJSONArray("Warenkorb");
-                                    if (jsonArray.length() > 0) {
-                                        if (fromWhichBtn == 2)
-                                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                                        else if (fromWhichBtn == 0)
-                                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                                        else if (fromWhichBtn == 1)
-                                            showShortToast(language.getMessageAngeboteBtn());
-                                        else if (fromWhichBtn == 3)
-                                            ;//showShortToast(language.getMessageMunclichesAngeboteBtn());
-                                        else if (fromWhichBtn == 4)
-                                            showShortToast(language.getMessageAuftragBtn());
-                                    }
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        // InsertPricing1EquipmentData(jsonOfEqi, jsonArray.get(i).toString());
-                                        /********20161114*********/
-                                        InsertPricing1EquipmentData(jsonOfEqiForInsert.get(i), jsonArray.get(i).toString());
-                                        /*************************/
-                                    }
-                                    if (fromWhichBtn == 3) {
-                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                            lostSaleRejectionReason(jsonArray.get(i).toString());
-                                        }
-                                    }
-                                /*for (int i = 0; i < ids.size(); i++)
-                                {
-                                    db.deleteLostSaleCart(ids.get(i));
-                                }
-                                pricingInser.clear();
-                                pricingInser = null;
-                                jsonOfEqi="";
-                                lablesLostSale = db.getPricing3LostsaleData(customer_KundenNr);
-                                lostSaleAdapter = new Pricing3LostSaleDataAdapter(getActivity(), R.layout.fragment_pricing_3_lost_sale_row, lablesLostSale);
-                                lostSaleAdapter.setSelectedIndex(-1);
-                                lvPricing3LostSaleListView.setAdapter(lostSaleAdapter);
-                                preferences.setisPrice("");
-                                if(lablesLostSale.size() == 0)
-                                {
-                                    etApproachP2.setText("");
-                                    etDepartureP2.setText("");
-                                    etAdditionalCargoPriceP2.setText("");
-                                    etFlatRateP2.setText("");
-                                    etNoteP2.setText("");
-                                    matecoPriceApplication.saveData(DataHelper.PricingCustomerBasicOrderInfo, new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-
-    //                    PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
-    //                            new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-                                }
-                                lostSaleAdapter.notifyDataSetChanged();
-                                selectedEquipments.clear();
-                        /*if (fromWhichBtn == 2)
-                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                        else if (fromWhichBtn == 0)
-                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                        else if (fromWhichBtn == 1)
-                            showShortToast(language.getMessageAngeboteBtn());
-                        else if (fromWhichBtn == 3)
-                            ;//showShortToast(language.getMessageMunclichesAngeboteBtn());
-                        else if (fromWhichBtn == 4)
-                            showShortToast(language.getMessageAuftragBtn());*/
-
-                               /* Gson gson = new Gson();
-                                Pricing2InsertPriceUseInformationListData myJson = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
-
-                                PricingCustomerOrderBasicInfo model=new PricingCustomerOrderBasicInfo();
-                                model.setEnferrung(String.valueOf(myJson.getEntfernung()));
-                                model.setZipCode(myJson.getEinsatzPLZ());
-                                model.setPlace(myJson.getEinsatzort());
-                                model.setStreet(myJson.getEinsatzStrasse());
-                                model.setZusatz(myJson.getZusatz());
-                                model.setContactPersonName(myJson.getAVO());
-                                model.setContactPersonMobile(myJson.getAVOTelefon());
-                                String jsonString = new Gson().toJson(model);
-                                matecoPriceApplication.saveData(DataHelper.PricingCustomerBasicOrderInfo,jsonString);
-                                */
-                                }
-
-                            } catch (JSONException e) {
-                                /// SHOW MESSAGE HERE
+                                start = dateFormat.parse(date);
+                            } catch (ParseException e) {
                                 e.printStackTrace();
                             }
+                            String showeddate=dateFormat.format(start);
+                            textviewDate1.setText(showeddate);
+                        //}
+                        //else {
+                            // give message here
+                           // showShortToast(language.getMessageEndTimeGreaterThenStartTime());
+                            //GlobalClass.showToast(getActivity(),"please selecte proprer start date");
+                        //}
+                    }
+                    else {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                        String date=day+"."+month+"."+year;
+
+                        Date start2=null;
+                        try {
+                            start2 = dateFormat.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
+                        String showeddate=dateFormat.format(start2);
+                        textviewDate1.setText(showeddate);
+                    }
 
-                        for (int i = 0; i < ids.size(); i++)
-                        {
-                            db.deleteLostSaleCart(ids.get(i));
+                }
+                else if(clickedTextbox.equalsIgnoreCase("second")) {
+                    if(!TextUtils.isEmpty(textviewDate1.getText().toString())){
+                        String selecteddate=day+"-"+month+"-"+year;
+                        String seconddate = textviewDate1.getText().toString().replace(".","-");
+                        //if(compareDate2WithDate1(seconddate,selecteddate))
+                        //{
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                            String date=day+"."+month+"."+year;
+
+                            Date end=null;
+                            try {
+                                end = dateFormat.parse(date);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            String showeddate=dateFormat.format(end);
+                            textviewDate2.setText(showeddate);
+                        //}
+                        //else {
+                            //showShortToast(language.getMessageEndTimeGreaterThenStartTime());
+                            //GlobalClass.showToast(getActivity(),"please selecte proprer end date");
+                            // give message here
+                        //}
+                    }
+                    else {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                        String date=day+"."+month+"."+year;
+
+                        Date end=null;
+                        try {
+                            end = dateFormat.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
-                        pricingInser.clear();
-                        pricingInser = null;
-                        jsonOfEqi="";
-                        /*********20161114*******/
-                        jsonOfEqiForInsert.clear();;
-                        /************************/
-                        lablesLostSale = db.getPricing3LostsaleData(customer_KundenNr);
-                        lostSaleAdapter = new Pricing3LostSaleDataAdapter(getActivity(), R.layout.fragment_pricing_3_lost_sale_row, lablesLostSale);
-                        lostSaleAdapter.setSelectedIndex(-1);
-                        lvPricing3LostSaleListView.setAdapter(lostSaleAdapter);
-                        preferences.setisPrice("");
-                        if(lablesLostSale.size() == 0)
-                        {
-                            etApproachP2.setText("");
-                            etDepartureP2.setText("");
-                            etAdditionalCargoPriceP2.setText("");
-                            etFlatRateP2.setText("");
-                            etNoteP2.setText("");
-                            matecoPriceApplication.saveData(DataHelper.PricingCustomerBasicOrderInfo, new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-
-    //                    PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo,
-    //                            new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-                        }
-                        lostSaleAdapter.notifyDataSetChanged();
-                        selectedEquipments.clear();
-                        /*if (fromWhichBtn == 2)
-                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                        else if (fromWhichBtn == 0)
-                            showShortToast(language.getMessageMunclichesAngeboteBtn());
-                        else if (fromWhichBtn == 1)
-                            showShortToast(language.getMessageAngeboteBtn());
-                        else if (fromWhichBtn == 3)
-                            ;//showShortToast(language.getMessageMunclichesAngeboteBtn());
-                        else if (fromWhichBtn == 4)
-                            showShortToast(language.getMessageAuftragBtn());*/
-
-                        Gson gson = new Gson();
-                        Pricing2InsertPriceUseInformationListData myJson = gson.fromJson(PriceUseInformationList, Pricing2InsertPriceUseInformationListData.class);
-
-                        PricingCustomerOrderBasicInfo model=new PricingCustomerOrderBasicInfo();
-                        model.setEnferrung(String.valueOf(myJson.getEntfernung()));
-                        model.setZipCode(myJson.getEinsatzPLZ());
-                        model.setPlace(myJson.getEinsatzort());
-                        model.setStreet(myJson.getEinsatzStrasse());
-                        model.setZusatz(myJson.getZusatz());
-                        model.setContactPersonName(myJson.getAVO());
-                        model.setContactPersonMobile(myJson.getAVOTelefon());
-                        String jsonString = new Gson().toJson(model);
-                        matecoPriceApplication.saveData(DataHelper.PricingCustomerBasicOrderInfo,jsonString);
-
-
-                        //Log.e(""," priceing  string : "+pricing);
-                    }
-                };
-
-                try
-                {
-                    String json = new Gson().toJson(listOfPricingSend);
-                    /*String url = DataHelper.ACCESS_PROTOCOL +
-                            DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PriceInsert;*/
-                    String url = DataHelper.URL_PRICE_HELPER+"priceinsert";
-                    MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                    multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
-                    multipartEntity.addPart("priceinsert", new StringBody(json, Charset.forName("UTF-8")));
-                    AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
-                    asyncTaskPost.execute();
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else
-            {
-                showShortToast(language.getMessageNetworkNotAvailable());
-            }
-        }
-
-        public void InsertPricing1EquipmentData(String json, String Warenkorb)
-        {
-            ArrayList<Pricing1EquipmentInsertData> listOfPriceingEquInsert = new ArrayList<Pricing1EquipmentInsertData>();
-            if (json.equals("null"))
-            {
-                LogApp.showLog("Equipment Json is null", json);
-            }
-            else
-            {
-                try
-                {
-                    JSONArray jsonArrayEqp = new JSONArray(json);
-                    listOfPriceingEquInsert.clear();
-                    for (int i = 0; i < jsonArrayEqp.length(); i++)
-                    {
-                        Pricing1EquipmentInsertData priceing1Equ = new Pricing1EquipmentInsertData();
-                        priceing1Equ.setWarenkorb(Warenkorb);
-                        priceing1Equ.setAusstattung(Integer.parseInt(jsonArrayEqp.getJSONObject(i).getString("Ausstattung")));
-                        priceing1Equ.setPreis(Double.parseDouble(jsonArrayEqp.getJSONObject(i).getString("Preis")));
-                        listOfPriceingEquInsert.add(priceing1Equ);
-                    }
-                    String jsonFinal = new Gson().toJson(listOfPriceingEquInsert);
-                    AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
-                    {
-                        @Override
-                        public void OnAsynResult(String result)
-                        {
-                            LogApp.showLog("result of eqp.", result);
-                        }
-                    };
-                    try
-                    {
-                        //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PricePriceEquipmentInsert;
-                        String url = DataHelper.URL_PRICE_HELPER+"priceequipmentinsert";
-                        MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                        multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
-                        multipartEntity.addPart("EquipmentsList", new StringBody(jsonFinal, Charset.forName("UTF-8")));
-                        AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
-                        asyncTaskPost.execute();
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
+                        String showeddate=dateFormat.format(end);
+                        textviewDate2.setText(showeddate);
                     }
                 }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-
-        private void insertDataIntoDB(int fromWhichBtn)
-        {
-            if (matecoPriceApplication.isCustomerLoaded(DataHelper.isCustomerLoaded, false))
-            {
-
-                Pricing3InsertData pricingInser = new Pricing3InsertData();
-                String loginUserNumberrange = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserId();
-                String Kontakt = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKontakt();
-                String KundenNr = matecoPriceApplication.getLoadedCustomer(DataHelper.LoadedCustomer, new CustomerModel().toString()).getKundenNr();
-                int Mandant = branchId;
-                int Warenkorbart = fromWhichBtn;
-                String Hoehengruppe = deviceType;
-                int Einheit_Mietdauer = rental;
-                int Mietdauer = rentalDaysWithoutSatSun;
-                // double Mietpreis = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etGesAmenitiesP2.getText().toString().trim()));// gesAminities;
-                //double Mietpreis = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etEuipmentRentP2.getText().toString().trim()));// gesAminities;
-                String Mietpreis = etEuipmentRentP2.getText().toString().trim();// gesAminities;
-
-                double Standtag = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etSatntagP2.getText().toString().trim()));
-                if(Standtag == 0.00)
-                {
-                    Standtag = 100.00;
-                }
-                String Selbstbehalt = String.valueOf((int) SB);
-                int HandlingFee;
-                if (chkHandllingFeeP2.isChecked())
-                {
-                    HandlingFee = 1;
-                }
-                else
-                {
-                    HandlingFee = 0;
-                }
-                int ServicePauschale;
-                if (chkServicePackagesP2.isChecked())
-                {
-                    ServicePauschale = 1;
-                }
-                else
-                {
-                    ServicePauschale = 0;
-                }
-                double Versicherung = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etHaftbP2.getText().toString().trim()));
-
-                int WochenendeMitversichert;
-                if (chkCalendarDaily.isChecked())
-                {
-                    WochenendeMitversichert = 1;
-                }
-                else
-                {
-                    WochenendeMitversichert = 0;
-                }
-                double TransportAnfahrt = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etApproachP2.getText().toString().trim()));
-                double TransportPauschal = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etFlatRateP2.getText().toString().trim()));
-                double TransportAbfahrt = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etDepartureP2.getText().toString().trim()));
-                double Beiladungspauschale = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etAdditionalCargoPriceP2.getText().toString().trim()));
-                String Einsatzinformation = EinsatzinformationId;
-                String Besteller = contactPerson;
-                String Besteller_Telefon = besteller_Telefon;
-                String Besteller_Email = besteller_Email;
-                String Notiz = etNoteP2.getText().toString().trim();
-                int Ersteller = 0;
-                try
-                {
-                    String est = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
-                    if (est == null || est.equals("null") || est.equals(""))
-                    {
-                        Ersteller = 0;
-                    }
-                    else
-                    {
-                        Ersteller = Integer.parseInt(est);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Ersteller = 0;
-                    e.printStackTrace();
-                }
-                int KaNr = kaNrOfLoadedCustomer;
-                String AnsPartner = contactPersonNo;
-                String Besteller_Anrede = besteller_Anrede;
-                String Besteller_Mobil = besteller_Mobil;
-                //String Mautkilometer = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etTollP2.getText().toString().trim()))+"";
-                String Mautkilometer = etTollP2.getText().toString().trim()+"";
-                int Winterreifenpauschale = 0;
-                int Bearbeitet = 0;
-                int Kalendertage;
-                if (chkCalendarDaily.isChecked())
-                {
-                    Kalendertage = 1;
-                }
-                else
-                {
-                    Kalendertage = 0;
-                }
-                String Referenz = "";
-                String Geratetype = GeratetypeId;
-                pricingInser.setKontakt(Kontakt);
-                pricingInser.setKundenNr(KundenNr);
-                pricingInser.setMandant(Mandant);
-                pricingInser.setWarenkorbart(Warenkorbart);
-                pricingInser.setHoehengruppe(Hoehengruppe);
-                pricingInser.setEinheit_Mietdauer(Einheit_Mietdauer);
-                pricingInser.setMietdauer(Mietdauer);
-                pricingInser.setMietpreis(Mietpreis);
-                pricingInser.setStandtag(Standtag);
-                pricingInser.setSelbstbehalt(Selbstbehalt);
-                pricingInser.setHandlingFee(HandlingFee);
-                pricingInser.setServicePauschale(ServicePauschale);
-                pricingInser.setVersicherung(Versicherung);
-                pricingInser.setWochenendeMitversichert(WochenendeMitversichert);
-                pricingInser.setTransportAnfahrt(TransportAnfahrt);
-                pricingInser.setTransportPauschal(TransportPauschal);
-                pricingInser.setTransportAbfahrt(TransportAbfahrt);
-                pricingInser.setBeiladungspauschale(Beiladungspauschale);
-                pricingInser.setEinsatzinformation(Einsatzinformation);
-                pricingInser.setBesteller(Besteller);
-                pricingInser.setBesteller_Telefon(Besteller_Telefon);
-                pricingInser.setBesteller_Email(Besteller_Email);
-                pricingInser.setNotiz(Notiz);
-                pricingInser.setErsteller(Ersteller);
-                pricingInser.setKaNr(KaNr);
-                pricingInser.setAnsPartner(AnsPartner);
-                pricingInser.setBesteller_Anrede(Besteller_Anrede);
-                pricingInser.setBesteller_Mobil(Besteller_Mobil);
-                pricingInser.setMautkilometer(Mautkilometer);
-                pricingInser.setWinterreifenpauschale(Winterreifenpauschale);
-                pricingInser.setBearbeitet(Bearbeitet);
-                pricingInser.setKalendertage(Kalendertage);
-                pricingInser.setReferenz(Referenz);
-                pricingInser.setGeraetetyp(Geratetype);
-                pricingInser.setUserID(loginUserNumberrange);
-
-                pricingInser.setBranch(branchName);
-                pricingInser.sethGRP(deviceType);
-                pricingInser.setDeviceType("");
-                pricingInser.setManufacturer("");
-                pricingInser.setType("");
-                pricingInser.setMd(rentalDaysWithoutSatSun);
-                pricingInser.setRentalPrice(price);
-                pricingInser.setSb(SB);
-                pricingInser.setHfStatus(hfStastus);
-                pricingInser.setSpStatus(spStatus);
-                pricingInser.setHb(haftb);
-                pricingInser.setBest(contactPerson);
-                pricingInser.setKundenNr(customer_KundenNr);
-
-                pricingInser.setKann(Boolean.parseBoolean(parsableClass.flagKann));
-                pricingInser.setLieferung(Boolean.parseBoolean(parsableClass.flagLieferung));
-                pricingInser.setVoranmeldung(Boolean.parseBoolean(parsableClass.flagVoranmeldung));
-                pricingInser.setBenachrichtgung(Boolean.parseBoolean(parsableClass.flagBenachrichtgung));
-                pricingInser.setRampena(Boolean.parseBoolean(parsableClass.flagRampena));
-                pricingInser.setSonstige(Boolean.parseBoolean(parsableClass.flagSonstige));
-                pricingInser.setEinweisung(Boolean.parseBoolean(parsableClass.flagEinweisung));
-                pricingInser.setSelbstfahrer(Boolean.parseBoolean(parsableClass.flagSelbstfahrer));
-
-                pricingInser.setStrKann(parsableClass.strKann);
-                pricingInser.setStrVoranmeldung(parsableClass.strVoranmeldung);
-                pricingInser.setStrBenachrich(parsableClass.strBenachrich);
-                pricingInser.setStrSonstige(parsableClass.strSonstige);
-                pricingInser.setintLadeiahrzeug(parsableClass.intSpinneritem);
-                pricingInser.setStrstartDate(preferences.getstartDate());
-                pricingInser.setStrstartTime(preferences.getstartTime());
-                pricingInser.setStrendDate(preferences.getendDate());
-                pricingInser.setStrendTime(preferences.getendTime());
-
-                LogApp.showLog(""," start date end ate and time infor in 3 fragment : "+parsableClass.strStartDate+" : "+parsableClass.strStartTime+" : "+
-                        parsableClass.strEndDate+" : "+parsableClass.strEndtime);
-
-                //String json = new Gson().toJson(pricingInser);
-                //Log.e("insert json of equi.", equipmentJson);
-                db.addPricing3InsertJson(customer_KundenNr, equipmentJson, pricingInser);
-
-            }
-            else
-            {
 
             }
         }
 
 
-        private void lostSaleRejectionReason(String LostsaleUId)
-        {
-            double GeratermietePrice;
-            String GeratermieteCompi;
-            double TransportPrice;
-            String TransportCompi;
-            double LimitationOfLiabilityPrice;
-            String LimitationOfLiabilityCompi;
-            String TheCustomerHasNotReceivedTheOrderCompi;
-            String Others;
-            if (chkLogisticsDLGP3.isChecked())
-            {
-                AbsagegrundIds = 1;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(1);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkLogisticsDLGP3.isChecked())
-            {
-                AbsagegrundIds = 2;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(2);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkAvailabilityDLGP3.isChecked())
-            {
-                AbsagegrundIds = 3;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(3);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkPriceDLGP3.isChecked())
-            {
-                AbsagegrundIds = 4;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(4);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-
-            if (chkGeratermieteDLGP3.isChecked())
-            {
-                //chkGeratermieteDLGP3.setChecked(true);
-                AbsagegrundIds = 5;
-                WarenkorbIds.add(LostsaleUId);
-                GeratermieteCompi = etGeratermieteCompititerDLGP3.getText().toString().trim();
-                AbsagegrundId.add(5);
-                if (etGeratermietePriceDLGP3.getText().toString().trim().equals(""))
-                {
-                    GeratermietePrice = 0.0;
-                }
-                else
-                {
-                    GeratermietePrice = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etGeratermietePriceDLGP3.getText().toString().trim()));
-                }
-                AbsPreis.add(GeratermietePrice);
-                Wettbewerber.add(GeratermieteCompi);
-                Notiz.add("");
-                chkCounter++;
-            }
-
-            if (chkTransportDLGP3.isChecked())
-            {
-                AbsagegrundIds = 6;
-                WarenkorbIds.add(LostsaleUId);
-                //chkTransportDLGP3.setChecked(true);
-                TransportCompi = etTransportCompititerDLGP3.getText().toString().trim();
-                if (etTransportPriceDLGP3.getText().toString().trim().equals(""))
-                {
-                    TransportPrice = 0.0;
-                }
-                else
-                {
-                    TransportPrice = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etTransportPriceDLGP3.getText().toString().trim()));
-                }
-                AbsagegrundId.add(6);
-                AbsPreis.add(TransportPrice);
-                Wettbewerber.add(TransportCompi);
-                Notiz.add("");
-                chkCounter++;
-            }
-
-            if (chkLimitationOfLiabilityDLGP3.isChecked())
-            {
-                AbsagegrundIds = 7;
-                WarenkorbIds.add(LostsaleUId);
-                chkLimitationOfLiabilityDLGP3.setChecked(true);
-                LimitationOfLiabilityCompi = etLimitationOfLiabilityCompititerDLGP3.getText().toString().trim();
-                if (etLimitationOfLiabilityPriceDLGP3.getText().toString().trim().equals(""))
-                {
-                    LimitationOfLiabilityPrice = 0.0;
-                }
-                else
-                {
-                    LimitationOfLiabilityPrice = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etLimitationOfLiabilityPriceDLGP3.getText().toString().trim()));
-                }
-                AbsagegrundId.add(7);
-                AbsPreis.add(LimitationOfLiabilityPrice);
-                Wettbewerber.add(LimitationOfLiabilityCompi);
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkTermsofPaymentDLGP3.isChecked())
-            {
-                AbsagegrundIds = 8;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(8);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkPaysNoAdvancePaymentDLGP3.isChecked())
-            {
-                AbsagegrundIds = 9;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(9);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-
-            if (chkCashDiscountDLGP3.isChecked())
-            {
-
-                AbsagegrundIds = 10;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(10);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkTheCustomerHasChosenAnAlternativeMtecoUnitDLGP3.isChecked())
-            {
-                AbsagegrundIds = 11;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(11);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkTheCustomerDoesNotHaveNeedLessDLGP3.isChecked())
-            {
-                AbsagegrundIds = 12;
-                WarenkorbIds.add(LostsaleUId);
-                AbsagegrundId.add(12);
-                AbsPreis.add(0.0);
-                Wettbewerber.add("");
-                Notiz.add("");
-                chkCounter++;
-            }
-            if (chkTheCustomerHasNotReceivedTheOrderDLGP3.isChecked())
-            {
-                AbsagegrundIds = 13;
-                WarenkorbIds.add(LostsaleUId);
-                TheCustomerHasNotReceivedTheOrderCompi = etTheCustomerHasNotReceivedTheOrderCompititerDLGP3.getText().toString().trim();
-                AbsagegrundId.add(13);
-                AbsPreis.add(0.0);
-                Wettbewerber.add(TheCustomerHasNotReceivedTheOrderCompi);
-                Notiz.add("");
-                chkCounter++;
-            }
-
-            if (chkOtherDLGP3.isChecked())
-            {
-                AbsagegrundIds = 14;
-                WarenkorbIds.add(LostsaleUId);
-                Others = etOtherDLGP3.getText().toString().trim();
-                AbsagegrundId.add(14);
-                AbsPreis.add(0.0);
-                Wettbewerber.add(Others);
-                Notiz.add("");
-                chkCounter++;
-            }
-
-            if (DataHelper.isNetworkAvailable(context) && chkCounter > 0)
-            {
-                String url = null;
-                ArrayList<Pricing3LostSaleInsertData> listOfLoastsaleinsert = new ArrayList<Pricing3LostSaleInsertData>();
-                for (int i = 0; i < selectedEquipments.size(); i++)
-                {
-                    for (int j = 0; j < AbsagegrundId.size(); j++)
-                    {
-                        Pricing3LostSaleInsertData pricingLostSaleInst = new Pricing3LostSaleInsertData();
-                        //pricingLostSaleInst.setWarenkorb(WarenkorbIds.get(j));
-                        pricingLostSaleInst.setWarenkorb(LostsaleUId);
-                        pricingLostSaleInst.setAbsagegrund(AbsagegrundId.get(j));
-                        pricingLostSaleInst.setPreis(AbsPreis.get(j));
-                        pricingLostSaleInst.setWettbewerber(Wettbewerber.get(j));
-                        pricingLostSaleInst.setNotiz(Notiz.get(j));
-                        listOfLoastsaleinsert.add(pricingLostSaleInst);
-                    }
-
-                    db.deleteLostSaleCart(selectedEquipments.get(i));
-                    lablesLostSale = db.getPricing3LostsaleData(customer_KundenNr);
-                }
-                String json = new Gson().toJson(listOfLoastsaleinsert);
-                AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
-                {
-                    @Override
-                    public void OnAsynResult(String result)
-                    {
-                        LogApp.showLog("lostsale rejection result", result);
-                    }
-                };
-
-                try
-                {
-                    //url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PriceReasonRejectionInsert;
-                    url = DataHelper.URL_PRICE_HELPER+"pricereasonrejectioninsert";
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-                MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                try
-                {
-                    multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
-                    multipartEntity.addPart("RejectionReasonsList", new StringBody(json, Charset.forName("UTF-8")));
-                }
-                catch (UnsupportedEncodingException e)
-                {
-                    e.printStackTrace();
-                }
-                AsyncTaskWithAuthorizationHeaderPost asyncTask = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
-                asyncTask.execute();
-
-                lostSaleAdapter = new Pricing3LostSaleDataAdapter(getActivity(), R.layout.fragment_pricing_3_lost_sale_row, lablesLostSale);
-
-                lvPricing3LostSaleListView.setAdapter(lostSaleAdapter);
-                preferences.setisPrice("yes");
-                lostSaleAdapter.notifyDataSetChanged();
-                selectedEquipments.clear();
-                showShortToast(language.getMessageLostSaleBtn());
-                LostsaleUId = "";
-
-            }
-            else if(chkCounter <= 0)
-            {
-                showShortToast(language.getMessageSelectOneReasonForRejection());
-            }
-            else
-            {
-                showShortToast(language.getMessageNetworkNotAvailable());
-            }
-        }
-
-        public void InsertPriceUseInformationList()
-        {
-            if(DataHelper.isNetworkAvailable(context))
-            {
-                AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
-                {
-                    @Override
-                    public void OnAsynResult(String result)
-                    {
-                        result = result.replace("\"", "");
-                        if (result.matches("[0-9]+") && result.length() > 0) {
-                            EinsatzinformationId = result.replace("\"", "");
-                            insertDataIntoDB(0);
-                        }else {
-                            EinsatzinformationId="";
-                            insertDataIntoDB(0);
-                        }
-
-                    }
-                };
-                try
-                {
-                    //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PriceUseInformationInsert + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
-
-                    String url = DataHelper.URL_PRICE_HELPER + "priceuseinformationinsert";
-
-                    /*String url = DataHelper.URL_PRICE_HELPER + "priceuseinformationinsert/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
-                    url += "/priceuseinformation=" + URLEncoder.encode(PriceUseInformationList, "UTF-8"); //&&&&*/
-
-                    MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                    multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
-                    multipartEntity.addPart("priceuseinformation", new StringBody(PriceUseInformationList, Charset.forName("UTF-8")));
-                    AsyncTaskWithAuthorizationHeaderPost asyncTaskPost = new AsyncTaskWithAuthorizationHeaderPost(url, onAsyncResult, getActivity(), multipartEntity, true, language);
-                    asyncTaskPost.execute();
-
-                    /*BasicAsyncTaskGetRequest asyncTaskLoadContactPersons = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                    asyncTaskLoadContactPersons.execute();*/
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else
-            {
-                showShortToast(language.getMessageNetworkNotAvailable());
-            }
-        }
-
-        /**
-         * Hides virtual keyboard
-         */
-        protected void hideKeyboard(View view)
-        {
-            InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-        public void addSBarraylit(){
-            for (int i=0;i<4;i++){
-                SpinnerSBModel model = new SpinnerSBModel();
-                model.setSelected(false);
-                if(i==0){
-                    model.setStrTitle("SB ");
-                }
-            }
-        }
-        private void savePricingCustomerOrderBasicInfo()
-        {
-            PricingCustomerOrderBasicInfo model = matecoPriceApplication.getPricingCustomerOrderGeneralInfo(DataHelper.PricingCustomerBasicOrderInfo, new Gson().toJson(new PricingCustomerOrderBasicInfo()));
-            double value = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etApproachP2.getText().toString()));
-            model.setAbfahrt(value + "");
-            value = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etDepartureP2.getText().toString()));
-            model.setAnfahrt(value+"");
-            value = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etAdditionalCargoPriceP2.getText().toString()));
-            model.setBeiladungsPreis(value + "");
-            value = Double.parseDouble(DataHelper.getEnglishCurrencyFromGerman(etFlatRateP2.getText().toString()));
-            model.setPauschale(value + "");
-            String notes = etNoteP2.getText().toString();
-            model.setNotes(notes);
-            matecoPriceApplication.saveData(DataHelper.PricingCustomerBasicOrderInfo, new Gson().toJson(model));
-            if(model != null && model.getAbfahrt() != null && !model.getAbfahrt().equals(""))
-            {
-                etApproachP2.setText(DataHelper.getGermanCurrencyFormat(model.getAbfahrt())+"");
-                GlobalMethods.setBlankValueForZero(etApproachP2);
-            }
-
-            if(model != null && model.getAnfahrt() != null && !model.getAnfahrt().equals(""))
-            {
-                etDepartureP2.setText(DataHelper.getGermanCurrencyFormat(model.getAnfahrt()));
-                GlobalMethods.setBlankValueForZero(etDepartureP2);
-            }
-            if(model != null && model.getBeiladungsPreis() != null && !model.getBeiladungsPreis().equals(""))
-            {
-                etAdditionalCargoPriceP2.setText(DataHelper.getGermanCurrencyFormat(model.getBeiladungsPreis()));
-                GlobalMethods.setBlankValueForZero(etAdditionalCargoPriceP2);
-            }
-            if(model != null && model.getPauschale() != null && !model.getPauschale().equals(""))
-            {
-                etFlatRateP2.setText(DataHelper.getGermanCurrencyFormat(model.getPauschale()));
-                GlobalMethods.setBlankValueForZero(etFlatRateP2);
-            }
-        }
-        public void showAlertDialg()
-        {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                    context);
-
-            // set title
-            alertDialogBuilder.setTitle(language.getLabelNote());
-
-            // set dialog message
-            alertDialogBuilder
-                    .setMessage("Die kundenmaske kann nicht geschlossen werden! Bitte bearbeiten sie alle zeilen des Zwischenspeichers!")
-                    .setCancelable(false)
-
-                    .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // if this button is clicked, just close
-                            // the dialog box and do nothing
-                            dialog.cancel();
-                        }
-                    });
-
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // show it
-            alertDialog.show();
-        }
-        private void populateViewForOrientation(LayoutInflater inflater, ViewGroup viewGroup) {
-            viewGroup.removeAllViewsInLayout();
-            View subview = inflater.inflate(R.layout.fragment_pricing_3, viewGroup);
-
-            // Find your buttons in subview, set up onclicks, set up callbacks to your parent fragment or activity here.
-
-            // You can create ViewHolder or separate method for that.
-            // example of accessing views: TextView textViewExample = (TextView) view.findViewById(R.id.text_view_example);
-            // textViewExample.setText("example");
-        }
         @Override
-        public void onConfigurationChanged(Configuration newConfig) {
-            super.onConfigurationChanged(newConfig);
-            //LayoutInflater inflater = LayoutInflater.from(getActivity());
-           // populateViewForOrientation(inflater, (ViewGroup) getView());
-            //setRetainInstance(true);
-            // Checks the orientation of the screen for landscape and portrait and set portrait mode always
-            /*if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                //linearMain.setWeightSum(1f);
-                /// for landscape
-                *//* this is to set HEIGHT as orientation change *//*
-                *//*paramTop = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, 0,0.66f);*//*
-                paramListview = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,400);
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        {
+            populateSetDate(dayOfMonth, monthOfYear+1, year);
+        }
+    }
+    public  void showShortToast(String message)
+    {
+        if(activity != null)
+        {
+            LayoutInflater inflater = activity.getLayoutInflater();
+            if(inflater != null)
+            {
+                View layout = inflater.inflate(R.layout.toast_custom, (ViewGroup) rootView.findViewById(R.id.toast_layout_root));
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText(message+"");
+                Toast toast = new Toast(activity);
+                toast.setGravity(Gravity.BOTTOM|Gravity.FILL_HORIZONTAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
+            }
+        }
+    }
+    public  static Boolean compareDate1WithDate2(String date1,String date2)
+    {
+        Boolean flag=false;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date dateStart = sdf.parse(date1);
+            Date dateEnd = sdf.parse(date2);
 
-            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            if(dateStart.equals(dateEnd))
+            {
+                flag=true;
+            }
 
-                //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                // for portrait
-                *//* this is to set HEIGHT as orientation change *//*
-                //linearMain.setWeightSum(1f);
-                *//*paramTop = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, 0,0.40f);*//*
-                paramListview = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,0,1f);
+            if(dateStart.before(dateEnd)){
+                flag=true;
+            }
+
+            if(dateStart.after(dateEnd)){
+                flag=false;
+            }
+        }
+        catch (Exception e){
+
+        }
+
+        return  flag;
+
+    }
+    public static  Boolean compareTime(String startTIme,String endTime){
+        Boolean flag=false;
+        String pattern = "dd.MM.yyyy HH:mm";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        Date start=null;
+        Date end=null;
+        try {
+            start = dateFormat.parse(startTIme);
+            end = dateFormat.parse(endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(start.after(end)){
+            flag=false;
+        }
+        else{
+            flag=true;
+        }
+
+        return flag;
+
+    }
+    public  static Boolean compareDate2WithDate1(String date1,String date2)
+    {
+        Boolean flag=false;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date dateStart = sdf.parse(date1);
+            Date dateEnd = sdf.parse(date2);
+
+            if(dateEnd.equals(dateStart))
+            {
+                flag=true;
+            }
+
+            if(dateEnd.before(dateStart)){
+                flag=false;
+            }
+
+            if(dateEnd.after(dateStart)){
+                flag=true;
+            }
+        }
+        catch (Exception e){
+
+        }
+
+        return  flag;
+
+    }
+    public static class SelectTimeFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState)
+        {
+            final Calendar calendar = Calendar.getInstance();
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+
+
+            return  new TimePickerDialog(getActivity(),this,hour,minute,true);
+            //return new DatePickerDialog(getActivity(), this, yy, mm, dd);
+        }
+        public void populateSetTime(int Hour,int Minute){
+            if(!TextUtils.isEmpty(clickedTextboxTime)){
+                if(clickedTextboxTime.equalsIgnoreCase("first")){
+
+                    textviewHourStart.setText(new StringBuilder().append(pad(Hour))+":"+new StringBuilder().append(pad(Minute)));
+
+
+                    if(textviewHourEnd.getText().toString().equalsIgnoreCase("")){
+                        /*SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+                        Date dateT=null;
+                        dateT.setHours(Hour);
+                        dateT.setMinutes(Minute);
+                        String currentDateandTime = sdf.format(dateT);*/
+
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.HOUR,Hour);
+                        cal.set(Calendar.HOUR,Minute);
+
+
+                        Date date = cal.getTime();
+                        try {
+                            //date = formatter.parse(currentDateandTime);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.HOUR_OF_DAY, 1);
+
+                        Date newdate = calendar.getTime();
+                        Calendar calTemp = Calendar.getInstance();
+                        calTemp.setTime(newdate);
+
+                        int hours;
+                        if(Hour==23){
+                            hours=00;
+                        }
+                        else {
+                            hours=Hour+1;
+                        }
+                        textviewHourEnd.setText(pad(hours)+":"+pad(Minute));
+                    }
+
+
+                    //textviewMinuteStart.setText(new StringBuilder().append(pad(Minute)));
+                }
+                else {
+                    textviewHourEnd.setText(new StringBuilder().append(pad(Hour))+":"+new StringBuilder().append(pad(Minute)));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR,Hour);
+                    calendar.set(Calendar.MINUTE,Minute);
+                    calendar.add(Calendar.HOUR, -1);
+
+                    if(textviewHourStart.getText().toString().equalsIgnoreCase("")){
+                        int hours;
+                        if(Hour==00 || Hour==0)
+                        {
+                            hours=23;
+                        }
+                        else {
+                            hours=Hour-1;
+                        }
+                        textviewHourStart.setText(pad(hours)+":"+pad(Minute));
+                    }
+
+
+                    //textviewMinuteEnd.setText(new StringBuilder().append(pad(Minute)));
+                }
 
             }
-            linearListview.setLayoutParams(paramListview);*/
-            //linearTop.setLayoutParams(paramTop);
         }
 
         @Override
-        public void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-           // outState.putString("approach", etApproachP2.getText().toString());
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+        {
+            populateSetTime(hourOfDay,minute);
         }
-        public int getScreenOrientation() {
-            Display getOrient = getActivity().getWindowManager().getDefaultDisplay();
-            int orientation = Configuration.ORIENTATION_UNDEFINED;
-            if(getOrient.getWidth()==getOrient.getHeight()){
-                orientation = Configuration.ORIENTATION_SQUARE;
-            } else{
-                if(getOrient.getWidth() < getOrient.getHeight()){
-                    orientation = Configuration.ORIENTATION_PORTRAIT;
-                }else {
-                    orientation = Configuration.ORIENTATION_LANDSCAPE;
-                }
+    }
+    public void setDefaultTimeandDate()
+    {
+        if(textviewDate1.getText().toString().equalsIgnoreCase(""))
+        {
+            if(fromDate.equalsIgnoreCase("") && toDate.equalsIgnoreCase("")){
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                String dateString = formatter.format(new Date());
+                textviewDate1.setText(dateString);
             }
-            return orientation;
+            else {
+                textviewDate1.setText(fromDate);
+            }
+
         }
-        public static class DecimalDigitsInputFilter implements InputFilter {
-
-            private final int decimalDigits;
-
-            /**
-             * Constructor.
-             *
-             * @param decimalDigits maximum decimal digits
-             */
-            public DecimalDigitsInputFilter(int decimalDigits) {
-                this.decimalDigits = decimalDigits;
+        if(textviewDate2.getText().toString().equalsIgnoreCase(""))
+        {
+            if(fromDate.equalsIgnoreCase("") && toDate.equalsIgnoreCase("")){
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                String dateString = formatter.format(new Date());
+                textviewDate2.setText(dateString);
+            }
+            else {
+                textviewDate2.setText(fromDate);
             }
 
-            @Override
-            public CharSequence filter(CharSequence source,
-                                       int start,
-                                       int end,
-                                       Spanned dest,
-                                       int dstart,
-                                       int dend) {
 
+        }
+        if(textviewHourStart.getText().toString().equalsIgnoreCase(""))
+        {
+            Calendar calendar = Calendar.getInstance();
+            // Set the time and date information and display it.
+            calendar.set(Calendar.HOUR, 07);
+            calendar.set(Calendar.MINUTE, 00);
+            textviewHourStart.setText(pad(calendar.get(Calendar.HOUR))+":"+pad(calendar.get(Calendar.MINUTE)));
+        }
+        if(textviewHourEnd.getText().toString().equalsIgnoreCase(""))
+        {
+            Calendar calendar = Calendar.getInstance();
+            // Set the time and date information and display it.
+            calendar.set(Calendar.HOUR, 9);
+            calendar.set(Calendar.MINUTE, 00);
+            textviewHourEnd.setText("09"+":"+pad(calendar.get(Calendar.MINUTE)));
+        }
 
-                int dotPos = -1;
-                int len = dest.length();
-                for (int i = 0; i < len; i++) {
-                    char c = dest.charAt(i);
-                    if (c == ',') {
-                        dotPos = i;
-                        break;
-                    }
-                }
-                if (dotPos >= 0) {
+    }
 
-                    // protects against many dots
-                    if (source.equals(",")) {
-                        return "";
-                    }
-                    // if the text is entered before the dot
-                    if (dend <= dotPos) {
-                        return null;
-                    }
-                    if (len - dotPos > decimalDigits) {
-                        return "";
-                    }
-                }
-
-                return null;
+    private static String pad(int c) {
+        if (c >= 10)
+            return String.valueOf(c);
+        else
+            return "0" + String.valueOf(c);
+    }
+    public void loadDataFromParsable(){
+        if(!TextUtils.isEmpty(parsableClass.flagKann)){
+            checkBoxKann.setChecked(Boolean.parseBoolean(parsableClass.flagKann));
+        }
+        if(TextUtils.isEmpty(strAvo)){
+            checkBoxLieferung.setChecked(false);
+        }
+        else{
+            if(!TextUtils.isEmpty(parsableClass.flagLieferung) ) {
+                checkBoxLieferung.setChecked(Boolean.parseBoolean(parsableClass.flagLieferung));
             }
         }
-        public class SpinnerSBAdapter extends BaseAdapter {
-            private ArrayList<SpinnerSBModel> arraylistsbLocal;
-            private Context context;
-            private int selectedPosition = -1;
 
-            public SpinnerSBAdapter(Activity context, ArrayList<SpinnerSBModel> listKaNr) {
-                this.context = context;
-                this.arraylistsbLocal = listKaNr;
+        if(!TextUtils.isEmpty(parsableClass.flagVoranmeldung)){
+            checkBoxVoranmeldung.setChecked(Boolean.parseBoolean(parsableClass.flagVoranmeldung));
+        }
+        if(!TextUtils.isEmpty(parsableClass.flagBenachrichtgung)){
+            checkBoxBenachrichtgung.setChecked(Boolean.parseBoolean(parsableClass.flagBenachrichtgung));
+        }
+        if(!TextUtils.isEmpty(parsableClass.flagRampena)){
+            checkBoxRampena.setChecked(Boolean.parseBoolean(parsableClass.flagRampena));
+        }
+        if(!TextUtils.isEmpty(parsableClass.flagSonstige)){
+            checkBoxsonstige.setChecked(Boolean.parseBoolean(parsableClass.flagSonstige));
+        }
+        if(!TextUtils.isEmpty(parsableClass.flagEinweisung)){
+            checkBoxEinweisung.setChecked(Boolean.parseBoolean(parsableClass.flagEinweisung));
+        }
+        if(!TextUtils.isEmpty(parsableClass.flagSelbstfahrer)){
+            checkBoxSelbstfahrer.setChecked(Boolean.parseBoolean(parsableClass.flagSelbstfahrer));
+        }
+        if(!TextUtils.isEmpty(parsableClass.strKann)){
+            edittextKannDetail.setText(parsableClass.strKann);
+        }
+        else {
+            edittextKannDetail.setText("");
+        }
+        if(!TextUtils.isEmpty(parsableClass.strVoranmeldung)){
+            edittextVoranmeldungDetail.setText(parsableClass.strVoranmeldung);
+        }
+        else {
+            edittextVoranmeldungDetail.setText("");
+        }
+        if(!TextUtils.isEmpty(parsableClass.strBenachrich)){
+            edittextBenachrichDetial.setText(parsableClass.strBenachrich);
+        }
+        else {
+            edittextBenachrichDetial.setText("");
+        }
+        if(!TextUtils.isEmpty(parsableClass.strSonstige)){
+            edittextSonstigeDetail.setText(parsableClass.strSonstige);
+        }
+        else {
+            edittextSonstigeDetail.setText("");
+        }
+
+
+        if(!TextUtils.isEmpty(strAvo)){
+            try {
+                if(!TextUtils.isEmpty(preferences.getstartDate())){
+                    if(fromDate.equalsIgnoreCase("")){
+                        if(preferences.getstartDate().equalsIgnoreCase("null")){
+                            textviewDate1.setText("");
+                        }
+                        else {
+                            textviewDate1.setText(preferences.getstartDate());
+                        }
+                    }
+                    else {
+                        textviewDate1.setText(fromDate);
+                    }
+
+
+                }
+                if(!TextUtils.isEmpty(preferences.getendDate())){
+                    if(toDate.equalsIgnoreCase("")){
+                        if(preferences.getendDate().equalsIgnoreCase("null")){
+                            textviewDate2.setText("");
+                        }
+                        else {
+                            textviewDate2.setText(preferences.getstartDate());
+                        }
+                    }
+                    else {
+                        textviewDate2.setText(toDate);
+                    }
+
+
+                }
+
+                if(!TextUtils.isEmpty(preferences.getstartTime())){
+                    if(preferences.getstartTime().equalsIgnoreCase("null")){
+                        textviewHourStart.setText("");
+                    }
+                    else {
+                        textviewHourStart.setText(preferences.getstartTime());
+                    }
+                    //textviewHourStart.setText(parsableClass.strStartTime.substring(0, 2));
+                    //textviewMinuteStart.setText(Math.max(parsableClass.strStartTime.length() - 2, 0));
+                    //textviewMinuteStart.setText(parsableClass.strStartTime.substring(parsableClass.strStartTime.length() - 2));
+                }
+                if(!TextUtils.isEmpty(preferences.getendTime())){
+                    if(preferences.getendTime().equalsIgnoreCase("null")){
+                        textviewHourEnd.setText("");
+                    }
+                    else {
+                        textviewHourEnd.setText(preferences.getendTime());
+                    }
+                    //textviewHourEnd.setText(parsableClass.strEndtime.substring(0,2));
+                    //textviewMinuteEnd.setText(parsableClass.strEndtime.substring(parsableClass.strEndtime.length() - 2));
+                }
+
             }
-
-            @Override
-            public int getCount() {
-                return arraylistsbLocal.size();
+            catch (Exception e){
+                LogApp.showLog(" exeexe"," exception while date operation "+e.toString());
             }
+        }
 
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
 
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
+    }
 
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent)
+
+    public void callWebservice()
+    {
+        try{
+            GlobalClass.showProgressDialog(getActivity(),language);
+            new addPricing_api().execute();
+
+        }
+        catch (Exception e){
+
+        }
+
+
+    }
+    public class addPricing_api extends AsyncTask<String,Void,String>
+    {
+
+        @Override
+        protected String doInBackground(String... arg0)
+        {
+            HttpClient httpclient = CustomSSLFactory.getNewHttpClient();
+            HttpPost httppost = new HttpPost(ROOT_URL);
+
+            MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+            try
             {
 
-                View v = getView(position, convertView, parent);
 
-                return v;
+                multipartEntity.addPart("isAnlieferung", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isKann", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isLieferung", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isVoranmeldung", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isBenachrichtgung", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isRampena", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isSonstige", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isEinweisung", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("isSelbstfahrer", new StringBody(URLEncoder.encode(String.valueOf(flagAnlieferung), "UTF-8")));
+                multipartEntity.addPart("Kann", new StringBody(URLEncoder.encode(strKann, "UTF-8")));
+                multipartEntity.addPart("Voranmeldung", new StringBody(URLEncoder.encode(strVoranmeldung, "UTF-8")));
+                multipartEntity.addPart("Benachrich", new StringBody(URLEncoder.encode(strBenachrich, "UTF-8")));
+                multipartEntity.addPart("Sonstige", new StringBody(URLEncoder.encode(strSonstige, "UTF-8")));
+                multipartEntity.addPart("Ladefahrzeug", new StringBody(URLEncoder.encode(String.valueOf(intLadefahrzeug), "UTF-8")));
+                multipartEntity.addPart("startDate", new StringBody(URLEncoder.encode(strStartDate, "UTF-8")));
+                multipartEntity.addPart("startTime", new StringBody(URLEncoder.encode(strStartTime, "UTF-8")));
+                multipartEntity.addPart("endDate", new StringBody(URLEncoder.encode(strEndDate, "UTF-8")));
+                multipartEntity.addPart("endTime", new StringBody(URLEncoder.encode(strEndtime, "UTF-8")));
+            }
+            catch (UnsupportedEncodingException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
 
-            @Override
-            public View getView(final int position, View convertView, ViewGroup parent) {
-                ViewHolder holder;
-                LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-                // If holder not exist then locate all view from UI file.
-                if (convertView == null) {
-                    // inflate UI from XML file
-                    convertView = inflater.inflate(R.layout.spinner_sb_item_list, parent, false);
-                    // get all UI view
-                    holder = new ViewHolder(convertView);
-                    // set tag for holder
-                    convertView.setTag(holder);
-                } else {
-                    // if holder created, get tag from view
-                    holder = (ViewHolder) convertView.getTag();
-                }
+            try
+            {
+                httppost.setEntity(multipartEntity);
+                HttpResponse response = httpclient.execute(httppost);
+                String responseText=EntityUtils.toString(response.getEntity());
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
 
-                holder.chkSB.setTag(position); // This line is important.
+        }
+        @Override
+        protected void onPostExecute(String result)
+        {
+            GlobalClass.dismissProgressDialog();
 
-                holder.title.setText(arraylistsbLocal.get(position).getStrTitle());
-                if(arraylistsbLocal.get(position).isSelected()){
-                    holder.chkSB.setChecked(true);
-                }else {
-                    holder.chkSB.setChecked(false);
-                }
-                /*convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        spinnerSB.clearFocus();
-                        for (int i = 0; i< arraylistsbLocal.size(); i++){
-                            if(i==position){
-                                SpinnerSBModel model = new SpinnerSBModel();
-                                model.setStrTitle(arraylistsbLocal.get(i).getStrTitle());
-                                model.setValue(arraylistsbLocal.get(i).getValue());
-                                model.setSelected(true);
-                                arraylistsbLocal.set(i,model);
+        }
+        @Override
+        protected void onPreExecute()
+        {
 
-                                String strSelected = arraylistsbLocal.get(position).getStrTitle();
-                                if(strSelected.equalsIgnoreCase("SB 1000")){
-                                    SB = 1000;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }else if(strSelected.equalsIgnoreCase("SB 2000")){
-                                    SB = 2000;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }
-                                else if(strSelected.equalsIgnoreCase("SB 3000")){
-                                    SB = 3000;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }
-                                else if(strSelected.equalsIgnoreCase("SB 500")){
-                                    SB = 500;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }
-                            }else{
-                                SpinnerSBModel model = new SpinnerSBModel();
-                                model.setStrTitle(arraylistsbLocal.get(i).getStrTitle());
-                                model.setSelected(false);
-                                model.setValue(arraylistsbLocal.get(i).getValue());
-                                arraylistsbLocal.set(i,model);
-                            }
-                        }
-                        //notifyDataSetChanged();
 
-                        *//* below code swap value in arraylist to put selected value to top and notify adapter *//*
-                        int postoSwamp = 0;
-                        for (int i = 0; i< arraylistsbLocal.size(); i++){
-                            if(arraylistsbLocal.get(i).isSelected()){
-                                postoSwamp = i;
-                                //spinnerSB.setSelection(i);
-                            }
-                        }
-                        Collections.swap(arraylistsbLocal, 0,postoSwamp);
-                        notifyDataSetChanged();
-                    }
-                });*/
-                holder.chkSB.setOnClickListener(new View.OnClickListener() {
+        }
 
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i< arraylistsbLocal.size(); i++){
-                            if(i==position){
-                                SpinnerSBModel model = new SpinnerSBModel();
-                                model.setStrTitle(arraylistsbLocal.get(i).getStrTitle());
-                                model.setValue(arraylistsbLocal.get(i).getValue());
-                                model.setSelected(true);
-                                arraylistsbLocal.set(i,model);
+        @Override
+        protected void onProgressUpdate(Void... values)
+        {
 
-                                String strSelected = arraylistsbLocal.get(position).getStrTitle();
-                                if(strSelected.equalsIgnoreCase("SB 1000")){
-                                    SB = 1000;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }else if(strSelected.equalsIgnoreCase("SB 2000")){
-                                    SB = 2000;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }
-                                else if(strSelected.equalsIgnoreCase("SB 3000")){
-                                    SB = 3000;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }
-                                else if(strSelected.equalsIgnoreCase("SB 500")){
-                                    SB = 500;
-                                    etHaftbP2.setText(DataHelper.getGermanFromEnglish(Double.parseDouble(arraylistsbLocal.get(position).getValue()) + ""));
-                                }
-                            }else{
-                                SpinnerSBModel model = new SpinnerSBModel();
-                                model.setStrTitle(arraylistsbLocal.get(i).getStrTitle());
-                                model.setSelected(false);
-                                model.setValue(arraylistsbLocal.get(i).getValue());
-                                arraylistsbLocal.set(i,model);
-                            }
-                        }
-                        //notifyDataSetChanged();
+        }
 
-                        /* below code swap value in arraylist to put selected value to top and notify adapter */
-                        int postoSwamp = 0;
-                        for (int i = 0; i< arraylistsbLocal.size(); i++){
-                            if(arraylistsbLocal.get(i).isSelected()){
-                                postoSwamp = i;
-                                //spinnerSB.setSelection(i);
-                            }
-                        }
-                        Collections.swap(arraylistsbLocal, 0,postoSwamp);
-                        notifyDataSetChanged();
+    }
+
+    public HttpEntity addToMultipart(HttpEntity reqEntity)
+    {
+       // MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+
+
+        try
+        {
+            multipartEntity.addPart("isAnlieferung", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isKann", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isLieferung", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isVoranmeldung", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isBenachrichtgung", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isRampena", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isSonstige", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isEinweisung", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("isSelbstfahrer", new StringBody(String.valueOf(flagAnlieferung)));
+            multipartEntity.addPart("Kann", new StringBody(strKann));
+            multipartEntity.addPart("Voranmeldung", new StringBody(strVoranmeldung));
+            multipartEntity.addPart("Benachrich", new StringBody(strBenachrich));
+            multipartEntity.addPart("Sonstige", new StringBody(strSonstige));
+            multipartEntity.addPart("Ladefahrzeug", new StringBody(String.valueOf(intLadefahrzeug)));
+            multipartEntity.addPart("startDate", new StringBody(strStartDate));
+            multipartEntity.addPart("startTime", new StringBody(strStartTime));
+            multipartEntity.addPart("endDate", new StringBody(strEndDate));
+            multipartEntity.addPart("endTime", new StringBody(strEndtime));
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        reqEntity = multipartEntity;
+
+        return reqEntity;
+
+    }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+    public void showAlertDialg()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title
+        alertDialogBuilder.setTitle(language.getLabelNote());
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Die kundenmaske kann nicht geschlossen werden! Bitte bearbeiten sie alle zeilen des Zwischenspeichers!")
+                .setCancelable(false)
+
+                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
                     }
                 });
 
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
 
-                return convertView;
-            }
-            private class ViewHolder {
-                private TextView title;
-                private CheckBox chkSB;
+        // show it
+        alertDialog.show();
+    }
 
-                public ViewHolder(View v) {
-                    chkSB = (CheckBox) v.findViewById(R.id.checkSB);
-                    title = (TextView) v.findViewById(R.id.txtTitle);
-                }
-            }
-        }
-
-        }
+}

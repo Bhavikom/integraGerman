@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,6 @@ import java.util.Locale;
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.PreferencesClass;
-import de.mateco.integrAMobile.fragment.PricingFragment;
 import de.mateco.integrAMobile.timesquare.CalendarCellDecorator;
 import de.mateco.integrAMobile.timesquare.CalendarCellView;
 import de.mateco.integrAMobile.timesquare.DayViewAdapter;
@@ -636,11 +633,11 @@ public class CalendarPickerView extends ListView {
             cell.setSelected(true);
           }
         selectedCals.add(newlySelectedCal);
-        //PricingFragment.Selectdate.onCellclicked();
+        //PricingFragment1.Selectdate.onCellclicked();
 
         try {
 
-          //new PricingFragment.onDateSelectedAsynch2.execute(date);
+          //new PricingFragment1.onDateSelectedAsynch2.execute(date);
           //asynch.execute(date);
 
 

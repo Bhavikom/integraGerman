@@ -35,7 +35,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
 import de.mateco.integrAMobile.BuildConfig;
-import de.mateco.integrAMobile.CrashDisplayActivity;
 import de.mateco.integrAMobile.Helper.Constants;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
@@ -579,45 +578,6 @@ public class MatecoPriceApplication extends Application
         }
         return dir.delete();
     }
-
-    private void startCatcher() {
-        Thread.UncaughtExceptionHandler systemUncaughtHandler = Thread.getDefaultUncaughtExceptionHandler();
-        // the following handler is used to catch exceptions thrown in background threads
-        Thread.setDefaultUncaughtExceptionHandler(new UncaughtHandler(new Handler()));
-
-         while (true) {
-            try {
-                //Looper.prepare();
-                Looper.loop();
-                Thread.setDefaultUncaughtExceptionHandler(systemUncaughtHandler);
-                throw new RuntimeException("Main thread loop unexpectedly exited");
-            } catch (BackgroundException e) {
-                //Fabric.with(this, new Crashlytics());
-                //MultiDex.install(this);
-                //defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
-
-                showCrashDisplayActivity(e.getCause());
-            } catch (Throwable e) {
-                //Fabric.with(this, new Crashlytics());
-                //MultiDex.install(this);
-
-                //defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
-                showCrashDisplayActivity(e);
-            }
-        }
-    }
-
-    void showCrashDisplayActivity(Throwable e) {
-        Intent i = new Intent(this, CrashDisplayActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("e", e);
-        startActivity(i);
-        //sendErrorMail();
-        //showAlertDialog(getApplicationContext());
-
-    }
-
-
     /**
      * This handler catches exceptions in the background threads and propagates them to the UI thread
      */

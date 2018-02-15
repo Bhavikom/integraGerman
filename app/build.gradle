@@ -55,14 +55,6 @@ android {
             signingConfig signingConfigs.config
         }
     }
-    productFlavors{
-        release{
-            buildConfigField "boolean", "LOG", "false"
-        }
-        debug{
-            buildConfigField "boolean", "LOG", "false"
-        }
-    }
     /*compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
