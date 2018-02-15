@@ -5,11 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 
 import de.mateco.integrAMobile.model.DailyAgendaModel;
+import de.mateco.integrAMobile.model_logonsquare.FutureItem;
 
 /**
  * Created by mmehta on 30.03.2016.
  */
-public class FuturePastAgendaComparable implements Comparator<DailyAgendaModel>
+public class FutureAgendaComparable implements Comparator<FutureItem>
 {
     //1 for kunde
     //2 for date
@@ -18,14 +19,14 @@ public class FuturePastAgendaComparable implements Comparator<DailyAgendaModel>
     private int type = 0;
     private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-    public FuturePastAgendaComparable(int sortingVia, int type)
+    public FutureAgendaComparable(int sortingVia, int type)
     {
         this.sortingVia = sortingVia;
         this.type = type;
     }
 
     @Override
-    public int compare(DailyAgendaModel sourceModel, DailyAgendaModel compareWithModel)
+    public int compare(FutureItem sourceModel, FutureItem compareWithModel)
     {
         switch (sortingVia)
         {
@@ -60,17 +61,17 @@ public class FuturePastAgendaComparable implements Comparator<DailyAgendaModel>
         return 0;
     }
 
-    private int sortKundeVise(DailyAgendaModel sourceModel, DailyAgendaModel compareWithModel)
+    private int sortKundeVise(FutureItem sourceModel, FutureItem compareWithModel)
     {
         return sourceModel.getName1().compareToIgnoreCase(compareWithModel.getName1());
     }
 
-    private int sortActivityVise(DailyAgendaModel sourceModel, DailyAgendaModel compareWithModel)
+    private int sortActivityVise(FutureItem sourceModel, FutureItem compareWithModel)
     {
         return sourceModel.getAktivitaetstytp().compareToIgnoreCase(compareWithModel.getAktivitaetstytp());
     }
 
-    private int sortDateVise(DailyAgendaModel sourceModel, DailyAgendaModel compareWithModel)
+    private int sortDateVise(FutureItem sourceModel, FutureItem compareWithModel)
     {
         try {
             /* change on 14th June 2017 to solve crash */

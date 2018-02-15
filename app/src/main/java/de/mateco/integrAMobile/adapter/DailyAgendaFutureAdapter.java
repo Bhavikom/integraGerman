@@ -5,27 +5,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
+import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.model.DailyAgendaModel;
+import de.mateco.integrAMobile.model_logonsquare.FutureItem;
 
-public class DailyAgendaTodayAdapter extends BaseAdapter
+/**
+ * Created by S Soft on 15-Feb-18.
+ */
+
+public class DailyAgendaFutureAdapter extends BaseAdapter
 {
     private int resourceId;
-    private ArrayList<DailyAgendaModel> listOfDailyAgenda;
+    private List<FutureItem> listOfDailyAgenda;
     private Context context;
     public int selectedIndex=-1;
+    private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
     public void setSelectedIndex(int ind) {
         selectedIndex = ind;
         notifyDataSetChanged();
     }
 
-    public DailyAgendaTodayAdapter(Context context, ArrayList<DailyAgendaModel> listOfDailyAgenda, int resourceId)
+    public DailyAgendaFutureAdapter(Context context, List<FutureItem> listOfDailyAgenda, int resourceId)
     {
         this.context = context;
         this.listOfDailyAgenda = listOfDailyAgenda;
@@ -57,29 +66,43 @@ public class DailyAgendaTodayAdapter extends BaseAdapter
                 (TextView)convertView.findViewById(R.id.labelListItemDailyAgendaCustomerName);
 
         //SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        labelListItemDailyAgendaCustomerName.setText
-                (listOfDailyAgenda.get(position).getName1());
+        labelListItemDailyAgendaCustomerName.setText(listOfDailyAgenda.get(position).getName1());
 
         TextView labelListItemCustomerActivityType =
                 (TextView)convertView.findViewById(R.id.labelListItemCustomerActivityType);
         labelListItemCustomerActivityType.setText(listOfDailyAgenda.get(position).getAktivitaetstytp());
 
-        CheckBox checkBoxCustomerActivityRealized =
-                (CheckBox)convertView.findViewById(R.id.checkBoxCustomerActivityRealized);
-        if(listOfDailyAgenda.get(position).getRealisiert().equals("True"))
+
+        TextView labelListItemCustomerActivityDate =
+                (TextView)convertView.findViewById(R.id.labelListItemCustomerActivityDate);
+        try
         {
-            checkBoxCustomerActivityRealized.setChecked(true);
+            labelListItemCustomerActivityDate.setText
+                    (DataHelper.formatDate(format.parse(listOfDailyAgenda.get(position).getDatum())));
         }
+        catch (ParseException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        //CheckBox checkBoxCustomerActivityRealized =
+        // (CheckBox)convertView.findViewById(R.id.checkBoxCustomerActivityRealized);
+//        if(listOfDailyAgenda.get(position).getRealisiert().equals("True"))
+//        {
+//            checkBoxCustomerActivityRealized.setChecked(true);
+//        }
         if(selectedIndex == position)
         {
             labelListItemDailyAgendaCustomerName.setTextColor(context.getResources().getColor(R.color.white));
             labelListItemCustomerActivityType.setTextColor(context.getResources().getColor(R.color.white));
+            labelListItemCustomerActivityDate.setTextColor(context.getResources().getColor(R.color.white));
             convertView.setBackgroundColor(context.getResources().getColor(R.color.red));
         }
         else
         {
             labelListItemDailyAgendaCustomerName.setTextColor(context.getResources().getColor(R.color.black));
             labelListItemCustomerActivityType.setTextColor(context.getResources().getColor(R.color.black));
+            labelListItemCustomerActivityDate.setTextColor(context.getResources().getColor(R.color.black));
             convertView.setBackgroundColor(context.getResources().getColor(R.color.white));
         }
         return convertView;

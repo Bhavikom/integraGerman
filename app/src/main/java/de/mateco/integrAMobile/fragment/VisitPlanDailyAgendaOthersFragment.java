@@ -19,48 +19,62 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
-import de.mateco.integrAMobile.Helper.FuturePastAgendaComparable;
+import de.mateco.integrAMobile.Helper.FutureAgendaComparable;
+import de.mateco.integrAMobile.Helper.LogApp;
+import de.mateco.integrAMobile.Helper.PastAgendaComparable;
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.adapter.DailyAgendaOtherAdapter;
+import de.mateco.integrAMobile.adapter.DailyAgendaFutureAdapter;
+import de.mateco.integrAMobile.adapter.DailyAgendaPastAdapter;
 import de.mateco.integrAMobile.adapter.SimpleStringAdapter;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.CustomerFullDetailModel;
-import de.mateco.integrAMobile.model.DailyAgendaModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
+import de.mateco.integrAMobile.model_logonsquare.FutureItem;
+import de.mateco.integrAMobile.model_logonsquare.PastItem;
+import de.mateco.integrAMobile.model_logonsquare.ResponseMainAgenda;
 
 public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements View.OnClickListener
 {
+    private ProgressDialog progressDialog;
+    int typeModel;
     String activityId="";
     private View rootView;
     private MatecoPriceApplication matecoPriceApplication;
     private Language language;
     private DataBaseHandler db;
-    private ListView listViewWeeklyDue, listViewWeeklyFuture;
+    private ListView listViewPast, listViewFuture;
     private EditText textAgendaCustomerDetails, textAgendaProjectDetails, textAgendaOfferDetails,
             textAgendaNotice, textAgendaActivityStartTime, textAgendaActivityEndTime;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    private ArrayList<DailyAgendaModel> arrayListWeeklyDue, arrayListWeeklyFuture;
-    private DailyAgendaOtherAdapter adapterAgendaWeeklyDue, adapterAgendaWeeklyFuture;
+    private List<PastItem> arrayListPast;
+    private List<FutureItem> arrayListFuture;
+    private DailyAgendaPastAdapter adapterAgendaPast;
+    private DailyAgendaFutureAdapter adapterAgendaFuture;
     private Button buttonCustomerDetails, buttonProjectDetails;
     private ArrayList<CustomerActivityEmployeeListItem> listOfEmployee;
 
@@ -68,7 +82,11 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
     private ListView listViewAgendaEmployee, listViewAgendaContacts;
     private ArrayList<String> listOfAgendaRelatedContactPerson, listOfAgendaRelatedEmployee;
     private SimpleStringAdapter adapterAgendaRelatedContactPerson, adapterAgendaRelatedEmployee;
-    private DailyAgendaModel model = null;
+
+    //private DailyAgendaModel model = null;
+    private PastItem pastItem = null;
+    private FutureItem futureItem = null;
+
     private boolean isFirstTimeSelectedSpinnerEmployee = false;
     private String loginPersonId = "",dateString = "";
     private boolean isAscending = false, isAscendingFuture = false;
@@ -96,8 +114,8 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         language = matecoPriceApplication.getLanguage();
         db = new DataBaseHandler(getActivity());
 
-        listViewWeeklyDue = (ListView)rootView.findViewById(R.id.listViewWeeklyDue);
-        listViewWeeklyFuture = (ListView)rootView.findViewById(R.id.listViewWeeklyFuture);
+        listViewPast = (ListView)rootView.findViewById(R.id.listViewWeeklyDue);
+        listViewFuture = (ListView)rootView.findViewById(R.id.listViewWeeklyFuture);
 
         imageSortName = (ImageView)rootView.findViewById(R.id.imageSortName);
         imageSortDate = (ImageView)rootView.findViewById(R.id.imageSortDate);
@@ -114,14 +132,14 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         textAgendaActivityStartTime = (EditText)rootView.findViewById(R.id.textAgendaActivityStartTime);
         textAgendaActivityEndTime = (EditText)rootView.findViewById(R.id.textAgendaActivityEndTime);
 
-        arrayListWeeklyDue = new ArrayList<>();
-        arrayListWeeklyFuture = new ArrayList<>();
+        arrayListPast = new ArrayList<>();
+        arrayListFuture = new ArrayList<>();
 
-        //adapterAgendaWeeklyDue = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyDue, R.layout.list_item_daily_other_agenda);
-        //adapterAgendaWeeklyFuture = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyFuture, R.layout.list_item_daily_other_agenda);
+        //adapterAgendaPast = new DailyAgendaPastAdapter(getActivity(), arrayListPast, R.layout.list_item_daily_other_agenda);
+        //adapterAgendaFuture = new DailyAgendaPastAdapter(getActivity(), arrayListFuture, R.layout.list_item_daily_other_agenda);
 
-        //listViewWeeklyDue.setAdapter(adapterAgendaWeeklyDue);
-        //listViewWeeklyFuture.setAdapter(adapterAgendaWeeklyFuture);
+        //listViewPast.setAdapter(adapterAgendaPast);
+        //listViewFuture.setAdapter(adapterAgendaFuture);
 
         buttonProjectDetails = (Button)rootView.findViewById(R.id.buttonProjectDetails);
         buttonCustomerDetails = (Button)rootView.findViewById(R.id.buttonCustomerDetails);
@@ -129,7 +147,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         buttonCustomerDetails.setOnClickListener(this);
         buttonProjectDetails.setOnClickListener(this);
 
-        setAgenda(matecoPriceApplication.getData(DataHelper.StoreOtherAgenda, ""));
+        setAgenda(matecoPriceApplication.getData(DataHelper.StoreAgenda, ""));
 
         listViewAgendaEmployee = (ListView)rootView.findViewById(R.id.listViewAgendaEmployee);
 
@@ -161,17 +179,17 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         imageSortNameFuture.setOnClickListener(this);
         imageSortDateFuture.setOnClickListener(this);
         imageSortTypeFuture.setOnClickListener(this);
-        listViewWeeklyDue.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewPast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapterAgendaWeeklyDue.setSelectedIndex(position);
+                adapterAgendaPast.setSelectedIndex(position);
                 showDetailAgenda(position, 0);
             }
         });
-        listViewWeeklyFuture.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewFuture.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapterAgendaWeeklyFuture.setSelectedIndex(position);
+                adapterAgendaFuture.setSelectedIndex(position);
                 showDetailAgenda(position, 1);
             }
         });
@@ -183,61 +201,117 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         clearFields();
         if (type == 0)
         {
-            model = arrayListWeeklyDue.get(position);
-            adapterAgendaWeeklyFuture.setSelectedIndex(-1);
+            typeModel = 0;
+            // past time
+            pastItem = arrayListPast.get(position);
+            adapterAgendaFuture.setSelectedIndex(-1);
+
+            activityId = pastItem.getAktivitaet();
+            String customerDetail = pastItem.getMatchcode() + "\n" + pastItem.getName1() + "\n" + pastItem.getStrasse() + "\n" + pastItem.getPLZ() + " " + pastItem.getOrt();
+            textAgendaCustomerDetails.setText(customerDetail);
+            String projectDetail = pastItem.getMatchcodeProjekt() + "\n" + pastItem.getBeschreibung() + "\n" + pastItem.getAdresse() + "\n" + pastItem.getPLZProjekt() + " " + pastItem.getPLZOrt();
+            textAgendaProjectDetails.setText(projectDetail);
+            //textAgendaActivityDetails.setText(model.getAktivitaet());
+            textAgendaNotice.setText(pastItem.getNotiz());
+            textAgendaOfferDetails.setText(pastItem.getAngebot());
+            if(pastItem.getStartzeit() != null){
+                if(pastItem.getStartzeit().equals("") || pastItem.getStartzeit().equals("00:00") || pastItem.getStartzeit().equals("00:00:00"))
+                {
+                    textAgendaActivityStartTime.setText("");
+                }
+                else
+                {
+                    textAgendaActivityStartTime.setText(DataHelper.formatTime(pastItem.getStartzeit()));
+                }
+            }
+
+            if(pastItem.getEndzeit() != null){
+                if(pastItem.getEndzeit().equals("") || pastItem.getEndzeit().equals("00:00") || pastItem.getEndzeit().equals("00:00:00"))
+                {
+                    textAgendaActivityEndTime.setText("");
+                }
+                else
+                {
+                    textAgendaActivityEndTime.setText(DataHelper.formatTime(pastItem.getEndzeit()));
+                }
+            }
+
+
+            listOfAgendaRelatedContactPerson.clear();
+            listOfAgendaRelatedEmployee.clear();
+
+            if(pastItem.getAnsprechpartner() != null){
+                listOfAgendaRelatedContactPerson.addAll(pastItem.getAnsprechpartner());
+            }else {
+                listOfAgendaRelatedContactPerson.clear();
+            }
+
+            if(pastItem.getMitarbeiterName() != null){
+
+                listOfAgendaRelatedEmployee.addAll(pastItem.getMitarbeiterName());
+            }else {
+                listOfAgendaRelatedEmployee.clear();
+            }
+            adapterAgendaRelatedEmployee.notifyDataSetChanged();
+            adapterAgendaRelatedContactPerson.notifyDataSetChanged();
         }
         else
         {
-            adapterAgendaWeeklyDue.setSelectedIndex(-1);
-            model = arrayListWeeklyFuture.get(position);
-        }
-        activityId = model.getAktivitaet();
-        String customerDetail = model.getMatchcode() + "\n" + model.getName1() + "\n" + model.getStrasse() + "\n" + model.getPLZ() + " " + model.getOrt();
-        textAgendaCustomerDetails.setText(customerDetail);
-        String projectDetail = model.getMatchcode_Projekt() + "\n" + model.getBeschreibung() + "\n" + model.getAdresse() + "\n" + model.getPLZ_Projekt() + " " + model.getPLZ_Ort();
-        textAgendaProjectDetails.setText(projectDetail);
-        //textAgendaActivityDetails.setText(model.getAktivitaet());
-        textAgendaNotice.setText(model.getNotiz());
-        textAgendaOfferDetails.setText(model.getAngebot());
-        if(model.getStartzeit() != null){
-            if(model.getStartzeit().equals("") || model.getStartzeit().equals("00:00") || model.getStartzeit().equals("00:00:00"))
-            {
-                textAgendaActivityStartTime.setText("");
-            }
-            else
-            {
-                textAgendaActivityStartTime.setText(DataHelper.formatTime(model.getStartzeit()));
-            }
-        }
+            // future item
+            typeModel = 1;
 
-        if(model.getEndzeit() != null){
-            if(model.getEndzeit().equals("") || model.getEndzeit().equals("00:00") || model.getEndzeit().equals("00:00:00"))
-            {
-                textAgendaActivityEndTime.setText("");
+            adapterAgendaPast.setSelectedIndex(-1);
+            futureItem = arrayListFuture.get(position);
+
+            activityId = futureItem.getAktivitaet();
+            String customerDetail = futureItem.getMatchcode() + "\n" + futureItem.getName1() + "\n" + futureItem.getStrasse() + "\n" + futureItem.getPLZ() + " " + futureItem.getOrt();
+            textAgendaCustomerDetails.setText(customerDetail);
+            String projectDetail = futureItem.getMatchcodeProjekt() + "\n" + futureItem.getBeschreibung() + "\n" + futureItem.getAdresse() + "\n" + futureItem.getPLZProjekt() + " " + futureItem.getPLZOrt();
+            textAgendaProjectDetails.setText(projectDetail);
+            //textAgendaActivityDetails.setText(model.getAktivitaet());
+            textAgendaNotice.setText(futureItem.getNotiz());
+            textAgendaOfferDetails.setText(futureItem.getAngebot());
+            if(futureItem.getStartzeit() != null){
+                if(futureItem.getStartzeit().equals("") || futureItem.getStartzeit().equals("00:00") || futureItem.getStartzeit().equals("00:00:00"))
+                {
+                    textAgendaActivityStartTime.setText("");
+                }
+                else
+                {
+                    textAgendaActivityStartTime.setText(DataHelper.formatTime(futureItem.getStartzeit()));
+                }
             }
-            else
-            {
-                textAgendaActivityEndTime.setText(DataHelper.formatTime(model.getEndzeit()));
+
+            if(futureItem.getEndzeit() != null){
+                if(futureItem.getEndzeit().equals("") || futureItem.getEndzeit().equals("00:00") || futureItem.getEndzeit().equals("00:00:00"))
+                {
+                    textAgendaActivityEndTime.setText("");
+                }
+                else
+                {
+                    textAgendaActivityEndTime.setText(DataHelper.formatTime(futureItem.getEndzeit()));
+                }
             }
-        }
 
 
-        listOfAgendaRelatedContactPerson.clear();
-        listOfAgendaRelatedEmployee.clear();
-
-        if(model.getAnsprechpartner() != null){
-            listOfAgendaRelatedContactPerson.addAll(model.getAnsprechpartner());
-        }else {
             listOfAgendaRelatedContactPerson.clear();
+            listOfAgendaRelatedEmployee.clear();
+
+            if(futureItem.getAnsprechpartner() != null){
+                listOfAgendaRelatedContactPerson.addAll(futureItem.getAnsprechpartner());
+            }else {
+                listOfAgendaRelatedContactPerson.clear();
+            }
+
+            if(futureItem.getMitarbeiterName() != null){
+                listOfAgendaRelatedEmployee.addAll(futureItem.getMitarbeiterName());
+            }else {
+                listOfAgendaRelatedEmployee.clear();
+            }
+            adapterAgendaRelatedEmployee.notifyDataSetChanged();
+            adapterAgendaRelatedContactPerson.notifyDataSetChanged();
         }
 
-        if(model.getMitarbeiterName() != null){
-            listOfAgendaRelatedEmployee.addAll(model.getMitarbeiterName());
-        }else {
-            listOfAgendaRelatedEmployee.clear();
-        }
-        adapterAgendaRelatedEmployee.notifyDataSetChanged();
-        adapterAgendaRelatedContactPerson.notifyDataSetChanged();
     }
 
     private void setupLanguage()
@@ -328,10 +402,10 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         textAgendaProjectDetails.setText("");
         listOfAgendaRelatedContactPerson.clear();
         listOfAgendaRelatedEmployee.clear();
-//        arrayListWeeklyDue.clear();
-//        arrayListWeeklyFuture.clear();
-//        adapterAgendaWeeklyDue.notifyDataSetChanged();
-//        adapterAgendaWeeklyFuture.notifyDataSetChanged();
+//        arrayListPast.clear();
+//        arrayListFuture.clear();
+//        adapterAgendaPast.notifyDataSetChanged();
+//        adapterAgendaFuture.notifyDataSetChanged();
     }
 
     @Override
@@ -350,21 +424,21 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 {
                     //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
                     imageSortName.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(1, 0));
+                    Collections.sort(arrayListPast, new PastAgendaComparable(1, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortName.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(1, 1));
+                    Collections.sort(arrayListPast, new PastAgendaComparable(1, 1));
                     imageSortName.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortType.setVisibility(View.GONE);
                 imageSortDate.setVisibility(View.GONE);
-                if(arrayListWeeklyDue.size() > 0)
+                if(arrayListPast.size() > 0)
                 {
-                    adapterAgendaWeeklyDue.setSelectedIndex(0);
+                    adapterAgendaPast.setSelectedIndex(0);
                     showDetailAgenda(0, 0);
                 }
                 break;
@@ -373,21 +447,21 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortDate.getVisibility() != View.GONE && !isAscending)
                 {
                     imageSortDate.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(2, 0));
+                    Collections.sort(arrayListPast, new PastAgendaComparable(2, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortDate.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(2, 1));
+                    Collections.sort(arrayListPast, new PastAgendaComparable(2, 1));
                     imageSortDate.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortType.setVisibility(View.GONE);
                 imageSortName.setVisibility(View.GONE);
-                if(arrayListWeeklyDue.size() > 0)
+                if(arrayListPast.size() > 0)
                 {
-                    adapterAgendaWeeklyDue.setSelectedIndex(0);
+                    adapterAgendaPast.setSelectedIndex(0);
                     showDetailAgenda(0, 0);
                 }
                 break;
@@ -396,21 +470,21 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortType.getVisibility() != View.GONE && !isAscending)
                 {
                     imageSortType.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(3, 0));
+                    Collections.sort(arrayListPast, new PastAgendaComparable(3, 0));
                     isAscending = true;
                 }
                 else
                 {
                     imageSortType.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(arrayListWeeklyDue, new FuturePastAgendaComparable(3, 1));
+                    Collections.sort(arrayListPast, new PastAgendaComparable(3, 1));
                     imageSortType.setVisibility(View.VISIBLE);
                     isAscending = false;
                 }
                 imageSortDate.setVisibility(View.GONE);
                 imageSortName.setVisibility(View.GONE);
-                if(arrayListWeeklyDue.size() > 0)
+                if(arrayListPast.size() > 0)
                 {
-                    adapterAgendaWeeklyDue.setSelectedIndex(0);
+                    adapterAgendaPast.setSelectedIndex(0);
                     showDetailAgenda(0, 0);
                 }
                 break;
@@ -420,21 +494,21 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 {
                     //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
                     imageSortNameFuture.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(1, 0));
+                    Collections.sort(arrayListFuture, new FutureAgendaComparable(1, 0));
                     isAscendingFuture = true;
                 }
                 else
                 {
                     imageSortNameFuture.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(1, 1));
+                    Collections.sort(arrayListFuture, new FutureAgendaComparable(1, 1));
                     imageSortNameFuture.setVisibility(View.VISIBLE);
                     isAscendingFuture = false;
                 }
                 imageSortTypeFuture.setVisibility(View.GONE);
                 imageSortDateFuture.setVisibility(View.GONE);
-                if(arrayListWeeklyFuture.size() > 0)
+                if(arrayListFuture.size() > 0)
                 {
-                    adapterAgendaWeeklyFuture.setSelectedIndex(0);
+                    adapterAgendaFuture.setSelectedIndex(0);
                     showDetailAgenda(0, 1);
                 }
                 break;
@@ -443,21 +517,21 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortDateFuture.getVisibility() != View.GONE && !isAscendingFuture)
                 {
                     imageSortDateFuture.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(2, 0));
+                    Collections.sort(arrayListFuture, new FutureAgendaComparable(2, 0));
                     isAscendingFuture = true;
                 }
                 else
                 {
                     imageSortDateFuture.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(2, 1));
+                    Collections.sort(arrayListFuture, new FutureAgendaComparable(2, 1));
                     imageSortDateFuture.setVisibility(View.VISIBLE);
                     isAscendingFuture = false;
                 }
                 imageSortTypeFuture.setVisibility(View.GONE);
                 imageSortNameFuture.setVisibility(View.GONE);
-                if(arrayListWeeklyFuture.size() > 0)
+                if(arrayListFuture.size() > 0)
                 {
-                    adapterAgendaWeeklyFuture.setSelectedIndex(0);
+                    adapterAgendaFuture.setSelectedIndex(0);
                     showDetailAgenda(0, 1);
                 }
                 break;
@@ -466,21 +540,21 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 if(imageSortTypeFuture.getVisibility() != View.GONE && !isAscendingFuture)
                 {
                     imageSortTypeFuture.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(3, 0));
+                    Collections.sort(arrayListFuture, new FutureAgendaComparable(3, 0));
                     isAscendingFuture = true;
                 }
                 else
                 {
                     imageSortTypeFuture.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(arrayListWeeklyFuture, new FuturePastAgendaComparable(3, 1));
+                    Collections.sort(arrayListFuture, new FutureAgendaComparable(3, 1));
                     imageSortTypeFuture.setVisibility(View.VISIBLE);
                     isAscendingFuture = false;
                 }
                 imageSortDateFuture.setVisibility(View.GONE);
                 imageSortNameFuture.setVisibility(View.GONE);
-                if(arrayListWeeklyFuture.size() > 0)
+                if(arrayListFuture.size() > 0)
                 {
-                    adapterAgendaWeeklyFuture.setSelectedIndex(0);
+                    adapterAgendaFuture.setSelectedIndex(0);
                     showDetailAgenda(0, 1);
                 }
                 break;
@@ -503,8 +577,8 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
             {
                 loginPersonId = selectedEmployee.getMitarbeiter();
             }
-            arrayListWeeklyDue.clear();
-            arrayListWeeklyFuture.clear();
+            arrayListPast.clear();
+            arrayListFuture.clear();
             if(DataHelper.isNetworkAvailable(getActivity()))
             {
                 BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult()
@@ -554,24 +628,31 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
 
     public void setAgenda(String result)
     {
-        try
-        {
-            arrayListWeeklyDue.clear();
-            arrayListWeeklyFuture.clear();
+
+            arrayListPast.clear();
+            arrayListFuture.clear();
             if(!result.equals(""))
             {
-                JSONObject jsonObject = new JSONObject(result);
+                ResponseMainAgenda responseMainAgenda = new ResponseMainAgenda();
+                try {
+                    responseMainAgenda = LoganSquare.parse(result.toString(), ResponseMainAgenda.class);
+                    arrayListPast = responseMainAgenda.getPast();
+                    arrayListFuture = responseMainAgenda.getFuture();
+                }catch (Exception e){
+
+                }
+                /*JSONObject jsonObject = new JSONObject(result);
                 if(jsonObject.has("Past"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Past").toString(), arrayListWeeklyDue);
+                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Past").toString(), arrayListPast);
                 if(jsonObject.has("Future"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Future").toString(), arrayListWeeklyFuture);
+                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Future").toString(), arrayListFuture);*/
             }
-            adapterAgendaWeeklyDue = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyDue, R.layout.list_item_daily_other_agenda);
-            adapterAgendaWeeklyFuture = new DailyAgendaOtherAdapter(getActivity(), arrayListWeeklyFuture, R.layout.list_item_daily_other_agenda);
-            listViewWeeklyDue.setAdapter(adapterAgendaWeeklyDue);
-            listViewWeeklyFuture.setAdapter(adapterAgendaWeeklyFuture);
+            adapterAgendaPast = new DailyAgendaPastAdapter(getActivity(), arrayListPast, R.layout.list_item_daily_other_agenda);
+            adapterAgendaFuture = new DailyAgendaFutureAdapter(getActivity(), arrayListFuture, R.layout.list_item_daily_other_agenda);
+            listViewPast.setAdapter(adapterAgendaPast);
+            listViewFuture.setAdapter(adapterAgendaFuture);
 
-            /*Collections.sort(arrayListWeeklyDue, new Comparator<DailyAgendaModel>() {
+            /*Collections.sort(arrayListPast, new Comparator<DailyAgendaModel>() {
                 @Override
                 public int compare(DailyAgendaModel lhs, DailyAgendaModel rhs) {
                     Date firstDate = new Date();
@@ -591,7 +672,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                 }
             });*/
 
-            /*Collections.sort(arrayListWeeklyFuture, new Comparator<DailyAgendaModel>() {
+            /*Collections.sort(arrayListFuture, new Comparator<DailyAgendaModel>() {
                 @Override
                 public int compare(DailyAgendaModel lhs, DailyAgendaModel rhs) {
                     Date firstDate = new Date();
@@ -609,20 +690,30 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                     return firstDate.compareTo(secondDate);
                 }
             });*/
-            //adapterAgendaWeeklyDue.notifyDataSetChanged();
-            //adapterAgendaWeeklyFuture.notifyDataSetChanged();
-        }
-        catch (JSONException ex)
-        {
-            ex.printStackTrace();
-        }
+            //adapterAgendaPast.notifyDataSetChanged();
+            //adapterAgendaFuture.notifyDataSetChanged();
+
+
     }
 
     private void getCustomerDetails()
     {
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
-            if(model != null && model.getKontakt() != null && !model.getKontakt().equals(""))
+            String strKontat="";
+            if(typeModel == 0){
+                // past
+                if(pastItem != null) {
+                    strKontat = pastItem.getKontakt();
+                }
+
+            }else {
+                // future
+                if(futureItem != null) {
+                    strKontat = futureItem.getKontakt();
+                }
+            }
+            if(!TextUtils.isEmpty(strKontat))
             {
                 final ProgressDialog dialog = new ProgressDialog(getActivity());
                 dialog.setTitle(language.getMessageWaitWhileLoading());
@@ -702,7 +793,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                     String url = DataHelper.URL_AGENDA_HELPER + "agendacustomershow" //+ DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.AGENDA_CUSTOMER_SHOW
                             + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/fieldname=" + "Kontakt"
-                            + "/value=" + model.getKontakt();
+                            + "/value=" + strKontat;
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                     asyncTask.execute(); // get customer detail
                 }
@@ -727,7 +818,21 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
     {
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
-            if(model != null && model.getProjekt() != null && !model.getProjekt().equals(""))
+            String strProject="";
+            if(typeModel == 0){
+                // past
+                if(pastItem != null) {
+                    strProject = pastItem.getProjekt();
+                }
+
+            }else {
+                // future
+                if(futureItem != null) {
+                    strProject = futureItem.getProjekt();
+                }
+            }
+
+            if(!TextUtils.isEmpty(strProject))
             {
                 final ProgressDialog dialog = new ProgressDialog(getActivity());
                 dialog.setTitle(language.getMessageWaitWhileLoading());
@@ -778,7 +883,7 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
                     String url = DataHelper.URL_AGENDA_HELPER + "agendaprojectlistshow" //+ DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.AGENDA_PROJECT_LIST_SHOW
                             + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                             + "/fieldname=" + "Projekt"
-                            + "/value=" + model.getProjekt();
+                            + "/value=" + strProject;
                     //Projekt
                     BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                     asyncTask.execute(); // get Project detail
@@ -858,7 +963,46 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
 
     private void adapterLoad()
     {
-        try
+        if(DataHelper.isNetworkAvailable(getActivity()))
+        {
+            try {
+                showProgressDialog();
+                final long starTime = System.currentTimeMillis();
+                matecoPriceApplication.saveData(DataHelper.AgendaDate, dateString);
+                loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
+                String urlAgendadate = DataHelper.URL_AGENDA_HELPER + "combinedagendalist"
+                        + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
+                        + "/mitarbeiter=" + loginPersonId
+                        + "/datum=" + dateString;
+                JsonObjectRequest object = new JsonObjectRequest(Request.Method.GET, urlAgendadate, "", new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        long endTime = System.currentTimeMillis() - starTime;
+                        LogApp.showLog("success"," response from volley :  time taken : " + endTime);
+
+                        matecoPriceApplication.saveData(DataHelper.StoreAgenda, response.toString());
+                        setAgenda(matecoPriceApplication.getData(DataHelper.StoreAgenda, ""));
+                        hideProgressDialog();
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        hideProgressDialog();
+                        LogApp.showLog(" error "," response from volley : "+error.toString());
+                        showShortToast(language.getMessageError());
+                    }
+                });
+                MatecoPriceApplication.getInstance().addToRequestQueue(object);
+            }catch (Exception e){
+                hideProgressDialog();
+                LogApp.showLog(" exception "," exception while calling agenda date");
+            }
+
+        }else {
+            showShortToast(language.getMessageNetworkNotAvailable());
+        }
+        /*try
         {
             matecoPriceApplication.saveData(DataHelper.AgendaDate, dateString);
             loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
@@ -927,6 +1071,18 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
         catch (IOException ex)
         {
             ex.printStackTrace();
+        }*/
+    }
+    public void showProgressDialog(){
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle(language.getMessageWaitWhileLoading());
+        progressDialog.setMessage(language.getMessageWaitWhileLoading());
+        progressDialog.show();
+    }
+    public void hideProgressDialog(){
+        if(progressDialog != null && progressDialog.isShowing()){
+            progressDialog.dismiss();
         }
     }
 }

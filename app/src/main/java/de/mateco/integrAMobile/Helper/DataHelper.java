@@ -84,6 +84,7 @@ public class DataHelper
     public static String WeeklyAgendaDate = "WeeklyAgendaDate";
     public static String NetworkError="networkerror";
     public static long NETWORK_CALL_DURATION=3000;
+    public static int VOLLEY_TIMEOUT = 60000;
     //    https://priceapp.tk/Mateco/MatecoSalesAppService.svc/json/GetToken
 //    public static String customerDataFragment = "Customer Data Fragment";
 //    public static String customerDataFragmentEdit = "Customer Data Fragment Edit";
@@ -1114,5 +1115,6 @@ public class DataHelper
     {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
+
 
 }

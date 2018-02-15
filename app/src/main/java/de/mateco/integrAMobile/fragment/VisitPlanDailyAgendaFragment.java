@@ -1,20 +1,33 @@
 package de.mateco.integrAMobile.fragment;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +54,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
 {
    /* private LinearLayout compoundButtonAgendaDailyPrevious, compoundButtonAgendaDailyDatePicker, compoundButtonAgendaDailyNext;
     private TextView labelAgendaDailyDateSelected;*/
+   private ProgressDialog progressDialog;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
     private DataBaseHandler db;
     private View rootView;
@@ -199,7 +213,49 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
 
     private void adapterLoad()
     {
-        try
+        if(DataHelper.isNetworkAvailable(getActivity()))
+        {
+            try {
+                showProgressDialog();
+                final long starTime = System.currentTimeMillis();
+                loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
+                String urlAgendadate = DataHelper.URL_AGENDA_HELPER + "combinedagendalist"
+                        + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
+                        + "/mitarbeiter=" + loginPersonId
+                        + "/datum=" + dateString;
+                JsonObjectRequest object = new JsonObjectRequest(Request.Method.GET, urlAgendadate, "", new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        long endTime = System.currentTimeMillis() - starTime;
+                        LogApp.showLog("success"," response from volley :  time taken : " + endTime);
+                        matecoPriceApplication.saveData(DataHelper.StoreAgenda, response.toString());
+                        adapter = new VisitPlanDailyAdapter(getChildFragmentManager(), mTabs);
+                        mViewPager.setAdapter(adapter);
+                        if(getArguments()!=null) {
+                            mViewPager.setCurrentItem(2);
+                        }
+                        hideProgressDialog();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        hideProgressDialog();
+                        LogApp.showLog(" error "," response from volley : "+error.toString());
+                        showShortToast(language.getMessageError());
+                    }
+                });
+                MatecoPriceApplication.getInstance().addToRequestQueue(object);
+            }catch (Exception e){
+                hideProgressDialog();
+                LogApp.showLog(" exception "," exception while calling agenda date");
+            }
+
+        }else {
+            showShortToast(language.getMessageNetworkNotAvailable());
+        }
+
+
+        /*try
         {
             matecoPriceApplication.saveData(DataHelper.AgendaDate, dateString);
             loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
@@ -259,10 +315,10 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                     }
                 };
 
-                /*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_TODAY_AGENDA
+                *//*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_TODAY_AGENDA
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&mitarbeiter=" + loginPersonId
-                        + "&datum=" + dateString;*/
+                        + "&datum=" + dateString;*//*
                 String url = DataHelper.URL_AGENDA_HELPER + "agendatoday"//DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_TODAY_AGENDA
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
@@ -278,7 +334,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
         catch (IOException ex)
         {
             ex.printStackTrace();
-        }
+        }*/
     }
 
 
@@ -427,4 +483,16 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
             }
         }
     };*/
+    public void showProgressDialog(){
+    progressDialog = new ProgressDialog(getActivity());
+    progressDialog.setCancelable(false);
+    progressDialog.setTitle(language.getMessageWaitWhileLoading());
+    progressDialog.setMessage(language.getMessageWaitWhileLoading());
+    progressDialog.show();
+}
+    public void hideProgressDialog(){
+        if(progressDialog != null && progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+    }
 }

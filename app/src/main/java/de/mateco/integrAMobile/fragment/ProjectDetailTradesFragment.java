@@ -829,30 +829,6 @@ public class ProjectDetailTradesFragment extends BaseFragment implements View.On
                 }
 
                 break;
-            case R.id.imageSortMatchCode:
-            case R.id.labelCustomerContactPersonGridHeaderSalutation:
-                if(imageSortMatchCode.getVisibility() != View.GONE && !isAscending)
-                {
-                    //((TextView)rootView.findViewById(R.id.labelAgendaWeeklyDueName)).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.ic_sort_asc_24dp);
-                    imageSortMatchCode.setImageResource(R.drawable.ic_sort_asc_24dp);
-                    Collections.sort(listOfContactPerson, new ContactPersonComparable(1, 0));
-                    isAscending = true;
-                }
-                else
-                {
-                    imageSortMatchCode.setImageResource(R.drawable.ic_sort_dsc_24dp);
-                    Collections.sort(listOfContactPerson, new ContactPersonComparable(1, 1));
-                    imageSortMatchCode.setVisibility(View.VISIBLE);
-                    isAscending = false;
-                }
-                imageSortGewerk.setVisibility(View.GONE);
-                if(listOfContactPerson.size() > 0)
-                {
-                    selectedContactPerson = listOfContactPerson.get(0);
-                    //setCustomerContactPerson(selectedContactPerson);
-                    //customerContactPersonListDetailAdapter.setSelectedIndex(0);
-                }
-                break;
         }
     }
 
