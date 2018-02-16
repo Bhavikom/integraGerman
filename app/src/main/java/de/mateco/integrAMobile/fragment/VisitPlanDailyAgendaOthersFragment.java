@@ -649,8 +649,13 @@ public class VisitPlanDailyAgendaOthersFragment extends BaseFragment implements 
             }
             adapterAgendaPast = new DailyAgendaPastAdapter(getActivity(), arrayListPast, R.layout.list_item_daily_other_agenda);
             adapterAgendaFuture = new DailyAgendaFutureAdapter(getActivity(), arrayListFuture, R.layout.list_item_daily_other_agenda);
-            listViewPast.setAdapter(adapterAgendaPast);
-            listViewFuture.setAdapter(adapterAgendaFuture);
+            if(arrayListPast != null && arrayListPast.size() > 0){
+                listViewPast.setAdapter(adapterAgendaPast);
+            }
+            if(arrayListFuture != null && arrayListFuture.size() > 0) {
+
+                listViewFuture.setAdapter(adapterAgendaFuture);
+            }
 
             /*Collections.sort(arrayListPast, new Comparator<DailyAgendaModel>() {
                 @Override

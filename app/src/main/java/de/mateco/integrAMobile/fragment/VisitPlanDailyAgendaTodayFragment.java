@@ -30,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,13 +43,11 @@ import de.mateco.integrAMobile.R;
 import de.mateco.integrAMobile.adapter.DailyAgendaTelephoneAdapter;
 import de.mateco.integrAMobile.adapter.DailyAgendaTermineAdapter;
 import de.mateco.integrAMobile.adapter.SimpleStringAdapter;
-import de.mateco.integrAMobile.adapter.VisitPlanDailyAdapter;
 import de.mateco.integrAMobile.asyncTask.BasicAsyncTaskGetRequest;
 import de.mateco.integrAMobile.base.BaseFragment;
 import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.CustomerFullDetailModel;
-import de.mateco.integrAMobile.model.DailyAgendaModel;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
@@ -577,21 +574,20 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                     arrayListAgendaTermine = responseMainAgenda.getTermine();
                     arrayListAgendaTelephone = responseMainAgenda.getTelefonate();
                     long endTime = System.currentTimeMillis()-startTime;
-                    LogApp.showLog(""," time taken by parsing of agenda : "+endTime);
+                    LogApp.showLog(" logan "," time taken by parsing of agenda : "+endTime);
                 }catch (Exception e){
 
                 }
-                /*JSONObject jsonObject = new JSONObject(result);
-                if(jsonObject.has("Termine"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Termine").toString(), arrayListAgendaTermine);
-                if(jsonObject.has("Telefonate"))
-                    DailyAgendaModel.extractFromJson(jsonObject.getJSONArray("Telefonate").toString(), arrayListAgendaTelephone);*/
             }
             adapterAgendaTermine = new DailyAgendaTermineAdapter(getActivity(), arrayListAgendaTermine, R.layout.list_item_daily_today_agenda);
             adapterAgendaTelephone = new DailyAgendaTelephoneAdapter(getActivity(), arrayListAgendaTelephone, R.layout.list_item_daily_today_agenda);
 
-            listViewTermine.setAdapter(adapterAgendaTermine);
-            listViewTelephone.setAdapter(adapterAgendaTelephone);
+            if(arrayListAgendaTermine != null && arrayListAgendaTermine.size() > 0) {
+                listViewTermine.setAdapter(adapterAgendaTermine);
+            }
+            if(arrayListAgendaTelephone != null && arrayListAgendaTelephone.size() > 0) {
+                listViewTelephone.setAdapter(adapterAgendaTelephone);
+            }
 
             //adapterAgendaTermine.notifyDataSetChanged();
             //adapterAgendaTelephone.notifyDataSetChanged();

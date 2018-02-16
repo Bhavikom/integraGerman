@@ -10,6 +10,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.FragmentTransaction;
@@ -125,6 +126,9 @@ import de.mateco.integrAMobile.weekview.WeekViewEvent;
 
 public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements WeekView.EventClickListener,MonthLoader.MonthChangeListener,DateTimeInterpreter,WeekView.ScrollListener,CheckBox.OnCheckedChangeListener,View.OnClickListener, TextView.OnEditorActionListener {
 
+    final Calendar calendar1 = Calendar.getInstance();
+
+    private boolean isAdapterLoad=false;
     private boolean isCallservice=true;
     private ProgressDialog progressDialog;
     String FOCUSED_EMPLOYEE="employee",FOCUSED_PLACE="place",FOCUSED_MATCHCODE_PROJECT="matccode",FOCUSED_DESCRIPTION="description",
@@ -239,6 +243,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_agenda_weekly, container, false);
+        LogApp.showLog(" on createview"," fragment life : ");
         super.initializeFragment(rootView);
         return rootView;
     }
@@ -279,18 +284,36 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         mWeekView.setDateTimeInterpreter(this);
         listOfWeeklyAgenda = new ArrayList<>();
 
-        if(isViewShown) {
-            adapterLoad();
+        getWeeklyData();
+        if(!isAdapterLoad) {
+            //adapterLoad();
+            isAdapterLoad=true;
         }
+
         getActivity().invalidateOptionsMenu();
         setHasOptionsMenu(true);
-}
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        LogApp.showLog(" user visible hint "," fragment life : "+isVisibleToUser);
+        if(isVisibleToUser){
+            if (getView() != null) {
+                //adapterLoad();
+                //isAdapterLoad=true;
+            }
+        }
+        /*else if(!isAdapterLoad){
+            adapterLoad();
+        }*/
+        /*if (isVisibleToUser) {
             isViewShown = true;
         } else {
             isViewShown = false;
@@ -304,9 +327,27 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
         } else {
             //isViewShown = false;
-        }
+        }*/
     }
+    private void getWeeklyData(){
+       String result = matecoPriceApplication.getData(DataHelper.WeeklyAgendaData,"");
 
+       if(!TextUtils.isEmpty(result)){
+           try
+           {
+               listOfWeeklyAgenda.clear();
+               WeeklyAgendaModel.extractFromJson(result, listOfWeeklyAgenda);
+               mWeekView.notifyDatasetChanged();
+               calendar1.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+
+               mWeekView.goToDate(calendar1);
+               mWeekView.goToHour(7);
+           } catch (Exception ex) {
+               ex.printStackTrace();
+           }
+       }
+
+    }
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -366,7 +407,6 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             String date = labelAgendaDailyDateSelected.getText().toString();
             final String finaldate = format.format(readFormat.parse(date));
             matecoPriceApplication.saveData(DataHelper.WeeklyAgendaDate, firstDate);
-            final Calendar calendar1 = Calendar.getInstance();
             final Date date1 = format.parse(finaldate);
             calendar1.setTime(date1);
             String loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();

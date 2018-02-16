@@ -4,9 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 
-import de.mateco.integrAMobile.model.ContactPersonModel;
-import de.mateco.integrAMobile.model.CustomerActivityModel;
-import de.mateco.integrAMobile.model.DailyAgendaModel;
 import de.mateco.integrAMobile.model.ProjectDetailActivityModel;
 
 /**

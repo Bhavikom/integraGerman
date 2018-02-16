@@ -9,12 +9,10 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.mateco.integrAMobile.Helper.DataHelper;
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.DailyAgendaModel;
 import de.mateco.integrAMobile.model_logonsquare.PastItem;
 
 public class DailyAgendaPastAdapter extends BaseAdapter

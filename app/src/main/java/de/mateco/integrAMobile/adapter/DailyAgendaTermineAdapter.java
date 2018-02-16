@@ -8,11 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.DailyAgendaModel;
 import de.mateco.integrAMobile.model_logonsquare.TermineItem;
 
 public class DailyAgendaTermineAdapter extends BaseAdapter

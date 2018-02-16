@@ -80,6 +80,7 @@ public class DataHelper
     public static String AgendaEmployeeSelected = "AgendaEmployeeSelected";
     public static String AgendaDate = "AgendaDate";
     public static String StoreAgenda = "StoreAgenda";
+    public static String WeeklyAgendaData = "weeklyAgenda";
     public static String StoreOtherAgenda = "StoreOtherAgenda";
     public static String WeeklyAgendaDate = "WeeklyAgendaDate";
     public static String NetworkError="networkerror";
