@@ -57,6 +57,9 @@ import de.mateco.integrAMobile.model_logonsquare.TermineItem;
 
 public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements View.OnClickListener
 {
+    SimpleDateFormat readFormat = new SimpleDateFormat("dd.MM.yyyy, E");
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+    private String strDateToSendWeeklyAgenda="";
     private ProgressDialog progressDialog;
     private int typeModel;
     private View rootView;
@@ -81,7 +84,7 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
     private TermineItem termineItem;
     private TelefonateItem telefonateItem;
     private boolean isFirstTimeSelectedSpinnerEmployee = false;
-    private String dateString = "",loginPersonId = "";
+    private String strDateToSendAAgenda = "",loginPersonId = "";
     private BasicAsyncTaskGetRequest asyncTask, asyncTask1;
 
     @Nullable
@@ -116,6 +119,21 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
         arrayListAgendaTermine = new ArrayList<>();
         arrayListAgendaTelephone = new ArrayList<>();
 
+        try {
+            if(matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,"").equals(""))
+            {
+                String strDate = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
+                setDate(strDate);
+
+            }
+            else{
+                strDateToSendWeeklyAgenda = matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,"");
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         //adapterAgendaTermine = new DailyAgendaTermineAdapter(getActivity(), arrayListAgendaTermine, R.layout.list_item_daily_today_agenda);
         //adapterAgendaTelephone = new DailyAgendaTermineAdapter(getActivity(), arrayListAgendaTelephone, R.layout.list_item_daily_today_agenda);
 
@@ -148,7 +166,16 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
         //((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelDailyAgenda());
         setupLanguage();
     }
+    private void setDate(String dateString) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = formatter.parse(dateString);
+            strDateToSendWeeklyAgenda = DataHelper.formatDisplayDate(date);
 
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void bindEvents(View rootView)
     {
@@ -393,8 +420,8 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                 SimpleDateFormat readFormat = new SimpleDateFormat("dd.MM.yyyy, E");
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 try {
-                    dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
-                    adapterLoad();
+                    strDateToSendAAgenda = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
+                    callAgendaService();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -405,20 +432,22 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
         //return super.onOptionsItemSelected(item);
     }
 
-    private void adapterLoad()
+    private void callAgendaService()
     {
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
             try {
+                final String finaldate = format.format(readFormat.parse(strDateToSendWeeklyAgenda));
                 showProgressDialog();
                 final long starTime = System.currentTimeMillis();
                 loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
-                matecoPriceApplication.saveData(DataHelper.AgendaDate, dateString);
+                matecoPriceApplication.saveData(DataHelper.AgendaDate, strDateToSendAAgenda);
 
                 String urlAgendadate = DataHelper.URL_AGENDA_HELPER + "combinedagendalist"
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
-                        + "/datum=" + dateString;
+                        + "/datum=" + strDateToSendAAgenda
+                        + "/datumweekly=" + finaldate;
                 JsonObjectRequest object = new JsonObjectRequest(Request.Method.GET, urlAgendadate, "", new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -450,7 +479,7 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
 
         /*try
         {
-            matecoPriceApplication.saveData(DataHelper.AgendaDate, dateString);
+            matecoPriceApplication.saveData(DataHelper.AgendaDate, strDateToSendAAgenda);
             loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
 
             if(DataHelper.isNetworkAvailable(getActivity()))
@@ -496,11 +525,11 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                                 *//*url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_TODAY_AGENDA_OTHER
                                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                                         + "&mitarbeiter=" + loginPersonId
-                                        + "&datum=" + dateString;*//*
+                                        + "&datum=" + strDateToSendAAgenda;*//*
                                 url = DataHelper.URL_AGENDA_HELPER + "agendadates"//DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_TODAY_AGENDA_OTHER
                                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                                         + "/mitarbeiter=" + loginPersonId
-                                        + "/datum=" + dateString;
+                                        + "/datum=" + strDateToSendAAgenda;
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
@@ -513,11 +542,11 @@ public class VisitPlanDailyAgendaTodayFragment extends BaseFragment implements V
                 *//*String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_TODAY_AGENDA
                         + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "&mitarbeiter=" + loginPersonId
-                        + "&datum=" + dateString;*//*
+                        + "&datum=" + strDateToSendAAgenda;*//*
                 String url = DataHelper.URL_AGENDA_HELPER + "agendatoday"//DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_TODAY_AGENDA
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
-                        + "/datum=" + dateString;
+                        + "/datum=" + strDateToSendAAgenda;
                 asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), false);
                 asyncTask.execute();
             }

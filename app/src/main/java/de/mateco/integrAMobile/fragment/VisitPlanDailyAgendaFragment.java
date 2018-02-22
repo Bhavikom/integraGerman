@@ -5,36 +5,28 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,11 +44,10 @@ import de.mateco.integrAMobile.base.MatecoPriceApplication;
 import de.mateco.integrAMobile.databaseHelpers.DataBaseHandler;
 import de.mateco.integrAMobile.model.Language;
 import de.mateco.integrAMobile.model.LoginPersonModel;
-import de.mateco.integrAMobile.model.WeeklyAgendaModel;
 
 public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPager.OnPageChangeListener
 {
-    private String strDateWeekly = "";
+
     private String strDateToSendWeekly ="";
     SimpleDateFormat readFormat = new SimpleDateFormat("dd.MM.yyyy, E");
     SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -73,13 +64,14 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
     private List<SamplePagerItem> mTabs = new ArrayList<SamplePagerItem>();
     private VisitPlanDailyAdapter adapter;
     private String loginPersonId;
-    private String dateString="";
+    private String strDateToSendAgenda ="";
     private BasicAsyncTaskGetRequest asyncTask, asyncTask1;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
         language = matecoPriceApplication.getLanguage();
         mTabs.add(new SamplePagerItem(
@@ -105,27 +97,142 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        mViewPager = (NonSwipeableViewPager) rootView.findViewById(R.id.viewpager);
+        /*mViewPager = (NonSwipeableViewPager) rootView.findViewById(R.id.viewpager);
         adapter = new VisitPlanDailyAdapter(getChildFragmentManager(), mTabs);
         mViewPager.setAdapter(adapter);
         mViewPager.setOnPageChangeListener(this);
         mViewPager.setOffscreenPageLimit(2);
-
-        int limit = (adapter.getCount() > 1 ? adapter.getCount() - 1 : 1);
-
-        //mViewPager.setOffscreenPageLimit(limit);
-
-        // END_INCLUDE (setup_viewpager)
-
-        // BEGIN_INCLUDE (setup_slidingtablayout)
-        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
-        // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
         mSlidingTabLayout.setOnPageChangeListener(this);
         if(getArguments()!=null) {
             mViewPager.setCurrentItem(2);
+        }
+        else{
+            callAgendaService();
+        }
+        if(mViewPager.getCurrentItem()==0 || mViewPager.getCurrentItem() == 1) {
+            ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelDailyAgenda());
+        }
+        else {
+            ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelWeeklyAgenda());
+        }
+
+        // BEGIN_INCLUDE (tab_colorizer)
+        // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
+        // the tab at the position, and return it's set color
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return mTabs.get(position).getIndicatorColor();
+            }
+
+            @Override
+            public int getDividerColor(int position) {
+                return mTabs.get(position).getDividerColor();
+            }
+        });*/
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
+    {
+        if(rootView == null)
+        {
+            rootView = inflater.inflate(R.layout.fragment_daily_agenda, container, false);
+            super.initializeFragment(rootView);
+        }
+        else
+        {
+            if(mViewPager != null) {
+                matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
+                language = matecoPriceApplication.getLanguage();
+                mSlidingTabLayout.setText(language.getLabelToday(),0);
+                mSlidingTabLayout.setText(language.getLabelOther(),1);
+                mSlidingTabLayout.setText(language.getLabelWeeklyAgenda(),2);
+                if (mViewPager.getCurrentItem() == 0 || mViewPager.getCurrentItem() == 1) {
+                    ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelDailyAgenda());
+                } else {
+                    ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelWeeklyAgenda());
+                }
+            }
+
+        }
+        return rootView;
+
+        //rootView = inflater.inflate(R.layout.temp_under_construction, container, false);
+
+    }
+
+//    @Override
+//    public void onResume() {
+//        matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
+//        language = matecoPriceApplication.getLanguage();
+//        mSlidingTabLayout.setText(language.getLabelToday(), 0);
+//        mSlidingTabLayout.setText(language.getLabelOther(), 1);
+//        mSlidingTabLayout.setText(language.getLabelWeeklyAgenda(), 2);
+//
+//        super.onResume();
+//    }
+
+    @Override
+    public void initializeComponents(View rootView) {
+        super.initializeComponents(rootView);
+
+        getActivity().invalidateOptionsMenu();
+        setHasOptionsMenu(true);
+
+
+
+        db = new DataBaseHandler(getActivity());
+
+        try {
+            if(matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,"").equals(""))
+            {
+                strDateToSendAgenda = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
+                setDateWeely(strDateToSendAgenda);
+            }
+            else{
+                strDateToSendWeekly = matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,"");
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+      /*  compoundButtonAgendaDailyPrevious = (LinearLayout)rootView.findViewById(R.id.compoundButtonAgendaDailyPrevious);
+        compoundButtonAgendaDailyDatePicker = (LinearLayout)rootView.findViewById(R.id.compoundButtonAgendaDailyDatePicker);
+        compoundButtonAgendaDailyNext = (LinearLayout)rootView.findViewById(R.id.compoundButtonAgendaDailyNext);
+        labelAgendaDailyDateSelected = (TextView)rootView.findViewById(R.id.labelAgendaDailyDateSelected);*/
+
+        SimpleDateFormat readFormat = new SimpleDateFormat("dd.MM.yyyy, E");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            strDateToSendAgenda = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
+            LogApp.showLog("date1", strDateToSendAgenda + " date2 " + matecoPriceApplication.getAgendaSelectedDate(DataHelper.AgendaDate, ""));
+            //if(!matecoPriceApplication.getAgendaSelectedDate(DataHelper.AgendaDate, "").equals(strDateToSendAgenda))
+            /*if(getArguments() == null) {
+                callAgendaService();
+            }*/
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        mViewPager = (NonSwipeableViewPager) rootView.findViewById(R.id.viewpager);
+        adapter = new VisitPlanDailyAdapter(getChildFragmentManager(), mTabs);
+        mViewPager.setAdapter(adapter);
+        mViewPager.setOnPageChangeListener(this);
+        mViewPager.setOffscreenPageLimit(2);
+        mSlidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mViewPager);
+        mSlidingTabLayout.setOnPageChangeListener(this);
+        if(getArguments()!=null) {
+            mViewPager.setCurrentItem(2);
+        }
+        else{
+            callAgendaService();
         }
         if(mViewPager.getCurrentItem()==0 || mViewPager.getCurrentItem() == 1) {
             ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelDailyAgenda());
@@ -148,71 +255,10 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                 return mTabs.get(position).getDividerColor();
             }
         });
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
-    {
-        rootView = inflater.inflate(R.layout.fragment_daily_agenda, container, false);
-        //rootView = inflater.inflate(R.layout.temp_under_construction, container, false);
-        super.initializeFragment(rootView);
-        return rootView;
-    }
+        /*if(!strDateToSendAgenda.equals("")) {
 
-//    @Override
-//    public void onResume() {
-//        matecoPriceApplication = (MatecoPriceApplication)getActivity().getApplication();
-//        language = matecoPriceApplication.getLanguage();
-//        mSlidingTabLayout.setText(language.getLabelToday(), 0);
-//        mSlidingTabLayout.setText(language.getLabelOther(), 1);
-//        mSlidingTabLayout.setText(language.getLabelWeeklyAgenda(), 2);
-//
-//        super.onResume();
-//    }
-
-    @Override
-    public void initializeComponents(View rootView) {
-        super.initializeComponents(rootView);
-
-        getActivity().invalidateOptionsMenu();
-        setHasOptionsMenu(true);
-
-
-        db = new DataBaseHandler(getActivity());
-
-        try {
-            if(matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,"").equals(""))
-            {
-                dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
-                setDateWeely(dateString);
-            }
-            else{
-                strDateToSendWeekly = matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,"");
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-      /*  compoundButtonAgendaDailyPrevious = (LinearLayout)rootView.findViewById(R.id.compoundButtonAgendaDailyPrevious);
-        compoundButtonAgendaDailyDatePicker = (LinearLayout)rootView.findViewById(R.id.compoundButtonAgendaDailyDatePicker);
-        compoundButtonAgendaDailyNext = (LinearLayout)rootView.findViewById(R.id.compoundButtonAgendaDailyNext);
-        labelAgendaDailyDateSelected = (TextView)rootView.findViewById(R.id.labelAgendaDailyDateSelected);*/
-
-        SimpleDateFormat readFormat = new SimpleDateFormat("dd.MM.yyyy, E");
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
-            LogApp.showLog("date1",dateString + " date2 " + matecoPriceApplication.getAgendaSelectedDate(DataHelper.AgendaDate, ""));
-            //if(!matecoPriceApplication.getAgendaSelectedDate(DataHelper.AgendaDate, "").equals(dateString))
-                adapterLoad();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        /*if(!dateString.equals("")) {
-
-            setDate(dateString);
+            setDate(strDateToSendAgenda);
         }
         else {
             Log.e("enter","else");
@@ -223,20 +269,6 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
         compoundButtonAgendaDailyNext.setOnClickListener(this);*/
     }
 
-    private void setDate(String dateString)
-    {
-        try
-        {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            Date date = formatter.parse(dateString);
-           // labelAgendaDailyDateSelected.setText(DataHelper.formatDisplayDate(date));
-            //adapterLoad();
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-    }
     private void setDateWeely(String dateString) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -247,18 +279,20 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
         }
     }
 
-    private void adapterLoad()
+    private void callAgendaService()
     {
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
             try {
+                final String finaldate = format.format(readFormat.parse(strDateToSendWeekly));
                 showProgressDialog();
                 final long starTime = System.currentTimeMillis();
                 loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
                 String urlAgendadate = DataHelper.URL_AGENDA_HELPER + "combinedagendalist"
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/mitarbeiter=" + loginPersonId
-                        + "/datum=" + dateString;
+                        + "/datum=" + strDateToSendAgenda
+                        + "/datumweekly=" + finaldate;
                 JsonObjectRequest object = new JsonObjectRequest(Request.Method.GET, urlAgendadate, "", new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -270,57 +304,7 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
                         if(getArguments()!=null) {
                             mViewPager.setCurrentItem(2);
                         }
-                        loadAdapterWeeklyAgenda();
-                        //hideProgressDialog();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //hideProgressDialog();
-                        LogApp.showLog(" error "," response from volley : "+error.toString());
-                        showShortToast(language.getMessageError());
-                    }
-                });
-                MatecoPriceApplication.getInstance().addToRequestQueue(object);
-            }catch (Exception e){
-                //hideProgressDialog();
-                LogApp.showLog(" exception "," exception while calling agenda date");
-            }
-
-        }else {
-            showShortToast(language.getMessageNetworkNotAvailable());
-        }
-    }
-    public void loadAdapterWeeklyAgenda(){
-        if(DataHelper.isNetworkAvailable(getActivity()))
-        {
-            try {
-                loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
-                String urlWeeklyAgenda = DataHelper.URL_AGENDA_HELPER + "agendaweek" //DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_WEEKLY_AGENDA
-                        + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
-                        + "/mitarbeiter=" + loginPersonId
-                        + "/datum=" + strDateToSendWeekly;
-                JsonArrayRequest object = new JsonArrayRequest(Request.Method.GET, urlWeeklyAgenda, "", new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        LogApp.showLog(" agenda data "," response from volley :  time taken : " + response.toString());
-                        if (response.equals("error")) {
-                            showShortToast(language.getMessageError());
-                        }
-                        else if(response.equals(DataHelper.NetworkError)){
-                            showShortToast(language.getMessageNetworkNotAvailable());
-                        }
-                        else
-                        {
-                            try
-                            {
-                                matecoPriceApplication.saveData(DataHelper.WeeklyAgendaData, response.toString());
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-
+                        //loadAdapterWeeklyAgenda();
                         hideProgressDialog();
                     }
                 }, new Response.ErrorListener() {
@@ -341,7 +325,6 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
             showShortToast(language.getMessageNetworkNotAvailable());
         }
     }
-
     @Override
     public void bindEvents(View rootView) {
         super.bindEvents(rootView);
@@ -393,100 +376,17 @@ public class VisitPlanDailyAgendaFragment extends BaseFragment implements ViewPa
 
     @Override
     public void onPageSelected(int position) {
-//        if(position==0 || position==1)
-//            ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelDailyAgenda());
-//        else
-//            ((HomeActivity)getActivity()).getSupportActionBar().setTitle(language.getLabelWeeklyAgenda());
-//        adapter.notifyDataSetChanged();
+        if(position==0 || position==1) {
+            ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelDailyAgenda());
+        }
+        else {
+            ((HomeActivity) getActivity()).getSupportActionBar().setTitle(language.getLabelWeeklyAgenda());
+        }
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
-
-
-
-    /*@Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
-            case R.id.compoundButtonAgendaDailyNext:
-               // addDate(1);
-                break;
-            case R.id.compoundButtonAgendaDailyDatePicker:
-              //  openDatePicker();
-                break;
-            case R.id.compoundButtonAgendaDailyPrevious:
-               // addDate(-1);
-                break;
-        }
-    }
-*/
-    /*private void addDate(int numbersToAdd) {
-        Calendar cal = Calendar.getInstance();
-        try
-        {
-            cal.setTime(formatter.parse(labelAgendaDailyDateSelected.getText().toString()));
-            cal.add(Calendar.DAY_OF_MONTH, numbersToAdd);
-            labelAgendaDailyDateSelected.setText(DataHelper.formatDisplayDate(cal.getTime()));
-            adapterLoad();
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-    }*/
-
-    /*private void openDatePicker()
-    {
-        try
-        {
-            Date today = new Date();
-            Calendar c = Calendar.getInstance();
-            //c.setTime(today);
-            c.setTime(formatter.parse(labelAgendaDailyDateSelected.getText().toString()));
-            DatePickerDialogFragment newFragment = new DatePickerDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt("year", c.get(Calendar.YEAR));
-            args.putInt("month", c.get(Calendar.MONTH));
-            args.putInt("day", c.get(Calendar.DAY_OF_MONTH));
-            newFragment.setArguments(args);
-            *//**
-             * Set Call back to capture selected date
-             *//*
-            newFragment.setCallBack(onFromDate);
-            Log.e("tag", "startDate");
-            newFragment.setMinDate(today);
-            newFragment.show(getActivity().getSupportFragmentManager(), "dateSelected");
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    DatePickerDialog.OnDateSetListener onFromDate = new DatePickerDialog.OnDateSetListener()
-    {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-        {
-            try
-            {
-                monthOfYear += 1;
-                String date = dayOfMonth + "." + monthOfYear + "." + year;
-                String finaldate = DataHelper.formatDisplayDate(formatter.parse(date));
-                Log.e("startDate", finaldate);
-                labelAgendaDailyDateSelected.setText(finaldate);
-                adapterLoad();
-            }
-            catch (ParseException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    };*/
     public void showProgressDialog(){
     progressDialog = new ProgressDialog(getActivity());
     progressDialog.setCancelable(false);

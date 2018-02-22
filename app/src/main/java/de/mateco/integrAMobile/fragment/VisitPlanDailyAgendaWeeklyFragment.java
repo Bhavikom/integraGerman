@@ -10,7 +10,6 @@ import android.graphics.RectF;
 import android.os.Bundle;
 
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.FragmentTransaction;
@@ -45,10 +44,12 @@ import android.widget.TimePicker;
 
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -80,6 +81,7 @@ import de.mateco.integrAMobile.Helper.DelayAutoCompleteTextView;
 import de.mateco.integrAMobile.Helper.GlobalClass;
 import de.mateco.integrAMobile.Helper.LogApp;
 import de.mateco.integrAMobile.Helper.TimePickerDialogFragment;
+import de.mateco.integrAMobile.HomeActivity;
 import de.mateco.integrAMobile.R;
 
 import de.mateco.integrAMobile.adapter.ActivityTopicAdapter;
@@ -115,22 +117,28 @@ import de.mateco.integrAMobile.model.ProjectActivityUpdateModel;
 import de.mateco.integrAMobile.model.ProjectDetailGenerallyModel;
 import de.mateco.integrAMobile.model.ProjectModel;
 import de.mateco.integrAMobile.model.ProjectSearchPagingRequestModel;
-import de.mateco.integrAMobile.model.WeeklyAgendaModel;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTypeListItem;
+import de.mateco.integrAMobile.model_logonsquare.ResponseMainAgenda;
+import de.mateco.integrAMobile.model_logonsquare.WeeklyAgendaListItem;
 import de.mateco.integrAMobile.weekview.DateTimeInterpreter;
 import de.mateco.integrAMobile.weekview.MonthLoader;
 import de.mateco.integrAMobile.weekview.WeekView;
 import de.mateco.integrAMobile.weekview.WeekViewEvent;
 
-public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements WeekView.EventClickListener,MonthLoader.MonthChangeListener,DateTimeInterpreter,WeekView.ScrollListener,CheckBox.OnCheckedChangeListener,View.OnClickListener, TextView.OnEditorActionListener {
+public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements WeekView.EventClickListener,
+        MonthLoader.MonthChangeListener,DateTimeInterpreter,WeekView.ScrollListener,CheckBox.OnCheckedChangeListener,
+        View.OnClickListener, TextView.OnEditorActionListener{
 
+    private String strDateToSendAgenda="";
+    private String strDateToSendWeeklyAgenda = "";
+    boolean isServiceRunning = false;
     final Calendar calendar1 = Calendar.getInstance();
 
     private boolean isAdapterLoad=false;
     private boolean isCallservice=true;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progressDialog ;
     String FOCUSED_EMPLOYEE="employee",FOCUSED_PLACE="place",FOCUSED_MATCHCODE_PROJECT="matccode",FOCUSED_DESCRIPTION="description",
             FOCUSED_TYPE_OF_PROJECT="type_of_project",FOCUSED_ADDRESS="address",FOCUSED_FROM="from",FOCUSED_TO="to";
     String lastFocusedvalueProject="";
@@ -227,8 +235,9 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     private WeekView mWeekView;
     private TextView labelAgendaDailyDateSelected;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    private ArrayList<WeeklyAgendaModel> listOfWeeklyAgenda,listOfWeeklyAgenda1 = new ArrayList<>();
-    private String firstDate = "";
+    private List<WeeklyAgendaListItem> arrayListOfWeeklyAgenda = new ArrayList<>();
+    private List<WeeklyAgendaListItem> arrayListOfWeeklyAgenda1 = new ArrayList<>();
+
     private boolean flag = false,isViewShown;
     private EventAdapter adapter;
     private int pos=0;
@@ -242,16 +251,22 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_agenda_weekly, container, false);
-        LogApp.showLog(" on createview"," fragment life : ");
-        super.initializeFragment(rootView);
+
+        if(rootView == null)
+        {
+            rootView = inflater.inflate(R.layout.fragment_agenda_weekly, container, false);
+            super.initializeFragment(rootView);
+        }
+        else
+        {
+        }
         return rootView;
     }
 
     @Override
     public void initializeComponents(View rootView) {
         super.initializeComponents(rootView);
-
+        progressDialog = new ProgressDialog(getActivity());
         matecoPriceApplication = (MatecoPriceApplication) getActivity().getApplication();
         language = matecoPriceApplication.getLanguage();
         db = new DataBaseHandler(getActivity());
@@ -265,31 +280,44 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         checkBoxRealizedActivities.setOnCheckedChangeListener(this);
         buttonCurrentweek.setOnClickListener(this);
 
-        adapter = new EventAdapter(getActivity(),listOfWeeklyAgenda1);
+        adapter = new EventAdapter(getActivity(), arrayListOfWeeklyAgenda1);
 
         try {
             if(matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,"").equals(""))
             {
                 dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
                 setDate(dateString);
+
+                final Date date1 = format.parse(dateString);
+                calendar1.setTime(date1);
+
             }
-            else
+            else{
                 labelAgendaDailyDateSelected.setText(matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate,""));
+                strDateToSendWeeklyAgenda = labelAgendaDailyDateSelected.getText().toString();
+                final String finaldate = format.format(readFormat.parse(strDateToSendWeeklyAgenda));
+                matecoPriceApplication.saveData(DataHelper.WeeklyAgendaDate, strDateToSendWeeklyAgenda);
+                final Date date1 = format.parse(finaldate);
+                calendar1.setTime(date1);
+            }
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        try {
+            strDateToSendAgenda = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
+        }catch (Exception e){
+        }
+
         mWeekView = (WeekView) rootView.findViewById(R.id.weekView);
         mWeekView.setOnEventClickListener(this);
         mWeekView.setMonthChangeListener(this);
         mWeekView.setDateTimeInterpreter(this);
-        listOfWeeklyAgenda = new ArrayList<>();
+        arrayListOfWeeklyAgenda = new ArrayList<>();
 
-        getWeeklyData();
-        if(!isAdapterLoad) {
-            //adapterLoad();
-            isAdapterLoad=true;
+        if(HomeActivity.isWeeklyCalled){
+            callWeeklyAgendaService();
         }
-
         getActivity().invalidateOptionsMenu();
         setHasOptionsMenu(true);
     }
@@ -306,47 +334,9 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         LogApp.showLog(" user visible hint "," fragment life : "+isVisibleToUser);
         if(isVisibleToUser){
             if (getView() != null) {
-                //adapterLoad();
-                //isAdapterLoad=true;
+                getWeeklyDataOffline();
             }
         }
-        /*else if(!isAdapterLoad){
-            adapterLoad();
-        }*/
-        /*if (isVisibleToUser) {
-            isViewShown = true;
-        } else {
-            isViewShown = false;
-        }
-        if (getView() != null) {
-            if(isViewShown){
-                adapterLoad();
-            }
-            //isViewShown = true;
-            // fetchdata() contains logic to show data when page is selected mostly asynctask to fill the data
-
-        } else {
-            //isViewShown = false;
-        }*/
-    }
-    private void getWeeklyData(){
-       String result = matecoPriceApplication.getData(DataHelper.WeeklyAgendaData,"");
-
-       if(!TextUtils.isEmpty(result)){
-           try
-           {
-               listOfWeeklyAgenda.clear();
-               WeeklyAgendaModel.extractFromJson(result, listOfWeeklyAgenda);
-               mWeekView.notifyDatasetChanged();
-               calendar1.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
-
-               mWeekView.goToDate(calendar1);
-               mWeekView.goToHour(7);
-           } catch (Exception ex) {
-               ex.printStackTrace();
-           }
-       }
-
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -366,7 +356,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 {
                     dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
                     setDate(dateString);
-                    adapterLoad();
+                    callWeeklyAgendaService();
                 }
                 catch (ParseException e) {
                     e.printStackTrace();
@@ -377,76 +367,73 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         }
     }
 
-    private void addDate(int numbersToAdd) {
-        Calendar cal = Calendar.getInstance();
-        try {
-            cal.setTime(formatter.parse(labelAgendaDailyDateSelected.getText().toString()));
-            cal.add(Calendar.DAY_OF_MONTH, numbersToAdd);
-            labelAgendaDailyDateSelected.setText(DataHelper.formatDisplayDate(cal.getTime()));
-            adapterLoad();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void setDate(String dateString) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             Date date = formatter.parse(dateString);
             labelAgendaDailyDateSelected.setText(DataHelper.formatDisplayDate(date));
-            firstDate = labelAgendaDailyDateSelected.getText().toString();
+            strDateToSendWeeklyAgenda = labelAgendaDailyDateSelected.getText().toString();
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
-    private void adapterLoad() {
+    private void callWeeklyAgendaService() {
 
         try {
-            firstDate = labelAgendaDailyDateSelected.getText().toString();
+            LogApp.showLog(" 1111111111 "," call weekly agend servcie ");
+            strDateToSendWeeklyAgenda = labelAgendaDailyDateSelected.getText().toString();
             String date = labelAgendaDailyDateSelected.getText().toString();
             final String finaldate = format.format(readFormat.parse(date));
-            matecoPriceApplication.saveData(DataHelper.WeeklyAgendaDate, firstDate);
+            matecoPriceApplication.saveData(DataHelper.WeeklyAgendaDate, strDateToSendWeeklyAgenda);
             final Date date1 = format.parse(finaldate);
             calendar1.setTime(date1);
             String loginPersonId = matecoPriceApplication.getLoginUser(DataHelper.LoginPerson, new LoginPersonModel().toString()).get(0).getUserNumber();
 
             if (DataHelper.isNetworkAvailable(getActivity())) {
-                BasicAsyncTaskGetRequest.OnAsyncResult onAsyncResult = new BasicAsyncTaskGetRequest.OnAsyncResult() {
+                isServiceRunning=true;
+
+                final String finaldateTosend = format.format(readFormat.parse(strDateToSendWeeklyAgenda));
+                String urlWeeklyAgenda = DataHelper.URL_AGENDA_HELPER + "combinedagendalist" //DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_WEEKLY_AGENDA
+                        + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
+                        + "/mitarbeiter=" + loginPersonId
+                        + "/datum=" + strDateToSendAgenda
+                        + "/datumweekly=" + finaldateTosend;
+                showProgressDialog();
+                JsonObjectRequest object = new JsonObjectRequest(Request.Method.GET, urlWeeklyAgenda, "", new Response.Listener<JSONObject>() {
                     @Override
-                    public void OnAsynResult(String result) {
-                        if (result.equals("error")) {
+                    public void onResponse(JSONObject response) {
+                        isServiceRunning=false;
+                        LogApp.showLog(" response  "," call weekly agend servcie "+response.toString());
+                        if (response.toString().equals("error")) {
+                            hideProgressDialog();
                             showShortToast(language.getMessageError());
                         }
-                        else if(result.equals(DataHelper.NetworkError)){
+                        else if(response.toString().equals(DataHelper.NetworkError)){
+                            hideProgressDialog();
                             showShortToast(language.getMessageNetworkNotAvailable());
                         }
                         else
                         {
-                            try
-                            {
-                                listOfWeeklyAgenda.clear();
-                                WeeklyAgendaModel.extractFromJson(result, listOfWeeklyAgenda);
-                                mWeekView.notifyDatasetChanged();
-                                calendar1.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
-
-                                mWeekView.goToDate(calendar1);
-                                mWeekView.goToHour(7);
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
+                            matecoPriceApplication.saveData(DataHelper.StoreAgenda, response.toString());
+                            getWeeklyDataOffline();
+                            hideProgressDialog();
                         }
                     }
-                };
-
-                String url = DataHelper.URL_AGENDA_HELPER + "agendaweek" //DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.GET_WEEKLY_AGENDA
-                        + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
-                        + "/mitarbeiter=" + loginPersonId
-                        + "/datum=" + finaldate;
-
-                BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
-                asyncTask.execute();
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        isServiceRunning=false;
+                        LogApp.showLog(" errrrrrrrrrrrror "," call weekly agend servcie "+error.toString());
+                        hideProgressDialog();
+                        LogApp.showLog(" error "," response from volley : "+error.toString());
+                        showShortToast(language.getMessageError());
+                    }
+                });
+                MatecoPriceApplication.getInstance().addToRequestQueue(object);
             } else {
+                isServiceRunning=false;
                 showShortToast(language.getMessageNetworkNotAvailable());
             }
 
@@ -456,44 +443,49 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             ex.printStackTrace();
         }
     }
+    public void getWeeklyDataOffline(){
+        if(matecoPriceApplication != null) {
+            String response = matecoPriceApplication.getData(DataHelper.StoreAgenda, "");
+            if (!TextUtils.isEmpty(response)) {
+                ResponseMainAgenda responseMainAgenda = new ResponseMainAgenda();
+                try {
+                    arrayListOfWeeklyAgenda.clear();
 
-    private void openDatePicker() {
-        try {
-            Date today = new Date();
-            Calendar c = Calendar.getInstance();
-            //c.setTime(today);
-            c.setTime(formatter.parse(labelAgendaDailyDateSelected.getText().toString()));
-            DatePickerDialogFragment newFragment = new DatePickerDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt("year", c.get(Calendar.YEAR));
-            args.putInt("month", c.get(Calendar.MONTH));
-            args.putInt("day", c.get(Calendar.DAY_OF_MONTH));
-            newFragment.setArguments(args);
-            /**
-             * Set Call back to capture selected date
-             */
-            newFragment.setCallBack(onFromDate);
-            newFragment.show(getActivity().getSupportFragmentManager(), "dateSelected");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
+                    responseMainAgenda = LoganSquare.parse(response.toString(), ResponseMainAgenda.class);
+                    arrayListOfWeeklyAgenda = responseMainAgenda.getWeeklyAgendaList();
+                    calendar1.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                    /*try {
+                        if (matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate, "").equals("")) {
+                            dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(new Date())));
+                            setDate(dateString);
 
-    DatePickerDialog.OnDateSetListener onFromDate = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            try {
-                monthOfYear += 1;
-                String date = dayOfMonth + "." + monthOfYear + "." + year;
-                String finaldate = DataHelper.formatDisplayDate(formatter.parse(date));
-                labelAgendaDailyDateSelected.setText(finaldate);
-                adapterLoad();
-            } catch (ParseException e) {
-                e.printStackTrace();
+                            final Date date1 = format.parse(dateString);
+                            calendar1.setTime(date1);
+
+                        } else {
+                            labelAgendaDailyDateSelected.setText(matecoPriceApplication.getData(DataHelper.WeeklyAgendaDate, ""));
+                            strDateToSendWeeklyAgenda = labelAgendaDailyDateSelected.getText().toString();
+                            final String finaldate = format.format(readFormat.parse(strDateToSendWeeklyAgenda));
+                            matecoPriceApplication.saveData(DataHelper.WeeklyAgendaDate, strDateToSendWeeklyAgenda);
+                            final Date date1 = format.parse(finaldate);
+                            calendar1.setTime(date1);
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }*/
+                    mWeekView.goToDate(calendar1);
+                    mWeekView.goToHour(7);
+
+                    mWeekView.notifyDatasetChanged();
+                } catch (Exception e) {
+                    LogApp.showLog(" weekly agenda ", "exception while parse weekly agenda : " + e.toString());
+                }
+
             }
         }
-    };
 
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_menu, menu);
@@ -534,7 +526,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF rectF) {
-        listOfWeeklyAgenda1.clear();
+        arrayListOfWeeklyAgenda1.clear();
         String datum = "";
         Calendar start = event.getStartTime();
         String startTime = manageTime(start.get(Calendar.HOUR_OF_DAY) + "", start.get(Calendar.MINUTE) + "");
@@ -549,21 +541,21 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(int i=0;i<listOfWeeklyAgenda.size();i++)
+        for(int i = 0; i< arrayListOfWeeklyAgenda.size(); i++)
         {
-            if((event.getName().equals(listOfWeeklyAgenda.get(i).getName1()) || event.getName().equals(listOfWeeklyAgenda.get(i).getAktivitaetstytp()))
-                    && (listOfWeeklyAgenda.get(i).getDatum().equals(datum)))
+            if((event.getName().equals(arrayListOfWeeklyAgenda.get(i).getName1()) || event.getName().equals(arrayListOfWeeklyAgenda.get(i).getAktivitaetstytp()))
+                    && (arrayListOfWeeklyAgenda.get(i).getDatum().equals(datum)))
             {
-                listDate = listOfWeeklyAgenda.get(i).getDatum();
+                listDate = arrayListOfWeeklyAgenda.get(i).getDatum();
             }
         }
-        for(int i=0;i<listOfWeeklyAgenda.size();i++)
+        for(int i = 0; i< arrayListOfWeeklyAgenda.size(); i++)
         {
-            if(!listOfWeeklyAgenda.get(i).getStartzeit().equals("")) {
-                if ((listOfWeeklyAgenda.get(i).getDatum().equals(listDate) &&
-                        listOfWeeklyAgenda.get(i).getStartzeit().equals(startTime) && listOfWeeklyAgenda.get(i).getEndzeit().equals(endTime))
-                        || (listOfWeeklyAgenda.get(i).getDatum().equals(listDate) && listOfWeeklyAgenda.get(i).getStartzeit().substring(0, 2).equals(startHour)))
-                    listOfWeeklyAgenda1.add(listOfWeeklyAgenda.get(i));
+            if(!arrayListOfWeeklyAgenda.get(i).getStartzeit().equals("")) {
+                if ((arrayListOfWeeklyAgenda.get(i).getDatum().equals(listDate) &&
+                        arrayListOfWeeklyAgenda.get(i).getStartzeit().equals(startTime) && arrayListOfWeeklyAgenda.get(i).getEndzeit().equals(endTime))
+                        || (arrayListOfWeeklyAgenda.get(i).getDatum().equals(listDate) && arrayListOfWeeklyAgenda.get(i).getStartzeit().substring(0, 2).equals(startHour)))
+                    arrayListOfWeeklyAgenda1.add(arrayListOfWeeklyAgenda.get(i));
             }
         }
         showEventDialog();
@@ -613,7 +605,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 if(pos >= 0)
                 {
 
-                    if (!listOfWeeklyAgenda1.get(pos).getKontakt().equals(""))
+                    if (!arrayListOfWeeklyAgenda1.get(pos).getKontakt().equals(""))
 
                         // this will go in customer activity
                         getCustomerDetails(pos);
@@ -631,7 +623,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 ad.dismiss();
             }
         });
-        if(listOfWeeklyAgenda1.size() > 0)
+        if(arrayListOfWeeklyAgenda1.size() > 0)
         {
             ad.show();
         }
@@ -645,19 +637,19 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         SimpleDateFormat formatterWithDateOnly = new SimpleDateFormat("dd-MM-yyyy");
         newMonth--;
         if (checkBoxRealizedActivities.isChecked()) {
-            for (int i = 0; i < listOfWeeklyAgenda.size(); i++) {
+            for (int i = 0; i < arrayListOfWeeklyAgenda.size(); i++) {
                 try {
                     Calendar calendar = Calendar.getInstance();
                     Calendar startTime = Calendar.getInstance();
-                    String startDateTime = listOfWeeklyAgenda.get(i).getDatum() + " " + listOfWeeklyAgenda.get(i).getStartzeit();
+                    String startDateTime = arrayListOfWeeklyAgenda.get(i).getDatum() + " " + arrayListOfWeeklyAgenda.get(i).getStartzeit();
 
                     Date d = formatterWithTime.parse(startDateTime);
                     calendar.setTime(d);
 
                     if (calendar.get(Calendar.MONTH) == newMonth) {
 
-                        if (listOfWeeklyAgenda.get(i).getStartzeit().equals("")) {
-                            startTime.setTime(formatterWithDateOnly.parse(listOfWeeklyAgenda.get(i).getDatum()));
+                        if (arrayListOfWeeklyAgenda.get(i).getStartzeit().equals("")) {
+                            startTime.setTime(formatterWithDateOnly.parse(arrayListOfWeeklyAgenda.get(i).getDatum()));
                         } else {
                             Calendar cal = Calendar.getInstance();
                             Date date = formatterWithTime.parse(startDateTime);
@@ -671,10 +663,10 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                         }
 
                         Calendar endTime = (Calendar) startTime.clone();
-                        String endDateTime = listOfWeeklyAgenda.get(i).getDatum() + " " + listOfWeeklyAgenda.get(i).getEndzeit();
+                        String endDateTime = arrayListOfWeeklyAgenda.get(i).getDatum() + " " + arrayListOfWeeklyAgenda.get(i).getEndzeit();
 
-                        if (listOfWeeklyAgenda.get(i).getEndzeit().equals("")) {
-                            endTime.setTime(formatterWithDateOnly.parse(listOfWeeklyAgenda.get(i).getDatum()));
+                        if (arrayListOfWeeklyAgenda.get(i).getEndzeit().equals("")) {
+                            endTime.setTime(formatterWithDateOnly.parse(arrayListOfWeeklyAgenda.get(i).getDatum()));
                         } else {
                             Calendar cal = Calendar.getInstance();
                             Date date = formatterWithTime.parse(endDateTime);
@@ -689,25 +681,25 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
                         WeekViewEvent event = new WeekViewEvent(i, getEventTitle(i), startTime, endTime);
 
-                        if (listOfWeeklyAgenda.get(i).getRealisiert().equals("False") && listOfWeeklyAgenda.get(i).getFest().equals("False")) {
+                        if (arrayListOfWeeklyAgenda.get(i).getRealisiert().equals("False") && arrayListOfWeeklyAgenda.get(i).getFest().equals("False")) {
                             event.setColor(getResources().getColor(R.color.lightRed));
                             for (int j = 0; j < i; j++) {
-                                if (listOfWeeklyAgenda.get(j).getDatum().equals(listOfWeeklyAgenda.get(i).getDatum()) &&
-                                        listOfWeeklyAgenda.get(j).getStartzeit().equals(listOfWeeklyAgenda.get(i).getStartzeit()) &&
-                                        listOfWeeklyAgenda.get(j).getEndzeit().equals(listOfWeeklyAgenda.get(i).getEndzeit())) {
+                                if (arrayListOfWeeklyAgenda.get(j).getDatum().equals(arrayListOfWeeklyAgenda.get(i).getDatum()) &&
+                                        arrayListOfWeeklyAgenda.get(j).getStartzeit().equals(arrayListOfWeeklyAgenda.get(i).getStartzeit()) &&
+                                        arrayListOfWeeklyAgenda.get(j).getEndzeit().equals(arrayListOfWeeklyAgenda.get(i).getEndzeit())) {
                                     event.setColor(getResources().getColor(R.color.yellow));
                                 }
                             }
-                        } else if (listOfWeeklyAgenda.get(i).getRealisiert().equals("False") && listOfWeeklyAgenda.get(i).getFest().equals("True")) {
+                        } else if (arrayListOfWeeklyAgenda.get(i).getRealisiert().equals("False") && arrayListOfWeeklyAgenda.get(i).getFest().equals("True")) {
                             event.setColor(getResources().getColor(R.color.red));
                             for (int j = 0; j < i; j++) {
-                                if (listOfWeeklyAgenda.get(j).getDatum().equals(listOfWeeklyAgenda.get(i).getDatum()) &&
-                                        listOfWeeklyAgenda.get(j).getStartzeit().equals(listOfWeeklyAgenda.get(i).getStartzeit()) &&
-                                        listOfWeeklyAgenda.get(j).getEndzeit().equals(listOfWeeklyAgenda.get(i).getEndzeit())) {
+                                if (arrayListOfWeeklyAgenda.get(j).getDatum().equals(arrayListOfWeeklyAgenda.get(i).getDatum()) &&
+                                        arrayListOfWeeklyAgenda.get(j).getStartzeit().equals(arrayListOfWeeklyAgenda.get(i).getStartzeit()) &&
+                                        arrayListOfWeeklyAgenda.get(j).getEndzeit().equals(arrayListOfWeeklyAgenda.get(i).getEndzeit())) {
                                     event.setColor(getResources().getColor(R.color.yellow));
                                 }
                             }
-                        } else if (listOfWeeklyAgenda.get(i).getRealisiert().equals("True")) {
+                        } else if (arrayListOfWeeklyAgenda.get(i).getRealisiert().equals("True")) {
                             event.setColor(getResources().getColor(R.color.cyan));
                         } else {
                             event.setColor(getResources().getColor(R.color.ripple_material_dark));
@@ -723,20 +715,20 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         }
         else
         {
-            for (int i = 0; i < listOfWeeklyAgenda.size(); i++) {
-                if(listOfWeeklyAgenda.get(i).getRealisiert().equals("False")){
+            for (int i = 0; i < arrayListOfWeeklyAgenda.size(); i++) {
+                if(arrayListOfWeeklyAgenda.get(i).getRealisiert().equals("False")){
                     try {
                         Calendar calendar = Calendar.getInstance();
                         Calendar startTime = Calendar.getInstance();
-                        String startDateTime = listOfWeeklyAgenda.get(i).getDatum() + " " + listOfWeeklyAgenda.get(i).getStartzeit();
+                        String startDateTime = arrayListOfWeeklyAgenda.get(i).getDatum() + " " + arrayListOfWeeklyAgenda.get(i).getStartzeit();
 
                         Date d = formatterWithTime.parse(startDateTime);
                         calendar.setTime(d);
 
                         if (calendar.get(Calendar.MONTH) == newMonth) {
 
-                            if (listOfWeeklyAgenda.get(i).getStartzeit().equals("")) {
-                                startTime.setTime(formatterWithDateOnly.parse(listOfWeeklyAgenda.get(i).getDatum()));
+                            if (arrayListOfWeeklyAgenda.get(i).getStartzeit().equals("")) {
+                                startTime.setTime(formatterWithDateOnly.parse(arrayListOfWeeklyAgenda.get(i).getDatum()));
                             } else {
                                 Calendar cal = Calendar.getInstance();
                                 Date date = formatterWithTime.parse(startDateTime);
@@ -750,10 +742,10 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                             }
 
                             Calendar endTime = (Calendar) startTime.clone();
-                            String endDateTime = listOfWeeklyAgenda.get(i).getDatum() + " " + listOfWeeklyAgenda.get(i).getEndzeit();
+                            String endDateTime = arrayListOfWeeklyAgenda.get(i).getDatum() + " " + arrayListOfWeeklyAgenda.get(i).getEndzeit();
 
-                            if (listOfWeeklyAgenda.get(i).getEndzeit().equals("")) {
-                                endTime.setTime(formatterWithDateOnly.parse(listOfWeeklyAgenda.get(i).getDatum()));
+                            if (arrayListOfWeeklyAgenda.get(i).getEndzeit().equals("")) {
+                                endTime.setTime(formatterWithDateOnly.parse(arrayListOfWeeklyAgenda.get(i).getDatum()));
                             } else {
                                 Calendar cal = Calendar.getInstance();
                                 Date date = formatterWithTime.parse(endDateTime);
@@ -768,25 +760,25 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
                             WeekViewEvent event = new WeekViewEvent(i, getEventTitle(i), startTime, endTime);
 
-                            if (listOfWeeklyAgenda.get(i).getRealisiert().equals("False") && listOfWeeklyAgenda.get(i).getFest().equals("False")) {
+                            if (arrayListOfWeeklyAgenda.get(i).getRealisiert().equals("False") && arrayListOfWeeklyAgenda.get(i).getFest().equals("False")) {
                                 event.setColor(getResources().getColor(R.color.lightRed));
                                 for (int j = 0; j < i; j++) {
-                                    if (listOfWeeklyAgenda.get(j).getDatum().equals(listOfWeeklyAgenda.get(i).getDatum()) &&
-                                            listOfWeeklyAgenda.get(j).getStartzeit().equals(listOfWeeklyAgenda.get(i).getStartzeit()) &&
-                                            listOfWeeklyAgenda.get(j).getEndzeit().equals(listOfWeeklyAgenda.get(i).getEndzeit())) {
+                                    if (arrayListOfWeeklyAgenda.get(j).getDatum().equals(arrayListOfWeeklyAgenda.get(i).getDatum()) &&
+                                            arrayListOfWeeklyAgenda.get(j).getStartzeit().equals(arrayListOfWeeklyAgenda.get(i).getStartzeit()) &&
+                                            arrayListOfWeeklyAgenda.get(j).getEndzeit().equals(arrayListOfWeeklyAgenda.get(i).getEndzeit())) {
                                         event.setColor(getResources().getColor(R.color.yellow));
                                     }
                                 }
-                            } else if (listOfWeeklyAgenda.get(i).getRealisiert().equals("False") && listOfWeeklyAgenda.get(i).getFest().equals("True")) {
+                            } else if (arrayListOfWeeklyAgenda.get(i).getRealisiert().equals("False") && arrayListOfWeeklyAgenda.get(i).getFest().equals("True")) {
                                 event.setColor(getResources().getColor(R.color.red));
                                 for (int j = 0; j < i; j++) {
-                                    if (listOfWeeklyAgenda.get(j).getDatum().equals(listOfWeeklyAgenda.get(i).getDatum()) &&
-                                            listOfWeeklyAgenda.get(j).getStartzeit().equals(listOfWeeklyAgenda.get(i).getStartzeit()) &&
-                                            listOfWeeklyAgenda.get(j).getEndzeit().equals(listOfWeeklyAgenda.get(i).getEndzeit())) {
+                                    if (arrayListOfWeeklyAgenda.get(j).getDatum().equals(arrayListOfWeeklyAgenda.get(i).getDatum()) &&
+                                            arrayListOfWeeklyAgenda.get(j).getStartzeit().equals(arrayListOfWeeklyAgenda.get(i).getStartzeit()) &&
+                                            arrayListOfWeeklyAgenda.get(j).getEndzeit().equals(arrayListOfWeeklyAgenda.get(i).getEndzeit())) {
                                         event.setColor(getResources().getColor(R.color.yellow));
                                     }
                                 }
-                            } else if (listOfWeeklyAgenda.get(i).getRealisiert().equals("True")) {
+                            } else if (arrayListOfWeeklyAgenda.get(i).getRealisiert().equals("True")) {
                                 event.setColor(getResources().getColor(R.color.cyan));
                             } else {
                                 event.setColor(getResources().getColor(R.color.lightRed));
@@ -806,10 +798,10 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
     private String getEventTitle(int i) {
         String name = "";
-        if(listOfWeeklyAgenda.get(i).getName1().equals("") || listOfWeeklyAgenda.get(i).getName1()==null)
-            name = listOfWeeklyAgenda.get(i).getAktivitaetstytp();
+        if(arrayListOfWeeklyAgenda.get(i).getName1().equals("") || arrayListOfWeeklyAgenda.get(i).getName1()==null)
+            name = arrayListOfWeeklyAgenda.get(i).getAktivitaetstytp();
         else
-            name = listOfWeeklyAgenda.get(i).getName1();
+            name = arrayListOfWeeklyAgenda.get(i).getName1();
         return name;
     }
 
@@ -829,51 +821,13 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
     @Override
     public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
-
-        /*if(calendar.get(Calendar.DAY_OF_WEEK)!=Calendar.MONDAY)
-        {
-            mWeekView.setXScrollingSpeed(0);
-            try {
-                Date date = readFormat.parse(firstDate);
-                cal2.setTime(date);
-                if(cal1.getTimeInMillis()<calendar.getTimeInMillis())
-                {
-                    if(cal2.get(Calendar.DAY_OF_WEEK)==Calendar.MONDAY)
-                        cal2.add(Calendar.DATE,7);
-                    else
-                        cal2.add(Calendar.DATE,6);
-                }
-                else
-                {
-                    if(cal2.get(Calendar.DAY_OF_WEEK)==Calendar.MONDAY)
-                        cal2.add(Calendar.DATE,-7);
-                    else
-                        cal2.add(Calendar.DATE,-6);
-                }
-
-                String dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(cal2.getTime())));
-                date = format.parse(dateString);
-                labelAgendaDailyDateSelected.setText(DataHelper.formatDisplayDate(date));
-                if(flag)
-                {
-                    flag = false;
-                    adapterLoad();
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            cal1 = (Calendar)calendar.clone();
-        }*/
         Calendar cal = Calendar.getInstance();
         try {
             String dateString = format.format(readFormat.parse(DataHelper.formatDisplayDate(calendar.getTime())));
             if (!dateString.equals("")) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 Date date = formatter.parse(dateString);
-                Date date1 = readFormat.parse(firstDate);
+                Date date1 = readFormat.parse(strDateToSendWeeklyAgenda);
                 cal.setTime(date1);
                 long diff = calendar.getTimeInMillis() - cal.getTimeInMillis();
                 long days = diff / (24 * 60 * 60 * 1000);
@@ -883,7 +837,9 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     if(flag)
                     {
                         flag = false;
-                        adapterLoad();
+                        //if(!isServiceRunning) {
+                            callWeeklyAgendaService();
+                        //}
                     }
                 }
             }
@@ -951,7 +907,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("WeeklyAgendaSelectedModel", new Gson().toJson(listOfWeeklyAgenda1.get(pos)));
+                                bundle.putString("WeeklyAgendaSelectedModel", new Gson().toJson(arrayListOfWeeklyAgenda1.get(pos)));
                                 dialog.dismiss();
                                 Fragment fragment = new CustomerActivityFragment();
                                 fragment.setArguments(bundle);
@@ -972,7 +928,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                 String url = DataHelper.URL_AGENDA_HELPER + "agendacustomershow" //+ DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.AGENDA_CUSTOMER_SHOW
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
                         + "/fieldname=" + "Kontakt"
-                        + "/value=" + listOfWeeklyAgenda1.get(selectedIndex).getKontakt();
+                        + "/value=" + arrayListOfWeeklyAgenda1.get(selectedIndex).getKontakt();
                 BasicAsyncTaskGetRequest asyncTask = new BasicAsyncTaskGetRequest(url, onAsyncResult, getActivity(), true);
                 asyncTask.execute();
             }
@@ -985,10 +941,10 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         else
         {
             showShortToast(language.getMessageNetworkNotAvailable());
-            if(db.isCustomerAvailable(listOfWeeklyAgenda1.get(selectedIndex).getKontakt()))
+            if(db.isCustomerAvailable(arrayListOfWeeklyAgenda1.get(selectedIndex).getKontakt()))
             {
                 Gson gson = new Gson();
-                CustomerDatabaseModel customerDatabaseModel = db.getCustomer(listOfWeeklyAgenda1.get(selectedIndex).getKontakt());
+                CustomerDatabaseModel customerDatabaseModel = db.getCustomer(arrayListOfWeeklyAgenda1.get(selectedIndex).getKontakt());
                 matecoPriceApplication.saveLoadedCustomer(DataHelper.LoadedCustomer, gson.toJson(customerDatabaseModel.getCustomerModel()));
 
                 ArrayList<ContactPersonModel> listOfContactPersonList = new ArrayList<>();
@@ -1036,7 +992,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             }
         }
     }
-    private void getCustomerDetails2(int selectedIndex, final WeeklyAgendaModel weekModel)
+    private void getCustomerDetails2(int selectedIndex, final WeeklyAgendaListItem weekModel)
     {
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
@@ -1221,7 +1177,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
 
 
-                                WeeklyAgendaModel model = listOfWeeklyAgenda1.get(selectedIndex);
+                                WeeklyAgendaListItem model = arrayListOfWeeklyAgenda1.get(selectedIndex);
 
                                 showActivityDialog(selectedIndex,model);
                             }
@@ -1229,11 +1185,11 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                     }
                 };
                 String projectId="";
-                if(listOfWeeklyAgenda1.get(selectedIndex).getProjekt().equalsIgnoreCase("0")){
-                    projectId=listOfWeeklyAgenda1.get(selectedIndex).getProjekt();
+                if(arrayListOfWeeklyAgenda1.get(selectedIndex).getProjekt().equalsIgnoreCase("0")){
+                    projectId= arrayListOfWeeklyAgenda1.get(selectedIndex).getProjekt();
                 }
                 else {
-                    projectId=listOfWeeklyAgenda1.get(selectedIndex).getProjekt();
+                    projectId= arrayListOfWeeklyAgenda1.get(selectedIndex).getProjekt();
                 }
                 String url = DataHelper.URL_AGENDA_HELPER + "agendaprojectlistshow" //+ DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.AGENDA_PROJECT_LIST_SHOW
                         + "/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")
@@ -1259,7 +1215,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         mWeekView.notifyDatasetChanged();
     }
-    private void showActivityDialog(int pos, final WeeklyAgendaModel weekModel)
+    private void showActivityDialog(int pos, final WeeklyAgendaListItem weekModel)
     {
         activityDialog = showCustomDialog2(R.layout.project_activity_detail2,"");
         buttonDialogAddTradeCancel = (Button) activityDialog.findViewById(R.id.buttonDialogAddTradeCancel);
@@ -1351,7 +1307,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         boolean isActivityTopicSelected = false;
         for(int i = 0; i < listOfActivityTopic.size(); i++)
         {
-            if(String.valueOf(weekModel.getAktThema()).equals(listOfActivityTopic.get(i).getAktthema()))
+            if(String.valueOf(weekModel.getAktivitaetstytp()).equals(listOfActivityTopic.get(i).getAktthema()))
             {
                 spinnerProjectActivityActivityTopic.setSelection(i + 1);
                 selectedActivityTopicModel = listOfActivityTopic.get(i);
@@ -1599,7 +1555,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
 
         activityDialog.show();
     }
-    private void selectCustomerActivityAccordingToSelectionBundleOrDefault(WeeklyAgendaModel weekmodel)
+    private void selectCustomerActivityAccordingToSelectionBundleOrDefault(WeeklyAgendaListItem weekmodel)
     {
         selectedActivity = new CustomerActivityModel();
         selectedCustomerOfferModel = new CustomerOfferModel();
@@ -1976,7 +1932,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
             showShortToast(language.getMessageNetworkNotAvailable());
         }
     }*/
-    private void updateProjectActivityInfo(WeeklyAgendaModel weekModel)
+    private void updateProjectActivityInfo(WeeklyAgendaListItem weekModel)
     {
         String activityType = null;
         if(selectedActivityTypeModel != null)
@@ -2133,12 +2089,12 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
                             }
                             if(project.equalsIgnoreCase("-1")){
                                 activityDialog.dismiss();
-                                adapterLoad();
+                                callWeeklyAgendaService();
 
                             }
                             else{
                                 activityDialog.dismiss();
-                                adapterLoad();
+                                callWeeklyAgendaService();
                             }
                             //matecoPriceApplication.saveData(DataHelper.LoadedProjectDetailActivityInfo, result);
                             //listOfLoadedProjectActivity.clear();
@@ -2605,7 +2561,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         projectDialog.show();
     }
 
-    public void showCustomerDialog(final WeeklyAgendaModel weekModel)
+    public void showCustomerDialog(final WeeklyAgendaListItem weekModel)
     {
         final Dialog dialog = showCustomDialog(R.layout.fragment_customer_search2, language.getLabelSearch());
         listCustomerSearchResult = (ListView)dialog.findViewById(R.id.listCustomerSearchResult);
@@ -3715,6 +3671,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         }
         return false;
     }
+
     public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable {
 
         private static final int MAX_RESULTS = 10;
@@ -4036,7 +3993,7 @@ public class VisitPlanDailyAgendaWeeklyFragment extends BaseFragment implements 
         }
     }
     public void showProgressDialog(){
-        progressDialog = new ProgressDialog(getActivity());
+
         progressDialog.setCancelable(false);
         progressDialog.setTitle(language.getMessageWaitWhileLoading());
         progressDialog.setMessage(language.getMessageWaitWhileLoading());

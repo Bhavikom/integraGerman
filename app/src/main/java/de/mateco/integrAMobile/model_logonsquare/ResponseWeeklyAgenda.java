@@ -5,10 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
-import org.greenrobot.greendao.annotation.Generated;
 
 @JsonObject
-public class TermineItem{
+public class ResponseWeeklyAgenda {
 
 	@SerializedName("Matchcode")
 	@JsonField(name ="Matchcode")
@@ -28,7 +27,7 @@ public class TermineItem{
 
 	@SerializedName("Ansprechpartner")
 	@JsonField(name ="Ansprechpartner")
-	private List<String> ansprechpartner;
+	private List<Object> ansprechpartner;
 
 	@SerializedName("Notiz")
 	@JsonField(name ="Notiz")
@@ -146,11 +145,11 @@ public class TermineItem{
 		return ort;
 	}
 
-	public void setAnsprechpartner(List<String> ansprechpartner){
+	public void setAnsprechpartner(List<Object> ansprechpartner){
 		this.ansprechpartner = ansprechpartner;
 	}
 
-	public List<String> getAnsprechpartner(){
+	public List<Object> getAnsprechpartner(){
 		return ansprechpartner;
 	}
 
@@ -325,7 +324,7 @@ public class TermineItem{
 	@Override
  	public String toString(){
 		return 
-			"TermineItem{" + 
+			"ResponseWeeklyAgenda{" +
 			"matchcode = '" + matchcode + '\'' + 
 			",adresse = '" + adresse + '\'' + 
 			",startzeit = '" + startzeit + '\'' + 

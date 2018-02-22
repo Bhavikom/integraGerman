@@ -105,10 +105,10 @@ import de.mateco.integrAMobile.model.ProjectModel;
 import de.mateco.integrAMobile.model.ProjectSearchPagingRequestModel;
 import de.mateco.integrAMobile.model.SimpleContactPersonAnsPartner;
 import de.mateco.integrAMobile.model.SimpleEmployeeMitrabeiter;
-import de.mateco.integrAMobile.model.WeeklyAgendaModel;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityEmployeeListItem;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTopicListItem;
 import de.mateco.integrAMobile.model_logonsquare.CustomerActivityTypeListItem;
+import de.mateco.integrAMobile.model_logonsquare.WeeklyAgendaListItem;
 
 public class CustomerActivityFragment extends LoadedCustomerFragment implements View.OnClickListener, TextView.OnEditorActionListener
 {
@@ -169,7 +169,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
     Button footerButton;
     TextView textViewProjectSearch;
     private EventAdapter adapter;
-    private ArrayList<WeeklyAgendaModel> listOfWeeklyAgenda,listOfWeeklyAgenda1 = new ArrayList<>();
+    private List<WeeklyAgendaListItem> listOfWeeklyAgenda,listOfWeeklyAgenda1 = new ArrayList<>();
     /*******************************/
     private ActivityTypeAdapter activityTypeAdapter;
     private ActivityTopicAdapter activityTopicAdapter;
@@ -1185,7 +1185,7 @@ public class CustomerActivityFragment extends LoadedCustomerFragment implements 
                 String jsonData = getArguments().getString("WeeklyAgendaSelectedModel", "");
                 if(!jsonData.equals(""))
                 {
-                    WeeklyAgendaModel agendaModel = new Gson().fromJson(jsonData, WeeklyAgendaModel.class);
+                    WeeklyAgendaListItem agendaModel = new Gson().fromJson(jsonData, WeeklyAgendaListItem.class);
                     for(int i = 0; i < listOfLoadedCustomerActivity.size(); i++)
                     {
                         if(listOfLoadedCustomerActivity.get(i).getAktivitaet().equals(agendaModel.getAktivitaet()))

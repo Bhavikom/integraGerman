@@ -63,7 +63,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
 
     long startTime;
     long elapsedTime;
-
+    public static boolean isWeeklyCalled = false;
     public boolean isFirsttime=true;
     PreferencesClass preferences2;
     PreferencesData prefObj;
@@ -659,6 +659,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
                 preferences2.clearPreferences();
                 preferences2.clearCombobox();
                 clearDate();
+                isWeeklyCalled = false;
                 fragment = new VisitPlanDailyAgendaFragment();
                 setTitle("Daily Agenda");
                 args.putString("Name", "Site inspection Daily Agenda");
@@ -679,6 +680,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
                 preferences2.clearPreferences();
                 preferences2.clearCombobox();
                 clearDate();
+                isWeeklyCalled = true;
                 fragment = new VisitPlanDailyAgendaFragment();
                 setTitle("Weekly Agenda");
                 args.putString("Name", "Site Inspection Weekly Agenda");
@@ -919,6 +921,7 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
 
         }
     }
+
     //    @Override
 //    public void editingComplete(String data)
 //    {

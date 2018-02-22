@@ -83,6 +83,7 @@ import de.mateco.integrAMobile.model.ProjectDetailTradeModel;
 public class MatecoPriceApplication extends Application
 {
     private static MatecoPriceApplication instance;
+    private static MatecoPriceApplication instanceSych;
     private static final String LOG_TAG = "CrashCatch";
     private Language language;
     private SharedPreferences prefs, settingsPref;
@@ -95,6 +96,7 @@ public class MatecoPriceApplication extends Application
     {
         super.onCreate();
         instance = this;
+        instanceSych = this;
         con = this;
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
@@ -582,6 +584,9 @@ public class MatecoPriceApplication extends Application
             ex.printStackTrace();
         }
         return language;
+    }
+    public static synchronized MatecoPriceApplication getInstanceSych() {
+        return instanceSych;
     }
     public static MatecoPriceApplication getInstance(){
         return instance;

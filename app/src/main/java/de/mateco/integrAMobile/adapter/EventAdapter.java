@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.mateco.integrAMobile.R;
-import de.mateco.integrAMobile.model.WeeklyAgendaModel;
+import de.mateco.integrAMobile.model_logonsquare.WeeklyAgendaListItem;
 
 
 public class EventAdapter extends BaseAdapter {
 
-    ArrayList<WeeklyAgendaModel> listOfEvents;
+    List<WeeklyAgendaListItem> listOfEvents;
     public int selectedIndex = -1;
     private Context context;
 
@@ -25,7 +25,7 @@ public class EventAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public EventAdapter(Context context, ArrayList<WeeklyAgendaModel> listOfEvents)
+    public EventAdapter(Context context, List<WeeklyAgendaListItem> listOfEvents)
     {
         this.context = context;
         this.listOfEvents = listOfEvents;

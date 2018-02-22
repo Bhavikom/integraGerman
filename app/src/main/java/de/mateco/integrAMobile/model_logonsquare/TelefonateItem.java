@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
+import org.greenrobot.greendao.annotation.Generated;
 
 @JsonObject
 public class TelefonateItem{

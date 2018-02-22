@@ -29,7 +29,6 @@ public class SamplePagerItem
     public CharSequence getTitle() {
         return mTitle;
     }
-
     /**
      * @return the color to be used for indicator on the {@link SlidingTabLayout}
      */

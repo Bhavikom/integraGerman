@@ -1,11 +1,11 @@
 package de.mateco.integrAMobile.model_logonsquare;
 
 import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
+import org.greenrobot.greendao.annotation.Generated;
 
 @JsonObject
 public class ResponseMainAgenda {
@@ -25,6 +25,10 @@ public class ResponseMainAgenda {
 	@SerializedName("Telefonate")
 	@JsonField(name ="Telefonate")
 	private List<TelefonateItem> telefonate;
+
+	@SerializedName("WeeklyAgendaList")
+	@JsonField(name ="WeeklyAgendaList")
+	private List<WeeklyAgendaListItem> weeklyAgendaList;
 
 	public void setPast(List<PastItem> past){
 		this.past = past;
@@ -58,6 +62,14 @@ public class ResponseMainAgenda {
 		return telefonate;
 	}
 
+	public void setWeeklyAgendaList(List<WeeklyAgendaListItem> weeklyAgendaList){
+		this.weeklyAgendaList = weeklyAgendaList;
+	}
+
+	public List<WeeklyAgendaListItem> getWeeklyAgendaList(){
+		return weeklyAgendaList;
+	}
+
 	@Override
  	public String toString(){
 		return 
@@ -66,6 +78,7 @@ public class ResponseMainAgenda {
 			",future = '" + future + '\'' + 
 			",termine = '" + termine + '\'' + 
 			",telefonate = '" + telefonate + '\'' + 
+			",weeklyAgendaList = '" + weeklyAgendaList + '\'' + 
 			"}";
 		}
 }
