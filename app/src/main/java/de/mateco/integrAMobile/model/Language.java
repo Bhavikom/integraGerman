@@ -230,6 +230,16 @@ public class Language
     private String messageErrorCustomerInsert;
     private String labelContactPersonSearchTitle;
 
+    private String labelMatchResultNotFound;
+
+    public String getLabelMatchResultNotFound() {
+        return labelMatchResultNotFound;
+    }
+
+    public void setLabelMatchResultNotFound(String labelMatchResultNotFound) {
+        this.labelMatchResultNotFound = labelMatchResultNotFound;
+    }
+
     public String getLabelContactPersonSearchTitle() {
         return labelContactPersonSearchTitle;
     }

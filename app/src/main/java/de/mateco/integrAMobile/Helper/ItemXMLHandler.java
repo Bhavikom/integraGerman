@@ -1169,6 +1169,9 @@ public class ItemXMLHandler extends DefaultHandler {
             language.setMessageForKanrGreaterThen2(currentValue);
         else if (localName.equalsIgnoreCase("labelContactPersonSearchTitle"))
             language.setLabelContactPersonSearchTitle(currentValue);
+        else if (localName.equalsIgnoreCase("labelMatchResultNotFound"))
+            language.setLabelMatchResultNotFound(currentValue);
+
 
     }
 

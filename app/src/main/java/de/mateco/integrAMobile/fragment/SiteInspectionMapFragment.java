@@ -178,6 +178,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                         map = googleMap;
                         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                         addDragEvent();
+                        isMapLoaded = true;
                         map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                             @Override
                             public void onMapLoaded() {
@@ -248,6 +249,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                     map = googleMap;
                     map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     addDragEvent();
+                    isMapLoaded = true;
                     map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                         @Override
                         public void onMapLoaded() {
@@ -373,6 +375,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
         }
         return rootView;
     }
+    boolean isMapLoaded = false;
     public void onMapSearch(String inputString) {
         matecoPriceApplication.hideKeyboard(getActivity());
         ArrayList<BasicNameValuePair> latLong = DataHelper.getLatLongFromAddress(getActivity(),inputString);
@@ -389,7 +392,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
             labelValueSelectedLatitudeFormat.setText(nameValuePair.getValue());
             updateLatLong(currentLocationMarker);
         } else {
-            showShortToast(language.getMessageError());
+            showShortToast(language.getLabelMatchResultNotFound());
         }
     }
 
@@ -935,7 +938,7 @@ public class SiteInspectionMapFragment extends BaseFragment implements View.OnCl
                     ActivityCompat.requestPermissions(getActivity(), new String[] {
                                     android.Manifest.permission.ACCESS_FINE_LOCATION,
                                     android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                            33);
+                            32);
                 }
             }
             else {

@@ -571,6 +571,8 @@
         <labelStrasse>Strasse</labelStrasse>
         <labelGenehmi>Genehmigungsgebühr</labelGenehmi>
 
+        <labelMatchResultNotFound>Übereinstimmendes Ergebnis nicht gefunden</labelMatchResultNotFound>
+
         <labelName>Name</labelName>
         <labelName>Name</labelName>
         <labelName>Name</labelName>
@@ -1145,6 +1147,8 @@
        <labelIndustrie>Industrie</labelIndustrie>
                                <labelStrasse>Strasse</labelStrasse>
                                <labelGenehmi>Genehmigungsgebühr</labelGenehmi>
+
+                                <labelMatchResultNotFound>Matching Result Not Found</labelMatchResultNotFound>
 	</Language>
 
 	<Language>
@@ -1715,6 +1719,8 @@
                         <labelIndustrie>Industrie</labelIndustrie>
                         <labelStrasse>Strasse</labelStrasse>
                         <labelGenehmi>Genehmigungsgebühr</labelGenehmi>
+
+                         <labelMatchResultNotFound>Übereinstimmendes Ergebnis nicht gefunden</labelMatchResultNotFound>
         	</Language>
 
 

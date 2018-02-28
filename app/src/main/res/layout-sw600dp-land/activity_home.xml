@@ -46,10 +46,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/primary"
+            android:childDivider="@android:color/darker_gray"
             android:choiceMode="singleChoice"
             android:divider="@android:color/black"
             android:dividerHeight="2dp"
-            android:childDivider="@android:color/darker_gray"
             android:groupIndicator="@android:color/transparent"
             android:indicatorLeft="260dp" />
 

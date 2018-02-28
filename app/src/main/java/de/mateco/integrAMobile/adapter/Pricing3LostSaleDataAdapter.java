@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -42,7 +43,7 @@ public class Pricing3LostSaleDataAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        LinearLayout linearLostsaleRow;
+        LinearLayout linearLostsaleRow,linearParent;
 
         CheckBox chkSelect;
 
@@ -102,6 +103,7 @@ public class Pricing3LostSaleDataAdapter extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.linearLostsaleRow = (LinearLayout) convertView.findViewById(R.id.linearLostsaleRow);
+            holder.linearParent = (LinearLayout) convertView.findViewById(R.id.linearParent);
 
             holder.chkSelect = (CheckBox) convertView.findViewById(R.id.chkPricing3LostSaleData_row);
 
@@ -152,9 +154,30 @@ public class Pricing3LostSaleDataAdapter extends BaseAdapter {
 
         if(listLostSale.get(position).isSelected()){
             holder.linearLostsaleRow.setBackgroundColor(context.getResources().getColor(R.color.red));
+
+            int count = holder.linearParent.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View view = holder.linearParent.getChildAt(i);
+
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    textView.setTextColor(context.getResources().getColor(R.color.white));
+                }
+            }
+
         }
         else {
             holder.linearLostsaleRow.setBackgroundColor(context.getResources().getColor(R.color.white));
+
+            int count = holder.linearParent.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View view = holder.linearParent.getChildAt(i);
+
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    textView.setTextColor(context.getResources().getColor(R.color.black));
+                }
+            }
         }
 
 
