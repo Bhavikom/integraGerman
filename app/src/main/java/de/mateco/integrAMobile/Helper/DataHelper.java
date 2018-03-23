@@ -112,23 +112,23 @@ public class DataHelper
     //public static String APP_NAME = "integrAMobileLuTest/MatecoSalesAppService.svc/json/";
 
     // use when want to call with TEST
-    public static String APP_NAME = "integrAMobileTest/MatecoSalesAppService.svc/json/";
+    /*public static String APP_NAME = "integrAMobileTest/MatecoSalesAppService.svc/json/";
     public static String URL_USER_HELPER = "https://mobile.mateco.de/UserServiceTest/api/userhelper/";
     public static String URL_PRICE_HELPER = "https://mobile.mateco.de/PriceServiceTest/api/pricehelper/";
     public static String URL_CUSTOMER_HELPER = "https://mobile.mateco.de/CustomerServiceTest/api/customerhelper/";
     public static String URL_BVO_HELPER = "https://mobile.mateco.de/BVOServiceTest/api/bvohelper/";
     public static String URL_PROJECT_HELPER = "https://mobile.mateco.de/ProjectServiceTest/api/projecthelper/";
-    public static String URL_AGENDA_HELPER = "https://mobile.mateco.de/AgendaServiceTest/api/agendahelper/";
+    public static String URL_AGENDA_HELPER = "https://mobile.mateco.de/AgendaServiceTest/api/agendahelper/";*/
 
 
     /* use when0 want to call with SCHULUNG url*/
-    /*public static String APP_NAME = "integrAMobileSchulung/MatecoSalesAppService.svc/json/";
+    public static String APP_NAME = "integrAMobileSchulung/MatecoSalesAppService.svc/json/";
     public static String URL_USER_HELPER = "https://mobile.mateco.de/UserServiceSchulung/api/userhelper/";
     public static String URL_PRICE_HELPER = "https://mobile.mateco.de/PriceServiceSchulung/api/pricehelper/";
     public static String URL_CUSTOMER_HELPER = "https://mobile.mateco.de/CustomerServiceSchulung/api/customerhelper/";
     public static String URL_BVO_HELPER = "https://mobile.mateco.de/BVOServiceSchulung/api/bvohelper/";
     public static String URL_PROJECT_HELPER = "https://mobile.mateco.de/ProjectServiceSchulung/api/projecthelper/";
-    public static String URL_AGENDA_HELPER = "https://mobile.mateco.de/AgendaServiceSchulung/api/agendahelper/";*/
+    public static String URL_AGENDA_HELPER = "https://mobile.mateco.de/AgendaServiceSchulung/api/agendahelper/";
 
     /* use when want to call with LIVE URL */
     /*public static String APP_NAME = "integrAMobile/MatecoSalesAppService.svc/json/";
