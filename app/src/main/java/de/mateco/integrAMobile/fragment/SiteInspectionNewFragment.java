@@ -733,7 +733,7 @@ public class SiteInspectionNewFragment extends BaseFragment implements View.OnCl
                         GlobalMethods.callToNumber(context, textPurchaserTelephone);
                     }
                     else{
-                        ActivityCompat.requestPermissions(getActivity(), new String[] {
+                         ActivityCompat.requestPermissions(getActivity(), new String[] {
                                         android.Manifest.permission.CALL_PHONE},
                                 91);
                     }

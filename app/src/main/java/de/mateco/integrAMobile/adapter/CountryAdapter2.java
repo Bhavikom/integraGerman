@@ -71,8 +71,6 @@ public class CountryAdapter2 extends BaseAdapter
             TextView labelListItemCountryName = (TextView)convertView.findViewById(R.id.labelListItemCountryName);
             labelListItemCountryName.setText(listOfCountries.get(position - 1).getBezeichnung());
         }
-        //imgvBackground.setImageResource(R.drawable.english);
-
         return convertView;
     }
 }

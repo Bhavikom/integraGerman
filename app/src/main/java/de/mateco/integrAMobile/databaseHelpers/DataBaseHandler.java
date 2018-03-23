@@ -3438,7 +3438,9 @@ public class DataBaseHandler extends SQLiteOpenHelper
         db.execSQL(deleteSQL);
         deleteSQL = "DELETE FROM " + TABLE_PROJECT_PHASE;
         db.execSQL(deleteSQL);
-        deleteSQL = "DELETE FROM " + TABLE_PROJECT_PHASE;
+        deleteSQL = "DELETE FROM " + TABLE_BUHENEART;
+        db.execSQL(deleteSQL);
+        deleteSQL = "DELETE FROM " + TABLE_CUSTOMER_BRANCH;
         db.execSQL(deleteSQL);
         db.close();
     }

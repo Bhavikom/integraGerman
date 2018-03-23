@@ -87,7 +87,7 @@ public class PricingFragment3 extends LoadedCustomerFragment implements View.OnC
     PreferencesData prerObj;
 
     private Menu menu;
-    public static final String ROOT_URL = "http://sm.ssoft.in/StudService.svc/AddPricing";
+    public static final String ROOT_URL = "";
     boolean flagAnlieferung, flagKann, flagLieferung, flagVoranmeldung, flagBenachrichtgung, flagRampena, flagSonstige,
             flagEinweisung,flagSelbstfahrer;
     String strKann ="", strVoranmeldung ="", strBenachrich ="", strSonstige ="";

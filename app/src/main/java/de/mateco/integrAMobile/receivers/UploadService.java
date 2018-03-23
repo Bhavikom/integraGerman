@@ -64,9 +64,7 @@ public class UploadService extends IntentService
         application = (MatecoPriceApplication)this.getApplication();
         language = application.getLanguage();
         bvoId = intent.getExtras().getInt("bvoId");
-        //imageList = db.getPhotos(preferences.getInt(DataHelper.SiteInspectionId, 0));
         imageList = db.getPhotosByFlag(bvoId);
-        //model = db.getSiteInspection(preferences.getInt(DataHelper.SiteInspectionId, 0));
         model = db.getSiteInspection(bvoId);
 
         builder = new NotificationCompat.Builder(this);
@@ -131,7 +129,6 @@ public class UploadService extends IntentService
                     }
                 }
             };
-            //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + "BVOInsertImage";
             String url = DataHelper.URL_BVO_HELPER + "bvoinsertimage";
             MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
             try
@@ -208,7 +205,6 @@ public class UploadService extends IntentService
             in.close();
             out.flush();
             out.close();
-
             // delete the original file
             new File(imageList.get(0).getPath()).delete();
             db.updatePhotoByPath(dest.getAbsolutePath(),imageList.get(0).getId());

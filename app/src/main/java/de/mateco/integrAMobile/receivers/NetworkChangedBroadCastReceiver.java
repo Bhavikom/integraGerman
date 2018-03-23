@@ -37,10 +37,8 @@ public class NetworkChangedBroadCastReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent)
     {
         db = new DataBaseHandler(context);
-        //preferences = context.getSharedPreferences("SiteInspection",Context.MODE_PRIVATE);
         application = ((MatecoPriceApplication)context.getApplicationContext());
         language = application.getLanguage();
-        //listOfSiteInspection = db.getSiteInspectionListToUpload();
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         final NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
@@ -55,7 +53,6 @@ public class NetworkChangedBroadCastReceiver extends BroadcastReceiver {
                 SiteInspectionOperationalEnvironmentModel siteInspectionOperationalEnvironmentModel = siteInspectionModel.getSiteInspectionOperationalEnvironmentModel();
                 String json = new Gson().toJson(siteInspectionModel);
                 String url = null;
-                //String deviceList = new Gson().toJson(db.getDeviceByID(preferences.getInt(DataHelper.SiteInspectionId, 0)));
                 String deviceList = new Gson().toJson(db.getDeviceByID(model.getId()));
                 String practicabilityList = new Gson().toJson(siteInspectionOperationalEnvironmentModel.getListOfPracticability());
                 AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult onAsyncResult = new AsyncTaskWithAuthorizationHeaderPost.OnAsyncResult()
@@ -66,12 +63,9 @@ public class NetworkChangedBroadCastReceiver extends BroadcastReceiver {
                         if(result.equalsIgnoreCase("error")){
                         }
                         else {
-                            //if(result != null && !result.equals("error") && result.length()<=38 && !result.trim().equals("false"))
                             ResponseFormat responseFormat = new Gson().fromJson(result, ResponseFormat.class);
                             if(responseFormat.getResponseCode() == 10)
                             {
-                                //db.updateSiteInspectionUpload(preferences.getInt(DataHelper.SiteInspectionId, 0), result.substring(1, result.length() - 1), 1);
-                                //db.updateSiteInspectionUpload(model.getId(), result.substring(1, result.length() - 1), 3);
                                 db.updateSiteInspectionUpload(model.getId(), responseFormat.getBvoID(), 3);
                                 Intent photoUploadIntent = new Intent();
                                 photoUploadIntent.putExtra("bvoId", model.getId());
@@ -86,7 +80,6 @@ public class NetworkChangedBroadCastReceiver extends BroadcastReceiver {
 
                     }
                 };
-                //url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.SiteInspectionInsert;
                 url = DataHelper.URL_BVO_HELPER + "bvoinsert";
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 try

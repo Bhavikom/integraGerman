@@ -36,12 +36,6 @@ public class ContactPersonSearchAdapter extends BaseAdapter {
         this.layoutInflater = LayoutInflater.from(context);
         this.objects = customerModels;
     }
-
-//    @Override
-//    public int getCount() {
-//        return objects.size();
-//    }
-
     @Override
     public int getCount() {
         return objects.size();

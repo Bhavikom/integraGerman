@@ -4,6 +4,9 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @JsonObject
 public class ResponseMain {

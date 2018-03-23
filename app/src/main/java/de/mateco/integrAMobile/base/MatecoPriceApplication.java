@@ -19,6 +19,7 @@ import android.os.Process;
 import android.preference.PreferenceManager;
 
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
@@ -80,7 +81,7 @@ import de.mateco.integrAMobile.model.ProjectDetailActivityModel;
 import de.mateco.integrAMobile.model.ProjectDetailGenerallyModel;
 import de.mateco.integrAMobile.model.ProjectDetailTradeModel;
 
-public class MatecoPriceApplication extends Application
+public class MatecoPriceApplication extends MultiDexApplication
 {
     private static MatecoPriceApplication instance;
     private static MatecoPriceApplication instanceSych;
@@ -109,7 +110,7 @@ public class MatecoPriceApplication extends Application
 
         //Fabric.with(this, new Crashlytics()); // do uncomment when make signed apk
 
-        MultiDex.install(this);
+        //MultiDex.install(this);
         //defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
         //Thread.setDefaultUncaughtExceptionHandler(handler);
         language = languageLoad();
@@ -132,11 +133,11 @@ public class MatecoPriceApplication extends Application
         ImageLoader.getInstance().init(config);
         //startCatcher();
     }
-    @Override
+    /*@Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
         MultiDex.install(this);
-    }
+    }*/
     /* for volley */
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {

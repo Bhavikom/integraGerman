@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -178,30 +179,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     prd.setMax(100);
                     prd.setCancelable(false);
 
-                    /* FOR RETROFIT PARSING */
-                    /*GenericHelper helper = new GenericHelper(LoginActivity.this);
-                    try {
-                        Call<String> call = helper.getRetrofitGetUrl().callLoginService
-                                (URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8"),userName,password);
-                        call.enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, retrofit2.ResponseMain<String> response) {
-                                LogApp.showLog(" success ", " response from retro : "+response);
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-                                LogApp.showLog(" fail ", " response from retro : "+t.toString());
-                                showShortToast(language.getMessageError());
-                                prd.dismiss();
-                            }
-                        });
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        showShortToast("Fehler");
-                        prd.dismiss();
-                    }
-*/
                     // using volley to call service
                     String urlLoginDetail = null;
                     try {
@@ -365,7 +342,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
 
                 List<PriceStandardListItem> listOfOfflineStandardPrice = responseMain.getPriceStandardList(); // 5 = size 15975
+
+                long startTime = System.currentTimeMillis();
                 db.addPriceStandardListItem(listOfOfflineStandardPrice); // 5
+                long endTime = System.currentTimeMillis()-startTime;
+                Log.e(" ####### "," time take to insert : "+endTime);
                 prd.setProgress(0);
                 prd.setMax(100);
                 prd.setProgress(35);

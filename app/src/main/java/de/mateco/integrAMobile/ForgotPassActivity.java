@@ -119,8 +119,6 @@ public class ForgotPassActivity extends BaseActivity implements View.OnClickList
                         };
 
                         String url = DataHelper.URL_USER_HELPER +"forgetpassword/token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
-                        //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.ForgotPassword + "?token=" + URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8");
-
                         url = url + "/email=" + textForgotPasswordUserName.getText().toString();
                         BasicAsyncTaskGetRequest asyncTaskGetRequest = new BasicAsyncTaskGetRequest(url,onAsyncResult,ForgotPassActivity.this,true);
                         asyncTaskGetRequest.execute();

@@ -27,7 +27,6 @@ import de.mateco.integrAMobile.model.TransportDetailModel;
 public class GlobalClass
 {
     public static boolean isFirsttime=false;
-    public static final String ROOT_URL = "http://sm.ssoft.in/StudService.svc";
     public static Context context;
     public static int SCREEN_HEIGHT;
     public static int SCREEN_WIDTH;

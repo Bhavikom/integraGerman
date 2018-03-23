@@ -46,7 +46,6 @@ public class CustomerActivityPagerAdapter extends FragmentPagerAdapter
             default:
                 return new CustomerOffersOpenOrdersFragment();
         }
-        //return mTabs.get(position).createFragment();
     }
 
     @Override

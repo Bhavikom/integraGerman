@@ -48,7 +48,6 @@ public class ActivityTypeAdapter extends BaseAdapter
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent)
     {
-        //return super.getDropDownView(position, convertView, parent);
         View v = getView(position, convertView, parent);
         return v;
     }
@@ -70,8 +69,6 @@ public class ActivityTypeAdapter extends BaseAdapter
             TextView labelListItemCountryName = (TextView)convertView.findViewById(R.id.labelListItemActivityTypeName);
             labelListItemCountryName.setText(listOfActivity.get(position - 1).getBezeichnung());
         }
-
-        //imgvBackground.setImageResource(R.drawable.english);
 
         return convertView;
 

@@ -69,7 +69,6 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
             convertView = inflater.inflate(R.layout.auto_complete_item, parent, false);
         }
         ((TextView) convertView.findViewById(R.id.txtAutoitem)).setText(getItem(position).getHint());
-        //((TextView) convertView.findViewById(R.id.tv_id_product_ac_barcode)).setText(getItem(position).getBarcode());
         return convertView;
     }
 
@@ -82,7 +81,6 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
                 if (constraint != null) {
                     findHintsFromApi(mContext, constraint.toString());
 
-                    // Assign the data to the FilterResults
                     filterResults.values = arraylistHint;
                     filterResults.count = arraylistHint.size();
                 }
@@ -105,8 +103,6 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
      * Returns a search result for the given book title.
      */
     private void findHintsFromApi(final Context context, String search) {
-        // GoogleBooksProtocol is a wrapper for the Google Books API
-        //GoogleBooksProtocol protocol = new GoogleBooksProtocol(context, MAX_RESULTS);
         arraylistHint = new ArrayList<HintModel>();
         String base64Data = DataHelper.getToken();
 
@@ -140,7 +136,6 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
                 customerSearch.setMitarbeiter("");
 
                 pageNuber = 1;
-                //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                 String jsonToSend = DataHelper.getGson().toJson(customerSearch);
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, DataHelper.URL_CUSTOMER_HELPER+"customersearchhint/token=" + URLEncoder.encode(base64Data.trim(), "UTF-8")
@@ -148,8 +143,6 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            //Log.d(MainActivity.TAG, response.toString());
-
                             try {
                                 // TODO: Json respond check status?
                                 // Parsing json array response
@@ -161,38 +154,21 @@ public class AutoCompleteSearchAdapter extends BaseAdapter implements Filterable
                                 //String jsonStringArray = "[\"JSON\",\"To\",\"Java\"]";
                                 arraylistHint = new Gson().fromJson(resultsOfCustomers.toString(),token.getType());
                                 LogApp.showLog(" test "," hint list size : "+ arraylistHint.size());
-                                //mDepartmentArrayAdapter = new DepartmentArrayAdapter(getActivity(), R.layout.list_item_spinner_activity_topic, hintList);
-                                //textCustomerSearchMatchCode.setAdapter(mDepartmentArrayAdapter);
-                                //mDepartmentArrayAdapter = new DepartmentArrayAdapter(getActivity(), R.layout.list_item_spinner_activity_topic, hintList);
-                                //textCustomerSearchMatchCode.setAdapter(mDepartmentArrayAdapter);
-
-                            /*for (int i = 0; i < jsonProducts.length(); i++) {
-                                JSONObject p = (JSONObject) jsonProducts.get(i);
-                                String name = p.getString("name");
-                                String barcode = p.getString("barcode");
-
-
-                                //arraylistHint.add(new HintModel(name, barcode));
-                            }*/
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                             notifyDataSetChanged();
                         }
                     }, new Response.ErrorListener() {
-
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-
             Volley.newRequestQueue(this.mContext).add(req);
         }
         catch (Exception e){
             Toast.makeText(context,"", Toast.LENGTH_SHORT).show();
         }
-
     }
 }

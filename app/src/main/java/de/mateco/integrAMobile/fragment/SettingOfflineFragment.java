@@ -231,6 +231,7 @@ public class SettingOfflineFragment extends BaseFragment implements View.OnClick
         if(DataHelper.isNetworkAvailable(getActivity()))
         {
             prd = new ProgressDialog(getActivity());
+            prd.setCancelable(false);
             prd.setTitle(language.getMessageWaitWhileLoading());
             prd.setMessage(language.getMessageWaitWhileLoading());
             prd.show();

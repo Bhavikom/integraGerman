@@ -46,62 +46,20 @@ public class NetworkChangeReceiver extends BroadcastReceiver
 
         if(status.equalsIgnoreCase("WIFI CONNECTION") || status.equalsIgnoreCase("MOBILE DATA"))
         {
-            //GlobalClass.showToast((Activity) context,"Network is availabe now calling services");
-            //Toast.makeText(context,"Netwok available now ",Toast.LENGTH_SHORT).show();
-            // network available here
-            //GlobalClass.arraylistTransportDetail.clear();
             try {
                 if(databaseHandler.getCountPRice() > 0){
                     arrylistJson= databaseHandler.getPriceInfo();
-                    //arrylistJson.add(arrylistJson.get(0));
 
                     if(arrylistJson.size() > 0){
-                       // databaseHandler.deletePriceInfo();
-
-                        //Toast.makeText(con," in receiver class to call calling service : ",Toast.LENGTH_LONG).show();
                         callWebservice();
                     }
-                /*for (int i=0;i<arrylistJson.size();i++)
-                {
-                       callWebservice(arrylistJson.get(i));
-                }*/
-
                 }
 
             }
             catch (Exception e){
-                /*Toast.makeText(con," catch : : "+e.toString(),Toast.LENGTH_LONG).show();
-                File file = new File(Environment.getExternalStorageDirectory() + "/catch.txt");
-                try {
-                    OutputStreamWriter osw;
-                    FileOutputStream f = new FileOutputStream(file);
-                    f.write(e.toString().getBytes());
-                    osw = new OutputStreamWriter(f);
-                    osw.append("\n\n");
-
-                    osw.append("\n\n");
-                    osw.flush();
-                    osw.close();
-                    f.flush();
-                    f.close();
-                } catch (IOException ex) {
-                    e.printStackTrace();
-                }*/
             }
-
-            //if(databaseHandler.getCursorCount() > 0){
-              //  GlobalClass.arraylistTransportDetail=databaseHandler.getTransportDetail();
-               // if(GlobalClass.arraylistTransportDetail.size() > 0){
-                 //   for (int i=0;i<GlobalClass.arraylistTransportDetail.size();i++){
-                    //    callWebservice(i);
-                    //}
-                //}
-
-           // }
-
         }
         else {
-            // no more network available
         }
 
     }
@@ -115,33 +73,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                 public void OnAsynResult(String result)
                 {
                     LogApp.showLog(" &&&&&"," result varaible after successfully service call :  "+result);
-                    /*Random random = new Random();
-                    int n = 100;
-                    File file = new File(Environment.getExternalStorageDirectory() + "/Result : " + random.nextInt(n) + ".txt");
-                                try {
-                                    OutputStreamWriter osw;
-                                    FileOutputStream f = new FileOutputStream(file);
-                                    f.write(result.getBytes());
-                                    osw = new OutputStreamWriter(f);
-                                    osw.append("\n\n");
-                                    osw.append(result);
-                                    osw.append("\n\n");
-                                    osw.flush();
-                                    osw.close();
-                                    f.flush();
-                                    f.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }*/
-
-
-                    //Toast.makeText(con,"REsult : "+result,Toast.LENGTH_LONG).show();
                     try
                     {
                         if(result.equalsIgnoreCase("error")){
-                            /* new code*/
-                            //databaseHandler.addPriceInfo(arrylistJson.get(0));
-
                             if(arrylistJson.size() > 0){
                                 arrylistJson.remove(0);
                             }
@@ -154,21 +88,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                                 }
 
                             }
-                            /* new code*/
-
-                            /*if(arrylistJson.size() > 0){
-                                for (int i =0;i<arrylistJson.size();i++){
-                                    databaseHandler.addPriceInfo(arrylistJson.get(i));
-                                }
-                            }*/
                         }
                         else if(result.equalsIgnoreCase(""))
                         {
-                            /*if(arrylistJson.size() > 0){
-                                for (int i =0;i<arrylistJson.size();i++){
-                                    databaseHandler.addPriceInfo(arrylistJson.get(i));
-                                }
-                            }*/
                             if(arrylistJson.size() > 0){
                                 arrylistJson.remove(0);
                             }
@@ -182,7 +104,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
 
                             }
                         }
-//                      success goes here
                         else {
                             JSONObject jsonObject = new JSONObject(result);
                             JSONArray jsonArray = jsonObject.getJSONArray("Warenkorb");
@@ -193,7 +114,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                                 if(arrylistJson.size() > 0){
                                     callWebservice();
                                 }
-                                //databaseHandler.deletePriceInfo();
                             }
                         }
                     }
@@ -204,16 +124,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                 }
             };
             try {
-                /*if(arrylistJson.size() > 0){
-                    for (int i=0;i<arrylistJson.size();i++){
-                        databaseHandler.deletePriceInfo(arrylistJson.get(i).getId());
-                    }
-
-                }*/
-
-                //Toast.makeText(con," calling service in receiver : "+arrylistJson.size(),Toast.LENGTH_LONG).show();
                 String url = DataHelper.URL_PRICE_HELPER+"priceinsert";
-                //String url = DataHelper.ACCESS_PROTOCOL + DataHelper.ACCESS_HOST + DataHelper.APP_NAME + DataHelper.PriceInsert;
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 multipartEntity.addPart("token", new StringBody(URLEncoder.encode(DataHelper.getToken().trim(), "UTF-8")));
                 multipartEntity.addPart("priceinsert", new StringBody(arrylistJson.get(0).getStrJson(), Charset.forName("UTF-8")));
@@ -221,7 +132,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver
                 asyncTaskPost.execute();
             }
             catch (Exception e) {
-                //Toast.makeText(con," exception calling service : ",Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }

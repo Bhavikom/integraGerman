@@ -13,7 +13,6 @@ public class WakeFulBroadCastReceiver extends WakefulBroadcastReceiver
     {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        //NetworkInfo mWifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (activeNetInfo != null && activeNetInfo.isConnected())
         {
             Intent service = new Intent(context, UploadService.class);

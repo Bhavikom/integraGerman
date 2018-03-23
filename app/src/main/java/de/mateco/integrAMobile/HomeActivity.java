@@ -921,34 +921,4 @@ public class HomeActivity extends BaseActivity implements ExpandableListView.OnC
 
         }
     }
-
-    //    @Override
-//    public void editingComplete(String data)
-//    {
-//        //CustomerDataFragment customerDataFragment = (CustomerDataFragment) getSupportFragmentManager().findFragmentByTag("Customer Data");
-//
-////        if (customerDataFragment != null)
-////        {
-////            // If article frag is available, we're in two-pane layout...
-////            // Call a method in the ArticleFragment to update its content
-////            customerDataFragment.updateView(data);
-////        }
-////        else
-////        {
-//            Log.e("in if else update", "in if else update");
-//        getFragmentManager().popBackStack();
-//
-////            CustomerDataFragment newFragment = new CustomerDataFragment();
-////            Bundle args = new Bundle();
-////            //args.putInt(ArticleFragment.ARG_POSITION, position);
-////            newFragment.setArguments(args);
-////            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-////            // Replace whatever is in the fragment_container view with this fragment,
-////            // and add the transaction to the back stack so the user can navigate back
-////            transaction.replace(R.id.content_frame, newFragment);
-////            transaction.addToBackStack("Customer Data");
-////            // Commit the transaction
-////            transaction.commit();
-//        //}
-//    }
 }

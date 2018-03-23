@@ -71,9 +71,6 @@ public class ActivityTopicAdapter extends BaseAdapter
             TextView labelListItemCountryName = (TextView)convertView.findViewById(R.id.labelListItemActivityTopicName);
             labelListItemCountryName.setText(listOfActivityTopic.get(position - 1).getBezeichnung());
         }
-
-        //imgvBackground.setImageResource(R.drawable.english);
-
         return convertView;
     }
 }
